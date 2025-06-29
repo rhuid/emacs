@@ -51,4 +51,4 @@
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(provide '02-looks)
+(provide '01-looks)

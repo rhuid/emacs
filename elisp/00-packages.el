@@ -19,4 +19,4 @@
   :config
   (exec-path-from-shell-initialize))                         ; copy shell's $PATH and other env vars ($MANPATH, $GOPATH, etc.) into Emacs
 
-(provide '01-packages)
+(provide '00-packages)

@@ -40,4 +40,4 @@
 ;;  (load-theme 'doom-one t)
 ;;  (doom-themes-org-config))             ; Improved org-mode styling
 
-(provide '03-theme)
+(provide '02-theme)
