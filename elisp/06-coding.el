@@ -1,5 +1,4 @@
 ;; Coding
-(add-to-list 'load-path "~/.emacs.d/engine")
 
 ;; Lean
 (add-to-list 'load-path "~/.emacs.d/lean4-mode")              ; lean4-mode is installed manually in this path

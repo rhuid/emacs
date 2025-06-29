@@ -1,4 +1,6 @@
 (require 'package)
+(setq package-enable-at-startup nil)                         ; avoid double init
+
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")            ; MELPA
         ("gnu" . "https://elpa.gnu.org/packages/")           ; GNU ELPA

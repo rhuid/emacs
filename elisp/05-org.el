@@ -2,6 +2,9 @@
 
 (require 'org)
 
+(add-hook 'org-mode-hook
+	  (lambda () (display-line-numbers-mode -1)))
+
 (setq org-startup-indented t
       org-hide-emphasis-markers t                             ; hide /, *, etc when used for emphasis, bold, etc
       org-ellipsis " ▾ "                                     ; folding symbol
