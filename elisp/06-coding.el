@@ -1,5 +1,7 @@
 ;; Coding
 
+(require 'rh-custom-keywords)
+
 ;; Lean
 (add-to-list 'load-path "~/.emacs.d/lean4-mode")              ; lean4-mode is installed manually in this path
 (require 'lean4-mode)
