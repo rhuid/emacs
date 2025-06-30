@@ -33,6 +33,10 @@
   ("msg"    "message")
   ("bd"     "birthday")
 
+  ;; Common words
+  ("yr"     "year")
+  ("yrs"    "years")
+  
   ;; Mathematics
   ("wlog"   "without loss of generality")
   ("tfae"   "the following are equivalent")

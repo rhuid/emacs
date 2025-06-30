@@ -1,4 +1,4 @@
-;; Highlighting custom keywords (currently implemented for sh-mode and emacs-lisp-mode
+;; Highlighting custom keywords (currently implemented for sh-mode, emacs-lisp-mode, lisp-interaction-mode)
 
 (defface rh/custom-keyword-face
   '((t (:foreground "MediumPurple1" :weight normal)))
@@ -25,6 +25,7 @@
   "Highlight custom emacs lisp keywords in `emacs-lisp-mode`."
   (let ((rh/elisp-custom-keywords
          '("add-hook"
+	   "add-to-list"
 	   )))
     (font-lock-add-keywords
      nil
@@ -32,5 +33,6 @@
         . 'rh/custom-keyword-face)))))
 
 (add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-custom-keywords)
+(add-hook 'lisp-interaction-mode-hook #'rh/elisp-highlight-custom-keywords)
 
 (provide 'rh-custom-keywords)
