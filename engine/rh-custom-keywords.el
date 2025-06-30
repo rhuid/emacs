@@ -1,21 +1,36 @@
+;; Highlighting custom keywords (currently implemented for sh-mode and emacs-lisp-mode
+
 (defface rh/custom-keyword-face
   '((t (:foreground "MediumPurple1" :weight normal)))
-  "Face for user-defined keywords.")
+  "Face for custom keywords.")
 
-(defun rh/sh-highlight-user-defined ()
-  "Highlight user-defined shell keywords in `sh-mode`."
-  (font-lock-add-keywords
-   nil
-   '(("\\<\\(print\\|log\\|debug\\|trace\\)\\>" . 'rh/custom-keyword-face))))
+;; sh-mode (Shell)
+(defun rh/sh-highlight-custom-keywords ()
+  "Highlight custom shell keywords in `sh-mode`."
+  (let ((rh/sh-custom-keywords
+         '("print"
+	   "file_exists"
+	   "dir_exists"
+	   "is_executable"
+	   )))
+    (font-lock-add-keywords
+     nil
+     `((,(concat "\\<" (regexp-opt rh/sh-custom-keywords t) "\\>")
+        . 'rh/custom-keyword-face)))))
 
-(add-hook 'sh-mode-hook #'rh/sh-highlight-user-defined)
+(add-hook 'sh-mode-hook #'rh/sh-highlight-custom-keywords)
 
-;; (defun rh/elisp-highlight-user-defined ()
-;;   "Highlight user-defined elisp keywords in `elisp-mode`."
-;;   (font-lock-add-keywords
-;;    nil
-;;    '(("\\<\\(show\\|log\\|debug\\|trace\\)\\>" . 'rh/custom-keyword-face))))
+;; emacs-lisp-mode (for .el files such as this one)
+(defun rh/elisp-highlight-custom-keywords ()
+  "Highlight custom emacs lisp keywords in `emacs-lisp-mode`."
+  (let ((rh/elisp-custom-keywords
+         '("add-hook"
+	   )))
+    (font-lock-add-keywords
+     nil
+     `((,(concat "\\<" (regexp-opt rh/elisp-custom-keywords t) "\\>")
+        . 'rh/custom-keyword-face)))))
 
-;; (add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-user-defined)
+(add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-custom-keywords)
 
 (provide 'rh-custom-keywords)
