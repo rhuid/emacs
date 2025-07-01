@@ -1,4 +1,4 @@
-;; Others 
+(require 'rh-auto-capitalize)
 
 ;;(use-package auto-complete
 ;;  :config

@@ -25,6 +25,7 @@
   "Highlight custom emacs lisp keywords in `emacs-lisp-mode`."
   (let ((rh/elisp-custom-keywords
          '("add-hook"
+	   "remove-hook"
 	   "add-to-list"
 	   )))
     (font-lock-add-keywords
