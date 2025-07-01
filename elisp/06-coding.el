@@ -35,6 +35,10 @@
 
 (require 'rh-rust)
 
+;; For .kbd kmonad files
+(use-package kbd-mode
+  :vc (:url "https://github.com/kmonad/kbd-mode" :rev :newest))
+
 (setq lsp-log-io nil)                                         ; Suppress LSP warnings
 
 (provide '06-coding)
