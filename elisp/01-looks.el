@@ -71,7 +71,7 @@
                       :foreground "#555555")
   (set-face-attribute 'line-number-current-line nil
                       :foreground "#c678dd"
-                      :weight 'bold)
+                      :weight 'semi-bold)
 
   ;; fringe
   (set-face-background 'fringe "#1a1a1a"))
@@ -98,7 +98,7 @@
                       :foreground "#555555")
   (set-face-attribute 'line-number-current-line nil
                       :foreground "#c678dd"
-                      :weight 'bold)
+                      :weight 'semi-bold)
 
   ;; highlighted line and fringe
   (set-face-background 'hl-line "#222222")
@@ -115,14 +115,14 @@
   (set-face-attribute 'font-lock-comment-face nil
 		      :slant 'oblique                   
 		      :foreground "#999999" 
-		      :weight 'light) 
+		      :weight 'normal) 
 
   ;; line numbers
   (set-face-attribute 'line-number nil
                       :foreground "#555555")
   (set-face-attribute 'line-number-current-line nil
                       :foreground "#c678dd"
-                      :weight 'bold)
+                      :weight 'semi-bold)
 
   ;; fringe
   (set-face-background 'fringe "#1a1a1a"))
