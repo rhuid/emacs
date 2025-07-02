@@ -1,4 +1,4 @@
-(dolist (dir '("core" "engine" "lang"))
+(dolist (dir '("core" "engine" "modes"))
   (add-to-list 'load-path
                (expand-file-name dir user-emacs-directory)))
 
