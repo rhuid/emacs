@@ -56,14 +56,38 @@
 ;;  :config
 ;;  (load-theme 'catppuccin t))
 
-(use-package gotham-theme                    
+(use-package doom-themes
   :ensure t
   :config
-  (load-theme 'gotham t)
+  (load-theme 'doom-vibrant t)
+  
+  ;; main background
+  (set-face-background 'default "#1a1a1a")
+  
+  ;; comments
   (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'oblique))                     ; make comments oblique
-;;		      :foreground "#999999"))               ; comment color (grayish)
-;;		      :weight 'light))                      ; make comments lighter
+		      :slant 'oblique
+		      :weight 'light)
+  
+  ;; line numbers
+  (set-face-attribute 'line-number nil
+                      :foreground "#555555")
+  (set-face-attribute 'line-number-current-line nil
+                      :foreground "#c678dd"
+                      :weight 'bold)
+  
+  ;; highlighted line and fringe
+  (set-face-background 'hl-line "#222222")
+  (set-face-background 'fringe "#1a1a1a"))
+
+;; (use-package gotham-theme                    
+;;   :ensure t
+;;   :config
+;;   (load-theme 'gotham t)
+;;   (set-face-attribute 'font-lock-comment-face nil
+;; 		      :slant 'oblique                       ; make comments oblique
+;; 		      :foreground "#999999"                 ; comment color (grayish)
+;; 		      :weight 'light))                      ; make comments lighter
 
 ;;(use-package gandalf-theme
 ;;  :ensure t
