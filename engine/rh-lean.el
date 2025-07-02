@@ -6,6 +6,7 @@
   '(("c" . "/- ? -/?")                                     ; multi-line comment
     ("ch" . "#check (?)?")
     ("ev" . "#eval (?)?")
+    ("rd" . "#reduce (?)?")
     ("st" . "structure ? where \n  ?\nderiving ?")
     ("ind" . "inductive ? where \n  | ?\nderiving ?")
     ("mt" . "match ? with\n?| ? => ?")

@@ -19,7 +19,8 @@
   (flymake-mode -1)                                           ; disable flymake-mode
   (setq flymake-error-bitmap nil)
   (setq flymake-warning-bitmap nil)
-  (setq flymake-note-bitmap nil))
+  (setq flymake-note-bitmap nil)
+  (setq header-line-format nil))
 
 (add-hook 'lean4-mode-hook #'custom/lean4-setup)
 

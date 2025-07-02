@@ -1,7 +1,7 @@
 ;; Highlighting custom keywords (currently implemented for sh-mode, emacs-lisp-mode, lisp-interaction-mode)
 
 (defface rh/custom-keyword-face
-  '((t (:foreground "MediumPurple1" :weight normal)))
+  '((t (:foreground "LightGoldenrod1" :weight normal)))
   "Face for custom keywords.")
 
 ;; sh-mode (Shell)
