@@ -1,10 +1,21 @@
-;; Lean customizations
+;; Lean
 
 (require 'rh-snip)
 (require 'rh-faces)
 
+(define-abbrev-table 'lean4-abbrev-table
+  '(("ex"    "example"  nil 0)
+    ("ax"    "axiom"    nil 0)
+    ("th"    "theorem"  nil 0)
+    ("ev"    "#eval"    nil 0)
+    ("ch"    "#check"   nil 0)
+    ("prnt"  "#print"   nil 0)
+    ("rd"    "reduce"   nil 0)
+    ;; ... add more when needed
+    ))
+
 (defvar rh/lean4-snippet-alist
-  '(("c" . "/- ? -/?")                                     ; multi-line comment
+  '(("c" . "/- ? -/?")
     ("ch" . "#check (?)?")
     ("ev" . "#eval (?)?")
     ("rd" . "#reduce (?)?")

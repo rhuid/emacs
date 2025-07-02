@@ -5,16 +5,6 @@
 (require 'lean4-mode)
 (add-to-list 'auto-mode-alist '("\\.lean\\'" . lean4-mode))   ; associate .lean files with lean4-mode
 
-(define-abbrev-table 'lean4-abbrev-table                      ; define abbrevs
-  '(("ex" "example" nil 0)
-    ("ax" "axiom" nil 0)
-    ("th" "theorem" nil 0)
-    ("ev" "#eval" nil 0)
-    ("ch" "#check" nil 0)
-    ("prnt" "#print" nil 0)
-    ("rd" "reduce" nil 0)
-    ))
-
 (defun custom/lean4-setup ()
    "Custom setup for Lean 4 editing."
    (abbrev-mode 1)                                             ; enable abbrev-mode
@@ -28,7 +18,7 @@
                '(lean4-mode . ("lake" "serve"))))             ; invoke lake server in lean4-mode
 
 (require 'rh-lean)
-(require 'rh-faces)
+;;(require 'rh-faces)
 
 (require 'rh-shell)
 (require 'rh-elisp)
