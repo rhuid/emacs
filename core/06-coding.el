@@ -10,7 +10,12 @@
 
 (use-package lsp-ui
   :after lsp-mode
-  :hook (lsp-mode . lsp-ui-mode))
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-sideline-enable t)
+  (lsp-ui-sideline-show-diagnostics t)
+  (lsp-ui-sideline-show-hover t)
+  (lsp-ui-doc-enable t))
 
 ;; Lean
 (add-to-list 'load-path "~/.emacs.d/lean4-mode")
@@ -18,13 +23,10 @@
 (add-to-list 'auto-mode-alist '("\\.lean\\'" . lean4-mode))
 
 (require 'rh-lean)
-
-(defun rh/lean4-setup ()
-  (abbrev-mode 1)
-  (setq lean4-info-auto-open t)    ;; auto open goal/context panel...not working?
-)
-
-(add-hook 'lean4-mode-hook #'rh/lean4-setup)
+(add-hook 'lean4-mode-hook #'rh/lean4-tab-hook)
+(add-hook 'lean4-mode-hook #'rh/lean-highlight-types)
+(add-hook 'lean4-mode-hook #'rh/lean-highlight-values)
+(add-hook 'lean4-mode-hook #'rh/lean-highlight-typeclasses)
 
 (require 'rh-shell)
 (require 'rh-elisp)

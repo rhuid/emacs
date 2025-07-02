@@ -43,9 +43,7 @@
                           rh/lean4-snippet-alist
                           rh/snippet-placeholder-positions)))))
 
-(add-hook 'lean4-mode-hook #'rh/lean4-tab-hook)
-
-;; Hightlighting
+;; Highlighting
 (defun rh/lean-highlight-types ()
   "Highlight types in `lean4-mode`."
   (let ((rh/lean-types
@@ -85,9 +83,5 @@
      nil
      `((,(concat "\\<" (regexp-opt rh/lean-typeclasses t) "\\>")
         . 'rh/custom-face-1)))))
-
-(add-hook 'lean4-mode-hook #'rh/lean-highlight-types)
-(add-hook 'lean4-mode-hook #'rh/lean-highlight-values)
-(add-hook 'lean4-mode-hook #'rh/lean-highlight-typeclasses)
 
 (provide 'rh-lean)
