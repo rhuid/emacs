@@ -13,13 +13,14 @@
 (scroll-bar-mode -1)                                         ; hide scroll bar
 (set-fringe-mode 0)                                          ; try other values too
 (global-visual-line-mode t)                                  ; automatic line wrapping
+(global-hl-line-mode 1)
 (setq-default cursor-type 'bar)                              ; cursor: thin vertical line
 (blink-cursor-mode 1)
 (global-prettify-symbols-mode 1) 
 (global-display-line-numbers-mode t)                         ; show line numbers
 (setq make-backup-files nil)                                 ; don't generate backup files
 
-(set-frame-font "Iosevka-12" t t)                            ; set font (font installed separately)
+;(set-frame-font "Iosevka-12" t t)                            ; set font (font installed separately)
 
 (use-package all-the-icons                                   ; some pretty icons
   :ensure t)                                             
