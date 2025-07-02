@@ -1,7 +1,7 @@
 ;; Lean customizations
 
 (require 'rh-snip)
-(require 'rh-custom-faces)
+(require 'rh-faces)
 
 (defvar rh/lean4-snippet-alist
   '(("c" . "/- ? -/?")                                     ; multi-line comment

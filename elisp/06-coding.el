@@ -28,7 +28,10 @@
                '(lean4-mode . ("lake" "serve"))))             ; invoke lake server in lean4-mode
 
 (require 'rh-lean)
-(require 'rh-custom-faces)
+(require 'rh-faces)
+
+(require 'rh-shell)
+(require 'rh-elisp)
 
 ;; Rust
 (use-package flycheck-rust
