@@ -1,10 +1,8 @@
 ;; Abbreviations
 
 (setq-default abbrev-mode t)                          ; enable abbrev by default in all buffers
-(add-hook 'prog-mode-hook (lambda () (abbrev-mode -1)))    ; no abbrev-mode in programming mode
-(global-set-key (kbd "C-c a") 'abbrev-mode)           ; toggle abbrev-mode
 
-(define-abbrev-table 'global-abbrev-table '(
+(define-abbrev-table 'text-mode-abbrev-table '(
   ;; Common phrases
   ("btw"    "by the way")
   ("afaik"  "as far as I know")

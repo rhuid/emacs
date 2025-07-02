@@ -28,15 +28,13 @@
                '(lean4-mode . ("lake" "serve"))))             ; invoke lake server in lean4-mode
 
 (require 'rh-lean)
-(require 'rh-custom-keywords)
+(require 'rh-custom-faces)
 
 ;; Rust
 (use-package flycheck-rust
   :hook (rust-mode . flycheck-rust-setup))
 
 (require 'rh-rust)
-
-
 
 ;; For .kbd kmonad files
 (use-package kbd-mode

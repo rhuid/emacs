@@ -1,6 +1,7 @@
 ;; Lean customizations
 
 (require 'rh-snip)
+(require 'rh-custom-faces)
 
 (defvar rh/lean4-snippet-alist
   '(("c" . "/- ? -/?")                                     ; multi-line comment
@@ -32,5 +33,50 @@
                           rh/snippet-placeholder-positions)))))
 
 (add-hook 'lean4-mode-hook #'rh/lean4-tab-hook)
+
+;; Hightlighting
+(defun rh/lean-highlight-types ()
+  "Highlight types in `lean4-mode`."
+  (let ((rh/lean-types
+         '("Nat"   "Int"    "Char"    "Bool"  "Unit"  "Empty"   "PUnit"  "String"
+	   "List"  "Array"  "Option"  "Prod"  "Sum"   "Except"  
+	   )))
+    (font-lock-add-keywords
+     nil
+     `((,(concat "\\<" (regexp-opt rh/lean-types t) "\\>")
+        . 'rh/types-face)))))
+
+(defun rh/lean-highlight-values ()
+  "Highlight values in `lean4-mode`."
+  (let ((rh/lean-values
+         '("none" "some" "true" "false" 
+	   )))
+    (font-lock-add-keywords
+     nil
+     `((,(concat "\\<" (regexp-opt rh/lean-values t) "\\>")
+        . 'rh/values-face)))))
+
+(defun rh/lean-highlight-typeclasses ()
+  "Highlight typeclasses in `lean4-mode`."
+  (let ((rh/lean-typeclasses
+         '("Repr"       "ToString"
+	   "Add"        "Sub"               "Mul"          "Div"        "Mod"     "Neg"     "Inv"     "Pow"
+	   "HAdd"       "HSub"              "HMul"         "HDiv"       "Mod"     "Neg"     "Inv"     "Pow"
+	   "HAppend"
+	   "OfNat"      "Zero"              "One"          "SMul"
+	   "BEq"        "DecidableEq"       "LT"           "LE"         "Ord"
+	   "Coe"        "CoeDep"            "CoeTail"      "Notation"
+	   "Inhabited"  "EmptyCollection"   "Enumerable"   "Hashable"
+
+	   "Semigroup"  "Monoid"            "Group"        "Ring"       "Field"   "Module"
+	   )))
+    (font-lock-add-keywords
+     nil
+     `((,(concat "\\<" (regexp-opt rh/lean-typeclasses t) "\\>")
+        . 'rh/custom-face-1)))))
+
+(add-hook 'lean4-mode-hook #'rh/lean-highlight-types)
+(add-hook 'lean4-mode-hook #'rh/lean-highlight-values)
+(add-hook 'lean4-mode-hook #'rh/lean-highlight-typeclasses)
 
 (provide 'rh-lean)
