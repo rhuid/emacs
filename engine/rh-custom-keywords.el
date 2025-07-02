@@ -4,6 +4,10 @@
   '((t (:foreground "LightGoldenrod1" :weight normal)))
   "Face for custom keywords.")
 
+(defface rh/types-face
+  '((t (:foreground "HotPink" :weight normal)))
+  "Face for custom keywords.")
+
 ;; sh-mode (Shell)
 (defun rh/sh-highlight-custom-keywords ()
   "Highlight custom shell keywords in `sh-mode`."
@@ -35,5 +39,19 @@
 
 (add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-custom-keywords)
 (add-hook 'lisp-interaction-mode-hook #'rh/elisp-highlight-custom-keywords)
+
+;; Lean
+(defun rh/lean-highlight-types ()
+  "Highlight types in `lean4-mode`."
+  (let ((rh/lean-types
+         '("Nat"    "Bool"
+	   "String"  "List"  "Array"
+	   )))
+    (font-lock-add-keywords
+     nil
+     `((,(concat "\\<" (regexp-opt rh/lean-types t) "\\>")
+        . 'rh/types-face)))))
+
+(add-hook 'lean4-mode-hook #'rh/lean-highlight-types)
 
 (provide 'rh-custom-keywords)
