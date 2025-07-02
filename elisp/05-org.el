@@ -68,5 +68,5 @@
 ;;
 ;; C-c C-e    Export menu
 
+(require '15-org-custom)
 (provide '05-org)
-

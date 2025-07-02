@@ -52,14 +52,37 @@
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;;(use-package catppuccin-theme                      
-;;  :ensure t
-;;  :config
-;;  (load-theme 'catppuccin t))
+;; Themes
 
-(use-package doom-themes
-  :ensure t
-  :config
+(use-package catppuccin-theme)
+
+(defun rh/set-catppuccin-theme ()
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme 'catppuccin t)
+ 
+  (set-face-attribute 'font-lock-comment-face nil
+		      :slant 'oblique                       ; make comments oblique
+		      :foreground "#999999"                 ; comment color (grayish)
+		      :weight 'light)                       ; make comments lighter
+
+  ;; line numbers
+  (set-face-attribute 'line-number nil
+                      :foreground "#555555")
+  (set-face-attribute 'line-number-current-line nil
+                      :foreground "#c678dd"
+                      :weight 'bold)
+
+  ;; fringe
+  (set-face-background 'fringe "#1a1a1a"))
+
+(global-set-key (kbd "C-c C-M-c") #'rh/set-catppuccin-theme)
+
+(use-package doom-themes)
+
+(defun rh/set-doom-vibrant-theme ()
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'doom-vibrant t)
   
   ;; main background
@@ -76,46 +99,50 @@
   (set-face-attribute 'line-number-current-line nil
                       :foreground "#c678dd"
                       :weight 'bold)
-  
+
   ;; highlighted line and fringe
   (set-face-background 'hl-line "#222222")
   (set-face-background 'fringe "#1a1a1a"))
 
-;; (use-package gotham-theme                    
-;;   :ensure t
-;;   :config
-;;   (load-theme 'gotham t)
-;;   (set-face-attribute 'font-lock-comment-face nil
-;; 		      :slant 'oblique                       ; make comments oblique
-;; 		      :foreground "#999999"                 ; comment color (grayish)
-;; 		      :weight 'light))                      ; make comments lighter
+(global-set-key (kbd "C-c C-M-d") #'rh/set-doom-vibrant-theme)
 
-;;(use-package gandalf-theme
-;;  :ensure t
-;;  :config
-;;  (load-theme 'gandalf t))
+(use-package gotham-theme)
 
-;;(use-package adwaita-dark-theme
-;;  :ensure t
-;;  :config
-;;  (load-theme 'adwaita-dark))
+(defun rh/set-gotham-theme ()
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme 'gotham t)
+  (set-face-attribute 'font-lock-comment-face nil
+		      :slant 'oblique                   
+		      :foreground "#999999" 
+		      :weight 'light) 
 
-;;(use-package ample-theme
-;;  :ensure t
-;;  :config
-;;  (load-theme 'ample))
+  ;; line numbers
+  (set-face-attribute 'line-number nil
+                      :foreground "#555555")
+  (set-face-attribute 'line-number-current-line nil
+                      :foreground "#c678dd"
+                      :weight 'bold)
 
-;;(use-package ef-themes
-;;  :ensure t)
-;;(load-theme 'ef-spring t)
+  ;; fringe
+  (set-face-background 'fringe "#1a1a1a"))
 
-;;(use-package doom-themes
-;;  :ensure t
-;;  :init                                 ; Runs before the package is loaded
-;;  (setq doom-themes-enable-bold t
-;;        doom-themes-enable-italic t)
-;;  :config                               ; Runs after the package is loaded
-;;  (load-theme 'doom-one t)
-;;  (doom-themes-org-config))             ; Improved org-mode styling
+(global-set-key (kbd "C-c C-M-g") #'rh/set-gotham-theme)
+
+(defun rh/set-theme-based-on-time ()
+  "Automatically set Emacs theme based on time of day.
+Doom during the day, Gotham after 6 PM."
+  (let* ((hour (string-to-number (format-time-string "%H")))
+         (night? (or (>= hour 18) (< hour 6))))
+    (mapc #'disable-theme custom-enabled-themes)
+    (if night?
+        (rh/set-gotham-theme)
+      (rh/set-doom-vibrant-theme))))
+
+;; Run on Emacs startup			
+(add-hook 'emacs-startup-hook #'rh/set-theme-based-on-time)
+
+;; Run every hour
+(run-at-time "00:00" 3600 #'rh/set-theme-based-on-time)
 
 (provide '01-looks)

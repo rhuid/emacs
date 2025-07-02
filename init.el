@@ -14,7 +14,3 @@
 (require '07-typesetting) 
 ;;(require '08-dired)
 (require '09-extras)
-
-;; More customizations
-;;(require '13-theme-custom)
-(require '15-org-custom)
