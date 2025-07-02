@@ -10,7 +10,13 @@
 
 (define-abbrev-table 'lean4-abbrev-table                      ; define abbrevs
   '(("ex" "example" nil 0)
-    ("ax" "axiom" nil 0)))
+    ("ax" "axiom" nil 0)
+    ("th" "theorem" nil 0)
+    ("ev" "#eval" nil 0)
+    ("ch" "#check" nil 0)
+    ("prnt" "#print" nil 0)
+    ("rd" "reduce" nil 0)
+    ))
 
 (defun custom/lean4-setup ()
   "Custom setup for Lean 4 editing."
@@ -27,6 +33,11 @@
 (with-eval-after-load 'eglot                                  ; tell Eglot how to start Lean Lsp
   (add-to-list 'eglot-server-programs
                '(lean4-mode . ("lake" "serve"))))             ; invoke lake server in lean4-mode
+
+(defun my/lean4-disable-header-line ()
+  (setq header-line-format nil))
+
+(add-hook 'lean4-mode-hook #'my/lean4-disable-header-line)
 
 (require 'rh-lean)
 
