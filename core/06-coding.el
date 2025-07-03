@@ -29,7 +29,13 @@
 (add-hook 'lean4-mode-hook #'rh/lean-highlight-typeclasses)
 
 (require 'rh-shell)
+
 (require 'rh-elisp)
+(add-hook 'emacs-lisp-mode-hook #'rh/elisp-tab-hook)
+(add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-custom-keywords)
+
+(add-hook 'lisp-interaction-mode-hook #'rh/elisp-tab-hook)
+(add-hook 'lisp-interaction-mode-hook #'rh/elisp-highlight-custom-keywords)
 
 ;; Rust
 (use-package flycheck-rust

@@ -1,8 +1,31 @@
+(require 'rh-snip)
 (require 'rh-faces)
 
-;; emacs-lisp-mode (for .el files such as this one)
+(define-abbrev-table 'elisp-abbrev-table
+  '(("req"    "require"   nil 0)
+    ("pro"    "provide"   nil 0)
+    ;; ... add more when needed
+    ))
+
+(defvar rh/elisp-snippet-alist
+  '(("req" . "(require '?)")
+    ("pro" . "(provide '?)")
+    ("ahk" . "(add-hook '?-mode-hook #'?)")
+    ;; ... add more when needed
+    ))
+ 
+(defun rh/elisp-tab-hook ()
+  "Setup Elisp snippet and placeholder support on TAB."
+  (local-set-key (kbd "TAB")
+                 (lambda ()
+                   (interactive)
+                   (setq rh/snippet-placeholder-positions
+                         (rh/jump-or-indent
+                          rh/elisp-snippet-alist
+                          rh/snippet-placeholder-positions)))))
+
 (defun rh/elisp-highlight-custom-keywords ()
-  "Highlight custom emacs lisp keywords in `emacs-lisp-mode`."
+  "Highlight some custom emacs lisp words in `emacs-lisp-mode`."
   (let ((rh/elisp-custom-keywords
          '("add-hook"
 	   "remove-hook"
@@ -13,8 +36,5 @@
      nil
      `((,(concat "\\<" (regexp-opt rh/elisp-custom-keywords t) "\\>")
         . 'rh/custom-keyword-face)))))
-
-(add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-custom-keywords)
-(add-hook 'lisp-interaction-mode-hook #'rh/elisp-highlight-custom-keywords)
 
 (provide 'rh-elisp)
