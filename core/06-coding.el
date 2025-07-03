@@ -41,4 +41,10 @@
 (use-package kbd-mode
   :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
 
+(use-package nix-mode
+  :straight t
+  :mode "\\.nix\\'"
+  :config
+  (setq nix-indent-function 'nix-indent-line))
+
 (provide '06-coding)
