@@ -25,14 +25,16 @@
 (use-package all-the-icons
   :ensure t
   :config
-  (unless (member "all-the-icons" (font-family-list))
-    (all-the-icons-install-fonts t)))
+  (when (display-graphic-p)
+    (unless (member "all-the-icons" (font-family-list))
+      (all-the-icons-install-fonts t))))
 
 (use-package nerd-icons
   :ensure t
   :config
-  (unless (member "Symbols Nerd Font Mono" (font-family-list))
-    (nerd-icons-install-fonts t)))
+  (when (display-graphic-p)
+    (unless (member "Symbols Nerd Font Mono" (font-family-list))
+      (nerd-icons-install-fonts t))))
 
 (use-package doom-modeline                                   ; modeline customization
   :ensure t

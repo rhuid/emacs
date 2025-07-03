@@ -1,24 +1,27 @@
-(require 'package)
-(setq package-enable-at-startup nil)                         ; avoid double init
+;; Bootstrap straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el"
+                         user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  ;; This must be outside the `unless` to load straight on every Emacs startup
+  (load bootstrap-file nil 'nomessage))
 
-(setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")            ; MELPA
-        ("gnu" . "https://elpa.gnu.org/packages/")           ; GNU ELPA
-        ("nongnu" . "https://elpa.nongnu.org/nongnu/")))     ; nonGNU ELPA
-(package-initialize)
-
-(unless (package-installed-p 'use-package)                   ; install use-package if not installed already
-  (package-refresh-contents)
-  (package-install 'use-package))
-
+;; Setup use-package to use straight.el by default
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 (require 'use-package)
-(setq use-package-always-ensure t)                           ; no :ensure t needed
 
-;; Ensure Emacs inherits shell's environment variables (particularly $PATH)
-;; Fix the common issue where Emacs daemon starts without full shell environment
+;; Make sure Emacs inherits shell's $PATH (esp. for daemon mode)
 (use-package exec-path-from-shell
-  :ensure t                                                  ; redundant (see above)
   :config
-  (exec-path-from-shell-initialize))                         ; copy shell's $PATH and other env vars ($MANPATH, $GOPATH, etc.) into Emacs
+  (exec-path-from-shell-initialize))
 
 (provide '00-packages)

@@ -1,7 +1,6 @@
 ;; Dashboard 
 
 (use-package dashboard             
-  :ensure t
   :config
   (setq dashboard-startup-banner '2
         dashboard-banner-logo-title "Ronald Huidrom"

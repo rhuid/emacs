@@ -1,5 +1,8 @@
 ;; Org
 
+(use-package org
+  :straight (:type built-in))
+
 (require 'org)
 
 (add-hook 'org-mode-hook

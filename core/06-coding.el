@@ -39,6 +39,6 @@
 
 ;; For .kbd kmonad files
 (use-package kbd-mode
-  :vc (:url "https://github.com/kmonad/kbd-mode" :rev :newest))
+  :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
 
 (provide '06-coding)
