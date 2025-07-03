@@ -8,18 +8,32 @@
         dashboard-center-content t
         dashboard-show-time t
         dashboard-set-heading-icons t
+	dashboard-set-file-icons t
         dashboard-heading-font-size 1
-        dashboard-set-file-icons t
         dashboard-footer-messages '("One editor to rule them all"))
-  (dashboard-setup-startup-hook)
-  (custom-set-faces '(dashboard-startup-banner ((t(:foreground "green"))))))
 
-(defun rhuid/open-dashboard-if-scratch ()                    ; to open dashboard, instead of scratch, when starting new client 
-  "Show dashboard if the current buffer is *scratch*."
-  (when (and (equal (buffer-name) "*scratch*")
-             (not (buffer-file-name)))
-    (dashboard-open)))
-(add-hook 'emacs-startup-hook #'rhuid/open-dashboard-if-scratch) ; show dashboard after emacs starts (initial frame)
-(add-hook 'server-after-make-frame-hook #'rhuid/open-dashboard-if-scratch) ; show it when a new frame is created via emacsclient
+  ;; (setq dashboard-icon-type 'all-the-icons)
+
+  ;; (setq dashboard-display-icons-p t)     ; display icons on both GUI and terminal
+  ;; (setq dashboard-icon-type 'nerd-icons) ; use `nerd-icons' package
+  
+  ;; Customize which widgets to display in order
+  (setq dashboard-startupify-list '(dashboard-insert-newline
+				    dashboard-insert-banner
+                                    dashboard-insert-footer
+				    dashboard-insert-newline
+                                    dashboard-insert-banner-title
+                                    dashboard-insert-newline
+                                    dashboard-insert-navigator
+                                    dashboard-insert-newline
+                                    dashboard-insert-init-info
+                                    dashboard-insert-items
+                                    dashboard-insert-newline
+				    ))
+  
+  ;; Show Dashboard in frames created with emacsclient -c 
+  (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+  
+  (dashboard-setup-startup-hook))
 
 (provide '04-dashboard)
