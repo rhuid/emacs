@@ -47,6 +47,9 @@
 (use-package kbd-mode
   :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
 
+(require 'rh-kbd)
+(add-hook 'kbd-mode-hook #'rh/kbd-tab-hook)
+
 (use-package nix-mode
   :straight t
   :mode "\\.nix\\'"

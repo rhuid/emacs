@@ -1,12 +1,6 @@
 (require 'rh-snip)
 (require 'rh-faces)
 
-(define-abbrev-table 'elisp-abbrev-table
-  '(("req"    "require"   nil 0)
-    ("pro"    "provide"   nil 0)
-    ;; ... add more when needed
-    ))
-
 (defvar rh/elisp-snippet-alist
   '(("req" . "(require '?)")
     ("pro" . "(provide '?)")
