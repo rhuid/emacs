@@ -2,9 +2,11 @@
 (require 'rh-faces)
 
 (defvar rh/elisp-snippet-alist
-  '(("req" . "(require '?)")
-    ("pro" . "(provide '?)")
-    ("ahk" . "(add-hook '?-mode-hook #'?)")
+  '(("req"  . "(require '?)")
+    ("pro"  . "(provide '?)")
+    ("ahk"  . "(add-hook '?-mode-hook #'?)")
+    ("use"  . "(use-package ?)")
+    ("cf"   . ":config") 
     ;; ... add more when needed
     ))
  
