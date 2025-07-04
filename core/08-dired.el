@@ -4,9 +4,9 @@
 ;;  :ensure t
 ;;  :hook (dired-mode . all-the-icons-dired-mode))
 
-(use-package ranger                   ; Make dired ranger-like
- :config
- (ranger-override-dired-mode t))
+;; (use-package ranger                   ; Make dired ranger-like
+;;  :config
+;;  (ranger-override-dired-mode t))
 
 ;; ;; Create a new file
 ;; (defun my/dired-create-file (filename)
