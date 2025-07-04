@@ -1,31 +1,33 @@
 ;; Keybindings
 
 (use-package evil
-  :config
-  (evil-mode 1)
+  :commands (evil-mode)
+  :init
   (setq evil-visual-state-cursor 'hollow))
 
 (use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
+  :commands (global-evil-surround-mode))
 
 (use-package evil-commentary
-  :config
-  (evil-commentary-mode))
+  :commands (evil-commentary-mode))
 
 (defun toggle-evil ()
   "Toggle Evil mode."
   (interactive)
   (if (bound-and-true-p evil-mode)
       (progn
-	(evil-mode -1)
-	(when (featurep 'evil-surround)
-	  (global-evil-surround-mode -1))
-	(message "Evil mode disabled."))
+        (evil-mode -1)
+        (when (fboundp 'global-evil-surround-mode)
+          (global-evil-surround-mode -1))
+        (setq cursor-type 'bar)
+        (message "Evil mode disabled."))
     (progn
-      (evil-mode 1)
+      (require 'evil)
       (require 'evil-surround)
+      (evil-mode 1)
       (global-evil-surround-mode 1)
+      (setq evil-visual-state-cursor 'hollow)
+      (setq cursor-type 'box)
       (message "Evil mode enabled."))))
 
 (global-set-key (kbd "C-c t e") #'toggle-evil)
