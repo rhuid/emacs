@@ -30,7 +30,7 @@
       (setq cursor-type 'box)
       (message "Evil mode enabled."))))
 
-(global-set-key (kbd "C-c t e") #'toggle-evil)
+(global-set-key (kbd "C-c e") #'toggle-evil)
 
 (global-set-key (kbd "C-c r") #'replace-string)
 (global-set-key (kbd "C-c w") #'delete-trailing-whitespace)
