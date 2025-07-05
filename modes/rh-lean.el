@@ -15,21 +15,24 @@
     ))
 
 (defvar rh/lean4-snippet-alist
-  '(("c" . "/- ? -/?")
-    ("ch" . "#check (?)?")
-    ("ev" . "#eval (?)?")
-    ("rd" . "#reduce (?)?")
-    ("st" . "structure ? where \n  ?\nderiving ?")
+  '(("c"   . "/- ? -/?")
+    ("ch"  . "#check (?)?")
+    ("ev"  . "#eval (?)?")
+    ("rd"  . "#reduce (?)?")
+    ("st"  . "structure ? where \n  ?\nderiving ?")
     ("ind" . "inductive ? where \n  | ?\nderiving ?")
-    ("mt" . "match ? with\n| ? => ?")
-    ("a" . "| ? => ?")
+    ("mt"  . "match ? with\n| ? => ?")
+    ("a"   . "| ? => ?")
     ("def" . "def ? : ? := ?")
-    ("fn" . "fun ? => ?")
+    ("fn"  . "fun ? => ?")
     ("ins" . "instance [?]: ? where\n  ?")
     ("cls" . "class ? where\n  ?")
-    ("l" . "[?]?")
+    ("l"   . "[?]?")
     ("arr" . "#[?]?")
-    ("th" . "theorem ? : ? := ?")
+
+    ("name" . "namespace ?\n\n?\n\nend ?")
+
+    ("th"   . "theorem ? : ? := ?")
     ;; ... add more when needed
     ))
 
