@@ -1,32 +1,48 @@
 ;; Keybindings
 
 (use-package evil
-  :commands (evil-mode)
   :init
-  (setq evil-visual-state-cursor 'hollow))
+  (setq evil-want-integration t
+        evil-want-keybinding nil               ; since I am not using evil-collection
+        evil-visual-state-cursor 'hollow)
+  :config
+  (evil-mode 1)                 
+  (setq cursor-type 'box))       
 
 (use-package evil-surround
-  :commands (global-evil-surround-mode))
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
 
 (use-package evil-commentary
-  :commands (evil-commentary-mode))
+  :after evil
+  :config
+  (evil-commentary-mode))
+
+(defun disable-evil-in-org ()
+  "Disable Evil and related modes in Org buffers."
+  (when (derived-mode-p 'org-mode)
+    (evil-local-mode -1)
+    (evil-commentary-mode -1)
+    (evil-surround-mode -1)
+    (setq cursor-type 'bar)))
+
+(add-hook 'org-mode-hook #'disable-evil-in-org)
 
 (defun toggle-evil ()
-  "Toggle Evil mode."
+  "Toggle Evil mode and related extensions globally."
   (interactive)
   (if (bound-and-true-p evil-mode)
       (progn
         (evil-mode -1)
-        (when (fboundp 'global-evil-surround-mode)
-          (global-evil-surround-mode -1))
+        (global-evil-surround-mode -1)
+        (evil-commentary-mode -1)
         (setq cursor-type 'bar)
         (message "Evil mode disabled."))
     (progn
-      (require 'evil)
-      (require 'evil-surround)
       (evil-mode 1)
       (global-evil-surround-mode 1)
-      (setq evil-visual-state-cursor 'hollow)
+      (evil-commentary-mode 1)
       (setq cursor-type 'box)
       (message "Evil mode enabled."))))
 
