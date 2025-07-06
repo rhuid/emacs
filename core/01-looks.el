@@ -34,35 +34,35 @@
     (unless (member "Symbols Nerd Font Mono" (font-family-list))
       (nerd-icons-install-fonts t))))
 
-;; (use-package doom-modeline                                   ; modeline customization
-;;   :ensure t
-;;   :init
-;;   (doom-modeline-mode 1)
-;;   :custom
-;;   (doom-modeline-height 25)
-;;   (doom-modeline-bar-width 6)
-;;   (doom-modeline-icon t)
-;;   (doom-modeline-major-mode-color-icon t)
-;;   (doom-modeline-buffer-state-icon t)
-;;   (doom-modeline-lsp-icon t)
-;;   (doom-modeline-time-icon t)
-;;   (doom-modeline-time-live-icon t)
-;;   (doom-modeline-buffer-file-name-style 'truncate-upto-project)
-;;   (doom-modeline-project-detection 'project)
-;;   (doom-modeline-env-version t)
-;;   (doom-modeline-lsp t)
-;;   (doom-modeline-github nil)
-;;   (setq doom-modeline-time-analogue-clock t)
-;;   (setq doom-modeline-enable-word-count t)
-;;   )
+(use-package doom-modeline                                   ; modeline customization
+  :ensure t
+  :init
+  (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-height 25)
+  (doom-modeline-bar-width 6)
+  (doom-modeline-icon t)
+  (doom-modeline-major-mode-color-icon t)
+  (doom-modeline-buffer-state-icon t)
+  (doom-modeline-lsp-icon t)
+  (doom-modeline-time-icon t)
+  (doom-modeline-time-live-icon t)
+  (doom-modeline-buffer-file-name-style 'truncate-upto-project)
+  (doom-modeline-project-detection 'project)
+  (doom-modeline-env-version t)
+  (doom-modeline-lsp t)
+  (doom-modeline-github nil)
+  (setq doom-modeline-time-analogue-clock t)
+  (setq doom-modeline-enable-word-count t)
+  )
 
-(use-package moody
-  :config
-  (setq x-underline-at-descent-line t)
-  (setq moody-mode-line-height 25)
+;; (use-package moody
+;;   :config
+;;   (setq x-underline-at-descent-line t)
+;;   (setq moody-mode-line-height 25)
 
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode))
+;;   (moody-replace-mode-line-buffer-identification)
+;;   (moody-replace-vc-mode))
 
 (use-package nyan-mode                                       ; nyan cat in the modeline representing buffer position
   :ensure t
@@ -164,6 +164,6 @@ Doom during the day, Gotham after 6 PM."
 (add-hook 'emacs-startup-hook #'rh/set-theme-based-on-time)
 
 ;; Run every hour
-(run-at-time "00:00" 3600 #'rh/set-theme-based-on-time)
+;; (run-at-time "00:00" 3600 #'rh/set-theme-based-on-time)
 
 (provide '01-looks)
