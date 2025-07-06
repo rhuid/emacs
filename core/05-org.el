@@ -71,5 +71,7 @@
 ;;
 ;; C-c C-e    Export menu
 
-(require '15-org-custom)
+(require 'rh-org)
+(add-hook 'org-mode-hook #'rh/org-tab-hook)
+
 (provide '05-org)
