@@ -32,6 +32,8 @@
 ;; (add-hook 'server-after-make-frame-hook #'rhuid/open-dashboard-if-scratch)
 
 
+
+
 (use-package eshell
   :hook (eshell-first-time-mode . rh/eshell-init)
   :config
@@ -60,5 +62,18 @@
 ;;   :hook (eshell-mode . eshell-hist-mode))
 
 ;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
+
+
+
+
+(use-package magit
+  :defer t
+  :commands (magit-status magit-log)
+  :config
+  (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+
+
+
 
 (provide '09-extras)
