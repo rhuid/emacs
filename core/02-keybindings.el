@@ -1,13 +1,20 @@
 ;; Keybindings
 
 (use-package evil
+  :ensure t
   :init
-  (setq evil-want-integration t
-        evil-want-keybinding nil               ; since I am not using evil-collection
-        evil-visual-state-cursor 'hollow)
+  (setq evil-want-integration t)                  ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-visual-state-cursor 'hollow)
   :config
-  (evil-mode 1)                 
-  (setq cursor-type 'box))       
+  (evil-mode 1)
+  (setq cursor-type 'box))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 
 (use-package evil-surround
   :after evil
@@ -19,6 +26,7 @@
   :config
   (evil-commentary-mode))
 
+;; Disable Evil only in Org Mode
 (defun disable-evil-in-org ()
   "Disable Evil and related modes in Org buffers."
   (when (derived-mode-p 'org-mode)
@@ -29,6 +37,7 @@
 
 (add-hook 'org-mode-hook #'disable-evil-in-org)
 
+;; Toggle Evil (optional: re-init evil-collection)
 (defun toggle-evil ()
   "Toggle Evil mode and related extensions globally."
   (interactive)
@@ -43,10 +52,66 @@
       (evil-mode 1)
       (global-evil-surround-mode 1)
       (evil-commentary-mode 1)
+      (evil-collection-init) ; optional: re-init collection
       (setq cursor-type 'box)
       (message "Evil mode enabled."))))
 
 (global-set-key (kbd "C-c e") #'toggle-evil)
+
+
+
+;; (use-package evil
+;;   :init
+;;   (setq evil-want-integration t
+;;         evil-want-keybinding t
+;;         evil-visual-state-cursor 'hollow)
+;;   :config
+;;   (evil-mode 1)                 
+;;   (setq cursor-type 'box))       
+
+;; (use-package evil-surround
+;;   :after evil
+;;   :config
+;;   (global-evil-surround-mode 1))
+
+;; (use-package evil-commentary
+;;   :after evil
+;;   :config
+;;   (evil-commentary-mode))
+
+;; (use-package evil-collection
+;;   :after evil
+;;   :config
+;;   (evil-collection-init))
+
+;; (defun disable-evil-in-org ()
+;;   "Disable Evil and related modes in Org buffers."
+;;   (when (derived-mode-p 'org-mode)
+;;     (evil-local-mode -1)
+;;     (evil-commentary-mode -1)
+;;     (evil-surround-mode -1)
+;;     (setq cursor-type 'bar)))
+
+;; (add-hook 'org-mode-hook #'disable-evil-in-org)
+
+;; (defun toggle-evil ()
+;;   "Toggle Evil mode and related extensions globally."
+;;   (interactive)
+;;   (if (bound-and-true-p evil-mode)
+;;       (progn
+;;         (evil-mode -1)
+;;         (global-evil-surround-mode -1)
+;;         (evil-commentary-mode -1)
+;;         (setq cursor-type 'bar)
+;;         (message "Evil mode disabled."))
+;;     (progn
+;;       (evil-mode 1)
+;;       (global-evil-surround-mode 1)
+;;       (evil-commentary-mode 1)
+;;       (setq cursor-type 'box)
+;;       (message "Evil mode enabled."))))
+
+;; (global-set-key (kbd "C-c e") #'toggle-evil)
 
 (global-set-key (kbd "C-c r") #'replace-string)
 (global-set-key (kbd "C-c w") #'delete-trailing-whitespace)

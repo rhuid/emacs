@@ -34,6 +34,26 @@
 
 
 
+;; UI for minibuffer candidates
+(use-package vertico
+  :init
+  (vertico-mode 1))
+
+;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, flex
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil))
+
+;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+
+
+
+
 (use-package eshell
   :hook (eshell-first-time-mode . rh/eshell-init)
   :config
@@ -62,6 +82,9 @@
 ;;   :hook (eshell-mode . eshell-hist-mode))
 
 ;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
+
+
+
 
 
 
