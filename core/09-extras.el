@@ -32,6 +32,31 @@
 ;; (add-hook 'server-after-make-frame-hook #'rhuid/open-dashboard-if-scratch)
 
 
+(use-package eshell
+  :hook (eshell-first-time-mode . rh/eshell-init)
+  :config
+  (defun rh/eshell-init ()
+    ;; Set prompt
+    (setq eshell-prompt-function
+          (lambda ()
+            (concat
+             (propertize (user-login-name) 'face `(:foreground "orange"))
+             "@"
+             (propertize (system-name) 'face `(:foreground "green"))
+             ":"
+             (propertize (eshell/pwd) 'face `(:foreground "blue"))
+             (if (= (user-uid) 0) " # " " $ "))))
+    (setq eshell-prompt-regexp "^[^#$\n]*[#$] ")))
 
+(use-package eshell-syntax-highlighting
+  :after eshell
+  :config
+  (eshell-syntax-highlighting-global-mode +1))
+
+(use-package esh-autosuggest
+  :hook (eshell-mode . esh-autosuggest-mode))
+
+;; (use-package eshell-hist-mode
+;;   :hook (eshell-mode . eshell-hist-mode))
 
 (provide '09-extras)
