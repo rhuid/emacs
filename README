@@ -1,4 +1,34 @@
-+---------+
-| dotmacs |
-+---------+
+╔═══════════════╗
+║    dotmacs    ║
+╚═══════════════╝
 
+A minimalist, fast and functional setup for vanilla Emacs.
+
+dotmacs
+├── core
+│   ├── 00-packages.el
+│   ├── 01-looks.el
+│   ├── 02-keybindings.el
+│   ├── 03-abbrevs.el
+│   ├── 04-dashboard.el
+│   ├── 05-org.el
+│   ├── 06-coding.el
+│   ├── 07-typesetting.el
+│   ├── 08-dired.el
+│   ├── 09-extras.el
+│   ├── 13-theme-custom.el
+├── doc
+│   ├── daemon.el
+│   ├── slides.org
+├── engine
+│   ├── rh-capitalize.el
+│   ├── rh-faces.el
+│   ├── rh-snip.el
+├── init.el
+├── modes
+│   ├── rh-elisp.el
+│   ├── rh-lean.el
+│   ├── rh-org.el
+│   ├── rh-rust.el
+│   ├── rh-shell.el
+├── README
