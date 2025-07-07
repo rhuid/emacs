@@ -18,7 +18,7 @@
   '(("c"   . "/- ? -/?")
     ("ch"  . "#check (?)?")
     ("ev"  . "#eval (?)?")
-    ("rd"  . "#reduce (?)?")
+    ("rd"  . "reduce (?)?")
     ("st"  . "structure ? where \n  ?\nderiving ?")
     ("ind" . "inductive ? where \n  | ?\nderiving ?")
     ("mt"  . "match ? with\n| ? => ?")
