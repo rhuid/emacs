@@ -40,7 +40,7 @@
     (setq eshell-prompt-function
           (lambda ()
             (concat
-             (propertize (user-login-name) 'face `(:foreground "orange"))
+             (propertize (user-login-name) 'face `(:foreground "cyan"))
              "@"
              (propertize (system-name) 'face `(:foreground "green"))
              ":"
@@ -58,5 +58,7 @@
 
 ;; (use-package eshell-hist-mode
 ;;   :hook (eshell-mode . eshell-hist-mode))
+
+;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
 
 (provide '09-extras)
