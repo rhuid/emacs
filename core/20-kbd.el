@@ -3,9 +3,12 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-integration t)                  ;; This is optional since it's already set to t by default.
+  (setq evil-want-integration t)                  ;; This is optional since it's already set to t by default
   (setq evil-want-keybinding nil)
   (setq evil-visual-state-cursor 'hollow)
+  (setq evil-want-Y-yank-to-eol t)
+  (setq evil-disable-insert-state-bindings t)     ;; If set to t, Emacs keybindings are available in insert state
+  (setq evil-undo-system 'undo-redo)              ;; Use the undo-redo system available in Emacs >= 28
   :config
   (evil-mode 1)
   (setq cursor-type 'box))
