@@ -196,5 +196,4 @@ Tomorrow Day during the day, Vibrant after 6 PM."
 ;;   (disable-theme custom-enabled-themes)
 ;;   (load-theme 'leuven t))
 
-
-(provide '01-looks)
+(provide '10-ui)

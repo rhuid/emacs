@@ -74,4 +74,4 @@
 (require 'rh-org)
 (add-hook 'org-mode-hook #'rh/org-tab-hook)
 
-(provide '05-org)
+(provide '50-org)

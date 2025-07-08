@@ -24,4 +24,4 @@
   :config
   (exec-path-from-shell-initialize))
 
-(provide '00-packages)
+(provide '00-pkg)

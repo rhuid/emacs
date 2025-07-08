@@ -40,4 +40,4 @@
   ("tfae"   "the following are equivalent")
   ))
 
-(provide '03-abbrevs)
+(provide '30-abbrev)

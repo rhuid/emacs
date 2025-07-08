@@ -94,4 +94,4 @@
 ;; R        Rename directory/file
 ;; C        Copy
 
-(provide '08-dired)
+(provide '80-dired)

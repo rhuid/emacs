@@ -79,4 +79,4 @@
 (use-package julia-mode
   :mode "\\.jl\\'")
 
-(provide '06-coding)
+(provide '60-src)

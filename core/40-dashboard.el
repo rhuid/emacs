@@ -35,4 +35,4 @@
   
   (dashboard-setup-startup-hook))
 
-(provide '04-dashboard)
+(provide '40-dashboard)

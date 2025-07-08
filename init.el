@@ -1,14 +1,17 @@
-(dolist (dir '("core" "engine" "modes"))
+(dolist (dir '("core"
+	       "engine"
+	       "modes"))
   (add-to-list 'load-path
                (expand-file-name dir user-emacs-directory)))
 
-(require '00-packages)
-(require '01-looks)
-(require '02-keybindings)
-(require '03-abbrevs)
-(require '04-dashboard)
-(require '05-org)
-(require '06-coding)
-(require '07-typesetting) 
-(require '08-dired)
-(require '09-extras)
+(dolist (mod '("00-pkg"
+	       "10-ui"
+	       "20-kbd"
+	       "30-abbrev"
+	       "40-dashboard"
+	       "50-org"
+	       "60-src"
+	       "70-typeset"
+	       "80-dired"
+	       "90-tools"))
+  (require (intern mod)))
