@@ -106,7 +106,6 @@
 
 
 
-
 ;; ESHELL
 
 (use-package eshell
@@ -115,14 +114,14 @@
   (defun rh/eshell-init ()
     ;; Set prompt
     (setq eshell-prompt-function
-          (lambda ()
-            (concat
-             (propertize (user-login-name) 'face `(:foreground "cyan"))
-             "@"
-             (propertize (system-name) 'face `(:foreground "green"))
-             ":"
-             (propertize (eshell/pwd) 'face `(:foreground "blue"))
-             (if (= (user-uid) 0) " # " " $ "))))
+	  (lambda ()
+	    (concat
+	     (propertize (user-login-name) 'face `(:foreground "cyan"))
+	     "@"
+	     (propertize (system-name) 'face `(:foreground "green"))
+	     ":"
+	     (propertize (eshell/pwd) 'face `(:foreground "blue"))
+	     (if (= (user-uid) 0) " # " " $ "))))
     (setq eshell-prompt-regexp "^[^#$\n]*[#$] ")))
 
 (use-package eshell-syntax-highlighting
@@ -150,6 +149,22 @@
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
+
+
+
+
+(use-package aggressive-indent
+  :ensure t
+  :hook ((emacs-lisp-mode . aggressive-indent-mode)
+         (lisp-mode . aggressive-indent-mode))
+  :config
+  (setq aggressive-indent-comments-too t))
+
+
+
+;; (use-package captain)
+
+;; (use-package chess)
 
 
 

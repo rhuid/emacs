@@ -75,12 +75,27 @@
 
 ;; Themes
 
-(use-package catppuccin-theme)
+(use-package doom-themes
+  :init
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  :config
+  (doom-themes-org-config))          ; Improved org-mode styling
 
-(defun rh/set-catppuccin-theme ()
+;; Some other doom themes to consider
+;; (load-theme 'doom-one-light t)
+;; (load-theme 'doom-xcode t)
+;; (load-theme 'doom-old-hope t)	; Dark, high-contrast
+;; (load-theme 'doom-ayu-light t)
+;; (load-theme 'doom-feather-light t)
+;; (load-theme 'doom-ephemeral t)
+;; (load-theme 'doom-nord t)		
+
+(defun rh/set-doom-tomorrow-day-theme ()
+  "Set a customized version of doom-tomorrow-day-theme."
   (interactive)
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'catppuccin t)
+  (load-theme 'doom-tomorrow-day t)
   
   (set-face-attribute 'font-lock-comment-face nil
 		      :slant 'oblique                       ; make comments oblique
@@ -97,11 +112,10 @@
   ;; fringe
   (set-face-background 'fringe "#1a1a1a"))
 
-(global-set-key (kbd "C-c C-M-c") #'rh/set-catppuccin-theme)
-
-(use-package doom-themes)
+(global-set-key (kbd "C-c C-M-t") #'rh/set-doom-tomorrow-day-theme)
 
 (defun rh/set-doom-vibrant-theme ()
+  "Set a customized version of doom-vibrant-theme."
   (interactive)
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'doom-vibrant t)
@@ -125,11 +139,12 @@
   (set-face-background 'hl-line "#222222")
   (set-face-background 'fringe "#1a1a1a"))
 
-(global-set-key (kbd "C-c C-M-d") #'rh/set-doom-vibrant-theme)
+(global-set-key (kbd "C-c C-M-v") #'rh/set-doom-vibrant-theme)
 
 (use-package gotham-theme)
 
 (defun rh/set-gotham-theme ()
+  "Set a customized version of gotham theme."
   (interactive)
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'gotham t)
@@ -152,18 +167,34 @@
 
 (defun rh/set-theme-based-on-time ()
   "Automatically set Emacs theme based on time of day.
-Doom during the day, Gotham after 6 PM."
+Tomorrow Day during the day, Vibrant after 6 PM."
   (let* ((hour (string-to-number (format-time-string "%H")))
          (night? (or (>= hour 18) (< hour 6))))
     (mapc #'disable-theme custom-enabled-themes)
     (if night?
-        (rh/set-gotham-theme)
-      (rh/set-doom-vibrant-theme))))
+        (rh/set-doom-vibrant-theme)
+      (rh/set-doom-tomorrow-day-theme))))
 
 ;; Run on Emacs startup			
 (add-hook 'emacs-startup-hook #'rh/set-theme-based-on-time)
 
 ;; Run every hour
-;; (run-at-time "00:00" 3600 #'rh/set-theme-based-on-time)
+;; (run-at-time "00:00" 3600 #'rh/set-theme-based-doom-tomorrow-day
+
+;; (use-package apropospriate-theme
+;;   :config
+;;   (disable-theme custom-enabled-themes)
+;;   (load-theme 'apropospriate-light t))
+
+;; (use-package moe-theme
+;;   :config
+;;   (disable-theme custom-enabled-themes)
+;;   (load-theme 'moe-light t))
+
+;; (use-package leuven-theme
+;;   :config
+;;   (disable-theme custom-enabled-themes)
+;;   (load-theme 'leuven t))
+
 
 (provide '01-looks)

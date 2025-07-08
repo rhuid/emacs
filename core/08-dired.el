@@ -1,8 +1,28 @@
 ;; Dired
 
-;;(use-package all-the-icons-dired                           ; use icons for dired mode
-;;  :ensure t
-;;  :hook (dired-mode . all-the-icons-dired-mode))
+(use-package all-the-icons-dired                           ; use icons for dired mode
+  :ensure t
+  :hook (dired-mode . all-the-icons-dired-mode))
+
+;; (use-package dired-du
+;;   :after dired
+;;   :config
+;;   (add-hook 'dired-mode-hook #'dired-du-mode))
+
+(use-package dired-git-info
+  :after dired
+  :bind (:map dired-mode-map
+              (")" . dired-git-info-mode))            ;; press `)` to toggle git info
+  :config
+  (setq dgi-auto-hide-details-p nil))
+
+(use-package dired-preview
+  :after dired
+  :config
+  (setq dired-preview-delay 0.5
+        dired-preview-max-size 10)                    ;; max 10 MB
+  (add-hook 'dired-mode-hook #'dired-preview-mode))
+
 
 ;; (use-package ranger                   ; Make dired ranger-like
 ;;  :config

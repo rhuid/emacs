@@ -26,6 +26,9 @@
   :config
   (evil-commentary-mode))
 
+(use-package evil-nerd-commenter
+  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+
 ;; Disable Evil only in Org Mode
 (defun disable-evil-in-org ()
   "Disable Evil and related modes in Org buffers."
