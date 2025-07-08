@@ -137,6 +137,9 @@
 
 ;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
 
+;; Emulate A Terminal
+(use-package eat
+  :hook (eshell-mode . eat-eshell-mode))
 
 
 

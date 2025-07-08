@@ -17,11 +17,11 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
-(use-package company
-  :hook (after-init . global-company-mode)
-  :config
-  (setq company-idle-delay 0.2
-        company-minimum-prefix-length 2))
+;; (use-package company
+;;   :hook (after-init . global-company-mode)
+;;   :config
+;;   (setq company-idle-delay 0.2
+;;         company-minimum-prefix-length 2))
 
 ;; Haskell
 (use-package haskell-mode
