@@ -10,5 +10,5 @@
 (require '05-org)
 (require '06-coding)
 (require '07-typesetting) 
-;;(require '08-dired)
+(require '08-dired)
 (require '09-extras)
