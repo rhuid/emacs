@@ -104,7 +104,7 @@
 
   ;; line numbers
   (set-face-attribute 'line-number nil
-                      :foreground "#555555")
+                      :foreground "#999999")
   (set-face-attribute 'line-number-current-line nil
                       :foreground "#c678dd"
                       :weight 'semi-bold)

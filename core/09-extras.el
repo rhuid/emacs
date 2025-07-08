@@ -169,4 +169,10 @@
 
 
 
+
+(use-package rainbow-mode
+  :hook (prog-mode . rainbow-mode))
+
+
+
 (provide '09-extras)

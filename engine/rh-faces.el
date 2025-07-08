@@ -1,5 +1,5 @@
 (defface rh/custom-keyword-face
-  '((t (:foreground "LightGoldenrod1" :weight normal)))
+  '((t (:foreground "DarkGoldenrod" :weight normal)))
   "Face for custom keywords.")
 
 (defface rh/types-face

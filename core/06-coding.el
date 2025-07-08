@@ -17,6 +17,22 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
+(use-package company
+  :hook (after-init . global-company-mode)
+  :config
+  (setq company-idle-delay 0.2
+        company-minimum-prefix-length 2))
+
+;; Haskell
+(use-package haskell-mode
+  :mode "\\.hs\\'"
+  )
+
+(use-package haskell-tng-mode
+  ;; :mode "\\.hs\\'"
+  )
+
+
 ;; Lean
 (add-to-list 'load-path "~/.emacs.d/lean4-mode")
 (require 'lean4-mode)
@@ -40,6 +56,11 @@
 (add-hook 'lisp-interaction-mode-hook #'rh/elisp-highlight-custom-keywords)
 
 ;; Rust
+(use-package rust-mode
+  :mode "\\.rs\\'"
+  :config
+  (setq rust-format-on-save t))
+
 (use-package flycheck-rust
   :hook (rust-mode . flycheck-rust-setup))
 
@@ -54,5 +75,8 @@
   :mode "\\.nix\\'"
   :config
   (setq nix-indent-function 'nix-indent-line))
+
+(use-package julia-mode
+  :mode "\\.jl\\'")
 
 (provide '06-coding)
