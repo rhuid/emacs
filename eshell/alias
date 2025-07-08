@@ -1,0 +1,8 @@
+alias gst git status
+alias ga git add $1
+alias gaa git add --all
+alias gc git commit -m $1
+alias gp git push
+alias ll ls -l
+alias la ls -a
+alias l eza
