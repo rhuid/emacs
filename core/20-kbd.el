@@ -32,16 +32,20 @@
 (use-package evil-nerd-commenter
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
-;; Disable Evil only in Org Mode
-(defun disable-evil-in-org ()
-  "Disable Evil and related modes in Org buffers."
-  (when (derived-mode-p 'org-mode)
-    (evil-local-mode -1)
-    (evil-commentary-mode -1)
-    (evil-surround-mode -1)
-    (setq cursor-type 'bar)))
+(use-package evil-goggles
+  :ensure t
+  :config
+  (evil-goggles-mode)
 
-(add-hook 'org-mode-hook #'disable-evil-in-org)
+  ;; optionally use diff-mode's faces; as a result, deleted text
+  ;; will be highlighed with `diff-removed` face which is typically
+  ;; some red color (as defined by the color theme)
+  ;; other faces such as `diff-added` will be used for other actions
+  (evil-goggles-use-diff-faces))
+
+(use-package evil-org
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode)))
 
 ;; Toggle Evil (optional: re-init evil-collection)
 (defun toggle-evil ()
@@ -72,8 +76,8 @@
 ;;         evil-want-keybinding t
 ;;         evil-visual-state-cursor 'hollow)
 ;;   :config
-;;   (evil-mode 1)                 
-;;   (setq cursor-type 'box))       
+;;   (evil-mode 1)
+;;   (setq cursor-type 'box))
 
 ;; (use-package evil-surround
 ;;   :after evil

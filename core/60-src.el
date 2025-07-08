@@ -66,10 +66,6 @@
 
 (require 'rh-rust)
 
-;; For .kbd kmonad files
-(use-package kbd-mode
-  :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
-
 (use-package nix-mode
   :straight t
   :mode "\\.nix\\'"
@@ -78,5 +74,14 @@
 
 (use-package julia-mode
   :mode "\\.jl\\'")
+
+;; For .kbd kmonad files
+(use-package kbd-mode
+  :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
+
+(use-package systemd
+  :mode "\\.service\\'")
+
+
 
 (provide '60-src)
