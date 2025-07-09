@@ -173,20 +173,18 @@
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
-
-
-
 (use-package general
   :after outline
   :config
   (general-create-definer rh/leader-keys
-			  :states '(normal visual)
-			  :prefix "SPC"
-			  :global-prefix "C-SPC")
+    :states '(normal visual)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
 
   (rh/leader-keys
-   "o t" 'rh/outline-toggle))
-
-
+    "o t" 'rh/outline-toggle
+    "o a" 'outline-show-all
+    "o h" 'outline-hide-body
+    ))
 
 (provide '90-tools)
