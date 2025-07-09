@@ -86,6 +86,8 @@
 (add-hook 'lean4-mode-hook #'rh/lean-highlight-values)
 (add-hook 'lean4-mode-hook #'rh/lean-highlight-typeclasses)
 
+;;;+ SHELL
+
 (use-package sh-script
   :mode "\\.sh\\'"
   :init
@@ -95,6 +97,76 @@
 (defun rh/setup-sh-mode ()
   (rh/sh-tab-hook)
   (rh/sh-highlight-custom-keywords))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(add-hook 'prog-mode-hook 'outline-minor-mode)
+(add-hook 'text-mode-hook 'outline-minor-mode)
+
+(add-hook 'outline-minor-mode-hook
+          (defun rh/outline-overview ()
+            "Show only outline headings."
+            (outline-show-all)
+            (outline-hide-body)))
+
+(evil-global-set-key 'normal (kbd "C-c <tab>") 'outline-show-entry)
+(evil-global-set-key 'normal (kbd "C-c <backtab>") 'outline-hide-body)
+
+
+(defun rh/outline-toggle ()
+  "Toggle visibility of current outline heading."
+  (interactive)
+  (save-excursion
+    (outline-back-to-heading)
+    (if (outline-invisible-p (line-end-position))
+        (outline-show-subtree)
+      (outline-hide-subtree))))
+
+(evil-global-set-key 'normal (kbd "C-c <tab>") #'rh/outline-toggle)
+(define-key outline-minor-mode-map (kbd "C-c <tab>") #'rh/outline-toggle) ; Outside evil mode
+
+
+;; Customize the folding markers to +
+(set-display-table-slot
+ standard-display-table
+ 'selective-display
+ (let ((face-offset (* (face-id 'shadow) (lsh 1 22))))
+   (vconcat (mapcar (lambda (c) (+ face-offset c)) " +"))))
+
+(defun rh/outline-elisp ()
+  "Fold only top-level declarations in Emacs Lisp."
+  (setq-local outline-regexp
+              (rx line-start
+                  (* space)
+                  "("
+                  (or "use-package" "provide")))
+  (outline-hide-body))
+
+(add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+(add-hook 'outline-minor-mode-hook #'rh/outline-elisp)
+
+(setq outline-minor-mode-prefix (kbd "C-c @"))
+
+
+
+
+
+
+
+
+
+
 
 
 (require 'rh-elisp)
@@ -110,6 +182,21 @@
   (require 'rh-rust)
   :config
   (setq rust-format-on-save t))
+
+
+
+
+(defun rh/outline-rust ()
+  (setq-local outline-regexp
+              (rx line-start (* space)
+                  (or "fn" "pub" "struct" "enum" "impl")))
+  (outline-hide-body))
+
+(add-hook 'rust-mode-hook #'outline-minor-mode)
+(add-hook 'rust-mode-hook #'rh/outline-rust)
+
+
+
 
 (use-package flycheck-rust
   :hook (rust-mode . flycheck-rust-setup))
