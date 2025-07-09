@@ -63,30 +63,26 @@
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-keyword))
 
-
-
-
 ;; Haskell
 (use-package haskell-mode
   :mode "\\.hs\\'"
   )
 
 (use-package haskell-tng-mode
-  ;; :mode "\\.hs\\'"
+  ;; :mode "\\.hs\\"
   )
 
-;; Lean
-(add-to-list 'load-path "~/.emacs.d/lean4-mode")
-(require 'lean4-mode)
-(add-to-list 'auto-mode-alist '("\\.lean\\'" . lean4-mode))
-
-(require 'rh-lean)
-(add-hook 'lean4-mode-hook #'rh/lean4-tab-hook)
-(add-hook 'lean4-mode-hook #'rh/lean-highlight-types)
-(add-hook 'lean4-mode-hook #'rh/lean-highlight-values)
-(add-hook 'lean4-mode-hook #'rh/lean-highlight-typeclasses)
-
-;;;+ SHELL
+(use-package lean4-mode
+  :straight nil
+  :load-path "~/.emacs.d/lean4-mode"
+  :mode "\\.lean\\'"
+  :init
+  (require 'lean4-mode)
+  (require 'rh-lean)
+  :hook ((lean4-mode . rh/lean4-tab-hook)
+         (lean4-mode . rh/lean-highlight-types)
+         (lean4-mode . rh/lean-highlight-values)
+         (lean4-mode . rh/lean-highlight-typeclasses)))
 
 (use-package sh-script
   :mode "\\.sh\\'"
@@ -98,105 +94,92 @@
   (rh/sh-tab-hook)
   (rh/sh-highlight-custom-keywords))
 
+(use-package outline
+  :hook ((prog-mode . outline-minor-mode)
+         (text-mode . outline-minor-mode)
+         (outline-minor-mode . outline-show-all)
+	 (outline-minor-mode . outline-hide-body))
+  :init
+  ;; Set the keybinding prefix for built-in outline commands
+  (setq outline-minor-mode-prefix (kbd "C-c @"))
 
+  :config
+  ;; Custom folding indicator (like +)
+  (set-display-table-slot
+   standard-display-table
+   'selective-display
+   (let ((face-offset (* (face-id 'shadow) (lsh 1 22))))
+     (vconcat (mapcar (lambda (c) (+ face-offset c)) " +"))))
 
+  ;; Global toggle function for heading subtree
+  (defun rh/outline-toggle ()
+    "Toggle visibility of current outline heading."
+    (interactive)
+    (save-excursion
+      (outline-back-to-heading)
+      (if (outline-invisible-p (line-end-position))
+          (outline-show-subtree)
+        (outline-hide-subtree))))
 
+  ;; ;; Overview function: show headings only
+  ;; (defun rh/outline-overview ()
+  ;;   "Show only outline headings."
+  ;;   (outline-show-all)
+  ;;   (outline-hide-body))
 
+  ;; Toggle keybinding (in both Evil and non-Evil)
+  (define-key outline-minor-mode-map (kbd "C-c @ <tab>") #'rh/outline-toggle)
+  (evil-global-set-key 'normal (kbd "C-c @ <tab>") #'rh/outline-toggle)
+  (evil-global-set-key 'normal (kbd "C-c @ <backtab>") #'outline-hide-body))
 
+;; ;; Specialized config for Emacs Lisp mode
+;; (use-package emacs
+;;   :ensure nil
+;;   :hook (emacs-lisp-mode . rh/outline-elisp)
+;;   :config
+;;   (defun rh/outline-elisp ()
+;;     "Set outline regex for top-level declarations in Emacs Lisp."
+;;     (setq-local outline-regexp
+;;                 (rx line-start
+;;                     (* space)
+;;                     "("
+;;                     (or ";;;" "use-package" "require" "provide" "defun"
+;;                         "add-to-list" "add-hook")))
+;;     (outline-hide-body)))
 
-
-
-
-
-
-
-
-(add-hook 'prog-mode-hook 'outline-minor-mode)
-(add-hook 'text-mode-hook 'outline-minor-mode)
-
-(add-hook 'outline-minor-mode-hook
-          (defun rh/outline-overview ()
-            "Show only outline headings."
-            (outline-show-all)
-            (outline-hide-body)))
-
-(evil-global-set-key 'normal (kbd "C-c <tab>") 'outline-show-entry)
-(evil-global-set-key 'normal (kbd "C-c <backtab>") 'outline-hide-body)
-
-
-(defun rh/outline-toggle ()
-  "Toggle visibility of current outline heading."
-  (interactive)
-  (save-excursion
-    (outline-back-to-heading)
-    (if (outline-invisible-p (line-end-position))
-        (outline-show-subtree)
-      (outline-hide-subtree))))
-
-(evil-global-set-key 'normal (kbd "C-c <tab>") #'rh/outline-toggle)
-(define-key outline-minor-mode-map (kbd "C-c <tab>") #'rh/outline-toggle) ; Outside evil mode
-
-
-;; Customize the folding markers to +
-(set-display-table-slot
- standard-display-table
- 'selective-display
- (let ((face-offset (* (face-id 'shadow) (lsh 1 22))))
-   (vconcat (mapcar (lambda (c) (+ face-offset c)) " +"))))
-
+(require 'rh-elisp)
 (defun rh/outline-elisp ()
-  "Fold only top-level declarations in Emacs Lisp."
+  "Set outline regex for top-level declarations in Emacs Lisp."
   (setq-local outline-regexp
               (rx line-start
                   (* space)
                   "("
-                  (or "use-package" "provide")))
+                  (or ";;;" "use-package" "require" "provide" "defun"
+                      "add-to-list" "add-hook")))
   (outline-hide-body))
 
-(add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
-(add-hook 'outline-minor-mode-hook #'rh/outline-elisp)
-
-(setq outline-minor-mode-prefix (kbd "C-c @"))
-
-
-
-
-
-
-
-
-
-
-
-
-(require 'rh-elisp)
 (add-hook 'emacs-lisp-mode-hook #'rh/elisp-tab-hook)
 (add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-custom-keywords)
-
+(add-hook 'emacs-lisp-mode-hook #'rh/outline-elisp)
 (add-hook 'lisp-interaction-mode-hook #'rh/elisp-tab-hook)
 (add-hook 'lisp-interaction-mode-hook #'rh/elisp-highlight-custom-keywords)
 
 (use-package rust-mode
   :mode "\\.rs\\'"
+  :hook ((rust-mode . outline-minor-mode)
+	 (rust-mode . rh/outline-rust))
   :init
   (require 'rh-rust)
   :config
-  (setq rust-format-on-save t))
+  (setq rust-format-on-save t)
 
-
-
-
-(defun rh/outline-rust ()
-  (setq-local outline-regexp
-              (rx line-start (* space)
-                  (or "fn" "pub" "struct" "enum" "impl")))
-  (outline-hide-body))
-
-(add-hook 'rust-mode-hook #'outline-minor-mode)
-(add-hook 'rust-mode-hook #'rh/outline-rust)
-
-
-
+  ;; Currently not working, will check
+  (defun rh/outline-rust ()
+    (setq-local outline-regexp
+		(rx line-start (* space)
+                    (or "fn" "pub" "struct" "enum" "impl")))
+    (outline-hide-body))
+  )
 
 (use-package flycheck-rust
   :hook (rust-mode . flycheck-rust-setup))
