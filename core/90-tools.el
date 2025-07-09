@@ -1,36 +1,22 @@
 ;; (require 'rh-capitalize)
 
-;; (use-package centaur-tabs
-;;   :demand
-;;   :config
-;;   (centaur-tabs-mode t)
-;;   (setq centaur-tabs-style "chamfer")
-;;   (setq centaur-tabs-height 24)
-;;   (setq centaur-tabs-set-icons t)
-;;   (setq centaur-tabs-icon-type 'all-the-icons)  ; or 'nerd-icons
-;;   (setq centaur-tabs-set-close-button nil)
-;;   :bind
-;;   ("C-<prior>" . centaur-tabs-backward)
-;;   ("C-<next>" . centaur-tabs-forward))
-
-;; (use-package aggresive-indent
-;;   :ensure t)
-
-;; (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(use-package centaur-tabs
+  :disabled t
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  (setq centaur-tabs-style "chamfer")
+  (setq centaur-tabs-height 24)
+  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-icon-type 'all-the-icons)  ; or 'nerd-icons
+  (setq centaur-tabs-set-close-button nil)
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward))
 
 ;; (use-package auto-complete
 ;;  :config
 ;;  (ac-config-default))
-
-;; (defun rhuid/open-dashboard-if-scratch ()
-;;   "Show dashboard if the current buffer is *scratch*."
-;;   (when (and (equal (buffer-name) "*scratch*")
-;;              (not (buffer-file-name)))
-;;     (dashboard-open)))
-
-;; (add-hook 'emacs-startup-hook #'rhuid/open-dashboard-if-scratch)
-;; (add-hook 'server-after-make-frame-hook #'rhuid/open-dashboard-if-scratch)
-
 
 ;; MINIBUFFER 
 
@@ -55,7 +41,18 @@
   :bind
   (("C-s" . consult-line)
    ("C-x b" . consult-buffer)
-   ("M-y" . consult-yank-pop)))
+   ("M-y" . consult-yank-pop)
+   ("C-c f" . consult-find)
+   ("C-c l" . consult-locate)
+   )
+  :config
+  
+  ;; To always start searching from home directory
+  (advice-add 'consult-find :around
+              (lambda (orig &rest args)
+		(let ((default-directory (expand-file-name "~")))
+                  (apply orig args))))
+  )
 
 ;; (setq consult-preview-key "M-.") ; preview only when you press M-
 
@@ -109,7 +106,8 @@
 ;; ESHELL
 
 (use-package eshell
-  :hook (eshell-first-time-mode . rh/eshell-init)
+  :hook ((eshell-first-time-mode . rh/eshell-init)
+	 (eshell-mode . esh-autosuggest-mode))
   :config
   (defun rh/eshell-init ()
     ;; Set prompt
@@ -122,24 +120,24 @@
 	     ":"
 	     (propertize (eshell/pwd) 'face `(:foreground "blue"))
 	     (if (= (user-uid) 0) " # " " $ "))))
-    (setq eshell-prompt-regexp "^[^#$\n]*[#$] ")))
+    (setq eshell-prompt-regexp "^[^#$\n]*[#$] "))
 
-(use-package eshell-syntax-highlighting
-  :after eshell
-  :config
-  (eshell-syntax-highlighting-global-mode +1))
+  (use-package eshell-syntax-highlighting
+    :after eshell
+    :config
+    (eshell-syntax-highlighting-global-mode +1))
 
-(use-package esh-autosuggest
-  :hook (eshell-mode . esh-autosuggest-mode))
+  (use-package esh-autosuggest)
+  )
+
+;; Emulate A Terminal
+(use-package eat
+  :hook (eshell-mode . eat-eshell-mode))
 
 ;; (use-package eshell-hist-mode
 ;;   :hook (eshell-mode . eshell-hist-mode))
 
 ;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
-
-;; Emulate A Terminal
-(use-package eat
-  :hook (eshell-mode . eat-eshell-mode))
 
 
 
@@ -172,9 +170,23 @@
 
 
 
-
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
+
+
+
+
+(use-package general
+  :after outline
+  :config
+  (general-create-definer rh/leader-keys
+			  :states '(normal visual)
+			  :prefix "SPC"
+			  :global-prefix "C-SPC")
+
+  (rh/leader-keys
+   "o t" 'rh/outline-toggle))
+
 
 
 (provide '90-tools)
