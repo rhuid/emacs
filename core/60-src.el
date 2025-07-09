@@ -90,9 +90,12 @@
   :mode "\\.sh\\'"
   :init
   (require 'rh-shell)
-  :hook (sh-mode . (lambda ()
-                     (rh/sh-tab-hook)
-                     (rh/sh-highlight-custom-keywords))))
+  :hook (sh-mode . rh/setup-sh-mode))
+
+(defun rh/setup-sh-mode ()
+  (rh/sh-tab-hook)
+  (rh/sh-highlight-custom-keywords))
+
 
 (require 'rh-elisp)
 (add-hook 'emacs-lisp-mode-hook #'rh/elisp-tab-hook)
