@@ -194,12 +194,15 @@
   :mode "\\.jl\\'")
 
 (use-package kbd-mode
-  :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
+  :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
+  :mode "\\.kbd\\'")
 
 (use-package systemd
   :mode (("\\.service\\'" . systemd-mode)
-         ("\\.timer\\'" . systemd-mode)
-         ("\\.mount\\'" . systemd-mode)
-         ("\\.target\\'" . systemd-mode)))
+         ("\\.timer\\'"   . systemd-mode)
+         ("\\.mount\\'"   . systemd-mode)
+         ("\\.target\\'"  . systemd-mode)
+	 ("\\.conf\\'"    . conf-unix-mode)
+	 ("\\.ini\\'"     . conf-unix-mode)))
 
 (provide '60-src)
