@@ -17,21 +17,22 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
-;; (use-package company
-;;   :hook (after-init . global-company-mode)
-;;   :config
-;;   (setq company-idle-delay 0.2
-;;         company-minimum-prefix-length 2
-;; 	company-auto-commit nil
-;; 	company-auto-commit-chars nil)
+(use-package company
+  :disabled t
+  :hook (after-init . global-company-mode)
+  :config
+  (setq company-idle-delay 0.2
+        company-minimum-prefix-length 2
+	company-auto-commit nil
+	company-auto-commit-chars nil)
 
-;; (define-key company-active-map (kbd "TAB") nil)
-;; (define-key company-active-map (kbd "<tab>") nil)
-;; (define-key company-active-map (kbd "RET") #'company-abort)
-;; (define-key company-active-map (kbd "<ret>") #'company-abort)
+  (define-key company-active-map (kbd "TAB") nil)
+  (define-key company-active-map (kbd "<tab>") nil)
+  (define-key company-active-map (kbd "RET") #'company-abort)
+  (define-key company-active-map (kbd "<ret>") #'company-abort)
 
-;; (define-key company-active-map (kbd "C-l") #'company-complete-selection)
-;; (define-key company-mode-map (kbd "C-l") #'company-complete))
+  (define-key company-active-map (kbd "C-l") #'company-complete-selection)
+  (define-key company-mode-map (kbd "C-l") #'company-complete))
 
 (use-package corfu
   :init
@@ -65,15 +66,18 @@
 
 ;; Haskell
 (use-package haskell-mode
+  :defer t
   :mode "\\.hs\\'"
   )
 
 (use-package haskell-tng-mode
+  :defer t
   ;; :mode "\\.hs\\"
   )
 
 (use-package lean4-mode
   :straight nil
+  :defer t
   :load-path "~/.emacs.d/lean4-mode"
   :mode "\\.lean\\'"
   :init
@@ -85,14 +89,16 @@
          (lean4-mode . rh/lean-highlight-typeclasses)))
 
 (use-package sh-script
+  :defer t
   :mode "\\.sh\\'"
   :init
   (require 'rh-shell)
-  :hook (sh-mode . rh/setup-sh-mode))
-
-(defun rh/setup-sh-mode ()
-  (rh/sh-tab-hook)
-  (rh/sh-highlight-custom-keywords))
+  :hook (sh-mode . rh/setup-sh-mode)
+  :config
+  (defun rh/setup-sh-mode ()
+    (rh/sh-tab-hook)
+    (rh/sh-highlight-custom-keywords))
+  )
 
 (use-package outline
   :hook ((prog-mode . outline-minor-mode)
@@ -121,53 +127,40 @@
           (outline-show-subtree)
         (outline-hide-subtree))))
 
-  ;; ;; Overview function: show headings only
-  ;; (defun rh/outline-overview ()
-  ;;   "Show only outline headings."
-  ;;   (outline-show-all)
-  ;;   (outline-hide-body))
-
   ;; Toggle keybinding (in both Evil and non-Evil)
   (define-key outline-minor-mode-map (kbd "C-c @ <tab>") #'rh/outline-toggle)
   (evil-global-set-key 'normal (kbd "C-c @ <tab>") #'rh/outline-toggle)
   (evil-global-set-key 'normal (kbd "C-c @ <backtab>") #'outline-hide-body))
 
-;; ;; Specialized config for Emacs Lisp mode
-;; (use-package emacs
-;;   :ensure nil
-;;   :hook (emacs-lisp-mode . rh/outline-elisp)
-;;   :config
-;;   (defun rh/outline-elisp ()
-;;     "Set outline regex for top-level declarations in Emacs Lisp."
-;;     (setq-local outline-regexp
-;;                 (rx line-start
-;;                     (* space)
-;;                     "("
-;;                     (or ";;;" "use-package" "require" "provide" "defun"
-;;                         "add-to-list" "add-hook")))
-;;     (outline-hide-body)))
+(use-package lisp-mode
+  :straight nil
+  :mode ("\\.el\\'" . emacs-lisp-mode)
+  :hook ((emacs-lisp-mode . rh/elisp-tab-hook)
+	 (emacs-lisp-mode . rh/elisp-highlight-custom-keywords)
+	 (emacs-lisp-mode . rh/outline-elisp)
+	 (lisp-interaction-mode . rh/elisp-tab-hook)
+	 (lisp-interaction-mode . rh/elisp-highlight-custom-keywords))
+  :init
+  (require 'rh-elisp)
 
-(require 'rh-elisp)
-(defun rh/outline-elisp ()
-  "Set outline regex for top-level declarations in Emacs Lisp."
-  (setq-local outline-regexp
-              (rx line-start
-                  (* space)
-                  "("
-                  (or ";;;" "use-package" "require" "provide" "defun"
-                      "add-to-list" "add-hook")))
-  (outline-hide-body))
-
-(add-hook 'emacs-lisp-mode-hook #'rh/elisp-tab-hook)
-(add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-custom-keywords)
-(add-hook 'emacs-lisp-mode-hook #'rh/outline-elisp)
-(add-hook 'lisp-interaction-mode-hook #'rh/elisp-tab-hook)
-(add-hook 'lisp-interaction-mode-hook #'rh/elisp-highlight-custom-keywords)
+  :config
+  (defun rh/outline-elisp ()
+    "Set outline regex for top-level declarations in Emacs Lisp."
+    (setq-local outline-regexp
+		(rx line-start
+                    (* space)
+                    "("
+                    (or ";;;" "use-package" "require" "provide" "defun"
+			"add-to-list" "add-hook")))
+    (outline-hide-body))
+  )
 
 (use-package rust-mode
+  :defer t
   :mode "\\.rs\\'"
   :hook ((rust-mode . outline-minor-mode)
-	 (rust-mode . rh/outline-rust))
+	 (rust-mode . rh/outline-rust)
+	 (rust-mode . flycheck-rust-setup))
   :init
   (require 'rh-rust)
   :config
@@ -179,10 +172,9 @@
 		(rx line-start (* space)
                     (or "fn" "pub" "struct" "enum" "impl")))
     (outline-hide-body))
-  )
 
-(use-package flycheck-rust
-  :hook (rust-mode . flycheck-rust-setup))
+  (use-package flycheck-rust)
+  )
 
 (use-package nix-mode
   :straight t
