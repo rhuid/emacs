@@ -21,7 +21,50 @@
 ;;   :hook (after-init . global-company-mode)
 ;;   :config
 ;;   (setq company-idle-delay 0.2
-;;         company-minimum-prefix-length 2))
+;;         company-minimum-prefix-length 2
+;; 	company-auto-commit nil
+;; 	company-auto-commit-chars nil)
+
+;; (define-key company-active-map (kbd "TAB") nil)
+;; (define-key company-active-map (kbd "<tab>") nil)
+;; (define-key company-active-map (kbd "RET") #'company-abort)
+;; (define-key company-active-map (kbd "<ret>") #'company-abort)
+
+;; (define-key company-active-map (kbd "C-l") #'company-complete-selection)
+;; (define-key company-mode-map (kbd "C-l") #'company-complete))
+
+(use-package corfu
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t)                        ;; Enable auto popup
+  (corfu-auto-delay 0.2)
+  (corfu-minimum-prefix-length 2)
+  (corfu-preview-current nil)           ;; Don't preview current candidate inline
+  (corfu-on-exact-match nil)            ;; Don’t auto-select exact match
+  (corfu-quit-at-boundary t)            ;; Stop completion at word boundaries
+  (corfu-quit-no-match t)               ;; Quit if no match
+  (corfu-preselect 'prompt)             ;; Don't preselect any candidate
+  (corfu-cycle t))                      ;; Cycle through candidates
+
+(with-eval-after-load 'corfu
+  (define-key corfu-map (kbd "RET") nil)
+  (define-key corfu-map (kbd "<return>") nil)
+  (define-key corfu-map (kbd "TAB") nil)
+  (define-key corfu-map (kbd "<tab>") nil)
+  (define-key corfu-map (kbd "C-j") nil)
+  (define-key corfu-map (kbd "C-m") nil)
+
+  (define-key corfu-map (kbd "C-SPC") #'corfu-insert))
+
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
+
+
+
 
 ;; Haskell
 (use-package haskell-mode
@@ -31,7 +74,6 @@
 (use-package haskell-tng-mode
   ;; :mode "\\.hs\\'"
   )
-
 
 ;; Lean
 (add-to-list 'load-path "~/.emacs.d/lean4-mode")
@@ -75,13 +117,13 @@
 (use-package julia-mode
   :mode "\\.jl\\'")
 
-;; For .kbd kmonad files
 (use-package kbd-mode
   :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
 
 (use-package systemd
-  :mode "\\.service\\'")
-
-
+  :mode (("\\.service\\'" . systemd-mode)
+         ("\\.timer\\'" . systemd-mode)
+         ("\\.mount\\'" . systemd-mode)
+         ("\\.target\\'" . systemd-mode)))
 
 (provide '60-src)
