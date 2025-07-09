@@ -86,10 +86,6 @@
 (add-hook 'lean4-mode-hook #'rh/lean-highlight-values)
 (add-hook 'lean4-mode-hook #'rh/lean-highlight-typeclasses)
 
-;; (require 'rh-shell)
-;; (add-hook 'sh-mode-hook #'rh/sh-tab-hook)
-;; (add-hook 'sh-mode-hook #'rh/sh-highlight-custom-keywords)
-
 (use-package sh-script
   :mode "\\.sh\\'"
   :init
@@ -98,8 +94,6 @@
                      (rh/sh-tab-hook)
                      (rh/sh-highlight-custom-keywords))))
 
-
-
 (require 'rh-elisp)
 (add-hook 'emacs-lisp-mode-hook #'rh/elisp-tab-hook)
 (add-hook 'emacs-lisp-mode-hook #'rh/elisp-highlight-custom-keywords)
@@ -107,16 +101,15 @@
 (add-hook 'lisp-interaction-mode-hook #'rh/elisp-tab-hook)
 (add-hook 'lisp-interaction-mode-hook #'rh/elisp-highlight-custom-keywords)
 
-;; Rust
 (use-package rust-mode
   :mode "\\.rs\\'"
+  :init
+  (require 'rh-rust)
   :config
   (setq rust-format-on-save t))
 
 (use-package flycheck-rust
   :hook (rust-mode . flycheck-rust-setup))
-
-(require 'rh-rust)
 
 (use-package nix-mode
   :straight t
