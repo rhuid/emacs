@@ -86,9 +86,19 @@
 (add-hook 'lean4-mode-hook #'rh/lean-highlight-values)
 (add-hook 'lean4-mode-hook #'rh/lean-highlight-typeclasses)
 
-(require 'rh-shell)
-(add-hook 'sh-mode-hook #'rh/sh-tab-hook)
-(add-hook 'sh-mode-hook #'rh/sh-highlight-custom-keywords)
+;; (require 'rh-shell)
+;; (add-hook 'sh-mode-hook #'rh/sh-tab-hook)
+;; (add-hook 'sh-mode-hook #'rh/sh-highlight-custom-keywords)
+
+(use-package sh-script
+  :mode "\\.sh\\'"
+  :init
+  (require 'rh-shell)
+  :hook (sh-mode . (lambda ()
+                     (rh/sh-tab-hook)
+                     (rh/sh-highlight-custom-keywords))))
+
+
 
 (require 'rh-elisp)
 (add-hook 'emacs-lisp-mode-hook #'rh/elisp-tab-hook)
