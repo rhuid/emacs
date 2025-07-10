@@ -1,3 +1,5 @@
+;;; early-init.el --- Load this before init.el -*- lexical-binding: t; -*-
+
 ;; Disable package.el auto-init (Use straight.el or manual setup)
 (setq package-enable-at-startup nil)
 
