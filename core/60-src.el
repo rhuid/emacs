@@ -1,7 +1,5 @@
 ;;; 60-src.el --- All things related to writing source code -*- lexical-binding: t; -*-
 
-;; Coding
-
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
@@ -79,8 +77,8 @@
   )
 
 (defun rh/lean4-corfu-off-company-on ()
-  (interactive)
   "Disable corfu and enable company only in Lean4 buffers."
+  (interactive)
   (corfu-mode -1)
   (company-mode +1))
 
@@ -128,7 +126,7 @@
   (set-display-table-slot
    standard-display-table
    'selective-display
-   (let ((face-offset (* (face-id 'shadow) (lsh 1 22))))
+   (let ((face-offset (* (face-id 'shadow) (ash 1 22))))
      (vconcat (mapcar (lambda (c) (+ face-offset c)) " +"))))
 
   ;; Global toggle function for heading subtree

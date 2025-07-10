@@ -121,9 +121,8 @@
 	     (propertize (system-name) 'face `(:foreground "green"))
 	     ":"
 	     (propertize (eshell/pwd) 'face `(:foreground "blue"))
-	     (if (= (user-uid) 0) " # " " $ "))))
-    (setq eshell-prompt-regexp "^[^#$\n]*[#$] "))
-
+	     (if (= (user-uid) 0) " # " " $ ")))))
+  
   (use-package eshell-syntax-highlighting
     :after eshell
     :config
@@ -145,12 +144,14 @@
 
 
 
-
 (use-package magit
   :defer t
   :commands (magit-status magit-log)
-  :config
-  (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  :init
+  (setq magit-display-buffer-function
+        #'magit-display-buffer-same-window-except-diff-v1))
+
+
 
 
 (use-package aggressive-indent
@@ -165,7 +166,6 @@
 ;; (use-package captain)
 
 ;; (use-package chess)
-
 
 
 
