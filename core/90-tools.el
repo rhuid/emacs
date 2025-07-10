@@ -181,9 +181,9 @@
     :global-prefix "C-SPC")
 
   (rh/leader-keys
-    "o t" 'rh/outline-toggle
-    "o a" 'outline-show-all
-    "o h" 'outline-hide-body
+    "o t"     'rh/outline-toggle-heading
+    "o <tab>" 'rh/outline-toggle-heading
+    "o a"     'rh/outline-toggle-visibility
     ))
 
 (provide '90-tools)

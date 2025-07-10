@@ -129,8 +129,7 @@
    (let ((face-offset (* (face-id 'shadow) (ash 1 22))))
      (vconcat (mapcar (lambda (c) (+ face-offset c)) " +"))))
 
-  ;; Global toggle function for heading subtree
-  (defun rh/outline-toggle ()
+  (defun rh/outline-toggle-heading ()
     "Toggle visibility of current outline heading."
     (interactive)
     (save-excursion
@@ -139,9 +138,30 @@
           (outline-show-subtree)
         (outline-hide-subtree))))
 
+  (defun rh/outline-toggle-visibility ()
+    "Toggle between fully expanded and folded view of the outline buffer."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (if (cl-some (lambda (pos)
+                     (goto-char pos)
+                     (outline-invisible-p (line-end-position)))
+                   (rh/outline-all-heading-positions))
+          (outline-show-all)
+	(outline-hide-body))))
+
+  (defun rh/outline-all-heading-positions ()
+    "Return a list of positions of all headings in the buffer."
+    (let (positions)
+      (save-excursion
+	(goto-char (point-min))
+	(while (re-search-forward outline-regexp nil t)
+          (push (point) positions)))
+      positions))
+
   ;; Toggle keybinding (in both Evil and non-Evil)
-  (define-key outline-minor-mode-map (kbd "C-c @ <tab>") #'rh/outline-toggle)
-  (evil-global-set-key 'normal (kbd "C-c @ <tab>") #'rh/outline-toggle)
+  (define-key outline-minor-mode-map (kbd "C-c @ <tab>") #'rh/outline-toggle-heading)
+  (evil-global-set-key 'normal (kbd "C-c @ <tab>") #'rh/outline-toggle-heading)
   (evil-global-set-key 'normal (kbd "C-c @ <backtab>") #'outline-hide-body))
 
 (use-package lisp-mode
