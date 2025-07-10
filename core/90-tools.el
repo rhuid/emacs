@@ -151,11 +151,26 @@
 
 
 (defun rh/vterm-toggle ()
-  "Toggle vterm buffer."
+  "Toggle the most recent vterm buffer."
   (interactive)
-  (if (string= (buffer-name) "*vterm*")
-      (switch-to-prev-buffer)
-    (vterm)))
+  (let ((vterm-buffer
+         (seq-find (lambda (buf)
+                     (with-current-buffer buf
+                       (derived-mode-p 'vterm-mode)))
+                   (buffer-list))))
+    (if (eq (current-buffer) vterm-buffer)
+        (switch-to-buffer (other-buffer))
+      (if vterm-buffer
+          (switch-to-buffer vterm-buffer)
+        (vterm)))))
+
+;; (defun rh/temp-vterm-toggle ()
+;;   "Toggle vterm buffer."
+;;   (interactive)
+;;   (if (string= (buffer-name) "*vterm*")
+;;       (switch-to-prev-buffer)
+;;     (vterm)))
+
 
 (use-package vterm
   :straight t

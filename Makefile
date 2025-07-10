@@ -1,5 +1,3 @@
-# Makefile for Emacs config in ~/.emacs.d
-
 EMACS   = emacs
 ELDIRS  = core engine modes
 EXCLUDE = engine/rh-capitalize.el
