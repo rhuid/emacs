@@ -1,4 +1,4 @@
-;; Dired
+;;; 80-dired.el --- description -*- lexical-binding: t; -*-
 
 (use-package dired
   :straight nil

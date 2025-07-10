@@ -1,3 +1,5 @@
+;;; rh-rust.el --- description -*- lexical-binding: t; -*-
+
 ;; Rust customizations
 
 (require 'rh-snip)

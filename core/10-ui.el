@@ -1,21 +1,10 @@
+;;; 10-ui.el --- description -*- lexical-binding: t; -*-
+
 ;; Looks and theme
 
-;; To set the size and positon of Emacs window at startup (may be required in Emacs client mode)
-(setq default-frame-alist
-      '((width . 120)                                        ; in characters
-        (height . 90)                                        ; in lines
-	(left . 0)                                           ; position
-	(top . 0)
-	(font . "Iosevka-12")))
-
-(menu-bar-mode -1)                                           ; hide menu bar
-(tool-bar-mode -1)                                           ; hide tool bar
-(scroll-bar-mode -1)                                         ; hide scroll bar
-(set-fringe-mode 0)                                          ; try other values too
 (global-visual-line-mode t)                                  ; automatic line wrapping
 (global-hl-line-mode 1)
-(setq-default cursor-type 'bar)                              ; cursor: thin vertical line
-(blink-cursor-mode 1)
+
 (global-prettify-symbols-mode 1) 
 (global-display-line-numbers-mode t)                         ; show line numbers
 (setq make-backup-files nil)                                 ; don't generate backup files
@@ -75,22 +64,7 @@
 
 ;; Themes
 
-(use-package doom-themes
-  :init
-  (setq doom-themes-enable-bold t
-	doom-themes-enable-italic t)
-  :config
-  (doom-themes-org-config))          ; Improved org-mode styling
-
-;; Some other doom themes to consider
-;; (load-theme 'doom-one-light t)
-;; (load-theme 'doom-xcode t)
-;; (load-theme 'doom-old-hope t)	; Dark, high-contrast
-;; (load-theme 'doom-ayu-light t)
-;; (load-theme 'doom-feather-light t)
-;; (load-theme 'doom-ephemeral t)
-;; (load-theme 'doom-nord t)		
-
+(use-package doom-themes :init (setq doom-themes-enable-bold t doom-themes-enable-italic t) :config (doom-themes-org-config))          ; Improved org-mode styling ;; Some other doom themes to consider ;; (load-theme 'doom-one-light t) ;; (load-theme 'doom-xcode t) ;; (load-theme 'doom-old-hope t)	; Dark, high-contrast ;; (load-theme 'doom-ayu-light t) ;; (load-theme 'doom-feather-light t) ;; (load-theme 'doom-ephemeral t) ;; (load-theme 'doom-nord t)
 (defun rh/set-doom-tomorrow-day-theme ()
   "Set a customized version of doom-tomorrow-day-theme."
   (interactive)

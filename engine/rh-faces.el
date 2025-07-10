@@ -1,3 +1,5 @@
+;;; rh-faces.el --- description -*- lexical-binding: t; -*-
+
 (defface rh/custom-keyword-face
   '((t (:foreground "DarkGoldenrod" :weight normal)))
   "Face for custom keywords.")

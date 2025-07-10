@@ -1,3 +1,5 @@
+;;; rh-lean.el --- description -*- lexical-binding: t; -*-
+
 ;; Lean
 
 (require 'rh-snip)

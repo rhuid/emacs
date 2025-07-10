@@ -1,3 +1,5 @@
+;;; 00-pkg.el --- description -*- lexical-binding: t; -*-
+
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file

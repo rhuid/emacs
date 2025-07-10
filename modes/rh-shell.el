@@ -1,3 +1,5 @@
+;;; rh-shell.el --- description -*- lexical-binding: t; -*-
+
 (require 'rh-snip)
 (require 'rh-faces)
 

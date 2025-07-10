@@ -1,4 +1,4 @@
-;; Org
+;;; 50-org.el --- description -*- lexical-binding: t; -*-
 
 (use-package org
   :straight (:type built-in))

@@ -1,3 +1,5 @@
+;;; 30-abbrev.el --- description -*- lexical-binding: t; -*-
+
 ;; Abbreviations
 
 (setq-default abbrev-mode t)                          ; enable abbrev by default in all buffers

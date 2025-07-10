@@ -1,3 +1,5 @@
+;;; rh-snip.el --- description -*- lexical-binding: t; -*-
+
 ;; Snippet engine (language-agnostic)
 
 ;; Shared placeholder position tracker, buffer-local

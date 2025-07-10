@@ -1,3 +1,5 @@
+;;; 70-typeset.el --- description -*- lexical-binding: t; -*-
+
 ;; Typesetting (Markdown, TeX, LaTeX, etc)
 
 (use-package flymd)                                         ; markdown live preview

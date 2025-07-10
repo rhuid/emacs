@@ -1,3 +1,5 @@
+;;; 40-dashboard.el --- description -*- lexical-binding: t; -*-
+
 ;; Dashboard 
 
 (use-package dashboard             

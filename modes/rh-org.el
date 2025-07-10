@@ -1,3 +1,5 @@
+;;; rh-org.el --- description -*- lexical-binding: t; -*-
+
 (require 'rh-snip)
 
 (defvar rh/org-snippet-alist

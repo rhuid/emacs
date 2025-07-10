@@ -1,3 +1,5 @@
+;;; 60-src.el --- description -*- lexical-binding: t; -*-
+
 ;; Coding
 
 (use-package lsp-mode
@@ -76,9 +78,11 @@
   )
 
 (use-package lean4-mode
-  :straight nil
+  :commands lean4-mode
+  :straight (lean4-mode :type git :host github
+                        :repo "leanprover-community/lean4-mode"
+                        :files ("*.el" "data"))
   :defer t
-  :load-path "~/.emacs.d/lean4-mode"
   :mode "\\.lean\\'"
   :init
   (require 'lean4-mode)
@@ -86,11 +90,12 @@
   :hook ((lean4-mode . rh/lean4-tab-hook)
          (lean4-mode . rh/lean-highlight-types)
          (lean4-mode . rh/lean-highlight-values)
-         (lean4-mode . rh/lean-highlight-typeclasses)))
+         (lean4-mode . rh/lean-highlight-typeclasses))
+  )
 
 (use-package sh-script
   :defer t
-  :mode "\\.sh\\'"
+  :mode ("\\.sh\\'" . sh-mode)
   :init
   (require 'rh-shell)
   :hook (sh-mode . rh/setup-sh-mode)
