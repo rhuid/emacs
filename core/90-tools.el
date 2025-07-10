@@ -1,4 +1,4 @@
-;;; 90-tools.el --- description -*- lexical-binding: t; -*-
+;;; 90-tools.el --- just tools -*- lexical-binding: t; -*-
 
 ;; (require 'rh-capitalize)
 
@@ -107,6 +107,13 @@
 
 ;; ESHELL
 
+(defun rh/eshell-toggle ()
+  "Toggle eshell buffer."
+  (interactive)
+  (if (string= (buffer-name) "*eshell*")
+      (switch-to-prev-buffer)
+    (eshell)))
+
 (use-package eshell
   :hook ((eshell-first-time-mode . rh/eshell-init)
 	 (eshell-mode . esh-autosuggest-mode))
@@ -141,6 +148,20 @@
 ;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
 
 
+
+
+(defun rh/vterm-toggle ()
+  "Toggle vterm buffer."
+  (interactive)
+  (if (string= (buffer-name) "*vterm*")
+      (switch-to-prev-buffer)
+    (vterm)))
+
+(use-package vterm
+  :straight t
+  :commands vterm
+  :config
+  (setq vterm-shell "/sbin/zsh"))
 
 
 
@@ -181,6 +202,13 @@
     :global-prefix "C-SPC")
 
   (rh/leader-keys
+    ;; eshell
+    "e t"     'rh/eshell-toggle
+
+    ;; vterm
+    "t t"     'rh/vterm-toggle
+
+    ;; Outline Minor Mode
     "o t"     'rh/outline-toggle-heading
     "o <tab>" 'rh/outline-toggle-heading
     "o a"     'rh/outline-toggle-visibility

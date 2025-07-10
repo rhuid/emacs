@@ -1,6 +1,6 @@
 ;;; 40-dashboard.el --- description -*- lexical-binding: t; -*-
 
-(use-package dashboard             
+(use-package dashboard
   :config
   (setq dashboard-startup-banner (expand-file-name "logo/Emacs-Bloody.txt" user-emacs-directory)
         dashboard-banner-logo-title "🏡 Welcome Home, Ronald"
