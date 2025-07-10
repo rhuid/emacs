@@ -1,6 +1,5 @@
-╔═══════════════╗
-║    baremacs   ║
-╚═══════════════╝
+baremacs
+========
 
 A modular and reproducible GNU Emacs setup.
 
@@ -8,5 +7,4 @@ Builds on vanilla (pure) Emacs.
 Assumes GNU Emacs 30.1 or higher.
 Uses straight.el and use-package.
 Implements Makefile to build native .eln files.
-Implements a systemd service to invoke emacs daemon at boot.
-Comes with some shell scripts to facilitate working with Emacs.
+Implements user service to invoke emacs daemon at login.
