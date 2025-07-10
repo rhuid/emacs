@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Kill running daemon (ignore error if not running)
+emacsclient -e "(kill-emacs)" 2>/dev/null
+
+# Wait a bit to ensure daemon shuts down fully
+echo "Shutting down emacs daemon..."
+sleep 1
+
+# Start a fresh daemon
+emacs --daemon
