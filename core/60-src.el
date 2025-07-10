@@ -83,6 +83,7 @@
   "Disable corfu and enable company only in Lean4 buffers."
   (corfu-mode -1)
   (company-mode +1))
+
 (use-package lean4-mode
   :commands lean4-mode
   :straight (lean4-mode :type git :host github
@@ -90,7 +91,8 @@
                         :files ("*.el" "data"))
   :defer t
   :mode "\\.lean\\'"
-  :hook ((lean4-mode . rh/lean4-tab-hook)
+  :hook ((lean4-mode . lsp-mode)
+	 (lean4-mode . rh/lean4-tab-hook)
          (lean4-mode . rh/lean-highlight-types)
          (lean4-mode . rh/lean-highlight-values)
          (lean4-mode . rh/lean-highlight-typeclasses)
