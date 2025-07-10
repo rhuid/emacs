@@ -108,11 +108,27 @@
 ;; ESHELL
 
 (defun rh/eshell-toggle ()
-  "Toggle eshell buffer."
+  "Toggle the most recent eshell buffer."
   (interactive)
-  (if (string= (buffer-name) "*eshell*")
-      (switch-to-prev-buffer)
-    (eshell)))
+  (let ((eshell-buffer
+         (seq-find (lambda (buf)
+                     (with-current-buffer buf
+                       (derived-mode-p 'eshell-mode)))
+                   (buffer-list))))
+    (if (eq (current-buffer) eshell-buffer)
+        (switch-to-buffer (other-buffer))
+      (if eshell-buffer
+          (switch-to-buffer eshell-buffer)
+        (eshell)))))
+
+;; (defun rh/eshell-toggle ()
+;;   "Toggle eshell buffer."
+;;   (interactive)
+;;   (if (string= (buffer-name) "*eshell*")
+;;       (switch-to-prev-buffer)
+;;     (eshell)))
+
+
 
 (use-package eshell
   :hook ((eshell-first-time-mode . rh/eshell-init)
