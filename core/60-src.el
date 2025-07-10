@@ -26,8 +26,8 @@
   :config
   (setq company-idle-delay 0.2
         company-minimum-prefix-length 2
-	company-auto-commit nil
-	company-auto-commit-chars nil)
+	company-insertion-on-trigger nil
+	company-insertion-triggers nil)
 
   (define-key company-active-map (kbd "TAB") nil)
   (define-key company-active-map (kbd "<tab>") nil)
