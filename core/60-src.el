@@ -1,4 +1,4 @@
-;;; 60-src.el --- description -*- lexical-binding: t; -*-
+;;; 60-src.el --- All things related to writing source code -*- lexical-binding: t; -*-
 
 ;; Coding
 
@@ -20,8 +20,9 @@
   (lsp-ui-doc-enable t))
 
 (use-package company
-  :disabled t
-  :hook (after-init . global-company-mode)
+  :straight t
+  :commands company-mode
+  :hook (lean4-mode . company-mode)
   :config
   (setq company-idle-delay 0.2
         company-minimum-prefix-length 2
@@ -77,6 +78,11 @@
   ;; :mode "\\.hs\\"
   )
 
+(defun rh/lean4-corfu-off-company-on ()
+  (interactive)
+  "Disable corfu and enable company only in Lean4 buffers."
+  (corfu-mode -1)
+  (company-mode +1))
 (use-package lean4-mode
   :commands lean4-mode
   :straight (lean4-mode :type git :host github
@@ -84,13 +90,14 @@
                         :files ("*.el" "data"))
   :defer t
   :mode "\\.lean\\'"
-  :init
-  (require 'lean4-mode)
-  (require 'rh-lean)
   :hook ((lean4-mode . rh/lean4-tab-hook)
          (lean4-mode . rh/lean-highlight-types)
          (lean4-mode . rh/lean-highlight-values)
-         (lean4-mode . rh/lean-highlight-typeclasses))
+         (lean4-mode . rh/lean-highlight-typeclasses)
+	 (lean4-mode . rh/lean4-corfu-off-company-on))
+  :init
+  (require 'lean4-mode)
+  (require 'rh-lean)
   )
 
 (use-package sh-script
