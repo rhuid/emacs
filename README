@@ -1,35 +1,12 @@
 ╔═══════════════╗
-║    dotmacs    ║
+║    baremacs   ║
 ╚═══════════════╝
 
-A minimalist, fast and functional setup for vanilla Emacs.
+A modular and reproducible GNU Emacs setup.
 
-dotmacs
-├── core
-│   ├── 00-packages.el
-│   ├── 01-looks.el
-│   ├── 02-keybindings.el
-│   ├── 03-abbrevs.el
-│   ├── 04-dashboard.el
-│   ├── 05-org.el
-│   ├── 06-coding.el
-│   ├── 07-typesetting.el
-│   ├── 08-dired.el
-│   ├── 09-extras.el
-│   └── 13-theme-custom.el
-├── doc
-│   ├── daemon.el
-│   └── slides.org
-├── engine
-│   ├── rh-capitalize.el
-│   ├── rh-faces.el
-│   └── rh-snip.el
-├── init.el
-├── modes
-│   ├── rh-elisp.el
-│   ├── rh-lean.el
-│   ├── rh-org.el
-│   ├── rh-rust.el
-│   └── rh-shell.el
-└── README
-
+Builds on vanilla (pure) Emacs.
+Assumes GNU Emacs 30.1 or higher.
+Uses straight.el and use-package.
+Implements Makefile to build native .eln files.
+Implements a systemd service to invoke emacs daemon at boot.
+Comes with some shell scripts to facilitate working with Emacs.
