@@ -2,8 +2,7 @@
 
 (use-package dired
   :straight nil
-  :hook ((dired-mode . all-the-icons-dired-mode)
-	 (dired-mode . dired-preview-mode))
+  :hook (dired-mode . all-the-icons-dired-mode)
   :config
   (use-package all-the-icons-dired)
   (setq dired-listing-switches "-alh")
