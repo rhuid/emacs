@@ -15,10 +15,11 @@
   )
 
 (use-package peep-dired
+  :straight t
   :after dired
-  :bind (:map dired-mode-map
-              ("P" . peep-dired))
-  :hook (peep-dired-mode . evil-normalize-keymaps))
+  ;; :hook (peep-dired-mode . evil-normalize-keymaps)
+  :config
+  (define-key dired-mode-map (kbd "P") #'peep-dired))
 
 ;; (use-package ranger
 ;;   :config
