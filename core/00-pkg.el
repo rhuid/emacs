@@ -1,4 +1,4 @@
-;;; 00-pkg.el --- description -*- lexical-binding: t; -*-
+;;; 00-pkg.el --- Package manager related stuff -*- lexical-binding: t; -*-
 
 ;; Bootstrap straight.el
 (defvar bootstrap-version)

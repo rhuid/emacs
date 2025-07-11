@@ -6,12 +6,24 @@
 	 (dired-mode . dired-preview-mode))
   :config
   (use-package all-the-icons-dired)
-  (use-package dired-preview
-    :after dired
-    :config
-    (setq dired-preview-delay 0.5
-          dired-preview-max-size 10))                   ;; max 10 MB
+  (setq dired-listing-switches "-alh")
+
+  ;; (use-package dired-preview
+  ;;   :after dired
+  ;;   :config
+  ;;   (setq dired-preview-delay 0.5
+  ;;         dired-preview-max-size 10))                   ;; max 10 MB
   )
+
+(use-package peep-dired
+  :after dired
+  :bind (:map dired-mode-map
+              ("P" . peep-dired))
+  :hook (peep-dired-mode . evil-normalize-keymaps))
+
+;; (use-package ranger
+;;   :config
+;;   (ranger-override-dired-mode t))
 
 ;; (use-package dired-du
 ;;   :after dired
@@ -24,10 +36,6 @@
               (")" . dired-git-info-mode))            ;; press `)` to toggle git info
   :config
   (setq dgi-auto-hide-details-p nil))
-
-;; (use-package ranger                   ; Make dired ranger-like
-;;  :config
-;;  (ranger-override-dired-mode t))
 
 ;; ;; Create a new file
 ;; (defun my/dired-create-file (filename)
