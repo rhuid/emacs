@@ -48,6 +48,12 @@
   ;; other faces such as `diff-added` will be used for other actions
   (evil-goggles-use-diff-faces))
 
+(use-package evil-colemak-basics
+  :init
+  (setq evil-colemak-basics-layout-mod 'mod-dh)
+  :config
+  (global-evil-colemak-basics-mode))
+
 (use-package evil-org
   :after org
   :hook (org-mode . (lambda () evil-org-mode)))
