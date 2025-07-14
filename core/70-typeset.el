@@ -1,18 +1,15 @@
 ;;; 70-typeset.el --- description -*- lexical-binding: t; -*-
 
-;; Typesetting (Markdown, TeX, LaTeX, etc)
+(use-package flymd :straight t :defer t)
+;; markdown live preview
 
-(use-package flymd)                                         ; markdown live preview
+(use-package auctex :straight t)
 
-(use-package auctex
-  :ensure t)
-
-(use-package auctex-latexmk
+(use-package auctex-latexmk :straight t
   :config
   (auctex-latexmk-setup))
 
-(use-package cdlatex
-  :ensure t
+(use-package cdlatex :straight t
   :hook ((LaTeX-mode . turn-on-cdlatex)
          (org-mode . turn-on-org-cdlatex))
   :config
@@ -31,7 +28,6 @@
 	  ("th" "Insert theorem env" "" cdlatex-environment ("theorem") t nil)         ; th TAB -> theorem env
 	  ("cl" "Insert corollary env" "" cdlatex-environment ("corollary") t nil)     ; cl TAB -> corollary env
 	  ("pr" "Insert proof env" "" cdlatex-environment ("proof") t nil))))          ; pr TAB -> proof env
-
 
 ;;(use-package auto-complete-auctex)
 

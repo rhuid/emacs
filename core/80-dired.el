@@ -1,37 +1,36 @@
 ;;; 80-dired.el --- description -*- lexical-binding: t; -*-
 
-(use-package dired
-  :straight nil
-  :hook (dired-mode . all-the-icons-dired-mode)
+(use-package dired :straight nil
   :config
-  (use-package all-the-icons-dired)
   (setq dired-listing-switches "-alh")
-
-  ;; (use-package dired-preview
-  ;;   :after dired
-  ;;   :config
-  ;;   (setq dired-preview-delay 0.5
-  ;;         dired-preview-max-size 10))                   ;; max 10 MB
   )
 
-(use-package peep-dired
-  :straight t
+(use-package dired-preview :straight t :disabled t
   :after dired
+  :config
+  (setq dired-preview-delay 0.5
+        dired-preview-max-size 10))                   ;; max 10 MB
+
+(use-package all-the-icons-dired :straight t
+  :hook (dired-mode . all-the-icons-dired-mode)
+  )
+
+(use-package peep-dired :straight t :defer t :after dired
   ;; :hook (peep-dired-mode . evil-normalize-keymaps)
   :config
   (define-key dired-mode-map (kbd "P") #'peep-dired))
 
-;; (use-package ranger
-;;   :config
-;;   (ranger-override-dired-mode t))
+(use-package ranger :straight t :disabled t
+  :config
+  (ranger-override-dired-mode t))
 
-;; (use-package dired-du
-;;   :after dired
-;;   :config
-;;   (add-hook 'dired-mode-hook #'dired-du-mode))
-
-(use-package dired-git-info
+(use-package dired-du :straight t :disabled t
   :after dired
+  ;; This package really slows down dired
+  :config
+  (add-hook 'dired-mode-hook #'dired-du-mode))
+
+(use-package dired-git-info :straight t :defer t :after dired
   :bind (:map dired-mode-map
               (")" . dired-git-info-mode))            ;; press `)` to toggle git info
   :config

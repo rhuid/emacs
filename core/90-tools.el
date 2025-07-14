@@ -2,7 +2,8 @@
 
 ;; (require 'rh-capitalize)
 
-(use-package centaur-tabs :disabled t :demand nil
+(use-package centaur-tabs :disabled t
+  :demand nil
   :config
   (centaur-tabs-mode t)
   (setq centaur-tabs-style "chamfer")
@@ -21,23 +22,20 @@
 ;; MINIBUFFER 
 
 ;; UI for minibuffer candidates
-(use-package vertico
-  :init
-  (vertico-mode 1))
-
-;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, flex
-(use-package orderless
+(use-package vertico :straight t :init (vertico-mode 1))
+(use-package orderless :straight t 
+  ;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, fle
   :init
   (setq completion-styles '(orderless)
         completion-category-defaults nil))
 
 ;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
-(use-package marginalia
+(use-package marginalia :straight t 
   :init
   (marginalia-mode))
 
 ;; Adds modern alternatives to core Emacs commands
-(use-package consult
+(use-package consult :straight t 
   :bind
   (("C-s" . consult-line)
    ("C-x b" . consult-buffer)
@@ -57,11 +55,8 @@
 ;; (setq consult-preview-key "M-.") ; preview only when you press M-
 
 ;; Live popup of possible key combinations
-(use-package which-key
-  :config
-  (which-key-mode))
-
-(use-package embark
+(use-package which-key :straight t :config (which-key-mode))
+(use-package embark :straight t 
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
@@ -94,13 +89,10 @@
                  (window-parameters (mode-line-format . none)))))
 
 ;; Consult users will also want the embark-consult package.
-(use-package embark-consult
-  :ensure t ; only need to install it, embark loads it after consult if found
+(use-package embark-consult :straight t 
+  ;; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
-
-
-
 
 
 ;; ESHELL
@@ -119,16 +111,8 @@
           (switch-to-buffer eshell-buffer)
         (eshell)))))
 
-;; (defun rh/eshell-toggle ()
-;;   "Toggle eshell buffer."
-;;   (interactive)
-;;   (if (string= (buffer-name) "*eshell*")
-;;       (switch-to-prev-buffer)
-;;     (eshell)))
 
-
-
-(use-package eshell
+(use-package eshell :straight nil
   :hook ((eshell-first-time-mode . rh/eshell-init)
 	 (eshell-mode . esh-autosuggest-mode))
   :config
@@ -153,16 +137,13 @@
   )
 
 ;; Emulate A Terminal
-(use-package eat
+(use-package eat :straight t :defer t
   :hook (eshell-mode . eat-eshell-mode))
 
 ;; (use-package eshell-hist-mode
 ;;   :hook (eshell-mode . eshell-hist-mode))
 
 ;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
-
-
-
 
 (defun rh/vterm-toggle ()
   "Toggle the most recent vterm buffer."
@@ -178,20 +159,12 @@
           (switch-to-buffer vterm-buffer)
         (vterm)))))
 
-;; (defun rh/temp-vterm-toggle ()
-;;   "Toggle vterm buffer."
-;;   (interactive)
-;;   (if (string= (buffer-name) "*vterm*")
-;;       (switch-to-prev-buffer)
-;;     (vterm)))
-
-
 (use-package vterm :straight t
   :commands vterm
   :config
   (setq vterm-shell "/sbin/zsh"))
 
-(use-package magit :defer t
+(use-package magit :straight t :defer t
   :commands (magit-status magit-log)
   :init
   (setq magit-display-buffer-function
@@ -214,10 +187,10 @@
 
 
 
-(use-package rainbow-mode
+(use-package rainbow-mode :straight t
   :hook (prog-mode . rainbow-mode))
 
-(use-package general :after outline
+(use-package general :straight t :after outline
   :config
   (general-create-definer rh/leader-keys
     :states '(normal visual)

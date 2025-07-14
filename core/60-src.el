@@ -1,6 +1,6 @@
 ;;; 60-src.el --- All things related to writing source code -*- lexical-binding: t; -*-
 
-(use-package lsp-mode
+(use-package lsp-mode :straight t
   :commands (lsp lsp-deferred)
   :custom
   (lsp-headerline-breadcrumb-enable nil)
@@ -8,8 +8,7 @@
   (lsp-signature-auto-activate nil)
   (lsp-log-io nil))
 
-(use-package lsp-ui
-  :after lsp-mode
+(use-package lsp-ui :straight t :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
@@ -17,8 +16,7 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
-(use-package company
-  :straight t
+(use-package company :straight t
   :commands company-mode
   :hook (lean4-mode . company-mode)
   :config
@@ -35,7 +33,7 @@
   (define-key company-active-map (kbd "C-l") #'company-complete-selection)
   (define-key company-mode-map (kbd "C-l") #'company-complete))
 
-(use-package corfu
+(use-package corfu :straight t
   :init
   (global-corfu-mode)
   :custom
@@ -64,20 +62,18 @@
   (define-key corfu-map (kbd "C-p") #'corfu-previous)
   (define-key corfu-map (kbd "C-SPC") #'corfu-insert))
 
-(use-package cape
+(use-package cape :straight t
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-keyword))
 
 ;; Haskell
-(use-package haskell-mode
-  :defer t
+(use-package haskell-mode :straight t :defer t
   :mode "\\.hs\\'"
   )
 
-(use-package haskell-tng-mode
-  :defer t
+(use-package haskell-tng-mode :straight t :defer t
   ;; :mode "\\.hs\\"
   )
 
@@ -87,12 +83,11 @@
   (corfu-mode -1)
   (company-mode +1))
 
-(use-package lean4-mode
+(use-package lean4-mode :defer t
   :commands lean4-mode
   :straight (lean4-mode :type git :host github
                         :repo "leanprover-community/lean4-mode"
                         :files ("*.el" "data"))
-  :defer t
   :mode "\\.lean\\'"
   :hook ((lean4-mode . lsp-mode)
 	 (lean4-mode . rh/lean4-tab-hook)
@@ -105,8 +100,7 @@
   (require 'rh-lean)
   )
 
-(use-package sh-script
-  :defer t
+(use-package sh-script :straight nil :defer t
   :mode ("\\.sh\\'" . sh-mode)
   :init
   (require 'rh-shell)
@@ -117,7 +111,7 @@
     (rh/sh-highlight-custom-keywords))
   )
 
-(use-package outline
+(use-package outline :straight t
   :hook ((prog-mode . outline-minor-mode)
          (text-mode . outline-minor-mode)
          (outline-minor-mode . outline-show-all)
@@ -169,8 +163,7 @@
   (evil-global-set-key 'normal (kbd "C-c @ <tab>") #'rh/outline-toggle-heading)
   (evil-global-set-key 'normal (kbd "C-c @ <backtab>") #'outline-hide-body))
 
-(use-package lisp-mode
-  :straight nil
+(use-package lisp-mode :straight nil
   :mode ("\\.el\\'" . emacs-lisp-mode)
   :hook ((emacs-lisp-mode . rh/elisp-tab-hook)
 	 (emacs-lisp-mode . rh/elisp-highlight-custom-keywords)
@@ -192,8 +185,7 @@
     (outline-hide-body))
   )
 
-(use-package rust-mode
-  :defer t
+(use-package rust-mode :straight t :defer t
   :mode "\\.rs\\'"
   :hook ((rust-mode . outline-minor-mode)
 	 (rust-mode . rh/outline-rust)
@@ -213,20 +205,19 @@
   (use-package flycheck-rust)
   )
 
-(use-package nix-mode
-  :straight t
+(use-package nix-mode :straight t
   :mode "\\.nix\\'"
   :config
   (setq nix-indent-function 'nix-indent-line))
 
-(use-package julia-mode
+(use-package julia-mode :straight t
   :mode "\\.jl\\'")
 
 (use-package kbd-mode
   :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
   :mode "\\.kbd\\'")
 
-(use-package systemd
+(use-package systemd :straight t
   :mode (("\\.service\\'" . systemd-mode)
          ("\\.timer\\'"   . systemd-mode)
          ("\\.mount\\'"   . systemd-mode)
