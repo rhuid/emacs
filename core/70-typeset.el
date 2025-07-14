@@ -1,15 +1,13 @@
 ;;; 70-typeset.el --- description -*- lexical-binding: t; -*-
 
-(use-package flymd :straight t :defer t)
 ;; markdown live preview
-
-(use-package auctex :straight t)
-
-(use-package auctex-latexmk :straight t
+(use-package flymd :straight t :defer t)
+(use-package auctex :straight t :defer t)
+(use-package auctex-latexmk :straight t :defer t
   :config
   (auctex-latexmk-setup))
 
-(use-package cdlatex :straight t
+(use-package cdlatex :straight t :defer t
   :hook ((LaTeX-mode . turn-on-cdlatex)
          (org-mode . turn-on-org-cdlatex))
   :config

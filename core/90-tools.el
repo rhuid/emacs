@@ -30,12 +30,9 @@
         completion-category-defaults nil))
 
 ;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
-(use-package marginalia :straight t 
-  :init
-  (marginalia-mode))
-
-;; Adds modern alternatives to core Emacs commands
-(use-package consult :straight t 
+(use-package marginalia :straight t :init (marginalia-mode))
+(use-package consult :straight t
+  ;; Adds modern alternatives to core Emacs commands
   :bind
   (("C-s" . consult-line)
    ("C-x b" . consult-buffer)
