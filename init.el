@@ -30,6 +30,11 @@
   :config
   (exec-path-from-shell-initialize))
 
+
+(use-package benchmark-init :straight t :defer t
+  :init (benchmark-init/activate)
+  :hook (after-init . benchmark-init/deactivate))
+
 (use-package 10-ui	    :straight nil :demand t)
 (use-package 20-kbd	    :straight nil :demand t)
 (use-package 30-abbrev	    :straight nil :demand t)

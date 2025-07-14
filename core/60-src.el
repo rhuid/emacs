@@ -1,6 +1,6 @@
 ;;; 60-src.el --- All things related to writing source code -*- lexical-binding: t; -*-
 
-(use-package lsp-mode :straight t
+(use-package lsp-mode :straight t :defer t
   :commands (lsp lsp-deferred)
   :custom
   (lsp-headerline-breadcrumb-enable nil)
@@ -8,7 +8,7 @@
   (lsp-signature-auto-activate nil)
   (lsp-log-io nil))
 
-(use-package lsp-ui :straight t :after lsp-mode
+(use-package lsp-ui :straight t :defer t :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
@@ -16,7 +16,7 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
-(use-package company :straight t
+(use-package company :straight t :defer t
   :commands company-mode
   :hook (lean4-mode . company-mode)
   :config
@@ -62,7 +62,7 @@
   (define-key corfu-map (kbd "C-p") #'corfu-previous)
   (define-key corfu-map (kbd "C-SPC") #'corfu-insert))
 
-(use-package cape :straight t
+(use-package cape :straight t :after corfu
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
@@ -77,12 +77,6 @@
   ;; :mode "\\.hs\\"
   )
 
-(defun rh/lean4-corfu-off-company-on ()
-  "Disable corfu and enable company only in Lean4 buffers."
-  (interactive)
-  (corfu-mode -1)
-  (company-mode +1))
-
 (use-package lean4-mode :defer t
   :commands lean4-mode
   :straight (lean4-mode :type git :host github
@@ -94,24 +88,27 @@
          (lean4-mode . rh/lean-highlight-types)
          (lean4-mode . rh/lean-highlight-values)
          (lean4-mode . rh/lean-highlight-typeclasses)
-	 (lean4-mode . rh/lean4-corfu-off-company-on))
-  :init
-  (require 'lean4-mode)
-  (require 'rh-lean)
+	 (lean4-mode . rh/lean4-corfu-off-company-on)
+	 (lean4-mode . (lambda ()
+                         (require 'lean4-mode)
+                         (require 'rh-lean))))
+  :config
+  (defun rh/lean4-corfu-off-company-on ()
+    "Disable corfu and enable company only in Lean4 buffers."
+    (interactive)
+    (corfu-mode -1)
+    (company-mode +1))
   )
 
 (use-package sh-script :straight nil :defer t
   :mode ("\\.sh\\'" . sh-mode)
-  :init
-  (require 'rh-shell)
-  :hook (sh-mode . rh/setup-sh-mode)
-  :config
-  (defun rh/setup-sh-mode ()
-    (rh/sh-tab-hook)
-    (rh/sh-highlight-custom-keywords))
+  :hook ((sh-mode . rh/sh-tab-hook)
+	 (sh-mode . rh/sh-highlight-custom-keywords)
+	 (sh-mode . (lambda ()
+		      (require 'rh-shell))))
   )
 
-(use-package outline :straight t
+(use-package outline :straight t :defer
   :hook ((prog-mode . outline-minor-mode)
          (text-mode . outline-minor-mode)
          (outline-minor-mode . outline-show-all)
@@ -163,16 +160,15 @@
   (evil-global-set-key 'normal (kbd "C-c @ <tab>") #'rh/outline-toggle-heading)
   (evil-global-set-key 'normal (kbd "C-c @ <backtab>") #'outline-hide-body))
 
-(use-package lisp-mode :straight nil
+(use-package lisp-mode :straight nil :defer t
   :mode ("\\.el\\'" . emacs-lisp-mode)
   :hook ((emacs-lisp-mode . rh/elisp-tab-hook)
 	 (emacs-lisp-mode . rh/elisp-highlight-custom-keywords)
 	 (emacs-lisp-mode . rh/outline-elisp)
 	 (lisp-interaction-mode . rh/elisp-tab-hook)
-	 (lisp-interaction-mode . rh/elisp-highlight-custom-keywords))
-  :init
-  (require 'rh-elisp)
-
+	 (lisp-interaction-mode . rh/elisp-highlight-custom-keywords)
+	 (emacs-lisp-mode . (lambda ()
+			      (require 'rh-elisp))))
   :config
   (defun rh/outline-elisp ()
     "Set outline regex for top-level declarations in Emacs Lisp."
@@ -189,9 +185,9 @@
   :mode "\\.rs\\'"
   :hook ((rust-mode . outline-minor-mode)
 	 (rust-mode . rh/outline-rust)
-	 (rust-mode . flycheck-rust-setup))
-  :init
-  (require 'rh-rust)
+	 (rust-mode . flycheck-rust-setup)
+	 (rust-mode . (lambda ()
+			(require 'rh-rust))))
   :config
   (setq rust-format-on-save t)
 
@@ -201,23 +197,23 @@
 		(rx line-start (* space)
                     (or "fn" "pub" "struct" "enum" "impl")))
     (outline-hide-body))
-
-  (use-package flycheck-rust)
   )
 
-(use-package nix-mode :straight t
+(use-package flycheck-rust :straight t :defer t :after rust)
+
+(use-package nix-mode :straight t :defer t
   :mode "\\.nix\\'"
   :config
   (setq nix-indent-function 'nix-indent-line))
 
-(use-package julia-mode :straight t
+(use-package julia-mode :straight t :defer t
   :mode "\\.jl\\'")
 
-(use-package kbd-mode
+(use-package kbd-mode :defer t
   :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
   :mode "\\.kbd\\'")
 
-(use-package systemd :straight t
+(use-package systemd :straight t :defer t
   :mode (("\\.service\\'" . systemd-mode)
          ("\\.timer\\'"   . systemd-mode)
          ("\\.mount\\'"   . systemd-mode)

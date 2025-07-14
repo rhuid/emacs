@@ -94,24 +94,25 @@
 
 ;; ESHELL
 
-(defun rh/eshell-toggle ()
-  "Toggle the most recent eshell buffer."
-  (interactive)
-  (let ((eshell-buffer
-         (seq-find (lambda (buf)
-                     (with-current-buffer buf
-                       (derived-mode-p 'eshell-mode)))
-                   (buffer-list))))
-    (if (eq (current-buffer) eshell-buffer)
-        (switch-to-buffer (other-buffer))
-      (if eshell-buffer
-          (switch-to-buffer eshell-buffer)
-        (eshell)))))
-
-
-(use-package eshell :straight nil
+(use-package eshell :straight nil :defer t
+  :commands eshell
   :hook ((eshell-first-time-mode . rh/eshell-init)
 	 (eshell-mode . esh-autosuggest-mode))
+  :init
+  (defun rh/eshell-toggle ()
+    "Toggle the most recent eshell buffer."
+    (interactive)
+    (let ((eshell-buffer
+           (seq-find (lambda (buf)
+                       (with-current-buffer buf
+			 (derived-mode-p 'eshell-mode)))
+                     (buffer-list))))
+      (if (eq (current-buffer) eshell-buffer)
+          (switch-to-buffer (other-buffer))
+	(if eshell-buffer
+            (switch-to-buffer eshell-buffer)
+          (eshell)))))
+
   :config
   (defun rh/eshell-init ()
     ;; Set prompt
@@ -124,17 +125,16 @@
 	     ":"
 	     (propertize (eshell/pwd) 'face `(:foreground "blue"))
 	     (if (= (user-uid) 0) " # " " $ ")))))
-  
-  (use-package eshell-syntax-highlighting
-    :after eshell
-    :config
-    (eshell-syntax-highlighting-global-mode +1))
-
-  (use-package esh-autosuggest)
   )
 
-;; Emulate A Terminal
-(use-package eat :straight t :defer t
+(use-package eshell-syntax-highlighting :straight t :defer t :after eshell
+  :config
+  (eshell-syntax-highlighting-global-mode +1))
+
+(use-package esh-autosuggest :straight t :defer t :after eshell)
+(use-package eat :straight t :defer t :after eshell
+  ;; Emulate A Terminal
+  :commands (eat eat-eshell-mode)
   :hook (eshell-mode . eat-eshell-mode))
 
 ;; (use-package eshell-hist-mode
@@ -142,22 +142,23 @@
 
 ;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
 
-(defun rh/vterm-toggle ()
-  "Toggle the most recent vterm buffer."
-  (interactive)
-  (let ((vterm-buffer
-         (seq-find (lambda (buf)
-                     (with-current-buffer buf
-                       (derived-mode-p 'vterm-mode)))
-                   (buffer-list))))
-    (if (eq (current-buffer) vterm-buffer)
-        (switch-to-buffer (other-buffer))
-      (if vterm-buffer
-          (switch-to-buffer vterm-buffer)
-        (vterm)))))
-
-(use-package vterm :straight t
+(use-package vterm :straight t :defer t
   :commands vterm
+  :init
+  (defun rh/vterm-toggle ()
+    "Toggle the most recent vterm buffer."
+    (interactive)
+    (let ((vterm-buffer
+           (seq-find (lambda (buf)
+                       (with-current-buffer buf
+			 (derived-mode-p 'vterm-mode)))
+                     (buffer-list))))
+      (if (eq (current-buffer) vterm-buffer)
+          (switch-to-buffer (other-buffer))
+	(if vterm-buffer
+            (switch-to-buffer vterm-buffer)
+          (vterm)))))
+
   :config
   (setq vterm-shell "/sbin/zsh"))
 
@@ -170,7 +171,7 @@
 
 
 
-(use-package aggressive-indent :straight t
+(use-package aggressive-indent :straight t :defer t
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
          (lisp-mode . aggressive-indent-mode))
   :config
@@ -184,7 +185,7 @@
 
 
 
-(use-package rainbow-mode :straight t
+(use-package rainbow-mode :straight t :defer t
   :hook (prog-mode . rainbow-mode))
 
 (use-package general :straight t :after outline
@@ -209,5 +210,6 @@
     "o <tab>" 'rh/outline-toggle-heading
     "o a"     'rh/outline-toggle-visibility
     ))
+
 
 (provide '90-tools)

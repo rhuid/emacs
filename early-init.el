@@ -1,6 +1,6 @@
 ;;; early-init.el --- Load this before init.el -*- lexical-binding: t; -*-
 
-;; Disable package.el auto-init (Use straight.el or manual setup)
+;; Disable package.el auto-init (using straight.el)
 (setq package-enable-at-startup nil)
 
 ;; Defer garbage collection to speed up startup
@@ -30,6 +30,7 @@
 ;; Don't resize fonts or frames implicitly at startup
 (setq inhibit-default-init t
       inhibit-startup-message t
+      initial-scratch-message nil
       inhibit-startup-echo-area-message user-login-name)
 
 ;; Inhibit loading X resources (faster on X11)
@@ -45,5 +46,7 @@
 
 ;; Record startup time
 (setq emacs-start-time (current-time))
+
+(setq server-client-instructions nil)
 
 (provide 'early-init)
