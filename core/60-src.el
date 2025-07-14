@@ -50,6 +50,8 @@
   (corfu-cycle t))                      ;; Cycle through candidates
 
 (with-eval-after-load 'corfu
+
+  ;; Disable some annoying stuffs like inserting on TAB or RET
   (define-key corfu-map (kbd "RET") nil)
   (define-key corfu-map (kbd "<return>") nil)
   (define-key corfu-map (kbd "TAB") nil)
@@ -57,6 +59,9 @@
   (define-key corfu-map (kbd "C-j") nil)
   (define-key corfu-map (kbd "C-m") nil)
 
+  ;; Use C-p and C-n to navigate through the corfu suggestions, and C-SPC to insert the selection
+  (define-key corfu-map (kbd "C-n") #'corfu-next)
+  (define-key corfu-map (kbd "C-p") #'corfu-previous)
   (define-key corfu-map (kbd "C-SPC") #'corfu-insert))
 
 (use-package cape

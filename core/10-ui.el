@@ -1,30 +1,24 @@
 ;;; 10-ui.el --- description -*- lexical-binding: t; -*-
 
-;; Looks and theme
-
 (global-visual-line-mode t)                                  ; automatic line wrapping
 (global-hl-line-mode 1)
-
 (global-prettify-symbols-mode 1) 
-(global-display-line-numbers-mode t)                         ; show line numbers
+(global-display-line-numbers-mode t)
 (setq make-backup-files nil)                                 ; don't generate backup files
 
-(use-package all-the-icons
-  :ensure t
+(use-package all-the-icons	:straight t
   :config
   (when (display-graphic-p)
     (unless (member "all-the-icons" (font-family-list))
       (all-the-icons-install-fonts t))))
 
-(use-package nerd-icons
-  :ensure t
+(use-package nerd-icons		:straight t
   :config
   (when (display-graphic-p)
     (unless (member "Symbols Nerd Font Mono" (font-family-list))
       (nerd-icons-install-fonts t))))
 
-(use-package doom-modeline                                   ; modeline customization
-  :ensure t
+(use-package doom-modeline	:straight t
   :init
   (doom-modeline-mode 1)
   :custom
@@ -46,25 +40,29 @@
   )
 
 ;; (use-package moody
-;;   :config
+;;				:config
 ;;   (setq x-underline-at-descent-line t)
 ;;   (setq moody-mode-line-height 25)
 
 ;;   (moody-replace-mode-line-buffer-identification)
 ;;   (moody-replace-vc-mode))
 
-(use-package nyan-mode                                       ; nyan cat in the modeline representing buffer position
-  :ensure t
-  :config
-  (nyan-mode 1))                                             ; enabling it globally
+(use-package nyan-mode		:straight t :config (nyan-mode 1))      ; enabling it globally
+(use-package rainbow-delimiters :straight t
+  :hook (prog-mode . rainbow-delimiters-mode)) ; different color for each pair of parenthesis
 
-(use-package rainbow-delimiters                              ; different color for each pair of parenthesis
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
+(use-package doom-themes	:straight t
+				:init (setq doom-themes-enable-bold t doom-themes-enable-italic t)
+				:config (doom-themes-org-config)) ; Improved org-mode styling
 
-;; Themes
-
-(use-package doom-themes :init (setq doom-themes-enable-bold t doom-themes-enable-italic t) :config (doom-themes-org-config))          ; Improved org-mode styling ;; Some other doom themes to consider ;; (load-theme 'doom-one-light t) ;; (load-theme 'doom-xcode t) ;; (load-theme 'doom-old-hope t)	; Dark, high-contrast ;; (load-theme 'doom-ayu-light t) ;; (load-theme 'doom-feather-light t) ;; (load-theme 'doom-ephemeral t) ;; (load-theme 'doom-nord t)
+;; Some other doom themes to consider
+;; (load-theme 'doom-one-light t)
+;; (load-theme 'doom-xcode t)
+;; (load-theme 'doom-old-hope t)	; Dark, high-contrast
+;; (load-theme 'doom-ayu-light t)
+;; (load-theme 'doom-feather-light t)
+;; (load-theme 'doom-ephemeral t)
+;; (load-theme 'doom-nord t)
 (defun rh/set-doom-tomorrow-day-theme ()
   "Set a customized version of doom-tomorrow-day-theme."
   (interactive)
@@ -72,16 +70,16 @@
   (load-theme 'doom-tomorrow-day t)
   
   (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'oblique                       ; make comments oblique
-		      :foreground "#999999"                 ; comment color (grayish)
-		      :weight 'light)                       ; make comments lighter
+				:slant 'oblique                       ; make comments oblique
+				:foreground "#999999"                 ; comment color (grayish)
+				:weight 'light)                       ; make comments lighter
 
   ;; line numbers
   (set-face-attribute 'line-number nil
-                      :foreground "#999999")
+				:foreground "#999999")
   (set-face-attribute 'line-number-current-line nil
-                      :foreground "#c678dd"
-                      :weight 'semi-bold)
+				:foreground "#c678dd"
+				:weight 'semi-bold)
 
   ;; fringe
   (set-face-background 'fringe "#1a1a1a"))
@@ -99,15 +97,15 @@
   
   ;; comments
   (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'oblique
-		      :weight 'light)
+				:slant 'oblique
+				:weight 'light)
   
   ;; line numbers
   (set-face-attribute 'line-number nil
-                      :foreground "#555555")
+				:foreground "#555555")
   (set-face-attribute 'line-number-current-line nil
-                      :foreground "#c678dd"
-                      :weight 'semi-bold)
+				:foreground "#c678dd"
+				:weight 'semi-bold)
 
   ;; highlighted line and fringe
   (set-face-background 'hl-line "#222222")
@@ -115,7 +113,7 @@
 
 (global-set-key (kbd "C-c C-M-v") #'rh/set-doom-vibrant-theme)
 
-(use-package gotham-theme)
+(use-package gotham-theme	:straight t)
 
 (defun rh/set-gotham-theme ()
   "Set a customized version of gotham theme."
@@ -123,16 +121,16 @@
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'gotham t)
   (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'oblique                   
-		      :foreground "#999999" 
-		      :weight 'normal) 
+				:slant 'oblique                   
+				:foreground "#999999" 
+				:weight 'normal) 
 
   ;; line numbers
   (set-face-attribute 'line-number nil
-                      :foreground "#555555")
+				:foreground "#555555")
   (set-face-attribute 'line-number-current-line nil
-                      :foreground "#c678dd"
-                      :weight 'semi-bold)
+				:foreground "#c678dd"
+				:weight 'semi-bold)
 
   ;; fringe
   (set-face-background 'fringe "#1a1a1a"))
@@ -156,17 +154,17 @@ Tomorrow Day during the day, Vibrant after 6 PM."
 ;; (run-at-time "00:00" 3600 #'rh/set-theme-based-doom-tomorrow-day
 
 ;; (use-package apropospriate-theme
-;;   :config
+;;				:config
 ;;   (disable-theme custom-enabled-themes)
 ;;   (load-theme 'apropospriate-light t))
 
 ;; (use-package moe-theme
-;;   :config
+;;				:config
 ;;   (disable-theme custom-enabled-themes)
 ;;   (load-theme 'moe-light t))
 
 ;; (use-package leuven-theme
-;;   :config
+;;				:config
 ;;   (disable-theme custom-enabled-themes)
 ;;   (load-theme 'leuven t))
 

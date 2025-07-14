@@ -2,9 +2,7 @@
 
 ;; (require 'rh-capitalize)
 
-(use-package centaur-tabs
-  :disabled t
-  :demand
+(use-package centaur-tabs :disabled t :demand nil
   :config
   (centaur-tabs-mode t)
   (setq centaur-tabs-style "chamfer")
@@ -188,16 +186,12 @@
 ;;     (vterm)))
 
 
-(use-package vterm
-  :straight t
+(use-package vterm :straight t
   :commands vterm
   :config
   (setq vterm-shell "/sbin/zsh"))
 
-
-
-(use-package magit
-  :defer t
+(use-package magit :defer t
   :commands (magit-status magit-log)
   :init
   (setq magit-display-buffer-function
@@ -206,8 +200,7 @@
 
 
 
-(use-package aggressive-indent
-  :ensure t
+(use-package aggressive-indent :straight t
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
          (lisp-mode . aggressive-indent-mode))
   :config
@@ -224,8 +217,7 @@
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
-(use-package general
-  :after outline
+(use-package general :after outline
   :config
   (general-create-definer rh/leader-keys
     :states '(normal visual)
@@ -235,6 +227,9 @@
   (rh/leader-keys
     ;; eshell
     "e t"     'rh/eshell-toggle
+
+    ;; eval
+    "e e"     'eval-expression
 
     ;; vterm
     "t t"     'rh/vterm-toggle

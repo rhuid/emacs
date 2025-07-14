@@ -1,9 +1,6 @@
 ;;; 20-kbd.el --- description -*- lexical-binding: t; -*-
 
-;; Keybindings
-
-(use-package evil
-  :ensure t
+(use-package evil			:straight t
   :init
   (setq evil-want-integration t)                  ;; This is optional since it's already set to t by default
   (setq evil-want-keybinding nil)
@@ -15,31 +12,25 @@
   :config
   (evil-mode 1)
   (setq cursor-type 'box)
-
-  (use-package evil-collection
-    :after evil
-    :ensure t
-    :config
-    (evil-collection-init))
-
-  (use-package evil-surround
-    :after evil
-    :config
-    (global-evil-surround-mode 1))
-
-  (use-package evil-commentary
-    :after evil
-    :config
-    (evil-commentary-mode))
   )
 
-(use-package evil-nerd-commenter
-  :bind ("M-;" . evilnc-comment-or-uncomment-lines))
-
-(use-package evil-goggles
-  :disabled t
-  :ensure t
+(use-package evil-collection		:straight t :after evil 
   :config
+  (evil-collection-init))
+
+(use-package evil-surround		:straight t :after evil
+  :config
+  (global-evil-surround-mode 1))
+
+(use-package evil-commentary		:straight t :after evil
+					:config
+  (evil-commentary-mode))
+
+(use-package evil-nerd-commenter	:straight t :after evil
+					:bind ("M-;" . evilnc-comment-or-uncomment-lines))
+
+(use-package evil-goggles		:straight t :disabled t
+					:config
   (evil-goggles-mode)
 
   ;; optionally use diff-mode's faces; as a result, deleted text
@@ -48,15 +39,15 @@
   ;; other faces such as `diff-added` will be used for other actions
   (evil-goggles-use-diff-faces))
 
-(use-package evil-colemak-basics
-  :init
+(use-package evil-colemak-basics	:straight t :after evil
+					:init
   (setq evil-colemak-basics-layout-mod 'mod-dh)
-  :config
+					:config
   (global-evil-colemak-basics-mode))
 
-(use-package evil-org
-  :after org
-  :hook (org-mode . (lambda () evil-org-mode)))
+(use-package evil-org			:straight t :after evil
+					:after org
+					:hook (org-mode . (lambda () evil-org-mode)))
 
 ;; Toggle Evil (optional: re-init evil-collection)
 (defun toggle-evil ()
@@ -78,7 +69,6 @@
       (message "Evil mode enabled."))))
 
 (global-set-key (kbd "C-c e") #'toggle-evil)
-
 (global-set-key (kbd "C-c r") #'replace-string)
 (global-set-key (kbd "C-c w") #'delete-trailing-whitespace)
 (global-set-key (kbd "C-c t c") #'company-mode)
