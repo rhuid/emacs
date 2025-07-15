@@ -34,14 +34,14 @@
 (use-package consult :straight t
   ;; Adds modern alternatives to core Emacs commands
   :bind
-  (("C-s" . consult-line)
+  (("C-c f" . consult-find)
+   ("C-c l" . consult-locate)
+   ("C-c r" . consult-recent-file)
+   ("C-s" . consult-line)
    ("C-x b" . consult-buffer)
    ("M-y" . consult-yank-pop)
-   ("C-c f" . consult-find)
-   ("C-c l" . consult-locate)
    )
   :config
-
   ;; To always start searching from home directory
   (advice-add 'consult-find :around
               (lambda (orig &rest args)
