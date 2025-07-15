@@ -54,7 +54,33 @@
 (use-package modus-themes :straight t
   :config
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'modus-operandi-deuteranopia t))
+  (load-theme 'modus-operandi-deuteranopia t)
+  )
+
+(defvar rh/modus-themes
+  '(modus-operandi
+    modus-operandi-deuteranopia
+    modus-operandi-tinted
+    modus-operandi-tritanopia
+    modus-vivendi
+    modus-vivendi-deuteranopia
+    modus-vivendi-tinted
+    modus-vivendi-tritanopia
+    )
+  "List of Modus themes to cycle through.")
+
+(defvar rh/current-theme-index 0
+  "Index of the currently active theme in `rh/modus-themes`.")
+
+(defun rh/cycle-modus-themes ()
+  "Cycle through predefined Modus themes."
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)
+  (let ((next-theme (nth rh/current-theme-index rh/modus-themes)))
+    (load-theme next-theme t)
+    (message "Loaded theme: %s" next-theme)
+    (setq rh/current-theme-index (mod (1+ rh/current-theme-index)
+                                      (length rh/modus-themes)))))
 
 (use-package doric-themes :straight t :disabled t
   :config

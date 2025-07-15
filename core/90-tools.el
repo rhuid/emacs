@@ -241,4 +241,9 @@
     "u r"     'recentf-open-files
     ))
 
+;; All custom keybindings
+
+(global-set-key (kbd "<f5>") #'rh/cycle-modus-themes)
+
+
 (provide '90-tools)
