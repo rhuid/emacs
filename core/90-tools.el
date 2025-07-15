@@ -22,16 +22,16 @@
 ;; MINIBUFFER
 
 ;; UI for minibuffer candidates
-(use-package vertico :straight t :init (vertico-mode 1))
-(use-package orderless :straight t
+(use-package vertico :straight t :demand t :init (vertico-mode 1))
+(use-package orderless :straight t :demand t 
   ;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, fle
   :init
   (setq completion-styles '(orderless)
         completion-category-defaults nil))
 
 ;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
-(use-package marginalia :straight t :init (marginalia-mode))
-(use-package consult :straight t
+(use-package marginalia :straight t  :demand t :init (marginalia-mode))
+(use-package consult :straight t :demand t 
   ;; Adds modern alternatives to core Emacs commands
   :bind
   (("C-c f" . consult-find)
@@ -52,8 +52,8 @@
 ;; (setq consult-preview-key "M-.") ; preview only when you press M-
 
 ;; Live popup of possible key combinations
-(use-package which-key :straight t :config (which-key-mode))
-(use-package embark :straight t
+(use-package which-key :straight t  :demand t :config (which-key-mode))
+(use-package embark :straight t :demand t 
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
@@ -86,14 +86,14 @@
                  (window-parameters (mode-line-format . none)))))
 
 ;; Consult users will also want the embark-consult package.
-(use-package embark-consult :straight t
+(use-package embark-consult :straight t :demand t 
   ;; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; ESHELL
 
-(use-package eshell :straight nil :defer t
+(use-package eshell :straight nil  :demand t 
   :commands eshell
   :hook ((eshell-first-time-mode . rh/eshell-init)
 	 (eshell-mode . esh-autosuggest-mode))
@@ -125,11 +125,11 @@
 	     (if (= (user-uid) 0) " # " " $ ")))))
   )
 
-(use-package eshell-syntax-highlighting :straight t :defer t :after eshell
+(use-package eshell-syntax-highlighting :straight t :demand t :after eshell
   :config
   (eshell-syntax-highlighting-global-mode +1))
 
-(use-package esh-autosuggest :straight t :defer t :after eshell)
+(use-package esh-autosuggest :straight t :demand t :after eshell)
 (use-package eat :straight t :defer t :after eshell
   ;; Emulate A Terminal
   :commands (eat eat-eshell-mode)
@@ -183,7 +183,7 @@
 (use-package rainbow-mode :straight t :defer t
   :hook (prog-mode . rainbow-mode))
 
-(use-package recentf :straight nil
+(use-package recentf :straight nil :demand t 
   :init
   (recentf-mode 1)
   :custom
@@ -196,21 +196,8 @@
   (run-at-time nil (* 5 60) #'recentf-save-list))
 
 
-(defun rh/eshell-banner ()
-  (let ((file "~/.emacs.d/logo/Emacs-Bloody.txt"))
-    (when (and (file-exists-p file)
-               (eq major-mode 'eshell-mode)
-               (= (point-min) (point-max))) ; Only at shell startup
-      (insert-file-contents file)
-      (goto-char (point-max))
-      (insert "\n🏡 Welcome back, Ronald\n\n"))))
 
-(add-hook 'eshell-first-time-mode-hook #'rh/eshell-banner)
-
-(add-hook 'emacs-startup-hook #'rh/eshell-banner)
-(add-hook 'server-after-make-frame-hook #'rh/eshell-banner)
-
-(use-package general :straight t :after outline
+(use-package general :straight t :demand t :after outline
   :config
   (general-create-definer rh/leader-keys
     :states '(normal visual)

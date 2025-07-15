@@ -25,11 +25,19 @@
 (setq straight-use-package-by-default t)
 (require 'use-package)
 
+;; For native-compiling manually with make, temporarily not defer
+(setq use-package-always-defer (not (bound-and-true-p byte-compile-current-file)))
+
+(setq use-package-always-defer t)
+
+;; (setq use-package-always-ensure    t  ; :ensure t by default
+;;       use-package-always-defer     t  ; :defer  t by default
+;;       use-package-vc-prefer-newest t) ; :rev :newest by default
+
 ;; Make sure Emacs inherits shell's $PATH (esp. for daemon mode)
 (use-package exec-path-from-shell
   :config
   (exec-path-from-shell-initialize))
-
 
 (use-package benchmark-init      :straight t :disabled t
   :init (benchmark-init/activate)

@@ -77,11 +77,14 @@
   ;; :mode "\\.hs\\"
   )
 
-(use-package lean4-mode :defer t
+(use-package lean4-mode :straight nil :defer t
   :commands lean4-mode
-  :straight (lean4-mode :type git :host github
-                        :repo "leanprover-community/lean4-mode"
-                        :files ("*.el" "data"))
+  :load-path "~/.emacs.d/lean4-mode"
+
+  ;; :straight (lean4-mode :type git :host github
+  ;;                       :repo "leanprover-community/lean4-mode"
+  ;;                       :files ("*.el" "data"))
+
   :mode "\\.lean\\'"
   :hook ((lean4-mode . lsp-mode)
 	 (lean4-mode . rh/lean4-tab-hook)
@@ -108,7 +111,7 @@
 		      (require 'rh-shell))))
   )
 
-(use-package outline :straight t :defer
+(use-package outline :straight t :demand t
   :hook ((prog-mode . outline-minor-mode)
          (text-mode . outline-minor-mode)
          (outline-minor-mode . outline-show-all)

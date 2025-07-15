@@ -1,6 +1,6 @@
 ;;; editing-environment.el --- description -*- lexical-binding: t; -*-
 
-(use-package evil			:straight t
+(use-package evil			:straight t :demand t
   :init
   (setq evil-want-integration t)                  ;; This is optional since it's already set to t by default
   (setq evil-want-keybinding nil)
@@ -14,22 +14,22 @@
   (setq cursor-type 'box)
   )
 
-(use-package evil-collection		:straight t :after evil
+(use-package evil-collection		:straight t  :demand t :after evil
   :config
   (evil-collection-init))
 
-(use-package evil-surround		:straight t :after evil
+(use-package evil-surround		:straight t  :demand t :after evil
   :config
   (global-evil-surround-mode 1))
 
-(use-package evil-commentary		:straight t :after evil
+(use-package evil-commentary		:straight t :demand t :after evil
   :config
   (evil-commentary-mode))
 
-(use-package evil-nerd-commenter	:straight t :after evil
+(use-package evil-nerd-commenter	:straight t  :demand t :after evil
   :bind ("M-;" . evilnc-comment-or-uncomment-lines))
 
-(use-package evil-snipe			:straight t :after evil
+(use-package evil-snipe			:straight t :demand t  :after evil
   :init
   (evil-snipe-mode +1)
   (evil-snipe-override-mode +1))
@@ -44,7 +44,7 @@
   ;; other faces such as `diff-added` will be used for other actions
   (evil-goggles-use-diff-faces))
 
-(use-package evil-colemak-basics	:straight t :after evil
+(use-package evil-colemak-basics	:straight t :demand t  :after evil
   :init
   (setq evil-colemak-basics-layout-mod 'mod-dh)
   :config

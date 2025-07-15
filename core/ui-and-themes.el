@@ -40,7 +40,7 @@
 ;;   (setq doom-modeline-enable-word-count t)
 ;;   )
 
-(use-package moody :straight t
+(use-package moody :straight t :demand t
   :config
   (setq x-underline-at-descent-line t)
   (setq moody-mode-line-height 25)
@@ -51,7 +51,7 @@
 (use-package rainbow-delimiters :straight t
   :hook (prog-mode . rainbow-delimiters-mode)) ; different color for each pair of parenthesis
 
-(use-package modus-themes :straight t
+(use-package modus-themes :straight t :demand t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'modus-operandi-deuteranopia t)
