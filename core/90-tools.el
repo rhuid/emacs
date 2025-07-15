@@ -122,7 +122,9 @@
 	     (propertize (system-name) 'face `(:foreground "green"))
 	     ":"
 	     (propertize (eshell/pwd) 'face `(:foreground "blue"))
-	     (if (= (user-uid) 0) " # " " $ ")))))
+	     (if (= (user-uid) 0) " # " " $ "))))
+    (display-line-numbers-mode -1)
+    )
   )
 
 (use-package eshell-syntax-highlighting :straight t :demand t :after eshell
@@ -197,6 +199,11 @@
 
 
 
+(use-package calc :straight nil
+  :config
+  )
+
+(use-package sudo-edit :straight t :commands (sudo-edit))
 (use-package general :straight t :demand t :after outline
   :config
   (general-create-definer rh/leader-keys

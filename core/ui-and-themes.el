@@ -41,11 +41,14 @@
 ;;   )
 
 (use-package moody :straight t :demand t
-  :config
+  :custom
   (setq x-underline-at-descent-line t)
-  (setq moody-mode-line-height 25)
+  (setq moody-mode-line-height 20)
+  :config
   (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode))
+  (moody-replace-vc-mode)
+  (moody-replace-eldoc-minibuffer-message-function)
+  )
 
 (use-package nyan-mode :straight t :disabled t :defer t :config (nyan-mode 1))
 (use-package rainbow-delimiters :straight t
