@@ -53,4 +53,7 @@
 
 (setq server-client-instructions nil)
 
+;; Don't pop up a warning buffer unless it's an emergency
+(setq warning-minimum-level :emergency)
+
 (provide 'early-init)
