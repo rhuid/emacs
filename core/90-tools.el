@@ -19,11 +19,11 @@
 ;;  :config
 ;;  (ac-config-default))
 
-;; MINIBUFFER 
+;; MINIBUFFER
 
 ;; UI for minibuffer candidates
 (use-package vertico :straight t :init (vertico-mode 1))
-(use-package orderless :straight t 
+(use-package orderless :straight t
   ;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, fle
   :init
   (setq completion-styles '(orderless)
@@ -41,7 +41,7 @@
    ("C-c l" . consult-locate)
    )
   :config
-  
+
   ;; To always start searching from home directory
   (advice-add 'consult-find :around
               (lambda (orig &rest args)
@@ -53,7 +53,7 @@
 
 ;; Live popup of possible key combinations
 (use-package which-key :straight t :config (which-key-mode))
-(use-package embark :straight t 
+(use-package embark :straight t
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
@@ -86,11 +86,10 @@
                  (window-parameters (mode-line-format . none)))))
 
 ;; Consult users will also want the embark-consult package.
-(use-package embark-consult :straight t 
+(use-package embark-consult :straight t
   ;; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
-
 
 ;; ESHELL
 
@@ -98,7 +97,7 @@
   :commands eshell
   :hook ((eshell-first-time-mode . rh/eshell-init)
 	 (eshell-mode . esh-autosuggest-mode))
-  :init
+  :config
   (defun rh/eshell-toggle ()
     "Toggle the most recent eshell buffer."
     (interactive)
@@ -113,7 +112,6 @@
             (switch-to-buffer eshell-buffer)
           (eshell)))))
 
-  :config
   (defun rh/eshell-init ()
     ;; Set prompt
     (setq eshell-prompt-function
@@ -158,17 +156,15 @@
 	(if vterm-buffer
             (switch-to-buffer vterm-buffer)
           (vterm)))))
-
   :config
-  (setq vterm-shell "/sbin/zsh"))
+  (setq vterm-shell "/sbin/zsh")
+  )
 
 (use-package magit :straight t :defer t
   :commands (magit-status magit-log)
   :init
   (setq magit-display-buffer-function
         #'magit-display-buffer-same-window-except-diff-v1))
-
-
 
 
 (use-package aggressive-indent :straight t :defer t
@@ -184,9 +180,20 @@
 ;; (use-package chess)
 
 
-
 (use-package rainbow-mode :straight t :defer t
   :hook (prog-mode . rainbow-mode))
+
+(use-package recentf :straight nil
+  :init
+  (recentf-mode 1)
+  :custom
+  (recentf-max-saved-items 100)
+  (recentf-max-menu-items 25)
+  (recentf-save-file (expand-file-name "recentf" user-emacs-directory))
+  (recentf-auto-cleanup 'never)
+  :config
+  ;; Save recentf list every 5 minutes
+  (run-at-time nil (* 5 60) #'recentf-save-list))
 
 (use-package general :straight t :after outline
   :config
@@ -202,14 +209,21 @@
     ;; eval
     "e e"     'eval-expression
 
-    ;; vterm
-    "t t"     'rh/vterm-toggle
-
-    ;; Outline Minor Mode
+    ;; outline minor mode
     "o t"     'rh/outline-toggle-heading
     "o <tab>" 'rh/outline-toggle-heading
     "o a"     'rh/outline-toggle-visibility
-    ))
 
+    ;; string manipulation
+    "s r"     'replace-string
+    "s w"     'delete-trailing-whitespace
+    "s a"     'abbrev-mode
+
+    ;; vterm
+    "t t"     'rh/vterm-toggle
+    
+    ;; utilities
+    "u r"     'recentf-open-files
+    ))
 
 (provide '90-tools)

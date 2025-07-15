@@ -46,13 +46,30 @@
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode))
 
-(use-package nyan-mode :straight t :defer t :config (nyan-mode 1))      ; enabling it globally
+(use-package nyan-mode :straight t :disabled t :defer t :config (nyan-mode 1))
 (use-package rainbow-delimiters :straight t
   :hook (prog-mode . rainbow-delimiters-mode)) ; different color for each pair of parenthesis
 
-(use-package doom-themes :straight t :defer t
-  :init (setq doom-themes-enable-bold t doom-themes-enable-italic t)
-  :config (doom-themes-org-config)) ; Improved org-mode styling
+(use-package modus-themes :straight t 
+  :config
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme 'modus-operandi-deuteranopia t))
+
+(use-package doric-themes :straight t :disabled t
+  :config
+  (mapc #'disable-theme custom-enabled-themes)
+  (setq doric-themes-to-toggle '(doric-light doric-dark))
+  (setq doric-themes-to-rotate doric-themes-collection)
+  (doric-themes-select 'doric-light)
+  :bind
+  (("<f5>" . doric-themes-toggle)
+   ("C-<f5>" . doric-themes-select)
+   ("M-<f5>" . doric-themes-rotate)))
+
+
+;; (use-package doom-themes :straight t :defer t
+;;   :init (setq doom-themes-enable-bold t doom-themes-enable-italic t)
+;;   :config (doom-themes-org-config)) ; Improved org-mode styling
 
 ;; Some other doom themes to consider
 ;; (load-theme 'doom-one-light t)
@@ -63,92 +80,92 @@
 ;; (load-theme 'doom-ephemeral t)
 ;; (load-theme 'doom-nord t)
 
-(defun rh/set-doom-tomorrow-day-theme ()
-  "Set a customized version of doom-tomorrow-day-theme."
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'doom-tomorrow-day t)
+;; (defun rh/set-doom-tomorrow-day-theme ()
+;;   "Set a customized version of doom-tomorrow-day-theme."
+;;   (interactive)
+;;   (mapc #'disable-theme custom-enabled-themes)
+;;   (load-theme 'doom-tomorrow-day t)
 
-  (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'oblique                       ; make comments oblique
-		      :foreground "#999999"                 ; comment color (grayish)
-		      :weight 'light)                       ; make comments lighter
+;;   (set-face-attribute 'font-lock-comment-face nil
+;; 		      :slant 'oblique                       ; make comments oblique
+;; 		      :foreground "#999999"                 ; comment color (grayish)
+;; 		      :weight 'light)                       ; make comments lighter
 
-  ;; line numbers
-  (set-face-attribute 'line-number nil
-		      :foreground "#999999")
-  (set-face-attribute 'line-number-current-line nil
-		      :foreground "#c678dd"
-		      :weight 'semi-bold)
+;;   ;; line numbers
+;;   (set-face-attribute 'line-number nil
+;; 		      :foreground "#999999")
+;;   (set-face-attribute 'line-number-current-line nil
+;; 		      :foreground "#c678dd"
+;; 		      :weight 'semi-bold)
 
-  ;; fringe
-  (set-face-background 'fringe "#1a1a1a"))
+;;   ;; fringe
+;;   (set-face-background 'fringe "#1a1a1a"))
 
-(global-set-key (kbd "C-c C-M-t") #'rh/set-doom-tomorrow-day-theme)
+;; (global-set-key (kbd "C-c C-M-t") #'rh/set-doom-tomorrow-day-theme)
 
-(defun rh/set-doom-vibrant-theme ()
-  "Set a customized version of doom-vibrant-theme."
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'doom-vibrant t)
+;; (defun rh/set-doom-vibrant-theme ()
+;;   "Set a customized version of doom-vibrant-theme."
+;;   (interactive)
+;;   (mapc #'disable-theme custom-enabled-themes)
+;;   (load-theme 'doom-vibrant t)
 
-  ;; main background
-  (set-face-background 'default "#1a1a1a")
+;;   ;; main background
+;;   (set-face-background 'default "#1a1a1a")
 
-  ;; comments
-  (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'oblique
-		      :weight 'light)
+;;   ;; comments
+;;   (set-face-attribute 'font-lock-comment-face nil
+;; 		      :slant 'oblique
+;; 		      :weight 'light)
 
-  ;; line numbers
-  (set-face-attribute 'line-number nil
-		      :foreground "#555555")
-  (set-face-attribute 'line-number-current-line nil
-		      :foreground "#c678dd"
-		      :weight 'semi-bold)
+;;   ;; line numbers
+;;   (set-face-attribute 'line-number nil
+;; 		      :foreground "#555555")
+;;   (set-face-attribute 'line-number-current-line nil
+;; 		      :foreground "#c678dd"
+;; 		      :weight 'semi-bold)
 
-  ;; highlighted line and fringe
-  (set-face-background 'hl-line "#222222")
-  (set-face-background 'fringe "#1a1a1a"))
+;;   ;; highlighted line and fringe
+;;   (set-face-background 'hl-line "#222222")
+;;   (set-face-background 'fringe "#1a1a1a"))
 
-(global-set-key (kbd "C-c C-M-v") #'rh/set-doom-vibrant-theme)
+;; (global-set-key (kbd "C-c C-M-v") #'rh/set-doom-vibrant-theme)
 
-(use-package gotham-theme	:straight t)
+;; (use-package gotham-theme	:straight t)
 
-(defun rh/set-gotham-theme ()
-  "Set a customized version of gotham theme."
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'gotham t)
-  (set-face-attribute 'font-lock-comment-face nil
-		      :slant 'oblique                   
-		      :foreground "#999999" 
-		      :weight 'normal) 
+;; (defun rh/set-gotham-theme ()
+;;   "Set a customized version of gotham theme."
+;;   (interactive)
+;;   (mapc #'disable-theme custom-enabled-themes)
+;;   (load-theme 'gotham t)
+;;   (set-face-attribute 'font-lock-comment-face nil
+;; 		      :slant 'oblique                   
+;; 		      :foreground "#999999" 
+;; 		      :weight 'normal) 
 
-  ;; line numbers
-  (set-face-attribute 'line-number nil
-		      :foreground "#555555")
-  (set-face-attribute 'line-number-current-line nil
-		      :foreground "#c678dd"
-		      :weight 'semi-bold)
+;;   ;; line numbers
+;;   (set-face-attribute 'line-number nil
+;; 		      :foreground "#555555")
+;;   (set-face-attribute 'line-number-current-line nil
+;; 		      :foreground "#c678dd"
+;; 		      :weight 'semi-bold)
 
-  ;; fringe
-  (set-face-background 'fringe "#1a1a1a"))
+;;   ;; fringe
+;;   (set-face-background 'fringe "#1a1a1a"))
 
-(global-set-key (kbd "C-c C-M-g") #'rh/set-gotham-theme)
+;; (global-set-key (kbd "C-c C-M-g") #'rh/set-gotham-theme)
 
-(defun rh/set-theme-based-on-time ()
-  "Automatically set Emacs theme based on time of day.
-Tomorrow Day during the day, Vibrant after 6 PM."
-  (let* ((hour (string-to-number (format-time-string "%H")))
-         (night? (or (>= hour 18) (< hour 6))))
-    (mapc #'disable-theme custom-enabled-themes)
-    (if night?
-        (rh/set-doom-vibrant-theme)
-      (rh/set-doom-tomorrow-day-theme))))
+;; (defun rh/set-theme-based-on-time ()
+;;   "Automatically set Emacs theme based on time of day.
+;; Tomorrow Day during the day, Vibrant after 6 PM."
+;;   (let* ((hour (string-to-number (format-time-string "%H")))
+;;          (night (or (>= hour 18) (< hour 6))))
+;;     (mapc #'disable-theme custom-enabled-themes)
+;;     (if night
+;;         (rh/set-doom-vibrant-theme)
+;;       (rh/set-doom-tomorrow-day-theme))))
 
-;; Run on Emacs startup			
-(add-hook 'emacs-startup-hook #'rh/set-theme-based-on-time)
+;; ;; Run on Emacs startup			
+;; (add-hook 'emacs-startup-hook #'rh/set-theme-based-on-time)
 
 ;; Run every hour
 ;; (run-at-time "00:00" 3600 #'rh/set-theme-based-doom-tomorrow-day

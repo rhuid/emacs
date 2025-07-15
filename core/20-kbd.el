@@ -72,10 +72,10 @@
 
 ;; (global-set-key (kbd "C-c e") #'toggle-evil)
 
-(global-set-key (kbd "C-c r") #'replace-string)
-(global-set-key (kbd "C-c w") #'delete-trailing-whitespace)
-(global-set-key (kbd "C-c t c") #'company-mode)
-(global-set-key (kbd "C-c t a") #'abbrev-mode)
+;; (global-set-key (kbd "C-c r") #'replace-string)
+;; (global-set-key (kbd "C-c w") #'delete-trailing-whitespace)
+;; (global-set-key (kbd "C-c t c") #'company-mode)
+;; (global-set-key (kbd "C-c t a") #'abbrev-mode)
 
 ;; (defun toggle-header-line ()
 ;;   "Toggle the header-line-format in the current buffer."
