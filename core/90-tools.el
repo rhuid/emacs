@@ -96,9 +96,7 @@
 (use-package eshell :straight nil :demand t 
   :commands eshell
   :hook ((eshell-first-time-mode . rh/eshell-init)
-	 (eshell-mode . esh-autosuggest-mode)
-	 (eshell-mode . (lambda ()
-			  (setenv "PATH" (mapconcat #'identity exec-path path-separator)))))
+	 (eshell-mode . esh-autosuggest-mode))
   :config
   (defun rh/eshell-toggle ()
     "Toggle the most recent eshell buffer."
