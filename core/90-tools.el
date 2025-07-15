@@ -93,9 +93,10 @@
 
 ;; ESHELL
 
-(use-package eshell :straight nil  :demand t 
+(use-package eshell :straight nil :demand t 
   :commands eshell
   :hook ((eshell-first-time-mode . rh/eshell-init)
+	 (eshell-first-time-mode . rh/sync-eshell-PATH-with-exec-path)
 	 (eshell-mode . esh-autosuggest-mode))
   :config
   (defun rh/eshell-toggle ()
@@ -123,6 +124,9 @@
 	     ":"
 	     (propertize (eshell/pwd) 'face `(:foreground "blue"))
 	     (if (= (user-uid) 0) " # " " $ ")))))
+  (defun rh/sync-eshell-PATH-with-exec-path ()
+    "Sync Eshell's $PATH with Emacs's `exec-path`."
+    (setenv "PATH" (string-join exec-path path-separator)))
   )
 
 (use-package eshell-syntax-highlighting :straight t :demand t :after eshell

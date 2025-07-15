@@ -35,9 +35,18 @@
 ;;       use-package-vc-prefer-newest t) ; :rev :newest by default
 
 ;; Make sure Emacs inherits shell's $PATH (esp. for daemon mode)
+;; (use-package exec-path-from-shell
+;;   :config
+;;   (exec-path-from-shell-initialize))
+
 (use-package exec-path-from-shell
+  :if (display-graphic-p) ;; Only needed in GUI sessions
+  :demand t
   :config
+  (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
   (exec-path-from-shell-initialize))
+
+
 
 (use-package benchmark-init      :straight t :disabled t
   :init (benchmark-init/activate)
