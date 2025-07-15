@@ -1,4 +1,4 @@
-;;; 20-kbd.el --- description -*- lexical-binding: t; -*-
+;;; editing-environment.el --- description -*- lexical-binding: t; -*-
 
 (use-package evil			:straight t
   :init
@@ -97,4 +97,4 @@
 
 ;; (global-set-key (kbd "C-c c") #'rh/clean-mode)
 
-(provide '20-kbd)
+(provide 'editing-environment)

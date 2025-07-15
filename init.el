@@ -31,15 +31,14 @@
   (exec-path-from-shell-initialize))
 
 
-(use-package benchmark-init :straight t :disabled t
+(use-package benchmark-init      :straight t :disabled t
   :init (benchmark-init/activate)
   :hook (after-init . benchmark-init/deactivate))
 
-(use-package ui-and-themes :straight nil :defer nil)
-(use-package welcome-screen :straight nil :defer nil)
-(use-package 20-kbd	    :straight nil :defer nil)
+(use-package ui-and-themes       :straight nil :defer nil)
+(use-package welcome-screen      :straight nil :defer nil)
+(use-package editing-environment :straight nil :defer nil)
 (use-package 30-abbrev	    :straight nil :defer nil)
-(use-package 40-dashboard   :straight nil :defer nil)
 (use-package 50-org	    :straight nil :defer nil)
 (use-package 60-src	    :straight nil :defer nil)
 (use-package 70-typeset	    :straight nil :defer nil)
