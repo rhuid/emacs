@@ -23,6 +23,7 @@
 
 ;; UI for minibuffer candidates
 (use-package vertico :straight t :demand t :init (vertico-mode 1))
+(use-package savehist :straight nil :demand t :init (savehist-mode))
 (use-package orderless :straight t :demand t 
   ;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, fle
   :init
@@ -197,11 +198,9 @@
   ;; Save recentf list every 5 minutes
   (run-at-time nil (* 5 60) #'recentf-save-list))
 
-
-
 (use-package calc :straight nil
   :config
-  )
+  (add-hook 'calc-trail-mode-hook 'evil-insert-state))
 
 (use-package sudo-edit :straight t :commands (sudo-edit))
 (use-package general :straight t :demand t :after outline
