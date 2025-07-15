@@ -1,5 +1,4 @@
-;;; ui-and-themes.el --- As the filename suggests -*- lexical-binding: t; -*-
-
+;;; ui-and-themes.el --- Just as the filename suggests -*- lexical-binding: t; -*-
 
 (global-visual-line-mode t)                                  ; automatic line wrapping
 (global-hl-line-mode 1)
@@ -43,11 +42,30 @@
 (use-package moody :straight t :demand t
   :custom
   (setq x-underline-at-descent-line t)
-  (setq moody-mode-line-height 20)
+  ;; (setq moody-mode-line-height 20)
   :config
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode)
   (moody-replace-eldoc-minibuffer-message-function)
+  )
+
+(setq display-time-format "[%b %-d %a %-I:%M %p]"
+      display-time-default-load-average nil
+      display-time-mail-file 0)
+
+(display-time-mode 1)
+
+;; The minions seem to be not working (let's fix it later)
+(use-package minions :straight t :demand t
+  :hook (after-init . minions-mode)
+  ;; :custom
+  ;; (minions-mode-line-delimiters (cons "" ""))
+  ;; :config
+  ;; (defun +set-minions-mode-line-lighter ()
+  ;;   (setq minions-mode-line-lighter
+  ;;         (if (display-graphic-p) "⚙" "#")))
+  ;; (add-hook 'server-after-make-frame-hook #'+set-minions-mode-line-lighter)
+  ;; (minions-mode 1)
   )
 
 (use-package nyan-mode :straight t :disabled t :defer t :config (nyan-mode 1))
