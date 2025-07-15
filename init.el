@@ -35,7 +35,8 @@
   :init (benchmark-init/activate)
   :hook (after-init . benchmark-init/deactivate))
 
-(use-package 10-ui	    :straight nil :defer nil)
+(use-package ui-and-themes :straight nil :defer nil)
+(use-package welcome-screen :straight nil :defer nil)
 (use-package 20-kbd	    :straight nil :defer nil)
 (use-package 30-abbrev	    :straight nil :defer nil)
 (use-package 40-dashboard   :straight nil :defer nil)
