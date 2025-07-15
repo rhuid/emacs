@@ -195,6 +195,21 @@
   ;; Save recentf list every 5 minutes
   (run-at-time nil (* 5 60) #'recentf-save-list))
 
+
+(defun rh/eshell-banner ()
+  (let ((file "~/.emacs.d/logo/Emacs-Bloody.txt"))
+    (when (and (file-exists-p file)
+               (eq major-mode 'eshell-mode)
+               (= (point-min) (point-max))) ; Only at shell startup
+      (insert-file-contents file)
+      (goto-char (point-max))
+      (insert "\n🏡 Welcome back, Ronald\n\n"))))
+
+(add-hook 'eshell-first-time-mode-hook #'rh/eshell-banner)
+
+(add-hook 'emacs-startup-hook #'rh/eshell-banner)
+(add-hook 'server-after-make-frame-hook #'rh/eshell-banner)
+
 (use-package general :straight t :after outline
   :config
   (general-create-definer rh/leader-keys

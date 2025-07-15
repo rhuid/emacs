@@ -30,8 +30,12 @@
 ;; Don't resize fonts or frames implicitly at startup
 (setq inhibit-default-init t
       inhibit-startup-message t
-      initial-scratch-message nil
       inhibit-startup-echo-area-message user-login-name)
+
+;; (setq initial-scratch-message
+;;       (with-temp-buffer
+;;         (insert-file-contents "~/.emacs.d/logo/Emacs-Bloody.txt")
+;;         (buffer-string)))
 
 ;; Inhibit loading X resources (faster on X11)
 (setq inhibit-x-resources t)

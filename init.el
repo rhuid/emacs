@@ -31,16 +31,16 @@
   (exec-path-from-shell-initialize))
 
 
-(use-package benchmark-init :straight t :defer t
+(use-package benchmark-init :straight t :disabled t
   :init (benchmark-init/activate)
   :hook (after-init . benchmark-init/deactivate))
 
-(use-package 10-ui	    :straight nil :demand t)
-(use-package 20-kbd	    :straight nil :demand t)
-(use-package 30-abbrev	    :straight nil :demand t)
-(use-package 40-dashboard   :straight nil :demand t)
-(use-package 50-org	    :straight nil :demand t)
-(use-package 60-src	    :straight nil :demand t)
-(use-package 70-typeset	    :straight nil :demand t)
-(use-package 80-dired	    :straight nil :demand t)
-(use-package 90-tools	    :straight nil :demand t)
+(use-package 10-ui	    :straight nil :defer nil)
+(use-package 20-kbd	    :straight nil :defer nil)
+(use-package 30-abbrev	    :straight nil :defer nil)
+(use-package 40-dashboard   :straight nil :defer nil)
+(use-package 50-org	    :straight nil :defer nil)
+(use-package 60-src	    :straight nil :defer nil)
+(use-package 70-typeset	    :straight nil :defer nil)
+(use-package 80-dired	    :straight nil :defer nil)
+(use-package 90-tools	    :straight nil :defer nil)
