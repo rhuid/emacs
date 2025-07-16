@@ -96,12 +96,8 @@
         #'magit-display-buffer-same-window-except-diff-v1)
   (setq magit-restore-window-configuration-after-quit nil)
   :config
-  (with-eval-after-load 'evil
-    (evil-define-key 'normal magit-mode-map
-      (kbd "u") #'magit-unstage)
-    (evil-define-key 'normal magit-mode-map
-      (kbd "U") #'magit-unstage-all)
-    )
+  (define-key magit-mode-map (kbd "C-c u") #'magit-unstage)
+  (define-key magit-mode-map (kbd "C-c U") #'magit-unstage-all)
   )
 
 (use-package aggressive-indent :straight t :defer t
