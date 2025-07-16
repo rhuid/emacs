@@ -1,4 +1,61 @@
-#*#
 /eshell/history
 /eshell/lastdir
 /private
+
+# Emacs backup & auto-save
+*~
+\#*\#
+.\#*
+auto-save-list/
+tramp
+recentf
+history
+abbrev_defs
+ac-comphist.dat
+
+# Transient state
+.lsp-session-v1
+projects
+games
+eln-cache/
+elpa/
+cnf/
+tmp.el
+lambda-calc-mode.el
+lean4-mode/
+rh-org.el
+
+# Org-specific junk (if any)
+org-id-locations
+
+# Byte-compiled files
+*.elc
+
+# Native compilation cache (Emacs 28+)
+eln-cache/
+*.eln
+
+# Package manager
+straight/
+quelpa/
+eln/
+auto-save-list/
+bookmarks
+projectile-bookmarks.eld
+url/cache/
+org-clock-save.el
+recentf
+transient/
+tramp
+*.tmp
+
+# Lockfiles and backups
+*.lock
+*.bak
+*.swp
+*.swo
+
+# Literate programming outputs
+*.pdf
+*.html
+*.tex
