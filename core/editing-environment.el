@@ -44,7 +44,7 @@
   ;; other faces such as `diff-added` will be used for other actions
   (evil-goggles-use-diff-faces))
 
-(use-package evil-colemak-basics	:straight t :demand t  :after evil
+(use-package evil-colemak-basics	:straight t :demand t :after evil
   :init
   (setq evil-colemak-basics-layout-mod 'mod-dh)
   :config
