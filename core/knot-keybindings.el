@@ -14,6 +14,9 @@
     ;; eval
     "e e"     'eval-expression
 
+    ;; git (magit)
+    "g s"     'magit-status
+
     ;; outline minor mode
     "o t"     'rh/outline-toggle-heading
     "o <tab>" 'rh/outline-toggle-heading
