@@ -93,8 +93,12 @@
   :commands (magit-status magit-log)
   :init
   (setq magit-display-buffer-function
-        #'magit-display-buffer-same-window-except-diff-v1))
-
+        #'magit-display-buffer-same-window-except-diff-v1)
+  (setq magit-restore-window-configuration-after-quit nil)
+  :config
+  (with-eval-after-load 'evil-collection
+    (evil-collection-init 'magit))
+  )
 
 (use-package aggressive-indent :straight t :defer t
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
