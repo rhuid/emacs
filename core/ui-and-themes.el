@@ -49,13 +49,14 @@
   (moody-replace-eldoc-minibuffer-message-function)
   )
 
-(setq display-time-format "[%b %-d %a %-I:%M %p]"
-      display-time-default-load-average nil
-      display-time-mail-file 0)
+(use-package emacs :straight nil :demand t
+  :config
+  (setq display-time-format "[%b %-d %a %-I:%M %p]"
+	display-time-default-load-average nil
+	display-time-mail-file nil)
+  (display-time-mode 1)
+  )
 
-(display-time-mode 1)
-
-;; The minions seem to be not working (let's fix it later)
 (use-package minions :straight t :demand t
   :hook (after-init . minions-mode)
   ;; :custom
@@ -72,36 +73,20 @@
 (use-package rainbow-delimiters :straight t
   :hook (prog-mode . rainbow-delimiters-mode)) ; different color for each pair of parenthesis
 
-(use-package modus-themes :straight t :demand t
+(use-package ef-themes :straight t :demand t
+  :config
+  (mapc #'disable-theme custom-enabled-themes)
+  (ef-themes-select 'ef-frost)
+  :bind
+  (("<f5>" . ef-themes-rotate)
+   ("C-<f5>" . ef-themes-select))
+  )
+
+(use-package modus-themes :straight t :disabled t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'modus-operandi-deuteranopia t)
   )
-
-(defvar rh/modus-themes
-  '(modus-operandi
-    modus-operandi-deuteranopia
-    modus-operandi-tinted
-    modus-operandi-tritanopia
-    modus-vivendi
-    modus-vivendi-deuteranopia
-    modus-vivendi-tinted
-    modus-vivendi-tritanopia
-    )
-  "List of Modus themes to cycle through.")
-
-(defvar rh/current-theme-index 0
-  "Index of the currently active theme in `rh/modus-themes`.")
-
-(defun rh/cycle-modus-themes ()
-  "Cycle through predefined Modus themes."
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes)
-  (let ((next-theme (nth rh/current-theme-index rh/modus-themes)))
-    (load-theme next-theme t)
-    (message "Loaded theme: %s" next-theme)
-    (setq rh/current-theme-index (mod (1+ rh/current-theme-index)
-                                      (length rh/modus-themes)))))
 
 (use-package doric-themes :straight t :disabled t
   :config
@@ -113,7 +98,6 @@
   (("<f5>" . doric-themes-toggle)
    ("C-<f5>" . doric-themes-select)
    ("M-<f5>" . doric-themes-rotate)))
-
 
 ;; (use-package doom-themes :straight t :defer t
 ;;   :init (setq doom-themes-enable-bold t doom-themes-enable-italic t)
