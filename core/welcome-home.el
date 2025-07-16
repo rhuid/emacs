@@ -1,8 +1,8 @@
-;;; welcome-screen.el --- A minimal and somewhat dry startup page -*- lexical-binding: t; -*-
+;;; welcome-home.el --- A minimal and somewhat dry startup page -*- lexical-binding: t; -*-
 
-(defun rh/startup-page ()
+(defun rh/welcome-home ()
   "Show custom startup screen with ASCII art and welcome message."
-  (let ((buf (get-buffer-create "*Welcome*"))
+  (let ((buf (get-buffer-create "*Home*"))
         (banner (expand-file-name "banner.txt" user-emacs-directory)))
     (with-current-buffer buf
       (let ((inhibit-read-only t))
@@ -40,7 +40,7 @@
         (setq-local display-line-numbers-mode nil)))
     (switch-to-buffer buf)))
 
-(add-hook 'emacs-startup-hook #'rh/startup-page)
-(add-hook 'server-after-make-frame-hook #'rh/startup-page)
+(add-hook 'emacs-startup-hook #'rh/welcome-home)
+(add-hook 'server-after-make-frame-hook #'rh/welcome-home)
 
-(provide 'welcome-screen)
+(provide 'welcome-home)
