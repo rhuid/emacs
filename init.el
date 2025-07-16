@@ -57,7 +57,7 @@
 (use-package welcome-home        :straight nil :defer nil)
 (use-package editing-environment :straight nil :defer nil)
 (use-package 30-abbrev	         :straight nil :defer nil)
-(use-package 50-org	         :straight nil :defer nil)
+(use-package knot-org	         :straight nil :defer nil)
 (use-package knot-programming	 :straight nil :defer nil)
 (use-package 70-typeset	         :straight nil :defer nil)
 (use-package knot-latex	         :straight nil :defer nil)
