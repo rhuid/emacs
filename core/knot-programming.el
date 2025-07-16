@@ -1,4 +1,4 @@
-;;; 60-src.el --- All things related to writing source code -*- lexical-binding: t; -*-
+;;; knot-programming.el --- All things related to writing source code -*- lexical-binding: t; -*-
 
 (use-package lsp-mode :straight t :defer t
   :commands (lsp lsp-deferred)
@@ -224,4 +224,4 @@
 	 ("\\.conf\\'"    . conf-unix-mode)
 	 ("\\.ini\\'"     . conf-unix-mode)))
 
-(provide '60-src)
+(provide 'knot-programming)
