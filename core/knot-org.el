@@ -32,6 +32,9 @@
     ;;(custom-set-faces                                             
     ;; '(org-block ((t (:background "#282a36" :foreground "#f8f8f2")))))
     )
+
+  :config
+  (setq org-directory "~/org")
   )
 
 (use-package evil-org :straight t :after (evil org)
