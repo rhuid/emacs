@@ -96,6 +96,12 @@
         #'magit-display-buffer-same-window-except-diff-v1)
   (setq magit-restore-window-configuration-after-quit nil)
   :config
+  (defun my/magit-quick-commit ()
+    "Prompt for a commit message in minibuffer and commit immediately."
+    (interactive)
+    (let ((msg (read-string "Commit message: ")))
+      (magit-commit-create `("-m" ,msg))))
+  (define-key magit-status-mode-map (kbd "C-c q") #'my/magit-quick-commit)
   (define-key magit-mode-map (kbd "C-c u") #'magit-unstage)
   (define-key magit-mode-map (kbd "C-c U") #'magit-unstage-all)
   )
