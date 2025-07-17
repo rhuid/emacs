@@ -7,7 +7,9 @@
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
 	 (org-mode . rh/org-custom-faces)
-	 (org-mode . rh/org-tab-hook))
+	 (org-mode . org-fragtog-mode)
+	 ;; (org-mode . rh/org-tab-hook)
+	 )
   :init
   (defun rh/org-init ()
     (require 'org)
@@ -19,6 +21,8 @@
 	  org-log-done 'time                                      ; log time when a task is marked done
 	  org-hide-leading-stars t                                ; important for org-superstar
 	  org-startup-folded 'content))
+
+  ;; (setq org-preview-latex-default-process 'dvisvgm)
 
   ;; Customize the face of the headings
   (defun rh/org-custom-faces ()
@@ -35,6 +39,21 @@
 
   :config
   (setq org-directory "~/org")
+
+  ;; (setq org-latex-preview-debug t)
+
+  ;; (setq org-preview-latex-default-process 'dvipng)
+
+  ;; (setq org-preview-latex-process-alist
+  ;; 	'((dvipng :programs ("latex" "dvipng")
+  ;;                 :description "dvi > png"
+  ;;                 :message "you need to install latex and dvipng."
+  ;;                 :use-xcolor t
+  ;;                 :image-input-type "dvi"
+  ;;                 :image-output-type "png"
+  ;;                 :image-size-adjust (1.0 . 1.0)
+  ;;                 :latex-compiler ("latex -interaction nonstopmode -output-directory %o %f")
+  ;;                 :image-converter ("dvipng -D %D -T tight -o %O %f"))))
   )
 
 (use-package evil-org :straight t :after (evil org)
@@ -68,6 +87,10 @@
   ;; prettify list bullets
   (setq org-superstar-prettify-item-bullets t))
 
+;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
+(use-package org-fragtog :straight t :after org)
+;; :hook (org-mode . org-fragtog-mode))
+
 (use-package ox-reveal :straight t :after org
   ;; nice looking HTML presentations
   :config
@@ -77,6 +100,7 @@
 
 (use-package org-agenda :straight nil :after org
   :commands (org-agenda org-todo-list))
+
 
 (with-eval-after-load 'org
   ;; Define header function; to insert a template header to a new org file
@@ -103,7 +127,7 @@
   (require 'rh-snip)
 
   (defvar rh/org-snippet-alist
-    '(("src" . "#+BEGIN_SRC ?\n?\n#+END_SRC")
+    '(("src" . "#+BEGIN_SRC \n\n#+END_SRC")
       ;; ... add more when needed
       ))
 
