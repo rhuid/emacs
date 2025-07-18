@@ -49,19 +49,20 @@
     (exec-path-from-shell-initialize)))
 
 
-(use-package benchmark-init      :straight t :disabled t
+(use-package benchmark-init    :straight t :disabled t
   :init (benchmark-init/activate)
   :hook (after-init . benchmark-init/deactivate))
 
-(use-package knot-theme-stuff    :straight nil :defer nil)
-(use-package knot-welcome-home   :straight nil :defer nil)
-(use-package knot-editor         :straight nil :defer nil)
-(use-package 30-abbrev	         :straight nil :defer nil)
-(use-package knot-org	         :straight nil :defer nil)
-(use-package knot-programming	 :straight nil :defer nil)
-(use-package 70-typeset	         :straight nil :defer nil)
-(use-package knot-latex	         :straight nil :defer nil)
-(use-package knot-dired	         :straight nil :defer nil)
-(use-package knot-minibuffer     :straight nil :defer nil)
-(use-package 90-tools	         :straight nil :defer nil)
-(use-package knot-keybindings    :straight nil :defer nil)
+(use-package knot-theme-stuff  :straight nil :defer nil)
+(use-package knot-welcome-home :straight nil :defer nil)
+(use-package knot-editor       :straight nil :defer nil)
+(use-package 30-abbrev	       :straight nil :defer nil)
+(use-package knot-org	       :straight nil :defer nil)
+(use-package knot-programming  :straight nil :defer nil)
+(use-package 70-typeset	       :straight nil :defer nil)
+(use-package knot-latex	       :straight nil :defer nil)
+(use-package knot-dired	       :straight nil :defer nil)
+(use-package knot-minibuffer   :straight nil :defer nil)
+(use-package 90-tools	       :straight nil :defer nil)
+(use-package knot-shells       :straight nil :defer nil)
+(use-package knot-keybindings  :straight nil :defer nil)
