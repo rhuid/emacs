@@ -1,5 +1,10 @@
 ;;; init.el --- The main init.el file -*- lexical-binding: t; -*-
 
+;;;; Scratch buffer
+
+(setq initial-major-mode 'org-mode)
+(setq initial-scratch-message "* Notes\n")
+
 (add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "engine" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "modes" user-emacs-directory))
