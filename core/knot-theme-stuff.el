@@ -76,7 +76,7 @@
 (use-package ef-themes :straight t :demand t
   :config
   (mapc #'disable-theme custom-enabled-themes)
-  (ef-themes-select 'ef-frost)
+  (ef-themes-select 'ef-maris-dark)
   :bind
   (("<f5>" . ef-themes-rotate)
    ("C-<f5>" . ef-themes-select))
