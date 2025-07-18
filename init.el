@@ -1,9 +1,20 @@
 ;;; init.el --- The main init.el file -*- lexical-binding: t; -*-
 
-;;;; Scratch buffer
-
-(setq initial-major-mode 'org-mode)
-(setq initial-scratch-message "* Notes\n")
+(defun rh/scratch-toggle ()
+  "Toggle to the *scratch* buffer and back."
+  (interactive)
+  (let ((scratch-buffer (get-buffer "*scratch*")))
+    (if (eq (current-buffer) scratch-buffer)
+        (switch-to-buffer (other-buffer))
+      (if scratch-buffer
+          (switch-to-buffer scratch-buffer)
+        ;; If *scratch* buffer doesn't exist, recreate it
+        (progn
+          (setq scratch-buffer (get-buffer-create "*scratch*"))
+          (with-current-buffer scratch-buffer
+            (funcall initial-major-mode)
+            (insert initial-scratch-message))
+          (switch-to-buffer scratch-buffer))))))
 
 (add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "engine" user-emacs-directory))
@@ -64,10 +75,10 @@
 (use-package 30-abbrev	       :straight nil :defer nil)
 (use-package knot-org	       :straight nil :defer nil)
 (use-package knot-programming  :straight nil :defer nil)
-(use-package 70-typeset	       :straight nil :defer nil)
 (use-package knot-latex	       :straight nil :defer nil)
 (use-package knot-dired	       :straight nil :defer nil)
 (use-package knot-minibuffer   :straight nil :defer nil)
 (use-package 90-tools	       :straight nil :defer nil)
 (use-package knot-shells       :straight nil :defer nil)
 (use-package knot-keybindings  :straight nil :defer nil)
+(use-package knot-scratch      :straight nil :commands (rh/toggle-org-scratch rh/toggle-lean-scratch))

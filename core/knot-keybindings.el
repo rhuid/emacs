@@ -1,5 +1,7 @@
 ;;; knot-keybindings.el --- All keybindings with or without general.el -*- lexical-binding: t; -*-
 
+;;;; General
+
 (use-package general :straight t :demand t :after outline
   :config
   (general-create-definer rh/leader-keys
@@ -8,6 +10,11 @@
     :global-prefix "C-SPC")
 
   (rh/leader-keys
+    ;; the best and most used ones
+    "SPC s"   'rh/scratch-toggle
+    "SPC o"   'rh/toggle-org-scratch
+    "SPC l"   'rh/toggle-lean-scratch
+
     ;; eshell
     "e t"     'rh/eshell-toggle
 
@@ -38,6 +45,7 @@
     ))
 
 ;; All custom keybindings
+
 ;; (global-set-key (kbd "<f5>") #'rh/cycle-modus-themes)
 
 (provide 'knot-keybindings)
