@@ -1,21 +1,5 @@
 ;;; init.el --- The main init.el file -*- lexical-binding: t; -*-
 
-(defun rh/scratch-toggle ()
-  "Toggle to the *scratch* buffer and back."
-  (interactive)
-  (let ((scratch-buffer (get-buffer "*scratch*")))
-    (if (eq (current-buffer) scratch-buffer)
-        (switch-to-buffer (other-buffer))
-      (if scratch-buffer
-          (switch-to-buffer scratch-buffer)
-        ;; If *scratch* buffer doesn't exist, recreate it
-        (progn
-          (setq scratch-buffer (get-buffer-create "*scratch*"))
-          (with-current-buffer scratch-buffer
-            (funcall initial-major-mode)
-            (insert initial-scratch-message))
-          (switch-to-buffer scratch-buffer))))))
-
 (add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "engine" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "modes" user-emacs-directory))

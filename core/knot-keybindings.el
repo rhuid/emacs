@@ -11,7 +11,6 @@
 
   (rh/leader-keys
     ;; the best and most used ones
-    "SPC s"   'rh/scratch-toggle
     "SPC o"   'rh/toggle-org-scratch
     "SPC l"   'rh/toggle-lean-scratch
 
