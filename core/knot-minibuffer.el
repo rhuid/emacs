@@ -1,10 +1,18 @@
 ;;; knot-minibuffer.el --- Enhancements of the minibuffer -*- lexical-binding: t; -*-
 
-;; UI for minibuffer candidates
-(use-package vertico :straight t :demand t :init (vertico-mode 1))
+;;; Mostly completion frameworks. There are lots of individual packages which all work together.
+
+(use-package vertico :straight t :demand t
+  :config (vertico-mode)
+  :bind (("C-x f" . find-file)
+	 :map vertico-map
+	 ("C-j"   . vertico-exit-input)
+	 ("C-M-p" . vertico-prev-group)
+	 ("C-M-n" . vertico-next-group)))
+
 (use-package savehist :straight nil :demand t :init (savehist-mode))
 (use-package orderless :straight t :demand t 
-  ;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, fle
+  ;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, flex
   :init
   (setq completion-styles '(orderless)
         completion-category-defaults nil))
@@ -17,9 +25,15 @@
   (("C-c f" . consult-find)
    ("C-c l" . consult-locate)
    ("C-c r" . consult-recent-file)
-   ("C-s" . consult-line)
+   ("C-s"   . consult-line)
+   ("C-M-s" . consult-line-multi)
+   ("C-M-g" . consult-ripgrep)
    ("C-x b" . consult-buffer)
-   ("M-y" . consult-yank-pop)
+   ("C-M-e" . consult-buffer)
+   ("M-y"   . consult-yank-pop)
+   ("C-c t" . consult-theme)
+   ("M-m"   . consult-imenu)
+   ("M-p"   . consult-project-buffer)
    )
   :config
   ;; To always start searching from home directory
@@ -29,7 +43,7 @@
                   (apply orig args))))
   )
 
-;; (setq consult-preview-key "M-.") ; preview only when you press M-
+(setq consult-preview-key "M-.") ; preview only when you press M-
 
 ;; Live popup of possible key combinations
 (use-package which-key :straight t  :demand t :config (which-key-mode))
