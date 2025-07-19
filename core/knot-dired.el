@@ -3,6 +3,9 @@
 (use-package dired :straight nil :defer t
   :config
   (setq dired-listing-switches "-alh")
+  (evil-define-key 'normal dired-mode-map
+    (kbd "h") #'dired-up-directory
+    (kbd "l") #'dired-find-file)
   )
 
 (use-package dired-preview :straight t :disabled t

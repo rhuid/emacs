@@ -165,7 +165,8 @@
 
 (use-package lisp-mode :straight nil :defer t
   :mode ("\\.el\\'" . emacs-lisp-mode)
-  :hook ((emacs-lisp-mode . rh/elisp-tab-hook)
+  :hook ((emacs-lisp-mode . eldoc-mode)
+	 (emacs-lisp-mode . rh/elisp-tab-hook)
 	 (emacs-lisp-mode . rh/elisp-highlight-custom-keywords)
 	 (emacs-lisp-mode . rh/outline-elisp)
 	 (lisp-interaction-mode . rh/elisp-tab-hook)
@@ -223,5 +224,17 @@
          ("\\.target\\'"  . systemd-mode)
 	 ("\\.conf\\'"    . conf-unix-mode)
 	 ("\\.ini\\'"     . conf-unix-mode)))
+
+;;;; Eglot (in-built)
+
+;; (use-package emacs :straight nil
+;;   :hook ((sh-mode . eglot-ensure)
+;; 	 (rust-mode . eglot-ensure))
+;;   )
+
+(add-hook 'sh-mode-hook #'eglot-ensure)
+
+;; markdown live preview
+(use-package flymd :straight t :defer t)
 
 (provide 'knot-programming)
