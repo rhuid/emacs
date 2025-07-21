@@ -22,6 +22,9 @@
 	  org-hide-leading-stars t                                ; important for org-superstar
 	  org-startup-folded 'content))
 
+  (setq org-todo-keywords
+	'((sequence "TODO" "WAITING" "IN-PROGRESS" "|" "DONE" "CANCELLED")))
+
   ;; (setq org-preview-latex-default-process 'dvisvgm)
 
   ;; Customize the face of the headings
