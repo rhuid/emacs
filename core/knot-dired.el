@@ -8,8 +8,7 @@
     (kbd "l") #'dired-find-file)
   )
 
-(use-package dired-preview :straight t :disabled t
-  :after dired
+(use-package dired-preview :straight t :after dired
   :config
   (setq dired-preview-delay 0.5
         dired-preview-max-size 10))                   ;; max 10 MB
@@ -18,7 +17,7 @@
   :hook (dired-mode . all-the-icons-dired-mode)
   )
 
-(use-package peep-dired :straight t :after dired
+(use-package peep-dired :straight t :disabled t :after dired
   ;; :hook (peep-dired-mode . evil-normalize-keymaps)
   :config
   (define-key dired-mode-map (kbd "P") #'peep-dired))
@@ -62,38 +61,38 @@
 ;; 	  ((eq system-type 'gnu/linux)
 ;; 	   (shell-command (concat "xdg-open " path))))))
 
-;; ;; Open files in their default application
-;; (defun dired-open-file ()
-;;   "Open the file at point in its default external application, but open text files inside Emacs. If a directory is selected, enter it as usual."
-;;   (interactive)
-;;   (let ((file (dired-get-file-for-visit)))
-;;     (cond
-;;      ;; if it's a directory, open it in dired
-;;      ((file-directory-p file)
-;;       (dired-find-file))
-;;      ;; if It's a text file, open it in Emacs
-;;      ((string-match-p (rx (or
-;; 			   ".txt" ".md" ".org" ".el" ".py" ".rs" ".java" ".cpp" ".h" ".c")  ; add more file extensions
-;; 			  eos)
-;; 		      file)
-;;       (find-file file))
-;;      ;; otherwise, open it externally
-;;      (t 
-;;       (cond ((eq system-type 'windows-nt)
-;; 	     (shell-command (concat "start \"\"" (shell-quote-argument file))))
-;; 	    ((eq system-type 'darwin)
-;; 	     (shell-command (concat "open " (shell-quote-argument file))))
-;; 	    ((eq system-type 'gnu/linux)
-;; 	     (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
+;; Open files in their default application
+(defun dired-open-file ()
+  "Open the file at point in its default external application, but open text files inside Emacs. If a directory is selected, enter it as usual."
+  (interactive)
+  (let ((file (dired-get-file-for-visit)))
+    (cond
+     ;; if it's a directory, open it in dired
+     ((file-directory-p file)
+      (dired-find-file))
+     ;; if It's a text file, open it in Emacs
+     ((string-match-p (rx (or
+			   ".txt" ".md" ".org" ".el" ".py" ".rs" ".java" ".cpp" ".h" ".c")  ; add more file extensions
+			  eos)
+		      file)
+      (find-file file))
+     ;; otherwise, open it externally
+     (t 
+      (cond ((eq system-type 'windows-nt)
+	     (shell-command (concat "start \"\"" (shell-quote-argument file))))
+	    ((eq system-type 'darwin)
+	     (shell-command (concat "open " (shell-quote-argument file))))
+	    ((eq system-type 'gnu/linux)
+	     (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
 
-;; ;; Key bindings
-;; (with-eval-after-load 'dired
-;;   (define-key dired-mode-map (kbd "N")       ; N          create a new file
-;;     'my/dired-create-file)
-;;   (define-key dired-mode-map (kbd "C-c o")   ; C-c o      open the current directory in GUI file manager
-;;     #'open-in-file-manager)
-;;   (define-key dired-mode-map (kbd "RET")     ; RET        open files in their default application
-;;     #'dired-open-file))
+;; Key bindings
+(with-eval-after-load 'dired
+  ;; (define-key dired-mode-map (kbd "N")       ; N          create a new file
+  ;; 	      'my/dired-create-file)
+  ;; (define-key dired-mode-map (kbd "C-c o")   ; C-c o      open the current directory in GUI file manager
+  ;; 	      #'open-in-file-manager)
+  (define-key dired-mode-map (kbd "RET")     ; RET        open files in their default application
+	      #'dired-open-file))
 
 ;; Default keybindings
 ;; C-x d    dired mode
