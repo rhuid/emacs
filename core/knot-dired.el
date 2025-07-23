@@ -73,8 +73,9 @@
      ;; if It's a text file, open it in Emacs
      ((string-match-p (rx (or
 			   ".txt" ".md" ".org"
+			   "README" ".gitignore"
 			   ".lean" ".hs" ".rs" ".el"
-			   ".toml" ".conf" ".kbd"
+			   ".toml" ".conf" ".ini" ".yaml" ".json" ".kbd"
 			   ".nix"
 			   ".py" ".java" ".cpp" ".h" ".c")  ; add more file extensions
 			  eos)
