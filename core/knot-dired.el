@@ -75,6 +75,7 @@
 			   ".txt" ".md" ".org"
 			   ".lean" ".hs" ".rs" ".el"
 			   ".toml" ".conf" ".kbd"
+			   ".nix"
 			   ".py" ".java" ".cpp" ".h" ".c")  ; add more file extensions
 			  eos)
 		      file)
