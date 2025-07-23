@@ -96,9 +96,7 @@
     (kbd "C-c o") #'open-in-file-manager))
 
 ;; Default keybindings
-;; C-x d    dired mode
 ;; d        Mark for delete
-;; x        Delete the marked items
 ;; C        Copy
 
 (provide 'knot-dired)
