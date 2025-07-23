@@ -62,35 +62,6 @@
 	   (shell-command (concat "xdg-open " path))))))
 
 ;; Open files in their default application
-;; (defun rh/dired-open-file ()
-;;   "Open the file at point in its default external application, but open text files inside Emacs. If a directory is selected, enter it as usual."
-;;   (interactive)
-;;   (let ((file (dired-get-file-for-visit)))
-;;     (cond
-;;      ;; if it's a directory, open it in dired
-;;      ((file-directory-p file)
-;;       (dired-find-file))
-;;      ;; if It's a text file, open it in Emacs
-;;      ((string-match-p (rx (or
-;; 			   ".txt" ".md" ".org"
-;; 			   "README" ".gitignore"
-;; 			   ".lean" ".hs" ".rs" ".el" ".sh"
-;; 			   ".toml" ".conf" ".ini" ".yaml" ".json" ".service"
-;; 			   ".kbd"
-;; 			   ".nix"
-;; 			   ".py" ".java" ".cpp" ".h" ".c")  ; add more file extensions
-;; 			  eos)
-;; 		      file)
-;;       (find-file file))
-;;      ;; otherwise, open it externally
-;;      (t 
-;;       (cond ((eq system-type 'windows-nt)
-;; 	     (shell-command (concat "start \"\"" (shell-quote-argument file))))
-;; 	    ((eq system-type 'darwin)
-;; 	     (shell-command (concat "open " (shell-quote-argument file))))
-;; 	    ((eq system-type 'gnu/linux)
-;; 	     (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
-
 (defun rh/dired-open-file ()
   "Open file at point appropriately:
  - Directories: enter with dired.

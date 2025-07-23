@@ -1,4 +1,4 @@
-;;; 90-tools.el --- just tools -*- lexical-binding: t; -*-
+;;; knot-tools.el --- just tools -*- lexical-binding: t; -*-
 
 ;; (require 'rh-capitalize)
 (use-package centaur-tabs :disabled t
@@ -77,4 +77,4 @@
 
 (use-package sudo-edit :straight t :commands (sudo-edit))
 
-(provide '90-tools)
+(provide 'knot-tools)
