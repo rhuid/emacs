@@ -62,34 +62,71 @@
 	   (shell-command (concat "xdg-open " path))))))
 
 ;; Open files in their default application
+;; (defun rh/dired-open-file ()
+;;   "Open the file at point in its default external application, but open text files inside Emacs. If a directory is selected, enter it as usual."
+;;   (interactive)
+;;   (let ((file (dired-get-file-for-visit)))
+;;     (cond
+;;      ;; if it's a directory, open it in dired
+;;      ((file-directory-p file)
+;;       (dired-find-file))
+;;      ;; if It's a text file, open it in Emacs
+;;      ((string-match-p (rx (or
+;; 			   ".txt" ".md" ".org"
+;; 			   "README" ".gitignore"
+;; 			   ".lean" ".hs" ".rs" ".el" ".sh"
+;; 			   ".toml" ".conf" ".ini" ".yaml" ".json" ".service"
+;; 			   ".kbd"
+;; 			   ".nix"
+;; 			   ".py" ".java" ".cpp" ".h" ".c")  ; add more file extensions
+;; 			  eos)
+;; 		      file)
+;;       (find-file file))
+;;      ;; otherwise, open it externally
+;;      (t 
+;;       (cond ((eq system-type 'windows-nt)
+;; 	     (shell-command (concat "start \"\"" (shell-quote-argument file))))
+;; 	    ((eq system-type 'darwin)
+;; 	     (shell-command (concat "open " (shell-quote-argument file))))
+;; 	    ((eq system-type 'gnu/linux)
+;; 	     (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
+
 (defun rh/dired-open-file ()
-  "Open the file at point in its default external application, but open text files inside Emacs. If a directory is selected, enter it as usual."
+  "Open file at point appropriately:
+ - Directories: enter with dired.
+ - Text/source files: open in Emacs.
+ - Audio files: play with EMMS.
+ - Others: open externally."
   (interactive)
   (let ((file (dired-get-file-for-visit)))
     (cond
-     ;; if it's a directory, open it in dired
      ((file-directory-p file)
       (dired-find-file))
-     ;; if It's a text file, open it in Emacs
-     ((string-match-p (rx (or
-			   ".txt" ".md" ".org"
-			   "README" ".gitignore"
-			   ".lean" ".hs" ".rs" ".el" ".sh"
-			   ".toml" ".conf" ".ini" ".yaml" ".json" ".service"
-			   ".kbd"
-			   ".nix"
-			   ".py" ".java" ".cpp" ".h" ".c")  ; add more file extensions
-			  eos)
-		      file)
+
+     ;; open in Emacs
+     ((string-match-p
+       (rx (or ".txt" ".md" ".org" "README" ".gitignore"
+               ".lean" ".hs" ".rs" ".el" ".sh"
+               ".toml" ".conf" ".ini" ".yaml" ".json" ".service"
+               ".kbd" ".nix" ".py" ".java" ".cpp" ".h" ".c")
+           eos)
+       file)
       (find-file file))
-     ;; otherwise, open it externally
-     (t 
+
+     ;; play audio files with EMMS
+     ((string-match-p
+       (rx (or ".mp3" ".flac" ".wav" ".m4a" ".ogg" ".opus") eos)
+       file)
+      (emms-play-file file))
+
+     ;; open others externally
+     (t
       (cond ((eq system-type 'windows-nt)
-	     (shell-command (concat "start \"\"" (shell-quote-argument file))))
-	    ((eq system-type 'darwin)
-	     (shell-command (concat "open " (shell-quote-argument file))))
-	    ((eq system-type 'gnu/linux)
-	     (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
+             (shell-command (concat "start \"\"" (shell-quote-argument file))))
+            ((eq system-type 'darwin)
+             (shell-command (concat "open " (shell-quote-argument file))))
+            ((eq system-type 'gnu/linux)
+             (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
 
 (with-eval-after-load 'dired
   (evil-define-key 'normal dired-mode-map
