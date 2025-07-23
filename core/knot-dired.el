@@ -74,8 +74,9 @@
      ((string-match-p (rx (or
 			   ".txt" ".md" ".org"
 			   "README" ".gitignore"
-			   ".lean" ".hs" ".rs" ".el"
-			   ".toml" ".conf" ".ini" ".yaml" ".json" ".kbd"
+			   ".lean" ".hs" ".rs" ".el" ".sh"
+			   ".toml" ".conf" ".ini" ".yaml" ".json" ".service"
+			   ".kbd"
 			   ".nix"
 			   ".py" ".java" ".cpp" ".h" ".c")  ; add more file extensions
 			  eos)
