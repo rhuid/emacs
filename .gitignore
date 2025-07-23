@@ -1,8 +1,9 @@
 /eshell/history
 /eshell/lastdir
 /private
-/core/knot-welcome-home
-/core/knot-home
+/core/knot-welcome-home.el
+/core/knot-home.el
+/emms/
 
 # Emacs backup & auto-save
 *~
