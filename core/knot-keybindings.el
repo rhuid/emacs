@@ -20,9 +20,6 @@
     ;; eval
     "e e"     'eval-expression
 
-    ;; shell command
-    "e s"     'shell-command
-
     ;; git (magit)
     "g s"     'magit-status
 
