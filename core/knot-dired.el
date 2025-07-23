@@ -72,7 +72,10 @@
       (dired-find-file))
      ;; if It's a text file, open it in Emacs
      ((string-match-p (rx (or
-			   ".txt" ".md" ".org" ".el" ".py" ".rs" ".java" ".cpp" ".h" ".c")  ; add more file extensions
+			   ".txt" ".md" ".org"
+			   ".lean" ".hs" ".rs" ".el"
+			   ".toml" ".conf" ".kbd"
+			   ".py" ".java" ".cpp" ".h" ".c")  ; add more file extensions
 			  eos)
 		      file)
       (find-file file))
