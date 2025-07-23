@@ -44,4 +44,9 @@
 
 ;; (global-set-key (kbd "<f5>") #'rh/cycle-modus-themes)
 
+(global-set-key (kbd "C-c e p") 'emms-pause)
+(global-set-key (kbd "C-c e s") 'emms-stop)
+(global-set-key (kbd "C-c e n") 'emms-next)
+(global-set-key (kbd "C-c e b") 'emms-previous)
+
 (provide 'knot-keybindings)
