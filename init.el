@@ -57,7 +57,6 @@
 ;; (use-package knot-home :straight nil :defer nil)
 (use-package knot-dashboard    :straight nil :defer nil)
 (use-package knot-editor       :straight nil :defer nil)
-(use-package 30-abbrev	       :straight nil :defer nil)
 (use-package knot-org	       :straight nil :defer nil)
 (use-package knot-programming  :straight nil :defer nil)
 (use-package knot-latex	       :straight nil :defer nil)
