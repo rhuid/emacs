@@ -33,19 +33,19 @@
 (use-package consult :straight t :demand t 
   ;; Adds modern alternatives to core Emacs commands
   :bind
-  (("C-c f" . consult-find)
-   ("C-c l" . consult-locate)
-   ("C-c r" . consult-recent-file)
-   ("C-s"   . consult-line)
-   ("C-M-s" . consult-line-multi)
-   ("C-M-g" . consult-ripgrep)
-   ("C-x b" . consult-buffer)
-   ("C-M-e" . consult-buffer)
-   ("M-y"   . consult-yank-pop)
-   ("C-c b" . consult-bookmark)
-   ("C-c t" . consult-theme)
-   ("M-m"   . consult-imenu)
-   ("M-p"   . consult-project-buffer)
+  (("C-c f"   . consult-find)
+   ("C-c l"   . consult-locate)
+   ("C-c r"   . consult-recent-file)
+   ("C-s"     . consult-line)
+   ("C-M-s"   . consult-line-multi)
+   ("C-M-g"   . consult-ripgrep)
+   ("C-x b"   . consult-buffer)
+   ("C-M-e"   . consult-buffer)
+   ("M-y"     . consult-yank-pop)
+   ("C-M-b"   . consult-bookmark)
+   ("C-c t"   . consult-theme)
+   ("M-m"     . consult-imenu)
+   ("M-p"     . consult-project-buffer)
    )
   :config
   ;; To always start searching from home directory

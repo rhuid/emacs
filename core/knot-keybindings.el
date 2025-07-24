@@ -42,11 +42,15 @@
 
 ;; All custom keybindings
 
-;; (global-set-key (kbd "<f5>") #'rh/cycle-modus-themes)
+(global-set-key (kbd "C-c b m") #'bookmark-set)
+(global-set-key (kbd "C-c b j") #'bookmark-jump)
+(global-set-key (kbd "C-c b l") #'list-bookmarks)
 
 (global-set-key (kbd "C-c e p") 'emms-pause)
 (global-set-key (kbd "C-c e s") 'emms-stop)
 (global-set-key (kbd "C-c e n") 'emms-next)
 (global-set-key (kbd "C-c e b") 'emms-previous)
+
+(global-set-key (kbd "C-M-m") 'magit-status)
 
 (provide 'knot-keybindings)

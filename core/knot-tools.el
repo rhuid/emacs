@@ -82,8 +82,4 @@
   (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
   (setq bookmark-bmenu-toggle-filenames t))
 
-(global-set-key (kbd "C-c b m") #'bookmark-set)
-(global-set-key (kbd "C-c b j") #'bookmark-jump)
-(global-set-key (kbd "C-c b l") #'list-bookmarks)
-
 (provide 'knot-tools)
