@@ -51,6 +51,27 @@
 (global-set-key (kbd "C-c e n") 'emms-next)
 (global-set-key (kbd "C-c e b") 'emms-previous)
 
-(global-set-key (kbd "C-M-m") 'magit-status)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(with-eval-after-load 'dired
+  (defun rh/dired-evil-keys ()
+    (define-key evil-normal-state-local-map
+		(kbd "l") #'dired-display-file)
+
+    (define-key evil-normal-state-local-map
+		(kbd "m") #'dired-up-directory)
+
+    (define-key evil-normal-state-local-map
+		(kbd "i") #'rh/dired-open-file)
+
+    (define-key evil-normal-state-local-map
+		(kbd "C-c o") #'open-in-file-manager))
+  
+  (add-hook 'dired-mode-hook #'rh/dired-evil-keys))
+
+
+
 
 (provide 'knot-keybindings)
