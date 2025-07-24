@@ -43,8 +43,7 @@
   (define-key magit-status-mode-map (kbd "C-c a") #'rh/magit-quick-amend)
 
   (define-key magit-mode-map (kbd "C-c u") #'magit-unstage)
-  (define-key magit-mode-map (kbd "C-c U") #'magit-unstage-all)
-  )
+  (define-key magit-mode-map (kbd "C-c U") #'magit-unstage-all))
 
 (use-package aggressive-indent :straight t :defer t
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
@@ -76,5 +75,15 @@
   (add-hook 'calc-trail-mode-hook 'evil-insert-state))
 
 (use-package sudo-edit :straight t :commands (sudo-edit))
+
+(use-package bookmark :straight nil :demand t
+  :config
+  (setq bookmark-save-flag 1)
+  (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
+  (setq bookmark-bmenu-toggle-filenames t))
+
+(global-set-key (kbd "C-c b m") #'bookmark-set)
+(global-set-key (kbd "C-c b j") #'bookmark-jump)
+(global-set-key (kbd "C-c b l") #'list-bookmarks)
 
 (provide 'knot-tools)
