@@ -10,7 +10,18 @@
 	 ("C-M-p" . vertico-prev-group)
 	 ("C-M-n" . vertico-next-group)))
 
-(use-package savehist :straight nil :demand t :init (savehist-mode))
+(use-package savehist :straight nil :demand t
+  ;; Save minibuffer-history
+  :init (savehist-mode)
+  :custom
+  (savehist-file (locate-user-emacs-file "history"))
+  (history-length 2000)
+  (savehist-additional-variables
+   '(kill-ring
+     register-alist
+     search-ring
+     regexp-search-ring)))
+
 (use-package orderless :straight t :demand t 
   ;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, flex
   :init
@@ -31,6 +42,7 @@
    ("C-x b" . consult-buffer)
    ("C-M-e" . consult-buffer)
    ("M-y"   . consult-yank-pop)
+   ("C-c b" . consult-bookmark)
    ("C-c t" . consult-theme)
    ("M-m"   . consult-imenu)
    ("M-p"   . consult-project-buffer)
@@ -80,7 +92,7 @@
                  (window-parameters (mode-line-format . none)))))
 
 ;; Consult users will also want the embark-consult package.
-(use-package embark-consult :straight t :demand t 
+(use-package embark-consult :straight t :demand t :after consult
   ;; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
