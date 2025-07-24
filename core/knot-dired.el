@@ -46,7 +46,6 @@
 ;;       (dired-add-file full-path)
 ;;       (revert-buffer))))
 
-;; Open the current directory in the GUI file manager
 (defun open-in-file-manager ()
   "Open the current directory in the system's GUI file manager."
   (interactive)
@@ -58,20 +57,20 @@
 	  ((eq system-type 'gnu/linux)
 	   (shell-command (concat "xdg-open " path))))))
 
-;; Open files in their default application
 (defun rh/dired-open-file ()
-  "Open file at point appropriately:
- - Directories: enter with dired.
- - Text/source files: open in Emacs.
- - Audio files: play with EMMS.
- - Others: open externally."
+  "Smart open for files in Dired:
+- Directories: open in Dired.
+- Source/text: open in side window.
+- Audio files: play with EMMS.
+- Media/other: open externally."
   (interactive)
   (let ((file (dired-get-file-for-visit)))
     (cond
+     ;; Directories: open in same buffer
      ((file-directory-p file)
-      (dired-find-file))
+      (dired-find-alternate-file))
 
-     ;; open in Emacs
+     ;; Source/text files: open side-by-side
      ((string-match-p
        (rx (or ".txt" ".md" ".org" "README" ".gitignore"
                ".lean" ".hs" ".rs" ".el" ".sh"
@@ -79,15 +78,15 @@
                ".kbd" ".nix" ".py" ".java" ".cpp" ".h" ".c")
            eos)
        file)
-      (find-file file))
+      (display-buffer (find-file-noselect file)))
 
-     ;; play audio files with EMMS
+     ;; Audio files: EMMS
      ((string-match-p
        (rx (or ".mp3" ".flac" ".wav" ".m4a" ".ogg" ".opus") eos)
        file)
       (emms-play-file file))
 
-     ;; open others externally
+     ;; Fallback: open externally
      (t
       (cond ((eq system-type 'windows-nt)
              (shell-command (concat "start \"\"" (shell-quote-argument file))))
@@ -95,7 +94,6 @@
              (shell-command (concat "open " (shell-quote-argument file))))
             ((eq system-type 'gnu/linux)
              (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
-
 
 ;; Default keybindings
 ;; d        Mark for delete
