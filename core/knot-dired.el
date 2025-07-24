@@ -2,7 +2,8 @@
 
 (use-package dired :straight nil :defer t
   :config
-  (setq dired-listing-switches "-alh"))
+  (setq dired-listing-switches "-alh")
+  (setq dired-dwim-target t))
 
 (use-package dired-preview :straight t :disabled t :after dired
   :hook (dired-mode . dired-preview-mode)
@@ -60,9 +61,9 @@
 (defun rh/dired-open-file ()
   "Smart open for files in Dired:
 - Directories: open in Dired.
-- Source/text: open in side window.
+- Known external files (e.g., media, PDF): open externally.
 - Audio files: play with EMMS.
-- Media/other: open externally."
+- All others: open in Emacs side window."
   (interactive)
   (let ((file (dired-get-file-for-visit)))
     (cond
@@ -70,30 +71,28 @@
      ((file-directory-p file)
       (dired-find-alternate-file))
 
-     ;; Source/text files: open side-by-side
-     ((string-match-p
-       (rx (or ".txt" ".md" ".org" "README" ".gitignore"
-               ".lean" ".hs" ".rs" ".el" ".sh"
-               ".toml" ".conf" ".ini" ".yaml" ".json" ".service"
-               ".kbd" ".nix" ".py" ".java" ".cpp" ".h" ".c")
-           eos)
-       file)
-      (display-buffer (find-file-noselect file)))
-
-     ;; Audio files: EMMS
+     ;; Audio files: play with EMMS
      ((string-match-p
        (rx (or ".mp3" ".flac" ".wav" ".m4a" ".ogg" ".opus") eos)
        file)
       (emms-play-file file))
 
-     ;; Fallback: open externally
-     (t
+     ;; External files: open with system default
+     ((string-match-p
+       (rx (or ".mp4" ".mkv" ".avi"
+               ".jpg" ".jpeg" ".png" ".gif" ".svg"
+               ".pdf" ".epub" ".cbz" ".cbr") eos)
+       file)
       (cond ((eq system-type 'windows-nt)
              (shell-command (concat "start \"\"" (shell-quote-argument file))))
             ((eq system-type 'darwin)
              (shell-command (concat "open " (shell-quote-argument file))))
             ((eq system-type 'gnu/linux)
-             (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
+             (shell-command (concat "xdg-open " (shell-quote-argument file))))))
+
+     ;; Everything else: open in Emacs side window
+     (t
+      (display-buffer (find-file-noselect file))))))
 
 ;; Default keybindings
 ;; d        Mark for delete
