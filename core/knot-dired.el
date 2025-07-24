@@ -2,20 +2,17 @@
 
 (use-package dired :straight nil :defer t
   :config
-  (setq dired-listing-switches "-alh")
-  (evil-define-key 'normal dired-mode-map
-    (kbd "h") #'dired-up-directory
-    (kbd "l") #'dired-find-file)
-  )
+  (setq dired-listing-switches "-alh"))
 
-(use-package dired-preview :straight t :after dired
+(use-package dired-preview :straight t :disabled t :after dired
+  :hook (dired-mode . dired-preview-mode)
   :config
-  (setq dired-preview-delay 0.5
-        dired-preview-max-size 10))                   ;; max 10 MB
+  (setq dired-preview-delay 0.2
+        dired-preview-max-size 10                   ;; max 10 MB
+	dired-preview-use-timer t))
 
 (use-package all-the-icons-dired :straight t
-  :hook (dired-mode . all-the-icons-dired-mode)
-  )
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package peep-dired :straight t :disabled t :after dired
   ;; :hook (peep-dired-mode . evil-normalize-keymaps)
@@ -99,11 +96,6 @@
             ((eq system-type 'gnu/linux)
              (shell-command (concat "xdg-open " (shell-quote-argument file)))))))))
 
-(with-eval-after-load 'dired
-  (evil-define-key 'normal dired-mode-map
-    (kbd "RET")   #'rh/dired-open-file
-    ;; (kbd "N")     #'my/dired-create-file
-    (kbd "C-c o") #'open-in-file-manager))
 
 ;; Default keybindings
 ;; d        Mark for delete
