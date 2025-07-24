@@ -1,6 +1,17 @@
-;;; knot-tools.el --- just tools -*- lexical-binding: t; -*-
+;;; knot-extra-tools.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
-;; (require 'rh-capitalize)
+(use-package aggressive-indent :straight t :defer t
+  :hook ((emacs-lisp-mode . aggressive-indent-mode)
+         (lisp-mode . aggressive-indent-mode))
+  :config
+  (setq aggressive-indent-comments-too t))
+
+;; (use-package auto-complete
+;;  :config
+;;  (ac-config-default))
+
+;; (use-package captain)
+
 (use-package centaur-tabs :disabled t
   :demand nil
   :config
@@ -14,9 +25,18 @@
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
 
-;; (use-package auto-complete
-;;  :config
-;;  (ac-config-default))
+;; (use-package chess)
+
+(use-package emms :straight t
+  :config
+  (setq emms-player-list '(emms-player-mpv)
+        emms-source-file-default-directory "~/Downloads/DB Scores/")
+  (require 'emms-setup)
+  (emms-all) ;; or (emms-standard) for a lighter setup
+  (require 'emms-player-mpv)
+  (setq emms-mode-line-format " %s"
+        emms-mode-line-titlebar-format "EMMS: %s")
+  (emms-mode-line-mode 1))
 
 (use-package magit :straight t :defer t
   :commands (magit-status magit-log)
@@ -45,41 +65,10 @@
   (define-key magit-mode-map (kbd "C-c u") #'magit-unstage)
   (define-key magit-mode-map (kbd "C-c U") #'magit-unstage-all))
 
-(use-package aggressive-indent :straight t :defer t
-  :hook ((emacs-lisp-mode . aggressive-indent-mode)
-         (lisp-mode . aggressive-indent-mode))
-  :config
-  (setq aggressive-indent-comments-too t))
-
-;; (use-package captain)
-
-;; (use-package chess)
-
-(use-package rainbow-mode :straight t :defer t
+(use-package rainbow-mode :straight t
   :hook (prog-mode . rainbow-mode))
 
-(use-package recentf :straight nil :demand t 
-  :init
-  (recentf-mode 1)
-  :custom
-  (recentf-max-saved-items 100)
-  (recentf-max-menu-items 25)
-  (recentf-save-file (expand-file-name "recentf" user-emacs-directory))
-  (recentf-auto-cleanup 'never)
-  :config
-  ;; Save recentf list every 5 minutes
-  (run-at-time nil (* 5 60) #'recentf-save-list))
+(use-package sudo-edit :straight t
+  :commands (sudo-edit))
 
-(use-package calc :straight nil
-  :config
-  (add-hook 'calc-trail-mode-hook 'evil-insert-state))
-
-(use-package sudo-edit :straight t :commands (sudo-edit))
-
-(use-package bookmark :straight nil :demand t
-  :config
-  (setq bookmark-save-flag 1)
-  (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
-  (setq bookmark-bmenu-toggle-filenames t))
-
-(provide 'knot-tools)
+(provide 'knot-extra-tools)
