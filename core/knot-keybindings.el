@@ -42,41 +42,37 @@
 
 ;; All custom keybindings
 
-(define-key evil-normal-state-map (kbd "C-c b m") #'bookmark-set)
-(define-key evil-normal-state-map (kbd "C-c b j") #'bookmark-jump)
-(define-key evil-normal-state-map (kbd "C-c b l") #'list-bookmarks)
+(dolist (binding
+	 '(("C-c b m" . bookmark-set)
+	   ("C-c b j" . bookmark-jump)
+	   ("C-c b l" . list-bookmarks)
 
-(define-key evil-normal-state-map (kbd "C-c e p") #'emms-pause)
-(define-key evil-normal-state-map (kbd "C-c e s") #'emms-stop)
-(define-key evil-normal-state-map (kbd "C-c e n") #'emms-next)
-(define-key evil-normal-state-map (kbd "C-c e b") #'emms-previous)
+	   ("C-c e p" . emms-pause)
+	   ("C-c e s" . emms-stop)
+	   ("C-c e n" . emms-next)
+	   ("C-c e b" . emms-previous)
 
-(define-key evil-normal-state-map (kbd "C-x C-b") #'ibuffer)
-(define-key evil-normal-state-map (kbd "C-x g")   #'magit-status)
+	   ("C-x C-b" . ibuffer)
+	   ("C-x g"   . magit-status)))
+  (define-key evil-normal-state-map (kbd (car binding)) (cdr binding)))
 
 (with-eval-after-load 'dired
   (defun rh/dired-evil-keys ()
-    (define-key evil-normal-state-local-map
-		(kbd "l") #'dired-display-file)
-
-    (define-key evil-normal-state-local-map
-		(kbd "m") #'dired-up-directory)
-
-    (define-key evil-normal-state-local-map
-		(kbd "i") #'rh/dired-open-file)
-
-    (define-key evil-normal-state-local-map
-		(kbd "C-c o") #'open-in-file-manager))
+    (dolist (binding
+	     '(("l" . dired-display-file)
+	       ("m" . dired-up-directory)
+	       ("i" . rh/dired-open-file)
+	       ("C-c o" . open-in-file-manager)))
+      (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
   
   (add-hook 'dired-mode-hook #'rh/dired-evil-keys))
 
 (with-eval-after-load 'magit
   (defun rh/magit-evil-keys ()
-    (define-key evil-normal-state-local-map
-		(kbd "u") #'magit-unstage)
-
-    (define-key evil-normal-state-local-map
-		(kbd "U") #'magit-unstage-all))
+    (dolist (binding
+	     '(("u" . magit-unstage)
+	       ("U" . magit-unstage-all)))
+      (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
   
   (add-hook 'magit-status-mode-hook #'rh/magit-evil-keys))
 
