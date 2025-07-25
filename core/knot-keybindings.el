@@ -59,9 +59,9 @@
 (with-eval-after-load 'dired
   (defun rh/dired-evil-keys ()
     (dolist (binding
-	     '(("l" . dired-display-file)
-	       ("m" . dired-up-directory)
-	       ("i" . rh/dired-open-file)
+	     '(("l"     . dired-display-file)
+	       ("m"     . dired-up-directory)
+	       ("i"     . rh/dired-open-file)
 	       ("C-c o" . open-in-file-manager)))
       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
   
@@ -70,10 +70,12 @@
 (with-eval-after-load 'magit
   (defun rh/magit-evil-keys ()
     (dolist (binding
-	     '(("u" . magit-unstage)
-	       ("U" . magit-unstage-all)))
+	     '(("u"     . magit-unstage)
+	       ("U"     . magit-unstage-all)
+	       ("C-c q" . rh/magit-quick-commit)
+	       ("C-c a" . rh/magit-quick-amend)))
       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
-  
+
   (add-hook 'magit-status-mode-hook #'rh/magit-evil-keys))
 
 (provide 'knot-keybindings)
