@@ -42,18 +42,17 @@
 
 ;; All custom keybindings
 
-(global-set-key (kbd "C-c b m") #'bookmark-set)
-(global-set-key (kbd "C-c b j") #'bookmark-jump)
-(global-set-key (kbd "C-c b l") #'list-bookmarks)
+(define-key evil-normal-state-map (kbd "C-c b m") #'bookmark-set)
+(define-key evil-normal-state-map (kbd "C-c b j") #'bookmark-jump)
+(define-key evil-normal-state-map (kbd "C-c b l") #'list-bookmarks)
 
-(global-set-key (kbd "C-c e p") 'emms-pause)
-(global-set-key (kbd "C-c e s") 'emms-stop)
-(global-set-key (kbd "C-c e n") 'emms-next)
-(global-set-key (kbd "C-c e b") 'emms-previous)
+(define-key evil-normal-state-map (kbd "C-c e p") #'emms-pause)
+(define-key evil-normal-state-map (kbd "C-c e s") #'emms-stop)
+(define-key evil-normal-state-map (kbd "C-c e n") #'emms-next)
+(define-key evil-normal-state-map (kbd "C-c e b") #'emms-previous)
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(global-set-key (kbd "C-x g") 'magit-status)
+(define-key evil-normal-state-map (kbd "C-x C-b") #'ibuffer)
+(define-key evil-normal-state-map (kbd "C-x g")   #'magit-status)
 
 (with-eval-after-load 'dired
   (defun rh/dired-evil-keys ()
@@ -71,7 +70,14 @@
   
   (add-hook 'dired-mode-hook #'rh/dired-evil-keys))
 
+(with-eval-after-load 'magit
+  (defun rh/magit-evil-keys ()
+    (define-key evil-normal-state-local-map
+		(kbd "u") #'magit-unstage)
 
-
+    (define-key evil-normal-state-local-map
+		(kbd "U") #'magit-unstage-all))
+  
+  (add-hook 'magit-status-mode-hook #'rh/magit-evil-keys))
 
 (provide 'knot-keybindings)
