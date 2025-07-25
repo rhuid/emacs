@@ -77,11 +77,17 @@
        file)
       (emms-play-file file))
 
+     ;; CBZ: open with yacreader
+     ((string-match-p
+       (rx (or ".cbz") eos)
+       file)
+      (start-process "com.yacreader.YACReader" nil "com.yacreader.YACReader" file))
+
      ;; External files: open with system default
      ((string-match-p
        (rx (or ".mp4" ".mkv" ".avi"
                ".jpg" ".jpeg" ".png" ".gif" ".svg"
-               ".pdf" ".epub" ".cbz" ".cbr") eos)
+               ".pdf" ".epub" ".cbr") eos)
        file)
       (cond ((eq system-type 'windows-nt)
              (shell-command (concat "start \"\"" (shell-quote-argument file))))
