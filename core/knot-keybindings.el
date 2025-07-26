@@ -24,11 +24,13 @@
     "g s"     'magit-status
 
     ;; outline minor mode
+    "o"       '(:ignore t :which-key "outline")
     "o t"     'rh/outline-toggle-heading
     "o <tab>" 'rh/outline-toggle-heading
     "o a"     'rh/outline-toggle-visibility
 
     ;; string manipulation
+    "s"       '(:ignore t :which-key "string manipulation")
     "s r"     'replace-string
     "s w"     'delete-trailing-whitespace
     "s a"     'abbrev-mode
@@ -37,6 +39,7 @@
     "t t"     'rh/vterm-toggle
     
     ;; utilities
+    "u"       '(:ignore t :which-key "utilities")
     "u r"     'recentf-open-files
     ))
 
@@ -54,21 +57,36 @@
 
 	   ("C-x C-b" . ibuffer)
 	   ("C-x g"   . magit-status)))
-  (define-key evil-normal-state-map (kbd (car binding)) (cdr binding)))
+  (global-set-key (kbd (car binding)) (cdr binding)))
 
 (with-eval-after-load 'dired
-  (defun rh/dired-evil-keys ()
+  (defun rh/dired-keys ()
     (dolist (binding
 	     '(("l"     . dired-display-file)
 	       ("m"     . dired-up-directory)
 	       ("i"     . rh/dired-open-file)
+	       ("d"     . dired-mark)
+	       ("u"     . dired-unmark)
+	       ("U"     . dired-unmark-all-marks)
 	       ("C-c o" . open-in-file-manager)))
       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
   
-  (add-hook 'dired-mode-hook #'rh/dired-evil-keys))
+  (add-hook 'dired-mode-hook #'rh/dired-keys))
+
+(with-eval-after-load 'ibuffer
+  (defun rh/ibuffer-keys ()
+    (dolist (binding
+	     '(("d" . ibuffer-mark-forward)
+	       ("u" . ibuffer-unmark-forward)
+	       ("U" . ibuffer-unmark-all)
+	       ("D" . ibuffer-do-kill-lines)
+	       ))
+      (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
+  
+  (add-hook 'ibuffer-mode-hook #'rh/ibuffer-keys))
 
 (with-eval-after-load 'magit
-  (defun rh/magit-evil-keys ()
+  (defun rh/magit-keys ()
     (dolist (binding
 	     '(("u"     . magit-unstage)
 	       ("U"     . magit-unstage-all)
@@ -76,6 +94,6 @@
 	       ("C-c a" . rh/magit-quick-amend)))
       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
 
-  (add-hook 'magit-status-mode-hook #'rh/magit-evil-keys))
+  (add-hook 'magit-status-mode-hook #'rh/magit-keys))
 
 (provide 'knot-keybindings)
