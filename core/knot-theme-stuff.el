@@ -1,11 +1,13 @@
 ;;; knot-theme-stuff.el --- Just as the filename suggests -*- lexical-binding: t; -*-
 
-(global-visual-line-mode t)                                  ; automatic line wrapping
-(global-hl-line-mode 1)
-(global-prettify-symbols-mode 1) 
-(global-display-line-numbers-mode t)
-(setq make-backup-files nil)                                 ; don't generate backup files
-(setq kill-buffer-query-functions nil)
+(use-package emacs :straight nil :demand t
+  :config
+  (global-visual-line-mode t)                                  ; automatic line wrapping
+  (global-hl-line-mode 1)
+  (global-prettify-symbols-mode 1) 
+  (global-display-line-numbers-mode t)
+  (setq make-backup-files nil)                                 ; don't generate backup files
+  (setq kill-buffer-query-functions nil))
 
 (use-package all-the-icons :disabled t :straight t :defer t
   :config
@@ -19,31 +21,9 @@
     (unless (member "Symbols Nerd Font Mono" (font-family-list))
       (nerd-icons-install-fonts t))))
 
-;; (use-package doom-modeline :straight t
-;;   :init
-;;   (doom-modeline-mode 1)
-;;   :custom
-;;   (doom-modeline-height 25)
-;;   (doom-modeline-bar-width 6)
-;;   (doom-modeline-icon t)
-;;   (doom-modeline-major-mode-color-icon t)
-;;   (doom-modeline-buffer-state-icon t)
-;;   (doom-modeline-lsp-icon t)
-;;   (doom-modeline-time-icon t)
-;;   (doom-modeline-time-live-icon t)
-;;   (doom-modeline-buffer-file-name-style 'truncate-upto-project)
-;;   (doom-modeline-project-detection 'project)
-;;   (doom-modeline-env-version t)
-;;   (doom-modeline-lsp t)
-;;   (doom-modeline-github nil)
-;;   (setq doom-modeline-time-analogue-clock t)
-;;   (setq doom-modeline-enable-word-count t)
-;;   )
-
 (use-package moody :straight t :demand t
   :custom
   (setq x-underline-at-descent-line t)
-  ;; (setq moody-mode-line-height 20)
   :config
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode)
