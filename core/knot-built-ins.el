@@ -2,44 +2,21 @@
 
 ;; (require 'rh-capitalize)
 
-(setq-default abbrev-mode t)
-(define-abbrev-table 'text-mode-abbrev-table '(
-					       ;; Common phrases
-					       ("btw"    "by the way")
-					       ("afaik"  "as far as I know")
-					       ("tbh"    "to be honest")
-					       ("idk"    "I don’t know")
-					       ("omw"    "on my way")
-					       ("imo"    "in my opinion")
-					       ("imho"   "in my humble opinion")
-					       ("fwiw"   "for what it's worth")
-					       ("asap"   "as soon as possible")
-					       ("np"     "no problem")
-					       ("ty"     "thank you")
-					       ("brb"    "be right back")
-					       ("wfh"    "working from home")
-					       ("lmk"    "let me know")
-					       ("yw"     "you're welcome")
+(use-package emacs :straight nil :demand t
+  :config
+  (setq-default abbrev-mode t)
+  (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
+  (read-abbrev-file abbrev-file-name))
 
-					       ;; Typing shortcuts
-					       ("u"      "you")
-					       ("ur"     "your")
-					       ("rly"    "really")
-					       ("pls"    "please")
-					       ("tho"    "though")
-					       ("bc"     "because")
-					       ("tmr"    "tomorrow")
-					       ("msg"    "message")
-					       ("bd"     "birthday")
+(use-package bookmark :straight nil :demand t
+  :config
+  (setq bookmark-save-flag 1)
+  (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
+  (setq bookmark-bmenu-toggle-filenames t))
 
-					       ;; Common words
-					       ("yr"     "year")
-					       ("yrs"    "years")
-					       
-					       ;; Mathematics
-					       ("wlog"   "without loss of generality")
-					       ("tfae"   "the following are equivalent")
-					       ))
+(use-package calc :straight nil
+  :config
+  (add-hook 'calc-trail-mode-hook 'evil-insert-state))
 
 (use-package recentf :straight nil :demand t 
   :init
@@ -53,14 +30,16 @@
   ;; Save recentf list every 5 minutes
   (run-at-time nil (* 5 60) #'recentf-save-list))
 
-(use-package calc :straight nil
-  :config
-  (add-hook 'calc-trail-mode-hook 'evil-insert-state))
-
-(use-package bookmark :straight nil :demand t
-  :config
-  (setq bookmark-save-flag 1)
-  (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
-  (setq bookmark-bmenu-toggle-filenames t))
+(use-package savehist :straight nil :demand t
+  ;; Save minibuffer-history
+  :init (savehist-mode)
+  :custom
+  (savehist-file (locate-user-emacs-file "history"))
+  (history-length 2000)
+  (savehist-additional-variables
+   '(kill-ring
+     register-alist
+     search-ring
+     regexp-search-ring)))
 
 (provide 'knot-built-ins)
