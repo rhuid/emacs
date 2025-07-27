@@ -61,7 +61,7 @@
 (use-package knot-programming  :straight nil :defer nil)
 (use-package knot-latex	       :straight nil :defer nil)
 (use-package knot-dired	       :straight nil :defer nil)
-(use-package knot-minibuffer   :straight nil :defer nil)
+(use-package knot-completion   :straight nil :defer nil)
 (use-package knot-built-ins    :straight nil :defer nil)
 (use-package knot-extra-tools  :straight nil :defer nil)
 (use-package knot-shells       :straight nil :defer nil)
