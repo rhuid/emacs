@@ -6,7 +6,8 @@
   :config
   (setq-default abbrev-mode t)
   (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
-  (read-abbrev-file abbrev-file-name))
+  (read-abbrev-file abbrev-file-name)
+  (setq save-abbrevs 'silently))
 
 (use-package bookmark :straight nil :demand t
   :config
