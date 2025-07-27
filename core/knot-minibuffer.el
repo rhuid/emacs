@@ -10,55 +10,46 @@
 	 ("C-M-p" . vertico-prev-group)
 	 ("C-M-n" . vertico-next-group)))
 
-(use-package savehist :straight nil :demand t
-  ;; Save minibuffer-history
-  :init (savehist-mode)
-  :custom
-  (savehist-file (locate-user-emacs-file "history"))
-  (history-length 2000)
-  (savehist-additional-variables
-   '(kill-ring
-     register-alist
-     search-ring
-     regexp-search-ring)))
-
 (use-package orderless :straight t :demand t 
-  ;; Type multiple words in any order to match candidates. Fuzzy, regex, initialism, flex
+  ;; Type multiple words in any order to match candidates
   :init
   (setq completion-styles '(orderless)
         completion-category-defaults nil))
 
-;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
-(use-package marginalia :straight t  :demand t :init (marginalia-mode))
+(use-package marginalia :straight t  :demand t
+  ;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
+  :init (marginalia-mode))
+
 (use-package consult :straight t :demand t 
   ;; Adds modern alternatives to core Emacs commands
   :bind
-  (("C-c f"   . consult-find)
-   ("C-c l"   . consult-locate)
-   ("C-c r"   . consult-recent-file)
-   ("C-s"     . consult-line)
-   ("C-M-s"   . consult-line-multi)
-   ("C-M-g"   . consult-ripgrep)
-   ("C-x b"   . consult-buffer)
-   ("C-M-e"   . consult-buffer)
-   ("M-y"     . consult-yank-pop)
-   ("C-M-b"   . consult-bookmark)
-   ("C-c t"   . consult-theme)
-   ("M-m"     . consult-imenu)
-   ("M-p"     . consult-project-buffer)
+  (("C-c f"  . consult-find)
+   ("C-c l"  . consult-locate)
+   ("C-c r"  . consult-recent-file)
+   ("C-s"    . consult-line)
+   ("C-M-s"  . consult-line-multi)
+   ("C-M-g"  . consult-ripgrep)
+   ("C-x b"  . consult-buffer)
+   ("C-M-e"  . consult-buffer)
+   ("M-y"    . consult-yank-pop)
+   ("C-M-b"  . consult-bookmark)
+   ("C-c t"  . consult-theme)
+   ("M-m"    . consult-imenu)
+   ("M-p"    . consult-project-buffer)
    )
   :config
+  (setq consult-preview-key 'any)
+
   ;; To always start searching from home directory
   (advice-add 'consult-find :around
               (lambda (orig &rest args)
 		(let ((default-directory (expand-file-name "~")))
-                  (apply orig args))))
-  )
+                  (apply orig args)))))
 
-(setq consult-preview-key "M-.") ; preview only when you press M-
+(use-package which-key :straight t :demand t
+  ;; Live popup of possible key combinations
+  :config (which-key-mode))
 
-;; Live popup of possible key combinations
-(use-package which-key :straight t  :demand t :config (which-key-mode))
 (use-package embark :straight t :demand t 
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
@@ -91,9 +82,7 @@
                  nil
                  (window-parameters (mode-line-format . none)))))
 
-;; Consult users will also want the embark-consult package.
 (use-package embark-consult :straight t :demand t :after consult
-  ;; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
