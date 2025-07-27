@@ -2,7 +2,7 @@
 
 (straight-use-package '(org :type built-in))
 
-(use-package org :straight nil :defer t
+(use-package org :straight nil :defer (not (daemonp))
   :commands (org-mode)
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
