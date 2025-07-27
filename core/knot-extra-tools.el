@@ -52,16 +52,11 @@
     (let ((msg (read-string "Commit message: ")))
       (magit-commit-create `("-m" ,msg))))
 
-  ;; (define-key magit-status-mode-map (kbd "C-c q") #'rh/magit-quick-commit)
-
   (defun rh/magit-quick-amend ()
     "Quickly amend last commit with a new message via minibuffer."
     (interactive)
     (let ((msg (read-string "Amend message: ")))
-      (magit-commit-create `("--amend" "-m" ,msg))))
-
-  ;; (define-key magit-status-mode-map (kbd "C-c a") #'rh/magit-quick-amend)
-  )
+      (magit-commit-create `("--amend" "-m" ,msg)))))
 
 (use-package rainbow-mode :straight t
   :hook (prog-mode . rainbow-mode))
