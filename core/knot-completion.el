@@ -1,4 +1,4 @@
-;;; knot-minibuffer.el --- Enhancements of the minibuffer -*- lexical-binding: t; -*-
+;;; knot-completion.el --- Enhancements of the minibuffer -*- lexical-binding: t; -*-
 
 ;;; Mostly completion frameworks. There are lots of individual packages which all work together.
 
@@ -86,4 +86,39 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(provide 'knot-minibuffer)
+(use-package corfu :straight t :demand t
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t)                        ;; Enable auto popup
+  (corfu-auto-delay 0.2)
+  (corfu-minimum-prefix-length 2)
+  (corfu-preview-current nil)           ;; Don't preview current candidate inline
+  (corfu-on-exact-match nil)            ;; Don’t auto-select exact match
+  (corfu-quit-at-boundary t)            ;; Stop completion at word boundaries
+  (corfu-quit-no-match t)               ;; Quit if no match
+  (corfu-preselect 'prompt)             ;; Don't preselect any candidate
+  (corfu-cycle t))                      ;; Cycle through candidates
+
+(with-eval-after-load 'corfu
+
+  ;; Disable some annoying stuffs like inserting on TAB or RET
+  (define-key corfu-map (kbd "RET") nil)
+  (define-key corfu-map (kbd "<return>") nil)
+  (define-key corfu-map (kbd "TAB") nil)
+  (define-key corfu-map (kbd "<tab>") nil)
+  (define-key corfu-map (kbd "C-j") nil)
+  (define-key corfu-map (kbd "C-m") nil)
+
+  ;; Use C-p and C-n to navigate through the corfu suggestions, and C-SPC to insert the selection
+  (define-key corfu-map (kbd "C-n") #'corfu-next)
+  (define-key corfu-map (kbd "C-p") #'corfu-previous)
+  (define-key corfu-map (kbd "C-SPC") #'corfu-insert))
+
+(use-package cape :straight t :after corfu
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
+
+(provide 'knot-completion)
