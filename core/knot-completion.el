@@ -46,10 +46,6 @@
 		(let ((default-directory (expand-file-name "~")))
                   (apply orig args)))))
 
-(use-package which-key :straight t :demand t
-  ;; Live popup of possible key combinations
-  :config (which-key-mode))
-
 (use-package embark :straight t :demand t 
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
@@ -79,12 +75,21 @@
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
+                 ;; nil
+		 (display-buffer-in-side-window)
+		 (side . bottom)
+		 (window-height . 0.3 )
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult :straight t :demand t :after consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package which-key :straight t :demand t
+  ;; Live popup of possible key combinations
+  :config
+  (setq which-key-idle-delay 0.3)
+  (which-key-mode))
 
 (use-package corfu :straight t :demand t
   :init
@@ -94,7 +99,7 @@
   (corfu-auto-delay 0.2)
   (corfu-minimum-prefix-length 2)
   (corfu-preview-current nil)           ;; Don't preview current candidate inline
-  (corfu-on-exact-match nil)            ;; Don’t auto-select exact match
+  (corfu-on-exact-match t)              ;; Auto-select exact match
   (corfu-quit-at-boundary t)            ;; Stop completion at word boundaries
   (corfu-quit-no-match t)               ;; Quit if no match
   (corfu-preselect 'prompt)             ;; Don't preselect any candidate
@@ -117,8 +122,12 @@
 
 (use-package cape :straight t :after corfu
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-keyword))
+  (setq completion-at-point-functions
+	(list #'cape-symbol
+	      #'cape-dabbrev
+	      #'cape-file
+	      #'cape-keyword
+	      #'cape-history
+	      #'cape-tex)))
 
 (provide 'knot-completion)
