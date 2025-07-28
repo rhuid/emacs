@@ -89,6 +89,7 @@
   ;; Live popup of possible key combinations
   :config
   (setq which-key-idle-delay 0.2)
+  (setq which-key-popup-type 'minibuffer)
   (which-key-mode))
 
 (use-package corfu :straight t :demand t
