@@ -48,8 +48,8 @@
 
 (use-package embark :straight t :demand t 
   :bind
-  (("C-." . embark-act)         ;; pick some comfortable binding
-   ("C-;" . embark-dwim)        ;; good alternative: M-.
+  (("C-."   . embark-act)
+   ("C-;"   . embark-dwim)
    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
 
   :init
@@ -98,11 +98,11 @@
   (corfu-auto t)                        ;; Enable auto popup
   (corfu-auto-delay 0.1)
   (corfu-minimum-prefix-length 2)
-  (corfu-preview-current nil)           ;; Don't preview current candidate inline
+  (corfu-preview-current t)
   (corfu-on-exact-match t)              ;; Auto-select exact match
-  (corfu-quit-at-boundary t)            ;; Stop completion at word boundaries
-  (corfu-quit-no-match t)               ;; Quit if no match
-  (corfu-preselect 'prompt)             ;; Don't preselect any candidate
+  (corfu-quit-at-boundary t)
+  (corfu-quit-no-match nil)
+  (corfu-preselect 'prompt)             ;; Preselect candidate
   (corfu-cycle t))                      ;; Cycle through candidates
 
 (with-eval-after-load 'corfu
@@ -126,7 +126,6 @@
 	(list #'cape-symbol
 	      #'cape-dabbrev
 	      #'cape-file
-	      #'cape-keyword
 	      #'cape-history
 	      #'cape-tex)))
 
