@@ -19,6 +19,13 @@
   :config
   (add-hook 'calc-trail-mode-hook 'evil-insert-state))
 
+(use-package eww :straight nil
+  :bind (("C-c w" . eww))
+  :config
+  (setq eww-search-prefix "https://duckduckgo.com/html/?q-")
+  (setq shr-use-colors nil)
+  (setq shr-width fill-column))
+
 (use-package recentf :straight nil :demand t 
   :init
   (recentf-mode 1)
