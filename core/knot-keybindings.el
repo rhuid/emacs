@@ -78,7 +78,7 @@
     (dolist (binding
 	     '(("d" . ibuffer-mark-forward)
 	       ("u" . ibuffer-unmark-forward)
-	       ("U" . ibuffer-unmark-all)
+	       ("U" . ibuffer-unmark-all-marks)
 	       ("D" . ibuffer-do-kill-lines)
 	       ))
       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
