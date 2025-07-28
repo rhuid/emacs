@@ -88,7 +88,7 @@
 (use-package which-key :straight t :demand t
   ;; Live popup of possible key combinations
   :config
-  (setq which-key-idle-delay 0.3)
+  (setq which-key-idle-delay 0.2)
   (which-key-mode))
 
 (use-package corfu :straight t :demand t
@@ -96,7 +96,7 @@
   (global-corfu-mode)
   :custom
   (corfu-auto t)                        ;; Enable auto popup
-  (corfu-auto-delay 0.2)
+  (corfu-auto-delay 0.1)
   (corfu-minimum-prefix-length 2)
   (corfu-preview-current nil)           ;; Don't preview current candidate inline
   (corfu-on-exact-match t)              ;; Auto-select exact match
