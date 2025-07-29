@@ -7,9 +7,7 @@
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
 	 (org-mode . rh/org-custom-faces)
-	 (org-mode . org-fragtog-mode)
-	 ;; (org-mode . rh/org-tab-hook)
-	 )
+	 (org-mode . org-fragtog-mode))
   :init
   (defun rh/org-init ()
     (require 'org)
