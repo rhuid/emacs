@@ -7,7 +7,8 @@
   (global-prettify-symbols-mode 1) 
   (global-display-line-numbers-mode t)
   (setq make-backup-files nil)                                 ; don't generate backup files
-  (setq kill-buffer-query-functions nil))
+  (setq kill-buffer-query-functions nil)
+  (fset 'yes-or-no-p 'y-or-n-p))
 
 (use-package all-the-icons :disabled t :straight t :defer t
   :config
