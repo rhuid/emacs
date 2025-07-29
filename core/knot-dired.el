@@ -28,6 +28,7 @@
   (add-hook 'dired-mode-hook #'dired-du-mode))
 
 (use-package dired-git-info :straight t :after dired
+  :hook (dired-after-readin . dired-git-info-auto-enable)
   :bind (:map dired-mode-map
               (")" . dired-git-info-mode))            ;; press `)` to toggle git info
   :config
