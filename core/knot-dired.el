@@ -2,8 +2,17 @@
 
 (use-package dired :straight nil :defer t
   :config
-  (setq dired-listing-switches "-alh")
-  (setq dired-dwim-target t))
+  (setq dired-listing-switches "-alh --group-directories-first"
+	dired-dwim-target t
+	dired-mouse-drag-files t
+	dired-recursive-copies 'always))
+
+(use-package all-the-icons-dired :straight t
+  :hook (dired-mode . all-the-icons-dired-mode))
+
+(use-package diredfl :straight t
+  :hook (dired-mode . diredfl-mode)
+  :config (diredfl-global-mode 1))
 
 (use-package dired-preview :straight t :disabled t :after dired
   :hook (dired-mode . dired-preview-mode)
@@ -11,18 +20,6 @@
   (setq dired-preview-delay 0.2
         dired-preview-max-size 10                   ;; max 10 MB
 	dired-preview-use-timer t))
-
-(use-package all-the-icons-dired :straight t
-  :hook (dired-mode . all-the-icons-dired-mode))
-
-(use-package peep-dired :straight t :disabled t :after dired
-  ;; :hook (peep-dired-mode . evil-normalize-keymaps)
-  :config
-  (define-key dired-mode-map (kbd "P") #'peep-dired))
-
-(use-package ranger :straight t :disabled t
-  :config
-  (ranger-override-dired-mode t))
 
 (use-package dired-du :straight t :disabled t
   :after dired
@@ -98,10 +95,7 @@
 
      ;; Everything else: open in Emacs side window
      (t
-      (display-buffer (find-file-noselect file))))))
-
-;; Default keybindings
-;; d        Mark for delete
-;; C        Copy
+      ;; (display-buffer (find-file-noselect file))
+      (dired-display-file)))))
 
 (provide 'knot-dired)
