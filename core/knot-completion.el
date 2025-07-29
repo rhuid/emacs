@@ -8,12 +8,15 @@
 	 :map vertico-map
 	 ("C-j"   . vertico-exit-input)
 	 ("C-M-p" . vertico-prev-group)
-	 ("C-M-n" . vertico-next-group)))
+	 ("C-M-n" . vertico-next-group))
+  :custom
+  (vertico-resize t)
+  (vertico-cycle t))
 
 (use-package orderless :straight t :demand t 
   ;; Type multiple words in any order to match candidates
   :init
-  (setq completion-styles '(orderless)
+  (setq completion-styles '(orderless partial-completion)
         completion-category-defaults nil))
 
 (use-package marginalia :straight t  :demand t
@@ -36,6 +39,7 @@
    ("C-c t"  . consult-theme)
    ("M-m"    . consult-imenu)
    ("M-p"    . consult-project-buffer)
+   ("M-o"    . consult-outline)
    )
   :config
   (setq consult-preview-key 'any)
