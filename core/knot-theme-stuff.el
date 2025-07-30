@@ -1,15 +1,5 @@
 ;;; knot-theme-stuff.el --- Just as the filename suggests -*- lexical-binding: t; -*-
 
-(use-package emacs :straight nil :demand t
-  :config
-  (global-visual-line-mode t)                                  ; automatic line wrapping
-  (global-hl-line-mode 1)
-  (global-prettify-symbols-mode 1) 
-  (global-display-line-numbers-mode t)
-  (setq make-backup-files nil)                                 ; don't generate backup files
-  (setq kill-buffer-query-functions nil)
-  (fset 'yes-or-no-p 'y-or-n-p))
-
 (use-package all-the-icons :disabled t :straight t :defer t
   :config
   (when (display-graphic-p)
