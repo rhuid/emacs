@@ -62,7 +62,7 @@
 (with-eval-after-load 'dired
   (defun rh/dired-keys ()
     (dolist (binding
-	     '(("l"     . dired-display-file)
+	     '(("l"     . dired-git-info-mode)
 	       ("m"     . dired-up-directory)
 	       ("i"     . rh/dired-open-file)
 	       ("d"     . dired-mark)
