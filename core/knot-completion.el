@@ -13,7 +13,7 @@
   (vertico-resize t)
   (vertico-cycle t))
 
-(use-package orderless :straight t :demand t 
+(use-package orderless :straight t :demand t
   ;; Type multiple words in any order to match candidates
   :init
   (setq completion-styles '(orderless partial-completion)
@@ -23,7 +23,7 @@
   ;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
   :init (marginalia-mode))
 
-(use-package consult :straight t :demand t 
+(use-package consult :straight t :demand t
   ;; Adds modern alternatives to core Emacs commands
   :bind
   (("C-c f"  . consult-find)
@@ -50,7 +50,7 @@
 		(let ((default-directory (expand-file-name "~")))
                   (apply orig args)))))
 
-(use-package embark :straight t :demand t 
+(use-package embark :straight t :demand t
   :bind
   (("C-."   . embark-act)
    ("C-;"   . embark-dwim)
@@ -92,7 +92,7 @@
 (use-package which-key :straight t :demand t
   ;; Live popup of possible key combinations
   :config
-  (setq which-key-idle-delay 0.2)
+  (setq which-key-idle-delay 0.5)
   (setq which-key-popup-type 'minibuffer)
   (which-key-mode))
 
