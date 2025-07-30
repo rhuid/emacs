@@ -4,6 +4,32 @@
 
 (use-package emacs :straight nil :demand t
   :config
+
+  ;; Automatically refresh the buffer when files change on disk
+  (global-auto-revert-mode)
+
+  ;; Automatic line wrapping
+  (global-visual-line-mode)
+
+  (global-hl-line-mode)
+  (global-prettify-symbols-mode) 
+  (global-display-line-numbers-mode)
+  (global-subword-mode)
+
+  (blink-cursor-mode 0)
+  (save-place-mode)
+  (kill-ring-deindent-mode)
+
+  ;; Don't generate backup files
+  (setq make-backup-files nil)
+
+  ;; Don't ask for confirmation while killing buffers
+  (setq kill-buffer-query-functions nil)
+
+  ;; All confirmations prompts be y or n
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  ;; Abbreviations
   (setq-default abbrev-mode t)
   (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
   (read-abbrev-file abbrev-file-name)
@@ -25,6 +51,12 @@
   (setq eww-search-prefix "https://duckduckgo.com/html/?q-")
   (setq shr-use-colors nil)
   (setq shr-width fill-column))
+
+(use-package minibuffer :straight nil
+  :hook (minibuffer-mode . savehist-mode)
+  :custom (history-delete-duplicates t))
+
+(use-package project :straight nil :demand t)
 
 (use-package recentf :straight nil :demand t 
   :init
