@@ -17,7 +17,7 @@
 	  org-ellipsis " ▾ "                                      ; folding symbol
 	  org-pretty-entities t                                   ; pretty TeX symbols
 	  org-log-done 'time                                      ; log time when a task is marked done
-	  org-hide-leading-stars t                                ; important for org-superstar
+	  org-hide-leading-stars t
 	  org-startup-folded 'content))
 
   (setq org-todo-keywords
@@ -92,6 +92,9 @@
 (use-package org-fragtog :straight t :after org)
 ;; :hook (org-mode . org-fragtog-mode))
 
+(use-package org-latex-preview :straight nil :after org
+  :hook (org-mode. org-latex-preview-auto-mode))
+
 (use-package ox-reveal :straight t :after org
   ;; nice looking HTML presentations
   :config
@@ -101,7 +104,6 @@
 
 (use-package org-agenda :straight nil :after org
   :commands (org-agenda org-todo-list))
-
 
 (with-eval-after-load 'org
   ;; Define header function; to insert a template header to a new org file
