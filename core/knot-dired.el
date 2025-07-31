@@ -1,6 +1,8 @@
 ;;; knot-dired.el --- Enchancements of the already great file manager -*- lexical-binding: t; -*-
 
 (use-package dired :straight nil :defer t
+  :hook ((dired-mode . (lambda ()
+			 (setq-local evil-normal-state-cursor nil))))
   :config
   (setq dired-listing-switches "-alh --group-directories-first"
 	dired-dwim-target t
