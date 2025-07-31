@@ -3,6 +3,8 @@
 ;; (require 'rh-capitalize)
 
 (use-package emacs :straight nil :demand t
+  :hook ((before-save . delete-trailing-whitespace)
+	 (prog-mode   . glyphless-display-mode))
   :config
 
   ;; Automatically refresh the buffer when files change on disk
@@ -12,7 +14,7 @@
   (global-visual-line-mode)
 
   (global-hl-line-mode)
-  (global-prettify-symbols-mode) 
+  (global-prettify-symbols-mode)
   (global-display-line-numbers-mode)
   (global-subword-mode)
 
@@ -33,7 +35,11 @@
   (setq-default abbrev-mode t)
   (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
   (read-abbrev-file abbrev-file-name)
-  (setq save-abbrevs 'silently))
+  (setq save-abbrevs 'silently)
+
+  ;; Calendar
+  (add-hook 'calendar-today-visible-hook #'calendar-mark-today)
+  )
 
 (use-package bookmark :straight nil :demand t
   :config
@@ -58,7 +64,7 @@
 
 (use-package project :straight nil :demand t)
 
-(use-package recentf :straight nil :demand t 
+(use-package recentf :straight nil :demand t
   :init
   (recentf-mode 1)
   :custom
