@@ -190,6 +190,10 @@
 	 ("\\.conf\\'"    . conf-unix-mode)
 	 ("\\.ini\\'"     . conf-unix-mode)))
 
+(use-package csv-mode :straight t
+  :mode ("\\.csv\\'" . csv-mode)
+  :hook (csv-mode . csv-align-mode))
+
 ;;;; Eglot (in-built)
 
 ;; (use-package emacs :straight nil
