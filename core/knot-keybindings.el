@@ -37,7 +37,7 @@
 
     ;; vterm
     "t t"     'rh/vterm-toggle
-    
+
     ;; utilities
     "u"       '(:ignore t :which-key "utilities")
     "u r"     'recentf-open-files
@@ -70,7 +70,7 @@
 	       ("U"     . dired-unmark-all-marks)
 	       ("C-c o" . open-in-file-manager)))
       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
-  
+
   (add-hook 'dired-mode-hook #'rh/dired-keys))
 
 (with-eval-after-load 'ibuffer
@@ -82,7 +82,7 @@
 	       ("D" . ibuffer-do-kill-lines)
 	       ))
       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
-  
+
   (add-hook 'ibuffer-mode-hook #'rh/ibuffer-keys))
 
 (with-eval-after-load 'magit
