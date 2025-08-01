@@ -41,13 +41,16 @@
 ;;   (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
 ;;   (exec-path-from-shell-initialize))
 
+;; (use-package use-package-vc
+;;   :init
+;;   (use-package-vc-install))
+
 (when (or (daemonp) (display-graphic-p))
   (use-package exec-path-from-shell
     :demand t
     :config
     (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
     (exec-path-from-shell-initialize)))
-
 
 (use-package benchmark-init    :straight t :disabled t
   :init (benchmark-init/activate)
@@ -65,5 +68,5 @@
 (use-package knot-completion   :straight nil :defer nil)
 (use-package knot-extra-tools  :straight nil :defer nil)
 (use-package knot-shells       :straight nil :defer nil)
-(use-package knot-keybindings  :straight nil :defer nil)
+;; (use-package knot-keybindings  :straight nil :defer nil)
 (use-package knot-scratch      :straight nil :commands (rh/toggle-org-scratch rh/toggle-lean-scratch))
