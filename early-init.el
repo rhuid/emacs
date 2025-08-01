@@ -1,7 +1,7 @@
 ;;; early-init.el --- Load this before init.el -*- lexical-binding: t; -*-
 
-;; Disable package.el auto-init (using straight.el)
-(setq package-enable-at-startup nil)
+;; Disable package.el auto-init (to avoid double initializing)
+;; (setq package-enable-at-startup nil)
 
 ;; Defer garbage collection to speed up startup
 (setq gc-cons-threshold most-positive-fixnum
