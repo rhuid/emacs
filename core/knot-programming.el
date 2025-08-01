@@ -122,11 +122,7 @@
 	(while (re-search-forward outline-regexp nil t)
           (push (point) positions)))
       positions))
-
-  ;; Toggle keybinding (in both Evil and non-Evil)
-  (define-key outline-minor-mode-map (kbd "C-c @ <tab>") #'rh/outline-toggle-heading)
-  (evil-global-set-key 'normal (kbd "C-c @ <tab>") #'rh/outline-toggle-heading)
-  (evil-global-set-key 'normal (kbd "C-c @ <backtab>") #'outline-hide-body))
+  )
 
 (use-package lisp-mode :straight nil :defer t
   :mode ("\\.el\\'" . emacs-lisp-mode)
