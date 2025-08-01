@@ -1,6 +1,6 @@
 ;;; knot-dashboard.el --- My minimai startup page -*- lexical-binding: t; -*-
 
-(use-package dashboard :straight t :demand t
+(use-package dashboard :demand t
   :hook (emacs-startup . dashboard-setup-startup-hook)
   :config
   (setq rh/dashboard-banner-path (expand-file-name "logo/Emacs-Bloody.txt" user-emacs-directory))
@@ -25,10 +25,11 @@
 				    dashboard-insert-newline
 				    dashboard-insert-banner-title
 				    dashboard-insert-newline
+				    dashboard-insert-init-info
 				    dashboard-insert-navigator
 				    ))
 
-  ;; Show Dashboard in frames created with emacsclient -c 
+  ;; Show Dashboard in frames created with emacsclient -c
   (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
 
   ;; (dashboard-setup-startup-hook)
