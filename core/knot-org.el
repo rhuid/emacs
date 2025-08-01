@@ -33,8 +33,8 @@
      '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#50fa7b"))))
      '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c")))))
 
-    ;; prettify code blocks (SRC) 
-    ;;(custom-set-faces                                             
+    ;; prettify code blocks (SRC)
+    ;;(custom-set-faces
     ;; '(org-block ((t (:background "#282a36" :foreground "#f8f8f2")))))
     )
 
@@ -57,8 +57,8 @@
   ;;                 :image-converter ("dvipng -D %D -T tight -o %O %f"))))
   )
 
-(use-package evil-org :straight t :after (evil org)
-  :hook (org-mode . evil-org-mode))
+;; (use-package evil-org :straight t :after (evil org)
+;;   :hook (org-mode . evil-org-mode))
 
 (use-package org-modern :straight t :after org
   ;; visual improvements for org mode
@@ -66,13 +66,13 @@
   :config
 
   ;; disable org-modern's heading stars (let org-superstar handle them)
-  (setq org-modern-star nil))                                
+  (setq org-modern-star nil))
 
 ;; To set variable-width characters instead of monospace, but preserve monospace for tables (for alignment) and code blocks
 ;;(set-face-attribute 'variable-pitch nil	:family "DejaVu Sans" :height 120)
 ;;(add-hook 'org-mode-hook
 ;;          (lambda ()
-;;            (variable-pitch-mode 1)                             
+;;            (variable-pitch-mode 1)
 ;;            (face-remap-add-relative 'org-table 'fixed-pitch)
 ;;            (face-remap-add-relative 'org-code 'fixed-pitch)))
 
@@ -82,7 +82,7 @@
   :config
 
   ;; replace * of headings with these emojis
-  (setq org-superstar-headline-bullets-list                   
+  (setq org-superstar-headline-bullets-list
 	'("✿" "❀" "✦" "❂"))
 
   ;; prettify list bullets
