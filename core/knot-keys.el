@@ -26,20 +26,13 @@
 
 	   ("C-c u r" . recentf-open-files)
 	   ("C-c u s" . rh/eshell-toggle)
-	   ("C-c u t" . rh/vterm-toggle)
+	   ("C-c u v" . rh/vterm-toggle)
+	   ("C-c u l" . rh/toggle-lean-scratch)
+	   ("C-c u o" . rh/toggle-org-scratch)
 
 	   ("C-x C-b" . ibuffer)
 	   ("C-x g"   . magit-status)))
   (global-set-key (kbd (car binding)) (cdr binding)))
-
-;;     "SPC o"   'rh/toggle-org-scratch
-;;     "SPC l"   'rh/toggle-lean-scratch
-
-;;     ;; git (magit)
-;;     "g s"     'magit-status
-
-;;     ;; utilities
-;;     "u"       '(:ignore t :which-key "utilities")
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
@@ -151,15 +144,11 @@
 
 ;;   (add-hook 'ibuffer-mode-hook #'rh/ibuffer-keys))
 
-;; (with-eval-after-load 'magit
-;;   (defun rh/magit-keys ()
-;;     (dolist (binding
-;; 	     '(("u"     . magit-unstage)
-;; 	       ("U"     . magit-unstage-all)
-;; 	       ("C-c q" . rh/magit-quick-commit)
-;; 	       ("C-c a" . rh/magit-quick-amend)))
-;;       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
-
-;;   (add-hook 'magit-status-mode-hook #'rh/magit-keys))
+(with-eval-after-load 'magit
+  (defun rh/magit-keys ()
+    (meow-motion-define-key
+     '("C-c C-q" . rh/magit-quick-commit)
+     '("C-c C-a" . rh/magit-quick-amend)))
+  (add-hook 'dired-mode-hook #'rh/magit-keys))
 
 (provide 'knot-keys)
