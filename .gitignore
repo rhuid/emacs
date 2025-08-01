@@ -6,6 +6,7 @@
 /core/knot-home.el
 /emms/
 /places
+/meow/
 
 # Emacs backup & auto-save
 *~
