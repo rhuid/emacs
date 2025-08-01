@@ -68,5 +68,5 @@
 (use-package knot-completion   :straight nil :defer nil)
 (use-package knot-extra-tools  :straight nil :defer nil)
 (use-package knot-shells       :straight nil :defer nil)
-;; (use-package knot-keybindings  :straight nil :defer nil)
+(use-package knot-keybindings  :straight nil :defer nil)
 (use-package knot-scratch      :straight nil :commands (rh/toggle-org-scratch rh/toggle-lean-scratch))
