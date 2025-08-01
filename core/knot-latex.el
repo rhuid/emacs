@@ -1,6 +1,6 @@
 ;;; knot-latex.el --- For all things LaTeX -*- lexical-binding: t; -*-
 
-(use-package auctex :straight t :defer t
+(use-package auctex :ensure t :defer t
   :mode (( "\\.tex\\'" . LaTeX-mode)
 	 ( "\\.cls\\'" . LaTeX-mode)
 	 ( "\\.sty\\'" . LaTeX-mode))
@@ -10,11 +10,11 @@
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
   )
 
-(use-package auctex-latexmk :straight t :defer t :after auctex
+(use-package auctex-latexmk :ensure t :defer t :after auctex
   :config
   (auctex-latexmk-setup))
 
-(use-package cdlatex :straight t :defer t
+(use-package cdlatex :ensure t :defer t
   :hook ((LaTeX-mode . turn-on-cdlatex)
          (org-mode . turn-on-org-cdlatex))
   :config
@@ -28,13 +28,13 @@
   (setq cdlatex-command-alist
 	'(("ax" "Insert axiom env" "" cdlatex-environment ("axiom") t nil)             ; ax TAB -> axiom env
 	  ("df" "Insert definition env" "" cdlatex-environment ("definition") t nil)   ; df TAB -> definition env
-	  ("lm" "Insert lemma env" "" cdlatex-environment ("lemma") t nil)             ; lm TAB -> lemma env	
+	  ("lm" "Insert lemma env" "" cdlatex-environment ("lemma") t nil)             ; lm TAB -> lemma env
 	  ("pp" "Insert proposition env" "" cdlatex-environment ("proposition") t nil) ; pp TAB -> propositin env
 	  ("th" "Insert theorem env" "" cdlatex-environment ("theorem") t nil)         ; th TAB -> theorem env
 	  ("cl" "Insert corollary env" "" cdlatex-environment ("corollary") t nil)     ; cl TAB -> corollary env
 	  ("pr" "Insert proof env" "" cdlatex-environment ("proof") t nil))))          ; pr TAB -> proof env
 
-(use-package latex-preview-pane :straight t)
+(use-package latex-preview-pane :ensure t)
 
 
 ;;(use-package auto-complete-auctex)

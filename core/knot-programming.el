@@ -1,6 +1,6 @@
 ;;; knot-programming.el --- All things related to writing source code -*- lexical-binding: t; -*-
 
-(use-package lsp-mode :straight t :defer t
+(use-package lsp-mode :ensure t :defer t
   :commands (lsp lsp-deferred)
   :custom
   (lsp-headerline-breadcrumb-enable nil)
@@ -8,7 +8,7 @@
   (lsp-signature-auto-activate nil)
   (lsp-log-io nil))
 
-(use-package lsp-ui :straight t :defer t :after lsp-mode
+(use-package lsp-ui :ensure t :defer t :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
@@ -16,7 +16,7 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
-(use-package company :straight t :defer t
+(use-package company :ensure t :defer t
   :commands company-mode
   :hook (lean4-mode . company-mode)
   :config
@@ -34,19 +34,19 @@
   (define-key company-mode-map (kbd "C-l") #'company-complete))
 
 ;; Haskell
-(use-package haskell-mode :straight t :defer t
+(use-package haskell-mode :ensure t :defer t
   :mode "\\.hs\\'"
   )
 
-(use-package haskell-tng-mode :straight t :defer t
+(use-package haskell-tng-mode :ensure t :defer t
   ;; :mode "\\.hs\\"
   )
 
-(use-package lean4-mode :straight nil :defer t
+(use-package lean4-mode :ensure nil :defer t
   :commands lean4-mode
   :load-path "~/.emacs.d/lean4-mode"
 
-  ;; :straight (lean4-mode :type git :host github
+  ;; :ensure (lean4-mode :type git :host github
   ;;                       :repo "leanprover-community/lean4-mode"
   ;;                       :files ("*.el" "data"))
 
@@ -68,7 +68,7 @@
     (company-mode +1))
   )
 
-(use-package sh-script :straight nil :defer t
+(use-package sh-script :ensure nil :defer t
   :mode ("\\.sh\\'" . sh-mode)
   :hook ((sh-mode . rh/sh-tab-hook)
 	 (sh-mode . rh/sh-highlight-custom-keywords)
@@ -76,7 +76,7 @@
 		      (require 'rh-shell))))
   )
 
-(use-package outline :straight t :demand t
+(use-package outline :ensure t :demand t
   :hook ((prog-mode . outline-minor-mode)
          (text-mode . outline-minor-mode)
          (outline-minor-mode . outline-show-all)
@@ -124,7 +124,7 @@
       positions))
   )
 
-(use-package lisp-mode :straight nil :defer t
+(use-package lisp-mode :ensure nil :defer t
   :mode ("\\.el\\'" . emacs-lisp-mode)
   :hook ((emacs-lisp-mode . eldoc-mode)
 	 (emacs-lisp-mode . rh/elisp-tab-hook)
@@ -146,7 +146,7 @@
     (outline-hide-body))
   )
 
-(use-package rust-mode :straight t :defer t
+(use-package rust-mode :ensure t :defer t
   :mode "\\.rs\\'"
   :hook ((rust-mode . outline-minor-mode)
 	 (rust-mode . rh/outline-rust)
@@ -164,21 +164,21 @@
     (outline-hide-body))
   )
 
-(use-package flycheck-rust :straight t :defer t :after rust)
+(use-package flycheck-rust :ensure t :defer t :after rust)
 
-(use-package nix-mode :straight t :defer t
+(use-package nix-mode :ensure t :defer t
   :mode "\\.nix\\'"
   :config
   (setq nix-indent-function 'nix-indent-line))
 
-(use-package julia-mode :straight t :defer t
+(use-package julia-mode :ensure t :defer t
   :mode "\\.jl\\'")
 
 (use-package kbd-mode :defer t
-  :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
+  :ensure (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
   :mode "\\.kbd\\'")
 
-(use-package systemd :straight t :defer t
+(use-package systemd :ensure t :defer t
   :mode (("\\.service\\'" . systemd-mode)
          ("\\.timer\\'"   . systemd-mode)
          ("\\.mount\\'"   . systemd-mode)
@@ -186,13 +186,13 @@
 	 ("\\.conf\\'"    . conf-unix-mode)
 	 ("\\.ini\\'"     . conf-unix-mode)))
 
-(use-package csv-mode :straight t
+(use-package csv-mode :ensure t
   :mode ("\\.csv\\'" . csv-mode)
   :hook (csv-mode . csv-align-mode))
 
 ;;;; Eglot (in-built)
 
-;; (use-package emacs :straight nil
+;; (use-package emacs :ensure nil
 ;;   :hook ((sh-mode . eglot-ensure)
 ;; 	 (rust-mode . eglot-ensure))
 ;;   )
@@ -200,6 +200,6 @@
 (add-hook 'sh-mode-hook #'eglot-ensure)
 
 ;; markdown live preview
-(use-package flymd :straight t :defer t)
+(use-package flymd :ensure t :defer t)
 
 (provide 'knot-programming)

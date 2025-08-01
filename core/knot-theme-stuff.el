@@ -1,18 +1,18 @@
 ;;; knot-theme-stuff.el --- Just as the filename suggests -*- lexical-binding: t; -*-
 
-(use-package all-the-icons :disabled t :straight t :defer t
+(use-package all-the-icons :disabled t :ensure t :defer t
   :config
   (when (display-graphic-p)
     (unless (member "all-the-icons" (font-family-list))
       (all-the-icons-install-fonts t))))
 
-(use-package nerd-icons :disabled t :straight t :defer t
+(use-package nerd-icons :disabled t :ensure t :defer t
   :config
   (when (display-graphic-p)
     (unless (member "Symbols Nerd Font Mono" (font-family-list))
       (nerd-icons-install-fonts t))))
 
-(use-package moody :straight t :demand t
+(use-package moody :ensure t :demand t
   :custom
   (setq x-underline-at-descent-line t)
   :config
@@ -21,7 +21,7 @@
   (moody-replace-eldoc-minibuffer-message-function)
   )
 
-(use-package emacs :straight nil :demand t
+(use-package emacs :ensure nil :demand t
   :config
   (setq display-time-format "[%b %-d %a %-I:%M %p]"
 	display-time-default-load-average nil
@@ -29,7 +29,7 @@
   (display-time-mode 1)
   )
 
-(use-package minions :straight t :demand t
+(use-package minions :ensure t :demand t
   :hook (after-init . minions-mode)
   ;; :custom
   ;; (minions-mode-line-delimiters (cons "" ""))
@@ -41,11 +41,11 @@
   ;; (minions-mode 1)
   )
 
-(use-package nyan-mode :straight t :disabled t :defer t :config (nyan-mode 1))
-(use-package rainbow-delimiters :straight t
+(use-package nyan-mode :ensure t :disabled t :defer t :config (nyan-mode 1))
+(use-package rainbow-delimiters :ensure t
   :hook (prog-mode . rainbow-delimiters-mode)) ; different color for each pair of parenthesis
 
-(use-package ef-themes :straight t :demand t
+(use-package ef-themes :ensure t :demand t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (ef-themes-select 'ef-maris-dark)
@@ -54,13 +54,13 @@
    ("C-<f5>" . ef-themes-select))
   )
 
-(use-package modus-themes :straight t :disabled t
+(use-package modus-themes :ensure t :disabled t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'modus-operandi-deuteranopia t)
   )
 
-(use-package doric-themes :straight t :disabled t
+(use-package doric-themes :ensure t :disabled t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (setq doric-themes-to-toggle '(doric-light doric-dark))
@@ -71,7 +71,7 @@
    ("C-<f5>" . doric-themes-select)
    ("M-<f5>" . doric-themes-rotate)))
 
-;; (use-package doom-themes :straight t :defer t
+;; (use-package doom-themes :ensure t :defer t
 ;;   :init (setq doom-themes-enable-bold t doom-themes-enable-italic t)
 ;;   :config (doom-themes-org-config)) ; Improved org-mode styling
 
@@ -134,7 +134,7 @@
 
 ;; (global-set-key (kbd "C-c C-M-v") #'rh/set-doom-vibrant-theme)
 
-;; (use-package gotham-theme	:straight t)
+;; (use-package gotham-theme	:ensure t)
 
 ;; (defun rh/set-gotham-theme ()
 ;;   "Set a customized version of gotham theme."
@@ -142,9 +142,9 @@
 ;;   (mapc #'disable-theme custom-enabled-themes)
 ;;   (load-theme 'gotham t)
 ;;   (set-face-attribute 'font-lock-comment-face nil
-;; 		      :slant 'oblique                   
-;; 		      :foreground "#999999" 
-;; 		      :weight 'normal) 
+;; 		      :slant 'oblique
+;; 		      :foreground "#999999"
+;; 		      :weight 'normal)
 
 ;;   ;; line numbers
 ;;   (set-face-attribute 'line-number nil
@@ -168,7 +168,7 @@
 ;;         (rh/set-doom-vibrant-theme)
 ;;       (rh/set-doom-tomorrow-day-theme))))
 
-;; ;; Run on Emacs startup			
+;; ;; Run on Emacs startup
 ;; (add-hook 'emacs-startup-hook #'rh/set-theme-based-on-time)
 
 ;; Run every hour

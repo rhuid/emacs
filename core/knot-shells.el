@@ -2,7 +2,7 @@
 
 ;;;; Eshell
 
-(use-package eshell :straight nil :demand t 
+(use-package eshell :ensure nil :demand t
   :commands eshell
   :hook ((eshell-first-time-mode . rh/eshell-init)
 	 (eshell-mode . esh-autosuggest-mode))
@@ -36,12 +36,12 @@
     )
   )
 
-(use-package eshell-syntax-highlighting :straight t :demand t :after eshell
+(use-package eshell-syntax-highlighting :ensure t :demand t :after eshell
   :config
   (eshell-syntax-highlighting-global-mode +1))
 
-(use-package esh-autosuggest :straight t :demand t :after eshell)
-(use-package eat :straight t :defer t :after eshell
+(use-package esh-autosuggest :ensure t :demand t :after eshell)
+(use-package eat :ensure t :defer t :after eshell
   ;; Emulate A Terminal
   :commands (eat eat-eshell-mode)
   :hook (eshell-mode . eat-eshell-mode))
@@ -53,7 +53,7 @@
 
 ;;;; vterm
 
-(use-package vterm :straight t :defer t
+(use-package vterm :ensure t :defer t
   :commands vterm
   :init
   (defun rh/vterm-toggle ()

@@ -1,6 +1,6 @@
 ;;; knot-dired.el --- Enchancements of the already great file manager -*- lexical-binding: t; -*-
 
-(use-package dired :straight nil :defer t
+(use-package dired :ensure nil :defer t
   :hook ((dired-mode . (lambda ()
 			 (setq-local evil-normal-state-cursor nil))))
   :config
@@ -9,27 +9,27 @@
 	dired-mouse-drag-files t
 	dired-recursive-copies 'always))
 
-(use-package all-the-icons-dired :straight t
+(use-package all-the-icons-dired :ensure t
   :hook (dired-mode . all-the-icons-dired-mode))
 
-(use-package diredfl :straight t
+(use-package diredfl :ensure t
   :hook (dired-mode . diredfl-mode)
   :config (diredfl-global-mode 1))
 
-(use-package dired-preview :straight t :disabled t :after dired
+(use-package dired-preview :ensure t :disabled t :after dired
   :hook (dired-mode . dired-preview-mode)
   :config
   (setq dired-preview-delay 0.2
         dired-preview-max-size 10                   ;; max 10 MB
 	dired-preview-use-timer t))
 
-(use-package dired-du :straight t :disabled t
+(use-package dired-du :ensure t :disabled t
   :after dired
   ;; This package really slows down dired
   :config
   (add-hook 'dired-mode-hook #'dired-du-mode))
 
-(use-package dired-git-info :straight t :after dired
+(use-package dired-git-info :ensure t :after dired
   ;; :hook (dired-after-readin . dired-git-info-auto-enable)
   :bind (:map dired-mode-map
               (")" . dired-git-info-mode))            ;; press `)` to toggle git info

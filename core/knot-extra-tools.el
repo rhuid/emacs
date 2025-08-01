@@ -1,6 +1,6 @@
 ;;; knot-extra-tools.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
-(use-package aggressive-indent :straight t :defer t
+(use-package aggressive-indent :ensure t :defer t
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
          (lisp-mode . aggressive-indent-mode))
   :config
@@ -27,7 +27,9 @@
 
 ;; (use-package chess)
 
-(use-package emms :straight t
+(use-package emms :demand t
+  :vc (:url "https://git.savannah.gnu.org/git/emms.git")
+
   :config
   (setq emms-player-list '(emms-player-mpv)
         emms-source-file-default-directory "~/Downloads/DB Scores/")
@@ -38,30 +40,35 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-(use-package magit :straight t :defer t
-  :commands (magit-status magit-log)
-  :config
+(straight-use-package 'magit)
 
-  (setq magit-display-buffer-function
-        #'magit-display-buffer-same-window-except-diff-v1)
-  (setq magit-restore-window-configuration-after-quit nil)
+;; (use-package magit
+;;   :demand t
+;;   ;; :vc (:url "https://github.com/magit/magit")
 
-  (defun rh/magit-quick-commit ()
-    "Prompt for a commit message in minibuffer and commit immediately."
-    (interactive)
-    (let ((msg (read-string "Commit message: ")))
-      (magit-commit-create `("-m" ,msg))))
+;;   :commands (magit-status magit-log)
+;;   :config
 
-  (defun rh/magit-quick-amend ()
-    "Quickly amend last commit with a new message via minibuffer."
-    (interactive)
-    (let ((msg (read-string "Amend message: ")))
-      (magit-commit-create `("--amend" "-m" ,msg)))))
+;;   (setq magit-display-buffer-function
+;; 	#'magit-display-buffer-same-window-except-diff-v1)
+;;   (setq magit-restore-window-configuration-after-quit nil)
 
-(use-package rainbow-mode :straight t
+;;   (defun rh/magit-quick-commit ()
+;;     "Prompt for a commit message in minibuffer and commit immediately."
+;;     (interactive)
+;;     (let ((msg (read-string "Commit message: ")))
+;;       (magit-commit-create `("-m" ,msg))))
+
+;;   (defun rh/magit-quick-amend ()
+;;     "Quickly amend last commit with a new message via minibuffer."
+;;     (interactive)
+;;     (let ((msg (read-string "Amend message: ")))
+;;       (magit-commit-create `("--amend" "-m" ,msg)))))
+
+(use-package rainbow-mode :ensure t
   :hook (prog-mode . rainbow-mode))
 
-(use-package sudo-edit :straight t
+(use-package sudo-edit :ensure t
   :commands (sudo-edit))
 
 (provide 'knot-extra-tools)

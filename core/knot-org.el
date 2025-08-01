@@ -1,8 +1,8 @@
 ;;; knot-org.el --- For all things org? -*- lexical-binding: t; -*-
 
-(straight-use-package '(org :type built-in))
+;; (ensure-use-package '(org :type built-in))
 
-(use-package org :straight nil :defer (not (daemonp))
+(use-package org :ensure nil :defer (not (daemonp))
   :commands (org-mode)
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
@@ -57,10 +57,10 @@
   ;;                 :image-converter ("dvipng -D %D -T tight -o %O %f"))))
   )
 
-;; (use-package evil-org :straight t :after (evil org)
+;; (use-package evil-org :ensure t :after (evil org)
 ;;   :hook (org-mode . evil-org-mode))
 
-(use-package org-modern :straight t :after org
+(use-package org-modern :ensure t :after org
   ;; visual improvements for org mode
   :hook (org-mode . org-modern-mode)
   :config
@@ -76,7 +76,7 @@
 ;;            (face-remap-add-relative 'org-table 'fixed-pitch)
 ;;            (face-remap-add-relative 'org-code 'fixed-pitch)))
 
-(use-package org-superstar :straight t :after org
+(use-package org-superstar :ensure t :after org
   ;; prettify headings
   :hook (org-mode . org-superstar-mode)
   :config
@@ -89,20 +89,20 @@
   (setq org-superstar-prettify-item-bullets t))
 
 ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
-(use-package org-fragtog :straight t :after org)
+(use-package org-fragtog :ensure t :after org)
 ;; :hook (org-mode . org-fragtog-mode))
 
-(use-package org-latex-preview :straight nil :after org
+(use-package org-latex-preview :ensure nil :after org
   :hook (org-mode. org-latex-preview-auto-mode))
 
-(use-package ox-reveal :straight t :after org
+(use-package ox-reveal :ensure t :after org
   ;; nice looking HTML presentations
   :config
   (setq org-re-reveal-root
 	"https://cdn.jsdelivr.net/npm/reveal.js")
   (add-to-list 'org-export-backends 'reveal))
 
-(use-package org-agenda :straight nil :after org
+(use-package org-agenda :ensure nil :after org
   :commands (org-agenda org-todo-list))
 
 (with-eval-after-load 'org
@@ -159,7 +159,7 @@
 ;;
 ;; C-c C-e    Export menu
 
-;; (use-package rh-org :straight nil :after org
+;; (use-package rh-org :ensure nil :after org
 ;;   :hook (org-mode . rh/org-tab-hook))
 
 (provide 'knot-org)
