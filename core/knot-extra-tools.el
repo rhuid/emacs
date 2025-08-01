@@ -10,8 +10,6 @@
 ;;  :config
 ;;  (ac-config-default))
 
-;; (use-package captain)
-
 (use-package centaur-tabs :disabled t
   :demand nil
   :config
@@ -24,8 +22,6 @@
   :bind
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
-
-;; (use-package chess)
 
 (use-package emms :demand t
   :vc (:url "https://git.savannah.gnu.org/git/emms.git")
@@ -40,30 +36,25 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-(straight-use-package 'magit)
+(use-package magit :demand t
+  :commands (magit-status magit-log)
+  :config
 
-;; (use-package magit
-;;   :demand t
-;;   ;; :vc (:url "https://github.com/magit/magit")
+  (setq magit-display-buffer-function
+	#'magit-display-buffer-same-window-except-diff-v1)
+  (setq magit-restore-window-configuration-after-quit nil)
 
-;;   :commands (magit-status magit-log)
-;;   :config
+  (defun rh/magit-quick-commit ()
+    "Prompt for a commit message in minibuffer and commit immediately."
+    (interactive)
+    (let ((msg (read-string "Commit message: ")))
+      (magit-commit-create `("-m" ,msg))))
 
-;;   (setq magit-display-buffer-function
-;; 	#'magit-display-buffer-same-window-except-diff-v1)
-;;   (setq magit-restore-window-configuration-after-quit nil)
-
-;;   (defun rh/magit-quick-commit ()
-;;     "Prompt for a commit message in minibuffer and commit immediately."
-;;     (interactive)
-;;     (let ((msg (read-string "Commit message: ")))
-;;       (magit-commit-create `("-m" ,msg))))
-
-;;   (defun rh/magit-quick-amend ()
-;;     "Quickly amend last commit with a new message via minibuffer."
-;;     (interactive)
-;;     (let ((msg (read-string "Amend message: ")))
-;;       (magit-commit-create `("--amend" "-m" ,msg)))))
+  (defun rh/magit-quick-amend ()
+    "Quickly amend last commit with a new message via minibuffer."
+    (interactive)
+    (let ((msg (read-string "Amend message: ")))
+      (magit-commit-create `("--amend" "-m" ,msg)))))
 
 (use-package rainbow-mode :ensure t
   :hook (prog-mode . rainbow-mode))

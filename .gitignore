@@ -8,6 +8,7 @@
 /emms/
 /places
 /meow/
+/dump.el
 
 # Emacs backup & auto-save
 *~
