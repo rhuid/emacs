@@ -48,7 +48,7 @@
 (use-package ef-themes :demand t
   :config
   (mapc #'disable-theme custom-enabled-themes)
-  (ef-themes-select 'ef-maris-dark)
+  (ef-themes-select 'ef-owl)
   :bind
   (("<f5>" . ef-themes-rotate)
    ("C-<f5>" . ef-themes-select))
