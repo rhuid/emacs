@@ -146,9 +146,9 @@
 
 (with-eval-after-load 'magit
   (defun rh/magit-keys ()
-    (meow-normal-define-key
+    (meow-motion-define-key
      '("C-c C-q" . rh/magit-quick-commit)
      '("C-c C-a" . rh/magit-quick-amend)))
-  (add-hook 'dired-mode-hook #'rh/magit-keys))
+  (add-hook 'magit-mode-hook #'rh/magit-keys))
 
 (provide 'knot-keys)
