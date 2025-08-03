@@ -1,18 +1,18 @@
 ;;; knot-theme-stuff.el --- Just as the filename suggests -*- lexical-binding: t; -*-
 
-(use-package all-the-icons :disabled t :ensure t :defer t
+(use-package all-the-icons :disabled t
   :config
   (when (display-graphic-p)
     (unless (member "all-the-icons" (font-family-list))
       (all-the-icons-install-fonts t))))
 
-(use-package nerd-icons :disabled t :ensure t :defer t
+(use-package nerd-icons :disabled t
   :config
   (when (display-graphic-p)
     (unless (member "Symbols Nerd Font Mono" (font-family-list))
       (nerd-icons-install-fonts t))))
 
-(use-package moody :ensure t :demand t
+(use-package moody :demand t
   :custom
   (setq x-underline-at-descent-line t)
   :config
@@ -29,7 +29,7 @@
   (display-time-mode 1)
   )
 
-(use-package minions :ensure t :demand t
+(use-package minions :demand t
   :hook (after-init . minions-mode)
   ;; :custom
   ;; (minions-mode-line-delimiters (cons "" ""))
@@ -41,11 +41,11 @@
   ;; (minions-mode 1)
   )
 
-(use-package nyan-mode :ensure t :disabled t :defer t :config (nyan-mode 1))
-(use-package rainbow-delimiters :ensure t
+(use-package nyan-mode :disabled t :config (nyan-mode 1))
+(use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode)) ; different color for each pair of parenthesis
 
-(use-package ef-themes :ensure t :demand t
+(use-package ef-themes :demand t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (ef-themes-select 'ef-maris-dark)
@@ -54,13 +54,13 @@
    ("C-<f5>" . ef-themes-select))
   )
 
-(use-package modus-themes :ensure t :disabled t
+(use-package modus-themes :disabled t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'modus-operandi-deuteranopia t)
   )
 
-(use-package doric-themes :ensure t :disabled t
+(use-package doric-themes :disabled t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (setq doric-themes-to-toggle '(doric-light doric-dark))
@@ -71,7 +71,7 @@
    ("C-<f5>" . doric-themes-select)
    ("M-<f5>" . doric-themes-rotate)))
 
-;; (use-package doom-themes :ensure t :defer t
+;; (use-package doom-themes
 ;;   :init (setq doom-themes-enable-bold t doom-themes-enable-italic t)
 ;;   :config (doom-themes-org-config)) ; Improved org-mode styling
 
