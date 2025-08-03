@@ -1,6 +1,6 @@
 ;;; knot-programming.el --- All things related to writing source code -*- lexical-binding: t; -*-
 
-(use-package lsp-mode :ensure t :defer t
+(use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
   (lsp-headerline-breadcrumb-enable nil)
@@ -8,7 +8,7 @@
   (lsp-signature-auto-activate nil)
   (lsp-log-io nil))
 
-(use-package lsp-ui :ensure t :defer t :after lsp-mode
+(use-package lsp-ui :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
@@ -16,7 +16,7 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
-(use-package company :ensure t :defer t
+(use-package company
   :commands company-mode
   :hook (lean4-mode . company-mode)
   :config
@@ -34,32 +34,30 @@
   (define-key company-mode-map (kbd "C-l") #'company-complete))
 
 ;; Haskell
-(use-package haskell-mode :ensure t :defer t
+(use-package haskell-mode
   :mode "\\.hs\\'"
   )
 
-(use-package haskell-tng-mode :ensure t :defer t
+(use-package haskell-tng-mode
   ;; :mode "\\.hs\\"
   )
 
-(use-package lean4-mode :ensure nil :defer t
+(use-package lean4-mode
   :commands lean4-mode
-  :load-path "~/.emacs.d/lean4-mode"
+  ;; :load-path "~/.emacs.d/lean4-mode"
 
-  ;; :ensure (lean4-mode :type git :host github
-  ;;                       :repo "leanprover-community/lean4-mode"
-  ;;                       :files ("*.el" "data"))
+  :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
 
   :mode "\\.lean\\'"
   :hook ((lean4-mode . lsp-mode)
 	 (lean4-mode . rh/lean4-tab-hook)
-         (lean4-mode . rh/lean-highlight-types)
-         (lean4-mode . rh/lean-highlight-values)
-         (lean4-mode . rh/lean-highlight-typeclasses)
+	 (lean4-mode . rh/lean-highlight-types)
+	 (lean4-mode . rh/lean-highlight-values)
+	 (lean4-mode . rh/lean-highlight-typeclasses)
 	 (lean4-mode . rh/lean4-corfu-off-company-on)
 	 (lean4-mode . (lambda ()
-                         (require 'lean4-mode)
-                         (require 'rh-lean))))
+			 (require 'lean4-mode)
+			 (require 'rh-lean))))
   :config
   (defun rh/lean4-corfu-off-company-on ()
     "Disable corfu and enable company only in Lean4 buffers."
@@ -68,7 +66,7 @@
     (company-mode +1))
   )
 
-(use-package sh-script :ensure nil :defer t
+(use-package sh-script :ensure nil
   :mode ("\\.sh\\'" . sh-mode)
   :hook ((sh-mode . rh/sh-tab-hook)
 	 (sh-mode . rh/sh-highlight-custom-keywords)
@@ -76,7 +74,7 @@
 		      (require 'rh-shell))))
   )
 
-(use-package outline :ensure t :demand t
+(use-package outline :demand t
   :hook ((prog-mode . outline-minor-mode)
          (text-mode . outline-minor-mode)
          (outline-minor-mode . outline-show-all)
@@ -124,7 +122,7 @@
       positions))
   )
 
-(use-package lisp-mode :ensure nil :defer t
+(use-package lisp-mode :ensure nil
   :mode ("\\.el\\'" . emacs-lisp-mode)
   :hook ((emacs-lisp-mode . eldoc-mode)
 	 (emacs-lisp-mode . rh/elisp-tab-hook)
@@ -146,7 +144,7 @@
     (outline-hide-body))
   )
 
-(use-package rust-mode :ensure t :defer t
+(use-package rust-mode
   :mode "\\.rs\\'"
   :hook ((rust-mode . outline-minor-mode)
 	 (rust-mode . rh/outline-rust)
@@ -164,21 +162,21 @@
     (outline-hide-body))
   )
 
-(use-package flycheck-rust :ensure t :defer t :after rust)
+(use-package flycheck-rust :after rust)
 
-(use-package nix-mode :ensure t :defer t
+(use-package nix-mode
   :mode "\\.nix\\'"
   :config
   (setq nix-indent-function 'nix-indent-line))
 
-(use-package julia-mode :ensure t :defer t
+(use-package julia-mode
   :mode "\\.jl\\'")
 
-(use-package kbd-mode :defer t
-  :ensure (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
+(use-package kbd-mode
+  :vc (:url "https://github.com/kmonad/kbd-mode" :rev :newest)
   :mode "\\.kbd\\'")
 
-(use-package systemd :ensure t :defer t
+(use-package systemd
   :mode (("\\.service\\'" . systemd-mode)
          ("\\.timer\\'"   . systemd-mode)
          ("\\.mount\\'"   . systemd-mode)
@@ -186,7 +184,7 @@
 	 ("\\.conf\\'"    . conf-unix-mode)
 	 ("\\.ini\\'"     . conf-unix-mode)))
 
-(use-package csv-mode :ensure t
+(use-package csv-mode
   :mode ("\\.csv\\'" . csv-mode)
   :hook (csv-mode . csv-align-mode))
 
@@ -200,6 +198,6 @@
 (add-hook 'sh-mode-hook #'eglot-ensure)
 
 ;; markdown live preview
-(use-package flymd :ensure t :defer t)
+(use-package flymd)
 
 (provide 'knot-programming)
