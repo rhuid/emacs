@@ -3,7 +3,7 @@
 ;;;; Some functions for more efficient editing
 
 (defun rh/join-line ()
-  "Join the current line with the next non-empty line."
+  "Join the current line with the next line."
   (interactive)
   (save-excursion
     (end-of-line)

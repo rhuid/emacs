@@ -14,8 +14,8 @@
 
 (setq use-package-enable-imenu-support t)
 (require 'use-package)
-(setq use-package-always-ensure    t  ; :ensure t by default
-      use-package-always-defer     t  ; :defer  t by default
+(setq use-package-always-ensure    t
+      use-package-always-defer     t
       use-package-vc-prefer-newest t) ; :rev :newest by default
 
 ;; For native-compiling manually with make, temporarily not defer
