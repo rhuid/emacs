@@ -24,14 +24,14 @@
 	   ("C-c s w" . delete-trailing-whitespace)
 	   ("C-c s a" . abbrev-mode)
 
+	   ("C-c u g" . magit-status)
+	   ("C-c u l" . rh/toggle-lean-scratch)
+	   ("C-c u o" . rh/toggle-org-scratch)
 	   ("C-c u r" . recentf-open-files)
 	   ("C-c u s" . rh/eshell-toggle)
 	   ("C-c u v" . rh/vterm-toggle)
-	   ("C-c u l" . rh/toggle-lean-scratch)
-	   ("C-c u o" . rh/toggle-org-scratch)
 
-	   ("C-x C-b" . ibuffer)
-	   ("C-x g"   . magit-status)))
+	   ("C-x C-b" . ibuffer)))
   (global-set-key (kbd (car binding)) (cdr binding)))
 
 (defun meow-setup ()
@@ -146,7 +146,7 @@
 
 (with-eval-after-load 'magit
   (defun rh/magit-keys ()
-    (meow-motion-define-key
+    (meow-normal-define-key
      '("C-c C-q" . rh/magit-quick-commit)
      '("C-c C-a" . rh/magit-quick-amend)))
   (add-hook 'dired-mode-hook #'rh/magit-keys))
