@@ -1,6 +1,6 @@
 ;;; knot-extra-tools.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
-(use-package aggressive-indent :ensure t :defer t
+(use-package aggressive-indent
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
          (lisp-mode . aggressive-indent-mode))
   :config
@@ -23,7 +23,7 @@
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
 
-(use-package emms :demand t
+(use-package emms
   :vc (:url "https://git.savannah.gnu.org/git/emms.git")
 
   :config
@@ -36,7 +36,7 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-(use-package magit :demand t
+(use-package magit
   :commands (magit-status magit-log)
   :config
 
@@ -56,10 +56,10 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
-(use-package rainbow-mode :ensure t
+(use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
-(use-package sudo-edit :ensure t
+(use-package sudo-edit
   :commands (sudo-edit))
 
 (provide 'knot-extra-tools)

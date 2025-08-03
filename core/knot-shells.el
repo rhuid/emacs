@@ -36,12 +36,12 @@
     )
   )
 
-(use-package eshell-syntax-highlighting :ensure t :demand t :after eshell
+(use-package eshell-syntax-highlighting :demand t :after eshell
   :config
   (eshell-syntax-highlighting-global-mode +1))
 
-(use-package esh-autosuggest :ensure t :demand t :after eshell)
-(use-package eat :ensure t :defer t :after eshell
+(use-package esh-autosuggest :demand t :after eshell)
+(use-package eat :after eshell
   ;; Emulate A Terminal
   :commands (eat eat-eshell-mode)
   :hook (eshell-mode . eat-eshell-mode))
@@ -53,7 +53,7 @@
 
 ;;;; vterm
 
-(use-package vterm :ensure t :defer t
+(use-package vterm
   :commands vterm
   :init
   (defun rh/vterm-toggle ()

@@ -1,6 +1,6 @@
 ;;; knot-latex.el --- For all things LaTeX -*- lexical-binding: t; -*-
 
-(use-package auctex :ensure t :defer t
+(use-package auctex
   :mode (( "\\.tex\\'" . LaTeX-mode)
 	 ( "\\.cls\\'" . LaTeX-mode)
 	 ( "\\.sty\\'" . LaTeX-mode))
@@ -10,11 +10,11 @@
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
   )
 
-(use-package auctex-latexmk :ensure t :defer t :after auctex
+(use-package auctex-latexmk :after auctex
   :config
   (auctex-latexmk-setup))
 
-(use-package cdlatex :ensure t :defer t
+(use-package cdlatex
   :hook ((LaTeX-mode . turn-on-cdlatex)
          (org-mode . turn-on-org-cdlatex))
   :config
@@ -34,12 +34,8 @@
 	  ("cl" "Insert corollary env" "" cdlatex-environment ("corollary") t nil)     ; cl TAB -> corollary env
 	  ("pr" "Insert proof env" "" cdlatex-environment ("proof") t nil))))          ; pr TAB -> proof env
 
-(use-package latex-preview-pane :ensure t)
-
+(use-package latex-preview-pane)
 
 ;;(use-package auto-complete-auctex)
-
-
-
 
 (provide 'knot-latex)
