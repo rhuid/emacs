@@ -60,7 +60,7 @@
 ;; (use-package evil-org :ensure t :after (evil org)
 ;;   :hook (org-mode . evil-org-mode))
 
-(use-package org-modern :ensure t :after org
+(use-package org-modern :after org
   ;; visual improvements for org mode
   :hook (org-mode . org-modern-mode)
   :config
@@ -76,7 +76,7 @@
 ;;            (face-remap-add-relative 'org-table 'fixed-pitch)
 ;;            (face-remap-add-relative 'org-code 'fixed-pitch)))
 
-(use-package org-superstar :ensure t :after org
+(use-package org-superstar :after org
   ;; prettify headings
   :hook (org-mode . org-superstar-mode)
   :config
@@ -89,13 +89,13 @@
   (setq org-superstar-prettify-item-bullets t))
 
 ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
-(use-package org-fragtog :ensure t :after org)
+(use-package org-fragtog :after org)
 ;; :hook (org-mode . org-fragtog-mode))
 
 (use-package org-latex-preview :ensure nil :after org
   :hook (org-mode. org-latex-preview-auto-mode))
 
-(use-package ox-reveal :ensure t :after org
+(use-package ox-reveal :after org
   ;; nice looking HTML presentations
   :config
   (setq org-re-reveal-root
@@ -107,7 +107,7 @@
 
 (with-eval-after-load 'org
   ;; Define header function; to insert a template header to a new org file
-  (defun insert-header ()
+  (defun rh/insert-org-header ()
     "Insert standard Org-mode header template at point."
     (interactive)
     (insert "#+TITLE: \n")
@@ -124,7 +124,7 @@
   )
 
 (with-eval-after-load 'org
-  (define-key org-mode-map (kbd "C-c h") #'insert-header))
+  (define-key org-mode-map (kbd "C-c h") #'rh/insert-org-header))
 
 (with-eval-after-load 'org
   (require 'rh-snip)
