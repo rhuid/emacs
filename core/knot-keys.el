@@ -1,9 +1,23 @@
 ;;; knot-keys.el --- Things related to keybindings and editing -*- lexical-binding: t; -*-
 
+;;;; Some functions for more efficient editing
+
+(defun rh/join-line ()
+  "Join the current line with the next non-empty line."
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (delete-char 1)
+    (just-one-space)))
+
 ;;;; Prefixes for which-key
 
-(which-key-add-key-based-replacements
-  "C-c o" "outline")
+(with-eval-after-load 'which-key
+  (which-key-add-key-based-replacements "C-c b" "bookmark")
+  (which-key-add-key-based-replacements "C-c e" "emms")
+  (which-key-add-key-based-replacements "C-c o" "outline")
+  (which-key-add-key-based-replacements "C-c s" "string-manipulation")
+  (which-key-add-key-based-replacements "C-c u" "utilities"))
 
 ;;;; Global keys
 
@@ -69,8 +83,8 @@
    '(";" . meow-reverse)
    '("," . meow-inner-of-thing)
    '("." . meow-bounds-of-thing)
-   '("[" . meow-beginning-of-thing)
-   '("]" . meow-end-of-thing)
+   '("<" . meow-beginning-of-thing)
+   '(">" . meow-end-of-thing)
    '("/" . meow-visit)
    '("a" . meow-append)
    '("A" . meow-open-below)
@@ -112,7 +126,11 @@
    '("y" . meow-save)
    '("z" . meow-pop-selection)
    '("'" . repeat)
-   '("<escape>" . ignore)))
+   '("<escape>" . ignore)
+
+   ;; extras
+   '("J" . rh/join-line)
+   '("K" . kill-whole-line)))
 
 (use-package meow :demand t
   :vc (:url "https://github.com/meow-edit/meow")
@@ -150,5 +168,15 @@
      '(": c" . rh/magit-quick-commit)
      '(": a" . rh/magit-quick-amend)))
   (add-hook 'magit-mode-hook #'rh/magit-keys))
+
+;; (defun rh/magit-keys ()
+;;   (setq-local meow-motion-state-local-map
+;;               (make-composed-keymap
+;;                (meow--define-keys (make-sparse-keymap)
+;; 				  '(": c" rh/magit-quick-commit)
+;; 				  '(": a" rh/magit-quick-amend))
+;;                meow-motion-state-local-map)))
+
+;; (add-hook 'magit-mode-hook #'rh/magit-keys)
 
 (provide 'knot-keys)
