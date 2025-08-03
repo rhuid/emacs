@@ -52,6 +52,7 @@
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
 
   (meow-motion-define-key
+   '(":" . execute-extended-command)
    '("e" . meow-prev)
    '("<escape>" . ignore))
 
@@ -129,6 +130,7 @@
    '("<escape>" . ignore)
 
    ;; extras
+   '(":" . execute-extended-command)
    '("J" . rh/join-line)
    '("K" . kill-whole-line)))
 
@@ -165,8 +167,8 @@
 (with-eval-after-load 'magit
   (defun rh/magit-keys ()
     (meow-motion-define-key
-     '(": c" . rh/magit-quick-commit)
-     '(": a" . rh/magit-quick-amend)))
+     '("> c" . rh/magit-quick-commit)
+     '("> a" . rh/magit-quick-amend)))
   (add-hook 'magit-mode-hook #'rh/magit-keys))
 
 ;; (defun rh/magit-keys ()
