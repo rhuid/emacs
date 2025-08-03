@@ -139,8 +139,9 @@
 		(rx line-start
                     (* space)
                     "("
-                    (or ";;;" "use-package" "require" "provide" "defun"
-			"add-to-list" "add-hook")))
+                    (or  "use-package" "require" "provide" "defun"
+			 "with-eval-after-load"
+			 "add-to-list" "add-hook")))
     (outline-hide-body))
   )
 
