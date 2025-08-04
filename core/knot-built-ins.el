@@ -2,7 +2,9 @@
 
 ;; (require 'rh-capitalize)
 
-(use-package emacs :ensure nil :demand t
+(use-package emacs
+  :demand t
+  :ensure nil
   :hook ((before-save . delete-trailing-whitespace)
 	 (prog-mode   . glyphless-display-mode))
   :config
@@ -18,6 +20,7 @@
   (global-display-line-numbers-mode)
   (global-subword-mode)
 
+  (setq-default cursor-type 'bar)
   (blink-cursor-mode 0)
   (save-place-mode)
   (kill-ring-deindent-mode)
@@ -38,33 +41,39 @@
   (setq save-abbrevs 'silently)
 
   ;; Calendar
-  (add-hook 'calendar-today-visible-hook #'calendar-mark-today)
-  )
+  (add-hook 'calendar-today-visible-hook #'calendar-mark-today))
 
-(use-package bookmark :ensure nil :demand t
+(use-package bookmark
+  :demand t
+  :ensure nil
   :config
   (setq bookmark-save-flag 1)
   (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
   (setq bookmark-bmenu-toggle-filenames t))
 
-(use-package calc :ensure nil
-  :config
-  (add-hook 'calc-trail-mode-hook 'evil-insert-state))
+(use-package calc
+  :ensure nil)
 
-(use-package eww :ensure nil
+(use-package eww
+  :ensure nil
   :bind (("C-c w" . eww))
   :config
   (setq eww-search-prefix "https://duckduckgo.com/html/?q-")
   (setq shr-use-colors nil)
   (setq shr-width fill-column))
 
-(use-package minibuffer :ensure nil
+(use-package minibuffer
+  :ensure nil
   :hook (minibuffer-mode . savehist-mode)
   :custom (history-delete-duplicates t))
 
-(use-package project :ensure nil :demand t)
+(use-package project
+  :demand t
+  :ensure nil)
 
-(use-package recentf :ensure nil :demand t
+(use-package recentf
+  :demand t
+  :ensure nil
   :init
   (recentf-mode 1)
   :custom
@@ -76,8 +85,10 @@
   ;; Save recentf list every 5 minutes
   (run-at-time nil (* 5 60) #'recentf-save-list))
 
-(use-package savehist :ensure nil :demand t
+(use-package savehist
   ;; Save minibuffer-history
+  :demand t
+  :ensure nil
   :init (savehist-mode)
   :custom
   (savehist-file (locate-user-emacs-file "history"))
