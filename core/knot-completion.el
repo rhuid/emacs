@@ -1,10 +1,10 @@
 ;;; knot-completion.el --- Enhancements of the minibuffer -*- lexical-binding: t; -*-
 
-;;; Mostly completion frameworks. There are lots of individual packages which all work together.
+;;; Mostly completion frameworks. There are lots of individual packages which all work together well.
 
-(use-package vertico :demand t
+(use-package vertico
+  :demand t
   :vc (:url "https://github.com/minad/vertico")
-
   :config (vertico-mode)
   :bind (("C-x f" . find-file)
 	 :map vertico-map
@@ -15,7 +15,17 @@
   (vertico-resize t)
   (vertico-cycle t))
 
-(use-package orderless :demand t
+(use-package vertico-directory
+  :demand t
+  :after vertico
+  :load-path "~/.emacs.d/elpa/vertico/extensions/"
+  :ensure nil
+  :bind (:map vertico-map
+	      ("DEL" . vertico-directory-delete-char)
+	      ("C-w" . vertico-directory-delete-word)))
+
+(use-package orderless
+  :demand t
   :vc (:url "https://github.com/oantolin/orderless")
   ;; Type multiple words in any order to match candidates
 
@@ -23,13 +33,15 @@
   (setq completion-styles '(orderless partial-completion)
         completion-category-defaults nil))
 
-(use-package marginalia :demand t
+(use-package marginalia
+  :demand t
   :vc (:url "https://github.com/minad/marginalia")
 
   ;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
   :init (marginalia-mode))
 
-(use-package consult :demand t
+(use-package consult
+  :demand t
   :vc (:url "https://github.com/minad/consult")
 
   ;; Adds modern alternatives to core Emacs commands
@@ -58,7 +70,8 @@
 		(let ((default-directory (expand-file-name "~")))
                   (apply orig args)))))
 
-(use-package embark :demand t
+(use-package embark
+  :demand t
   :vc (:url "https://github.com/oantolin/embark")
 
   :bind
@@ -95,20 +108,24 @@
 		 (window-height . 0.3 )
                  (window-parameters (mode-line-format . none)))))
 
-(use-package embark-consult :demand t :after consult
+(use-package embark-consult
+  :demand t
+  :after consult
   :vc (:url "https://github.com/oantolin/embark")
 
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package which-key :demand t
+(use-package which-key
+  :demand t
   ;; Live popup of possible key combinations
   :config
   (setq which-key-idle-delay 0.5)
   (setq which-key-popup-type 'minibuffer)
   (which-key-mode))
 
-(use-package corfu :demand t
+(use-package corfu
+  :demand t
   :init
   (global-corfu-mode)
   :custom
@@ -137,7 +154,8 @@
   (define-key corfu-map (kbd "C-p") #'corfu-previous)
   (define-key corfu-map (kbd "C-SPC") #'corfu-insert))
 
-(use-package cape :after corfu
+(use-package cape
+  :after corfu
   :init
   (setq completion-at-point-functions
 	(list #'cape-symbol
