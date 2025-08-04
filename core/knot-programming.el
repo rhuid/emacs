@@ -43,11 +43,8 @@
   )
 
 (use-package lean4-mode
-  :commands lean4-mode
-  ;; :load-path "~/.emacs.d/lean4-mode"
-
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
-
+  :commands lean4-mode
   :mode "\\.lean\\'"
   :hook ((lean4-mode . lsp-mode)
 	 (lean4-mode . rh/lean4-tab-hook)
