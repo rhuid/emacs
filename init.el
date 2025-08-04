@@ -49,7 +49,6 @@
 ;;;; Local modules
 
 (use-package knot-theme-stuff  :ensure nil :defer nil)
-(use-package knot-dashboard    :ensure nil :defer nil)
 (use-package knot-built-ins    :ensure nil :defer nil)
 (use-package knot-keys         :ensure nil :defer nil)
 (use-package knot-org	       :ensure nil :defer nil)
