@@ -8,7 +8,8 @@
   (lsp-signature-auto-activate nil)
   (lsp-log-io nil))
 
-(use-package lsp-ui :after lsp-mode
+(use-package lsp-ui
+  :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
@@ -63,7 +64,8 @@
     (company-mode +1))
   )
 
-(use-package sh-script :ensure nil
+(use-package sh-script
+  :ensure nil
   :mode ("\\.sh\\'" . sh-mode)
   :hook ((sh-mode . rh/sh-tab-hook)
 	 (sh-mode . rh/sh-highlight-custom-keywords)
@@ -71,7 +73,8 @@
 		      (require 'rh-shell))))
   )
 
-(use-package outline :demand t
+(use-package outline
+  :demand t
   :hook ((prog-mode . outline-minor-mode)
          (text-mode . outline-minor-mode)
          (outline-minor-mode . outline-show-all)
@@ -119,7 +122,8 @@
       positions))
   )
 
-(use-package lisp-mode :ensure nil
+(use-package lisp-mode
+  :ensure nil
   :mode ("\\.el\\'" . emacs-lisp-mode)
   :hook ((emacs-lisp-mode . eldoc-mode)
 	 (emacs-lisp-mode . rh/elisp-tab-hook)
@@ -160,7 +164,8 @@
     (outline-hide-body))
   )
 
-(use-package flycheck-rust :after rust)
+(use-package flycheck-rust
+  :after rust)
 
 (use-package nix-mode
   :mode "\\.nix\\'"
