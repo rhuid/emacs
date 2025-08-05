@@ -2,13 +2,11 @@
 /eshell/lastdir
 /private
 /expt
-/core/snot-welcome-home.el
-/core/knot-home.el
-/knot-editor.el
 /emms/
 /places
 /meow/
 /dump.el
+/knot-dashboard.el
 
 # Emacs backup & auto-save
 *~
