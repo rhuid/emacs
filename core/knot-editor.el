@@ -25,6 +25,7 @@
 
 (dolist (binding
 	 '(("C-c SPC k" . kill-buffer-and-window)
+	   ("C-c SPC o" . other-window)
 
 	   ("C-c b m" . bookmark-set)
 	   ("C-c b j" . bookmark-jump)
@@ -75,7 +76,7 @@
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
 
   (meow-motion-define-key
-   '(":" . execute-extended-command)
+   '(":" . mode-line-other-buffer)
    '("e" . meow-prev)
    '("<escape>" . ignore))
 
@@ -153,7 +154,7 @@
    '("<escape>" . ignore)
 
    ;; extras
-   '(":" . execute-extended-command)
+   '(":" . mode-line-other-buffer)
    '("J" . rh/join-line)
    '("K" . kill-whole-line)))
 
