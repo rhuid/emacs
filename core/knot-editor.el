@@ -14,11 +14,12 @@
 ;;;; Prefixes for which-key
 
 (with-eval-after-load 'which-key
-  (which-key-add-key-based-replacements "C-c b" "bookmark")
-  (which-key-add-key-based-replacements "C-c e" "emms")
-  (which-key-add-key-based-replacements "C-c o" "outline")
-  (which-key-add-key-based-replacements "C-c s" "string-manipulation")
-  (which-key-add-key-based-replacements "C-c u" "utilities"))
+  (dolist (binding '(("C-c b" . "bookmark")
+		     ("C-c e" . "emms")
+		     ("C-c o" . "outline")
+		     ("C-c s" . "string-manipulation")
+		     ("C-c u" . "utilities")))
+    (which-key-add-key-based-replacements (car binding) (cdr binding))))
 
 ;;;; Global keys
 
@@ -50,6 +51,25 @@
 
 	   ("C-x C-b" . ibuffer)))
   (global-set-key (kbd (car binding)) (cdr binding)))
+
+;;;; Local keys
+
+(with-eval-after-load 'dired
+  (dolist (binding
+	   '(("g" . dired-git-info-mode)
+	     ("r" . dired-up-directory)
+	     ("i" . rh/dired-open-file)
+	     ("u" . dired-unmark)
+	     ("U" . dired-unmark-all-marks)))
+    (define-key dired-mode-map (kbd (car binding)) (cdr binding))))
+
+;; (with-eval-after-load 'magit
+;;   (dolist (binding
+;; 	   '(("> c" . rh/magit-quick-commit)
+;; 	     ("> a" . rh/magit-quick-amend)))
+;;     (define-key magit-mode-map (kbd (car binding)) (cdr binding))))
+
+;;;; Customizations to meow
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
@@ -143,50 +163,5 @@
   (meow-setup)
   (meow-global-mode 1)
   )
-
-;; (with-eval-after-load 'dired
-;;   (defun rh/dired-keys ()
-;;     (meow-motion-define-key
-;;      '("g" . dired-git-info-mode)
-;;      '("r" . dired-up-directory)
-;;      '("i" . rh/dired-open-file)
-;;      '("u" . dired-unmark)
-;;      '("U" . dired-unmark-all-marks)
-;;      '("C-c o" . open-in-file-manager)))
-;;   (add-hook 'dired-mode-hook #'rh/dired-keys))
-
-
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "r") 'dired-up-directory))
-
-
-;; (with-eval-after-load 'ibuffer
-;;   (defun rh/ibuffer-keys ()
-;;     (dolist (binding
-;; 	     '(("d" . ibuffer-mark-forward)
-;; 	       ("u" . ibuffer-unmark-forward)
-;; 	       ("U" . ibuffer-unmark-all-marks)
-;; 	       ("D" . ibuffer-do-kill-lines)
-;; 	       ))
-;;       (define-key dired-mode-map (kbd (car binding)) (cdr binding))))
-
-;;   (add-hook 'ibuffer-mode-hook #'rh/ibuffer-keys))
-
-(with-eval-after-load 'magit
-  (defun rh/magit-keys ()
-    (meow-motion-define-key
-     '("> c" . rh/magit-quick-commit)
-     '("> a" . rh/magit-quick-amend)))
-  (add-hook 'magit-mode-hook #'rh/magit-keys))
-
-;; (defun rh/magit-keys ()
-;;   (setq-local meow-motion-state-local-map
-;;               (make-composed-keymap
-;;                (meow--define-keys (make-sparse-keymap)
-;; 				  '(": c" rh/magit-quick-commit)
-;; 				  '(": a" rh/magit-quick-amend))
-;;                meow-motion-state-local-map)))
-
-;; (add-hook 'magit-mode-hook #'rh/magit-keys)
 
 (provide 'knot-editor)
