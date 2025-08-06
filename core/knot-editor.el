@@ -157,11 +157,12 @@
    '("J" . rh/join-line)
    '("K" . kill-whole-line)))
 
-(use-package meow :demand t
+(use-package meow
+  :demand t
   :vc (:url "https://github.com/meow-edit/meow")
   :config
   (meow-setup)
-  (meow-global-mode 1)
-  )
+  (setq meow-use-clipboard t)
+  (meow-global-mode 1))
 
 (provide 'knot-editor)
