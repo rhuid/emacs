@@ -1,15 +1,37 @@
-The world is quiet here.
-— Lemony Snicket
+Only those who risk going too far can possibly find out how far one can go.
 ---
 
-Hope is the thing with feathers
-That perches in the soul...
-— Emily Dickinson
+Do I dare
+Disturb the universe?
+In a minute there is time
+For decisions and revisions which a minute will reverse.
+---
+
+For I have known them all already, known them all:
+Have known the evenings, mornings, afternoons,
+I have measured out my life with coffee spoons;
+I know the voices dying with a dying fall
+Beneath the music from a farther room.
+So how should I presume?
+---
+
+The woods are lovely, dark and deep,
+But I have promises to keep,
+And miles to go before I sleep,
+And miles to go before I sleep.
+---
+
+There are far, far better things ahead than any we leave behind.
 ---
 
 To be, or not to be: that is the question.
-— Shakespeare
 ---
 
-Only those who risk going too far can possibly find out how far one can go.
-— T. S. Eliot
+Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of leather on which a mirror and a razor lay crossed.
+---
+
+Behold the greatest editor in existence. The thermonuclear editor. GNU Emacs.
+---
+
+The world is quiet here.
+— Lemony Snicket
