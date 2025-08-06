@@ -63,11 +63,11 @@
 	     ("U" . dired-unmark-all-marks)))
     (define-key dired-mode-map (kbd (car binding)) (cdr binding))))
 
-;; (with-eval-after-load 'magit
-;;   (dolist (binding
-;; 	   '(("> c" . rh/magit-quick-commit)
-;; 	     ("> a" . rh/magit-quick-amend)))
-;;     (define-key magit-mode-map (kbd (car binding)) (cdr binding))))
+(with-eval-after-load 'magit
+  (dolist (binding
+	   '(("." . rh/magit-quick-commit)
+	     ("," . rh/magit-quick-amend)))
+    (define-key magit-mode-map (kbd (car binding)) (cdr binding))))
 
 ;;;; Customizations to meow
 
