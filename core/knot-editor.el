@@ -23,7 +23,7 @@
 ;;;; Global keys
 
 (dolist (binding
-	 '(("C-c k"   . kill-buffer-and-window)
+	 '(("C-c SPC k" . kill-buffer-and-window)
 
 	   ("C-c b m" . bookmark-set)
 	   ("C-c b j" . bookmark-jump)
@@ -144,16 +144,21 @@
   (meow-global-mode 1)
   )
 
+;; (with-eval-after-load 'dired
+;;   (defun rh/dired-keys ()
+;;     (meow-motion-define-key
+;;      '("g" . dired-git-info-mode)
+;;      '("r" . dired-up-directory)
+;;      '("i" . rh/dired-open-file)
+;;      '("u" . dired-unmark)
+;;      '("U" . dired-unmark-all-marks)
+;;      '("C-c o" . open-in-file-manager)))
+;;   (add-hook 'dired-mode-hook #'rh/dired-keys))
+
+
 (with-eval-after-load 'dired
-  (defun rh/dired-keys ()
-    (meow-motion-define-key
-     '("g" . dired-git-info-mode)
-     '("r" . dired-up-directory)
-     '("i" . rh/dired-open-file)
-     '("u" . dired-unmark)
-     '("U" . dired-unmark-all-marks)
-     '("C-c o" . open-in-file-manager)))
-  (add-hook 'dired-mode-hook #'rh/dired-keys))
+  (define-key dired-mode-map (kbd "r") 'dired-up-directory))
+
 
 ;; (with-eval-after-load 'ibuffer
 ;;   (defun rh/ibuffer-keys ()
@@ -163,7 +168,7 @@
 ;; 	       ("U" . ibuffer-unmark-all-marks)
 ;; 	       ("D" . ibuffer-do-kill-lines)
 ;; 	       ))
-;;       (define-key evil-normal-state-local-map (kbd (car binding)) (cdr binding))))
+;;       (define-key dired-mode-map (kbd (car binding)) (cdr binding))))
 
 ;;   (add-hook 'ibuffer-mode-hook #'rh/ibuffer-keys))
 
