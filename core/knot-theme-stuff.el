@@ -21,38 +21,30 @@
   (moody-replace-eldoc-minibuffer-message-function)
   )
 
-(use-package emacs :ensure nil :demand t
+(use-package emacs
+  :demand t
+  :ensure nil
   :config
   (setq display-time-format "[%b %-d %a %-I:%M %p]"
 	display-time-default-load-average nil
 	display-time-mail-file nil)
-  (display-time-mode 1)
-  )
+  (display-time-mode 1))
 
 (use-package minions :demand t
-  :hook (after-init . minions-mode)
-  ;; :custom
-  ;; (minions-mode-line-delimiters (cons "" ""))
-  ;; :config
-  ;; (defun +set-minions-mode-line-lighter ()
-  ;;   (setq minions-mode-line-lighter
-  ;;         (if (display-graphic-p) "⚙" "#")))
-  ;; (add-hook 'server-after-make-frame-hook #'+set-minions-mode-line-lighter)
-  ;; (minions-mode 1)
-  )
+  :hook (after-init . minions-mode))
 
 (use-package nyan-mode :disabled t :config (nyan-mode 1))
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode)) ; different color for each pair of parenthesis
 
-(use-package ef-themes :demand t
+(use-package ef-themes
+  :demand t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (ef-themes-select 'ef-owl)
   :bind
   (("<f5>" . ef-themes-rotate)
-   ("C-<f5>" . ef-themes-select))
-  )
+   ("C-<f5>" . ef-themes-select)))
 
 (use-package modus-themes :disabled t
   :config
