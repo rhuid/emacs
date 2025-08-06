@@ -24,43 +24,39 @@
 	      ("DEL" . vertico-directory-delete-char)
 	      ("C-w" . vertico-directory-delete-word)))
 
+;; Type multiple words in any order to match candidates
 (use-package orderless
   :demand t
   :vc (:url "https://github.com/oantolin/orderless")
-  ;; Type multiple words in any order to match candidates
-
   :init
   (setq completion-styles '(orderless partial-completion)
         completion-category-defaults nil))
 
+;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
 (use-package marginalia
   :demand t
   :vc (:url "https://github.com/minad/marginalia")
-
-  ;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
   :init (marginalia-mode))
 
 (use-package consult
   :demand t
   :vc (:url "https://github.com/minad/consult")
-
-  ;; Adds modern alternatives to core Emacs commands
   :bind
-  (("C-c f"  . consult-find)
-   ("C-c l"  . consult-locate)
-   ("C-c r"  . consult-recent-file)
-   ("C-s"    . consult-line)
-   ("C-M-s"  . consult-line-multi)
-   ("C-M-g"  . consult-ripgrep)
-   ("C-x b"  . consult-buffer)
-   ("C-M-e"  . consult-buffer)
-   ("M-y"    . consult-yank-pop)
-   ("C-M-b"  . consult-bookmark)
-   ("C-c t"  . consult-theme)
-   ("M-m"    . consult-imenu)
-   ("M-p"    . consult-project-buffer)
-   ("M-o"    . consult-outline)
-   )
+  (("C-c f" . consult-find)
+   ("C-c l" . consult-locate)
+   ("C-c r" . consult-recent-file)
+   ("C-s"   . consult-line)
+   ("C-M-s" . consult-line-multi)
+   ("C-M-g" . consult-ripgrep)
+   ("C-x b" . consult-buffer)
+   ("C-M-e" . consult-buffer)
+   ("M-y"   . consult-yank-pop)
+   ("C-M-b" . consult-bookmark)
+   ("<f5>"  . consult-theme)
+   ("M-m"   . consult-imenu)
+   ("M-p"   . consult-project-buffer)
+   ("M-o"   . consult-outline))
+
   :config
   (setq consult-preview-key 'any)
 
@@ -84,12 +80,6 @@
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
 
-  ;; Show the Embark target at point via Eldoc. You may adjust the
-  ;; Eldoc strategy, if you want to see the documentation from
-  ;; multiple providers. Beware that using this can be a little
-  ;; jarring since the message shown in the minibuffer can be more
-  ;; than one line, causing the modeline to move up and down:
-
   ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
   ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
 
@@ -112,13 +102,11 @@
   :demand t
   :after consult
   :vc (:url "https://github.com/oantolin/embark")
-
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package which-key
   :demand t
-  ;; Live popup of possible key combinations
   :config
   (setq which-key-idle-delay 0.5)
   (setq which-key-popup-type 'minibuffer)
