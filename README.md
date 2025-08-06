@@ -8,4 +8,4 @@
 
 ### On the editor
 
-Over the years, I have realized that it's best to stay as close to vanilla emacs. However, I do like modal editing and I used meow as a base to create a personalized editing system while staying true to vanilla Emacs. The result is a modal editor which, I believe, is superior to Evil mode (Vi/Vim emulation) in terms of efficiency, speed, leanness and closeness to vanilla.
+Over the years, I have realized that it's best to stay as close to vanilla emacs. However, I do like modal editing and I used meow as a base to create a personalized editing system which, I believe, is superior to Evil mode (Vi/Vim emulation) in terms of efficiency, speed, leanness and closeness to vanilla.

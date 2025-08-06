@@ -1,4 +1,4 @@
-;;; knot-keys.el --- Things related to keybindings and editing -*- lexical-binding: t; -*-
+;;; knot-editor.el --- Things about editing and keybindings -*- lexical-binding: t; -*-
 
 ;;;; Some functions for more efficient editing
 
@@ -181,4 +181,4 @@
 
 ;; (add-hook 'magit-mode-hook #'rh/magit-keys)
 
-(provide 'knot-keys)
+(provide 'knot-editor)

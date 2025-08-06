@@ -31,14 +31,14 @@
       native-comp-speed 3
       native-comp-defer t)
 
+;; For native-compiling manually with make, temporarily not defer
+(setq use-package-always-defer (not (bound-and-true-p byte-compile-current-file)))
+
 (setq use-package-enable-imenu-support t)
 (require 'use-package)
 (setq use-package-always-ensure    t
       use-package-always-defer     t
       use-package-vc-prefer-newest t) ; :rev :newest by default
-
-;; For native-compiling manually with make, temporarily not defer
-(setq use-package-always-defer (not (bound-and-true-p byte-compile-current-file)))
 
 (use-package benchmark-init
   :disabled t
@@ -51,7 +51,7 @@
 (use-package knot-startup-page :ensure nil :defer nil)
 (use-package knot-theme-stuff  :ensure nil :defer nil)
 (use-package knot-built-ins    :ensure nil :defer nil)
-(use-package knot-keys         :ensure nil :defer nil)
+(use-package knot-editor       :ensure nil :defer nil)
 (use-package knot-org	       :ensure nil :defer nil)
 (use-package knot-programming  :ensure nil :defer nil)
 (use-package knot-latex	       :ensure nil :defer nil)
