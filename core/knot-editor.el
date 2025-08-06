@@ -3,10 +3,11 @@
 ;;;; Some functions for more efficient editing
 
 (defun rh/join-line ()
-  "Join the current line with the next line."
+  "Join the current line with the next line, collapsing all whitespace between them to a single space."
   (interactive)
   (save-excursion
     (end-of-line)
+    (delete-horizontal-space t)
     (delete-char 1)
     (just-one-space)))
 
@@ -22,7 +23,9 @@
 ;;;; Global keys
 
 (dolist (binding
-	 '(("C-c b m" . bookmark-set)
+	 '(("C-c k"   . kill-buffer-and-window)
+
+	   ("C-c b m" . bookmark-set)
 	   ("C-c b j" . bookmark-jump)
 	   ("C-c b l" . list-bookmarks)
 
