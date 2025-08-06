@@ -141,7 +141,7 @@
                     (* space)
                     "("
                     (or  "use-package" "require" "provide" "defun"
-			 "with-eval-after-load"
+			 "with-eval-after-load" "setq" "defvar"
 			 "add-to-list" "add-hook")))
     (outline-hide-body))
   )
