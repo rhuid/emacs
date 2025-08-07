@@ -4,13 +4,7 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 
-;; To set the size and positon of Emacs window at startup (may be required in Emacs client mode)
-(setq default-frame-alist
-      '((width . 120)                                        ; in characters
-        (height . 90)                                        ; in lines
-	(left . 0)                                           ; position
-	(top . 0)
-	(font . "Iosevka Term-12")))
+(setq default-frame-alist '((font . "Iosevka Term-13")))
 
 ;; Prevent frame resizing (very expensive)
 (setq frame-inhibit-implied-resize t)
