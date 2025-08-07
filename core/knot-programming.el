@@ -68,9 +68,10 @@
     (setq-local outline-regexp
 		(rx line-start
 		    (* space)
-		    "("
-		    (or  "structure"
-			 "theorem" )))
+		    (or  "structure" "inductive" "class"
+			 "theorem" "axiom" "lemma" "def"
+			 "instance" "example" "opaque"
+			 "namespace")))
     (outline-hide-body)))
 
 (use-package sh-script
