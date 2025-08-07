@@ -9,6 +9,7 @@
       (when (> count 0)
         (string-trim (nth (random count) entries))))))
 
+(setq initial-major-mode 'fundamental-mode)
 (setq initial-scratch-message
       (with-temp-buffer
 	(insert "\nWelcome home, Ronald.\n")
@@ -22,9 +23,12 @@
 (add-hook 'emacs-startup-hook
 	  (lambda ()
 	    (with-current-buffer "*scratch*"
-	      (setq-local display-line-numbers nil)
-	      (setq-local left-margin-width 2)
-	      (setq-local right-margin-width 2)
+	      (setq-local buffer-read-only   t
+			  left-margin-width  2
+			  right-margin-width 2
+			  display-line-numbers nil
+			  meow-cursor-type-normal '(bar . 0)
+			  meow-cursor-type-keypad '(bar . 0))
 	      (set-window-buffer (selected-window) (current-buffer)))))
 
 (provide 'knot-startup-page)
