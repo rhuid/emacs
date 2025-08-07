@@ -21,8 +21,13 @@
   (global-subword-mode)
 
   (setq-default cursor-type 'bar)
+  (setq-default cursor-in-non-selected-windows nil)
   (blink-cursor-mode 0)
+
+  ;; Automatically save place in each file
   (save-place-mode)
+
+  ;; Remove indentation from text in kill-ring
   (kill-ring-deindent-mode)
 
   ;; Don't generate backup files
