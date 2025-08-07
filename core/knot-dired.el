@@ -1,15 +1,23 @@
 ;;; knot-dired.el --- Enchancements of the already great file manager -*- lexical-binding: t; -*-
 
 (use-package dired :ensure nil
-  :hook ((dired-mode . dired-hide-details-mode))
+  :hook ((dired-mode . rh/dired-setup)
+	 (dired-mode . dired-hide-details-mode))
   :config
+  (defun rh/dired-setup ()
+    (display-line-numbers-mode -1)
+    (set-window-buffer (selected-window) (current-buffer))
+    (setq-local cursor-type nil)
+
+    )
+
   (setq dired-listing-switches "-alh --group-directories-first"
 	dired-dwim-target t
 	dired-mouse-drag-files t
 	dired-recursive-copies 'always))
 
-(use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode))
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package diredfl
   :hook (dired-mode . diredfl-mode)
