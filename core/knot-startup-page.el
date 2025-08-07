@@ -9,16 +9,16 @@
       (when (> count 0)
         (string-trim (nth (random count) entries))))))
 
-(setq initial-major-mode 'fundamental-mode)
-(setq initial-scratch-message
+(setq initial-major-mode 'fundamental-mode
+      initial-scratch-message
       (with-temp-buffer
 	(insert "\nWelcome home, Ronald.\n")
-        (insert-file-contents (concat user-emacs-directory "logo/Emacs-ANSI-Shadow.txt"))
+	(insert-file-contents (concat user-emacs-directory "logo/Emacs-ANSI-Shadow.txt"))
 	(goto-char (point-max))
 	(insert "\n")
 	(insert (rh/random-excerpt (concat user-emacs-directory "excerpts.txt")))
-        (insert "\n")
-        (buffer-string)))
+	(insert "\n")
+	(buffer-string)))
 
 (add-hook 'emacs-startup-hook
 	  (lambda ()
