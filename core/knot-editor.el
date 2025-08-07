@@ -163,6 +163,7 @@
   :vc (:url "https://github.com/meow-edit/meow")
   :config
   (meow-setup)
+  (setq-default meow-cursor-type-motion '(bar . 0))
   (setq meow-use-clipboard t)
   (meow-global-mode 1))
 
