@@ -34,10 +34,9 @@
   (define-key company-active-map (kbd "C-l") #'company-complete-selection)
   (define-key company-mode-map (kbd "C-l") #'company-complete))
 
-;; Haskell
 (use-package haskell-mode
-  :mode "\\.hs\\'"
-  )
+  :commands haskell-mode
+  :mode "\\.hs\\'" )
 
 (use-package haskell-tng-mode
   ;; :mode "\\.hs\\"
@@ -52,17 +51,27 @@
 	 (lean4-mode . rh/lean-highlight-types)
 	 (lean4-mode . rh/lean-highlight-values)
 	 (lean4-mode . rh/lean-highlight-typeclasses)
+	 (lean4-mode . rh/outline-lean)
 	 (lean4-mode . rh/lean4-corfu-off-company-on)
 	 (lean4-mode . (lambda ()
 			 (require 'lean4-mode)
 			 (require 'rh-lean))))
-  :config
+  :init
   (defun rh/lean4-corfu-off-company-on ()
     "Disable corfu and enable company only in Lean4 buffers."
     (interactive)
     (corfu-mode -1)
     (company-mode +1))
-  )
+
+  (defun rh/outline-lean ()
+    "Set outline regex for top-level declarations in Lean."
+    (setq-local outline-regexp
+		(rx line-start
+		    (* space)
+		    "("
+		    (or  "structure"
+			 "theorem" )))
+    (outline-hide-body)))
 
 (use-package sh-script
   :ensure nil
@@ -70,8 +79,7 @@
   :hook ((sh-mode . rh/sh-tab-hook)
 	 (sh-mode . rh/sh-highlight-custom-keywords)
 	 (sh-mode . (lambda ()
-		      (require 'rh-shell))))
-  )
+		      (require 'rh-shell)))))
 
 (use-package outline
   :demand t
@@ -119,8 +127,7 @@
 	(goto-char (point-min))
 	(while (re-search-forward outline-regexp nil t)
           (push (point) positions)))
-      positions))
-  )
+      positions)))
 
 (use-package lisp-mode
   :ensure nil
@@ -143,8 +150,7 @@
                     (or  "use-package" "require" "provide" "defun"
 			 "with-eval-after-load" "setq" "defvar"
 			 "add-to-list" "add-hook")))
-    (outline-hide-body))
-  )
+    (outline-hide-body)))
 
 (use-package rust-mode
   :mode "\\.rs\\'"
@@ -161,8 +167,7 @@
     (setq-local outline-regexp
 		(rx line-start (* space)
                     (or "fn" "pub" "struct" "enum" "impl")))
-    (outline-hide-body))
-  )
+    (outline-hide-body)))
 
 (use-package flycheck-rust
   :after rust)
