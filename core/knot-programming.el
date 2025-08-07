@@ -1,5 +1,21 @@
 ;;; knot-programming.el --- All things related to writing source code -*- lexical-binding: t; -*-
 
+(use-package prog-mode
+  :ensure nil
+  :config
+  (global-font-lock-mode 1)
+  (setq-default indent-tabs-mode nil
+		            tab-width 2)
+  (setq standard-indent 2))
+
+(use-package yasnippet
+  :demand t
+  ;; :hook (prog-mode . yas-minor-mode)
+  :config
+  (yas-global-mode)
+  :custom
+  (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
+
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
@@ -47,7 +63,7 @@
   :commands lean4-mode
   :mode "\\.lean\\'"
   :hook ((lean4-mode . lsp-mode)
-	 (lean4-mode . rh/lean4-tab-hook)
+	 ;; (lean4-mode . rh/lean4-tab-hook)
 	 (lean4-mode . rh/lean-highlight-types)
 	 (lean4-mode . rh/lean-highlight-values)
 	 (lean4-mode . rh/lean-highlight-typeclasses)
@@ -163,7 +179,6 @@
   :config
   (setq rust-format-on-save t)
 
-  ;; Currently not working, will check
   (defun rh/outline-rust ()
     (setq-local outline-regexp
 		(rx line-start (* space)
