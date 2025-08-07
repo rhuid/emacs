@@ -66,6 +66,13 @@
 		(let ((default-directory (expand-file-name "~")))
                   (apply orig args)))))
 
+(use-package consult-dir
+  :demand t
+  :bind (("C-x C-d" . consult-dir)
+         :map vertico-map
+         ("C-x C-d" . consult-dir)
+	 ("C-x C-j" . consult-dir-jump-file)))
+
 (use-package embark
   :demand t
   :vc (:url "https://github.com/oantolin/embark")
