@@ -163,7 +163,13 @@
   :vc (:url "https://github.com/meow-edit/meow")
   :config
   (meow-setup)
-  (setq-default meow-cursor-type-motion '(bar . 0))
+
+  ;; Remove cursor in motion mode
+  (setq meow-cursor-type-motion '(bar . 0))
+
+  ;; Remove that annoying position hint while selecting
+  (setq meow-expand-hint-remove-delay 0)
+
   (setq meow-use-clipboard t)
   (meow-global-mode 1))
 
