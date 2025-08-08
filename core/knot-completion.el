@@ -115,8 +115,8 @@
 (use-package which-key
   :demand t
   :config
-  (setq which-key-idle-delay 0.5)
-  (setq which-key-popup-type 'minibuffer)
+  (setq which-key-idle-delay 0.5
+        which-key-popup-type 'minibuffer)
   (which-key-mode))
 
 (use-package corfu
@@ -130,7 +130,7 @@
   (corfu-preview-current t)
   (corfu-on-exact-match t)              ;; Auto-select exact match
   (corfu-quit-at-boundary t)
-  (corfu-quit-no-match nil)
+  (corfu-quit-no-match t)
   (corfu-preselect 'prompt)             ;; Preselect candidate
   (corfu-cycle t))                      ;; Cycle through candidates
 
