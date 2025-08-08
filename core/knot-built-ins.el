@@ -6,7 +6,7 @@
   :demand t
   :ensure nil
   :hook ((before-save . delete-trailing-whitespace)
-	 (prog-mode   . glyphless-display-mode))
+	       (prog-mode   . glyphless-display-mode))
   :config
 
   ;; Automatically refresh the buffer when files change on disk
@@ -68,8 +68,10 @@
   (setq shr-width fill-column))
 
 (use-package minibuffer
+  :demand t
   :ensure nil
   :hook (minibuffer-mode . savehist-mode)
+  :config (recentf-mode)
   :custom (history-delete-duplicates t))
 
 (use-package project
