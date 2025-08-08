@@ -1,12 +1,8 @@
 /eshell/history
 /eshell/lastdir
 /private
-/expt
 /emms/
 /places
-/meow/
-/dump.el
-/knot-dashboard.el
 
 # Emacs backup & auto-save
 *~
@@ -26,10 +22,6 @@ games
 eln-cache/
 elpa/
 cnf/
-tmp.el
-lambda-calc-mode.el
-lean4-mode/
-rh-org.el
 
 # Org-specific junk (if any)
 org-id-locations
