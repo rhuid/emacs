@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: header
+# key: header
+# --
+;;; ${1:filename}.el --- ${2:description} -*- lexical-binding: t; -*-
+
+(provide '${1})
