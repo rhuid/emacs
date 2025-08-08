@@ -10,7 +10,6 @@
 
 (use-package yasnippet
   :demand t
-  ;; :hook (prog-mode . yas-minor-mode)
   :config
   (yas-global-mode)
   :custom
@@ -19,6 +18,7 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
+  (setq lsp-completion-provider :none)
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-enable-symbol-highlighting nil)
   (lsp-signature-auto-activate nil)
@@ -34,13 +34,13 @@
   (lsp-ui-doc-enable t))
 
 (use-package company
+  :disabled t
   :commands company-mode
-  :hook (lean4-mode . company-mode)
   :config
   (setq company-idle-delay 0.2
         company-minimum-prefix-length 2
-	company-insertion-on-trigger nil
-	company-insertion-triggers nil)
+	      company-insertion-on-trigger nil
+	      company-insertion-triggers nil)
 
   (define-key company-active-map (kbd "TAB") nil)
   (define-key company-active-map (kbd "<tab>") nil)
@@ -63,15 +63,15 @@
   :commands lean4-mode
   :mode "\\.lean\\'"
   :hook ((lean4-mode . lsp-mode)
-	 ;; (lean4-mode . rh/lean4-tab-hook)
-	 (lean4-mode . rh/lean-highlight-types)
-	 (lean4-mode . rh/lean-highlight-values)
-	 (lean4-mode . rh/lean-highlight-typeclasses)
-	 (lean4-mode . rh/outline-lean)
-	 (lean4-mode . rh/lean4-corfu-off-company-on)
-	 (lean4-mode . (lambda ()
-			 (require 'lean4-mode)
-			 (require 'rh-lean))))
+	       ;; (lean4-mode . rh/lean4-tab-hook)
+	       (lean4-mode . rh/lean-highlight-types)
+	       (lean4-mode . rh/lean-highlight-values)
+	       (lean4-mode . rh/lean-highlight-typeclasses)
+	       (lean4-mode . rh/outline-lean)
+	       (lean4-mode . rh/lean4-corfu-off-company-on)
+	       (lean4-mode . (lambda ()
+                         (require 'lean4-mode)
+			                   (require 'rh-lean))))
   :init
   (defun rh/lean4-corfu-off-company-on ()
     "Disable corfu and enable company only in Lean4 buffers."
@@ -82,28 +82,28 @@
   (defun rh/outline-lean ()
     "Set outline regex for top-level declarations in Lean."
     (setq-local outline-regexp
-		(rx line-start
-		    (* space)
-		    (or  "structure" "inductive" "class"
-			 "theorem" "axiom" "lemma" "def"
-			 "instance" "example" "opaque"
-			 "namespace")))
+		            (rx line-start
+		                (* space)
+		                (or  "structure" "inductive" "class"
+			                   "theorem" "axiom" "lemma" "def"
+		                     "instance" "example" "opaque"
+			                   "namespace")))
     (outline-hide-body)))
 
 (use-package sh-script
   :ensure nil
   :mode ("\\.sh\\'" . sh-mode)
   :hook ((sh-mode . rh/sh-tab-hook)
-	 (sh-mode . rh/sh-highlight-custom-keywords)
-	 (sh-mode . (lambda ()
-		      (require 'rh-shell)))))
+	       (sh-mode . rh/sh-highlight-custom-keywords)
+	       (sh-mode . (lambda ()
+		                  (require 'rh-shell)))))
 
 (use-package outline
   :demand t
   :hook ((prog-mode . outline-minor-mode)
          (text-mode . outline-minor-mode)
          (outline-minor-mode . outline-show-all)
-	 (outline-minor-mode . outline-hide-body))
+	       (outline-minor-mode . outline-hide-body))
   :init
   ;; Set the keybinding prefix for built-in outline commands
   (setq outline-minor-mode-prefix (kbd "C-c @"))
@@ -135,14 +135,14 @@
                      (outline-invisible-p (line-end-position)))
                    (rh/outline-all-heading-positions))
           (outline-show-all)
-	(outline-hide-body))))
+	      (outline-hide-body))))
 
   (defun rh/outline-all-heading-positions ()
     "Return a list of positions of all headings in the buffer."
     (let (positions)
       (save-excursion
-	(goto-char (point-min))
-	(while (re-search-forward outline-regexp nil t)
+	      (goto-char (point-min))
+	      (while (re-search-forward outline-regexp nil t)
           (push (point) positions)))
       positions)))
 
