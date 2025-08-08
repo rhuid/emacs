@@ -2,7 +2,7 @@
 # name: defun
 # key: def
 # --
-(defun ${1:name} (${2:args})
+(defun ${1:name} ($2)
   "${3:docstring}"
-  ${4:(interactive${5: "${6:P}"})}
+  (interactive)
   $0)
