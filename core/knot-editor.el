@@ -54,14 +54,6 @@
 	         ("C-x C-b" . ibuffer)))
   (global-set-key (kbd (car binding)) (cdr binding)))
 
-;;;; Local keys
-
-;; (with-eval-after-load 'magit
-;;   (dolist (binding
-;; 	         '(("." . rh/magit-quick-commit)
-;; 	           ("," . rh/magit-quick-amend)))
-;;     (define-key magit-mode-map (kbd (car binding)) (cdr binding))))
-
 ;;;; Customizations to meow
 
 (defun meow-setup ()
