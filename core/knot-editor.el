@@ -15,7 +15,7 @@
 
 (with-eval-after-load 'which-key
   (dolist (binding '(("C-c b" . "bookmark")
-		                 ("C-c e" . "emms")
+                     ("C-c e" . "emms")
 		                 ("C-c o" . "outline")
 		                 ("C-c s" . "string-manipulation")
 		                 ("C-c u" . "utilities")))
@@ -58,17 +58,18 @@
 
 (with-eval-after-load 'dired
   (dolist (binding
-	         '(("g" . dired-git-info-mode)
-	           ("r" . dired-up-directory)
-	           ("i" . rh/dired-open-file)
-	           ("u" . dired-unmark)
-	           ("U" . dired-unmark-all-marks)))
+	         '(("g"    . dired-git-info-mode)
+	           ("r"    . dired-up-directory)
+	           ("i"    . rh/dired-open-file)
+	           ("u"    . dired-unmark)
+	           ("U"    . dired-unmark-all-marks)
+             ("<f5>" . revert-buffer-quick)))
     (define-key dired-mode-map (kbd (car binding)) (cdr binding))))
 
 (with-eval-after-load 'lean4-mode
   (dolist (binding
-           '(("<f7>" . lean4-toggle-info)
-             ("<f5>" . rh/lean4-minimal-mode-toggle)))
+           '(("<f5>" . rh/lean4-minimal-mode-toggle)
+             ("<f7>" . lean4-toggle-info)))
     (define-key lean4-mode-map (kbd (car binding)) (cdr binding))))
 
 (with-eval-after-load 'magit
@@ -79,8 +80,7 @@
 
 (with-eval-after-load 'notmuch
   (dolist (binding
-           '(("<f5>" . rh/mbsync-sync)
-             ))
+           '(("<f5>" . rh/mbsync-sync)))
     (define-key notmuch-hello-mode-map (kbd (car binding)) (cdr binding))))
 
 ;;;; Customizations to meow
