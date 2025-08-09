@@ -12,6 +12,7 @@
   (:map notmuch-hello-mode-map
         ("<f5>" . rh/mbsync-sync))
   (:map notmuch-search-mode-map
+        ("d"    . rh/mark-mail-for-deletion)
         ("<f5>" . notmuch-search-refresh-view))
   (:map notmuch-show-mode-map
         ("d r"  . notmuch-show-reply-sender)
@@ -37,10 +38,10 @@
               (message "Mail sync complete")
               (notmuch-refresh-this-buffer)))))
 
-  (defun rh/notmuch-mark-for-delete ()
-    "Mark message for deletion."
+  (defun rh/mark-mail-for-deletion ()
+    "Mark mail for deletion."
     (interactive)
-    (notmuch-search-add-tag '("+deleted" "-inbox")))
+    (notmuch-search-add-tag '("+delete" "-inbox")))
 
   :custom
   (notmuch-search-oldest-first nil) ; sort from newest to oldest
