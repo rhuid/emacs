@@ -62,12 +62,18 @@
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
   :commands lean4-mode
   :mode "\\.lean\\'"
+
+  :bind (:map lean4-mode-map
+              ("<f5>" . rh/lean4-minimal-mode-toggle)
+              ("<f7>" . lean4-toggle-info))
+
   :hook ((lean4-mode . lsp-mode)
 	       (lean4-mode . rh/lean-highlight-types)
 	       (lean4-mode . rh/lean-highlight-values)
 	       (lean4-mode . rh/lean-highlight-typeclasses)
 	       (lean4-mode . rh/outline-lean)
 	       (lean4-mode . (lambda () (require 'rh-lean))))
+
   :config
   (defvar rh/lean4-minimal-mode-enabled nil
     "If non-nil, Lean 4 is in minimal UI mode.")

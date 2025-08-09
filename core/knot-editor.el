@@ -66,22 +66,11 @@
              ("<f5>" . revert-buffer-quick)))
     (define-key dired-mode-map (kbd (car binding)) (cdr binding))))
 
-(with-eval-after-load 'lean4-mode
-  (dolist (binding
-           '(("<f5>" . rh/lean4-minimal-mode-toggle)
-             ("<f7>" . lean4-toggle-info)))
-    (define-key lean4-mode-map (kbd (car binding)) (cdr binding))))
-
 (with-eval-after-load 'magit
   (dolist (binding
 	         '(("." . rh/magit-quick-commit)
 	           ("," . rh/magit-quick-amend)))
     (define-key magit-mode-map (kbd (car binding)) (cdr binding))))
-
-(with-eval-after-load 'notmuch
-  (dolist (binding
-           '(("<f5>" . rh/mbsync-sync)))
-    (define-key notmuch-hello-mode-map (kbd (car binding)) (cdr binding))))
 
 ;;;; Customizations to meow
 
