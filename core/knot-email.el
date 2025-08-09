@@ -6,14 +6,12 @@
 
 (use-package notmuch
   :commands (notmuch notmuch-search notmuch-tree notmuch-show)
-  :bind (("<f5>" . rh/mbsync-sync))
   :config
   (setq sendmail-program "msmtp"
         sendmail-extra-arguments '("--read-envelope-from")
         mail-specify-envelope-from t
         message-sendmail-envelope-from 'header
         message-send-mail-function 'message-send-mail-with-sendmail)
-
 
   (defun rh/mbsync-sync ()
     "Run mbsync to update mail, then refresh notmuch."
@@ -30,7 +28,5 @@
   :custom
   (notmuch-search-oldest-first nil) ; sort from newest to oldest
   )
-
-
 
 (provide 'knot-email)
