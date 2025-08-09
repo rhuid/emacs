@@ -42,20 +42,20 @@
   :demand t
   :vc (:url "https://github.com/minad/consult")
   :bind
-  (("C-c f" . consult-find)
-   ("C-c l" . consult-locate)
-   ("C-c r" . consult-recent-file)
-   ("C-s"   . consult-line)
-   ("C-M-s" . consult-line-multi)
-   ("C-M-g" . consult-ripgrep)
-   ("C-x b" . consult-buffer)
-   ("C-M-e" . consult-buffer)
-   ("M-y"   . consult-yank-pop)
-   ("C-M-b" . consult-bookmark)
-   ("<f5>"  . consult-theme)
-   ("M-m"   . consult-imenu)
-   ("M-p"   . consult-project-buffer)
-   ("M-o"   . consult-outline))
+  (("C-c f"  . consult-find)
+   ("C-c l"  . consult-locate)
+   ("C-c r"  . consult-recent-file)
+   ("C-s"    . consult-line)
+   ("C-M-s"  . consult-line-multi)
+   ("C-M-g"  . consult-ripgrep)
+   ("C-x b"  . consult-buffer)
+   ("C-M-e"  . consult-buffer)
+   ("M-y"    . consult-yank-pop)
+   ("C-M-b"  . consult-bookmark)
+   ("C-<f5>" . consult-theme)
+   ("M-m"    . consult-imenu)
+   ("M-p"    . consult-project-buffer)
+   ("M-o"    . consult-outline))
 
   :config
   (setq consult-preview-key 'any)
@@ -63,7 +63,7 @@
   ;; To always start searching from home directory
   (advice-add 'consult-find :around
               (lambda (orig &rest args)
-		(let ((default-directory (expand-file-name "~")))
+		            (let ((default-directory (expand-file-name "~")))
                   (apply orig args)))))
 
 (use-package consult-dir
@@ -121,6 +121,7 @@
 
 (use-package corfu
   :demand t
+  :after orderless
   :init
   (global-corfu-mode)
   :custom
@@ -153,10 +154,10 @@
   :after corfu
   :init
   (setq completion-at-point-functions
-	(list #'cape-symbol
-	      #'cape-dabbrev
-	      #'cape-file
-	      #'cape-history
-	      #'cape-tex)))
+	      (list #'cape-symbol
+	            #'cape-dabbrev
+	            #'cape-file
+	            #'cape-history
+	            #'cape-tex)))
 
 (provide 'knot-completion)
