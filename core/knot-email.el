@@ -6,6 +6,7 @@
 
 (use-package notmuch
   :commands (notmuch notmuch-search notmuch-tree notmuch-show)
+  :bind (("<f5>" . rh/mbsync-sync))
   :config
   (setq sendmail-program "msmtp"
         sendmail-extra-arguments '("--read-envelope-from")
@@ -17,6 +18,7 @@
   (defun rh/mbsync-sync ()
     "Run mbsync to update mail, then refresh notmuch."
     (interactive)
+    (message "Syncing mail now...")
     (let ((proc (start-process-shell-command
                  "mbsync" "*mbsync-output*"
                  "mbsync -a && notmuch new")))
