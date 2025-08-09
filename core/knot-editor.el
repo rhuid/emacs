@@ -15,60 +15,73 @@
 
 (with-eval-after-load 'which-key
   (dolist (binding '(("C-c b" . "bookmark")
-		     ("C-c e" . "emms")
-		     ("C-c o" . "outline")
-		     ("C-c s" . "string-manipulation")
-		     ("C-c u" . "utilities")))
+		                 ("C-c e" . "emms")
+		                 ("C-c o" . "outline")
+		                 ("C-c s" . "string-manipulation")
+		                 ("C-c u" . "utilities")))
     (which-key-add-key-based-replacements (car binding) (cdr binding))))
 
 ;;;; Global keys
 
 (dolist (binding
-	 '(("C-c SPC k" . kill-buffer-and-window)
-	   ("C-c SPC o" . other-window)
+	       '(("C-c SPC k" . kill-buffer-and-window)
+	         ("C-c SPC o" . other-window)
 
-	   ("C-c b m" . bookmark-set)
-	   ("C-c b j" . bookmark-jump)
-	   ("C-c b l" . list-bookmarks)
+	         ("C-c b m" . bookmark-set)
+	         ("C-c b j" . bookmark-jump)
+	         ("C-c b l" . list-bookmarks)
 
-	   ("C-c e p" . emms-pause)
-	   ("C-c e s" . emms-stop)
-	   ("C-c e n" . emms-next)
-	   ("C-c e b" . emms-previous)
+	         ("C-c e p" . emms-pause)
+	         ("C-c e s" . emms-stop)
+	         ("C-c e n" . emms-next)
+	         ("C-c e b" . emms-previous)
 
-	   ("C-c o t" . rh/outline-toggle-heading)
-	   ("C-c o a" . rh/outline-toggle-visibility)
+	         ("C-c o t" . rh/outline-toggle-heading)
+	         ("C-c o a" . rh/outline-toggle-visibility)
 
-	   ("C-c s r" . replace-string)
-	   ("C-c s w" . delete-trailing-whitespace)
-	   ("C-c s a" . abbrev-mode)
+	         ("C-c s r" . replace-string)
+	         ("C-c s w" . delete-trailing-whitespace)
+	         ("C-c s a" . abbrev-mode)
 
-	   ("C-c u g" . magit-status)
-	   ("C-c u l" . rh/toggle-lean-scratch)
-	   ("C-c u o" . rh/toggle-org-scratch)
-	   ("C-c u r" . recentf-open-files)
-	   ("C-c u s" . rh/eshell-toggle)
-	   ("C-c u v" . rh/vterm-toggle)
+	         ("C-c u g" . magit-status)
+	         ("C-c u l" . rh/toggle-lean-scratch)
+           ("C-c u m" . notmuch)
+	         ("C-c u o" . rh/toggle-org-scratch)
+	         ("C-c u r" . recentf-open-files)
+	         ("C-c u s" . rh/eshell-toggle)
+	         ("C-c u v" . rh/vterm-toggle)
 
-	   ("C-x C-b" . ibuffer)))
+	         ("C-x C-b" . ibuffer)))
   (global-set-key (kbd (car binding)) (cdr binding)))
 
 ;;;; Local keys
 
 (with-eval-after-load 'dired
   (dolist (binding
-	   '(("g" . dired-git-info-mode)
-	     ("r" . dired-up-directory)
-	     ("i" . rh/dired-open-file)
-	     ("u" . dired-unmark)
-	     ("U" . dired-unmark-all-marks)))
+	         '(("g" . dired-git-info-mode)
+	           ("r" . dired-up-directory)
+	           ("i" . rh/dired-open-file)
+	           ("u" . dired-unmark)
+	           ("U" . dired-unmark-all-marks)))
     (define-key dired-mode-map (kbd (car binding)) (cdr binding))))
+
+(with-eval-after-load 'lean4-mode
+  (dolist (binding
+           '(("<f7>" . lean4-toggle-info)
+             ("<f5>" . rh/lean4-minimal-mode-toggle)))
+    (define-key lean4-mode-map (kbd (car binding)) (cdr binding))))
 
 (with-eval-after-load 'magit
   (dolist (binding
-	   '(("." . rh/magit-quick-commit)
-	     ("," . rh/magit-quick-amend)))
+	         '(("." . rh/magit-quick-commit)
+	           ("," . rh/magit-quick-amend)))
     (define-key magit-mode-map (kbd (car binding)) (cdr binding))))
+
+(with-eval-after-load 'notmuch
+  (dolist (binding
+           '(("<f5>" . rh/mbsync-sync)
+             ))
+    (define-key notmuch-hello-mode-map (kbd (car binding)) (cdr binding))))
 
 ;;;; Customizations to meow
 
