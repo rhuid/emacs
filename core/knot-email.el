@@ -6,6 +6,10 @@
 
 (use-package notmuch
   :commands (notmuch notmuch-search notmuch-tree notmuch-show)
+  :bind (:map notmuch-hello-mode-map
+              ("<f5>" . rh/mbsync-sync))
+  (:map notmuch-show-mode-map
+        ("d r" . notmuch-show-reply-sender))
   :config
   (setq sendmail-program "msmtp"
         sendmail-extra-arguments '("--read-envelope-from")
