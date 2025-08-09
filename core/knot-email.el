@@ -3,7 +3,10 @@
 ;;;; First you need to have mbsync (isync), notmuch, msmtp installed and configured
 ;;;; Additionally, you may also want gpg installed (for encrypting passwords)
 
+(defconst cmi-mail-id "huidrom.mcs2024@cmi.ac.in")
+
 (use-package notmuch
+  :load-path (lambda () (getenv "NOTMUCH_EMACS"))
   :commands (notmuch notmuch-search notmuch-tree notmuch-show)
   :bind
   (:map notmuch-hello-mode-map
@@ -41,6 +44,8 @@
 
   :custom
   (notmuch-search-oldest-first nil) ; sort from newest to oldest
+  (notmuch-fcc-dirs '((cmi-mail-id . "cmi/Sent +sent -new -unread")))
+  (notmuch-show-logo nil)
   )
 
 (provide 'knot-email)
