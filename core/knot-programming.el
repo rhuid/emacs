@@ -62,8 +62,6 @@
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
   :commands lean4-mode
   :mode "\\.lean\\'"
-  :bind (("<f7>" . lean4-toggle-info)
-         ("<f8>" . rh/lean4-minimal-mode-toggle))
   :hook ((lean4-mode . lsp-mode)
 	       (lean4-mode . rh/lean-highlight-types)
 	       (lean4-mode . rh/lean-highlight-values)
@@ -92,12 +90,6 @@
       (company-mode -1)
       (lsp-ui-sideline-toggle-symbols-info) ; turning it off
       (message "Minimal UI mode.")))
-
-  (defun rh/lean4-corfu-off-company-on ()
-    "Disable corfu and enable company only in Lean4 buffers."
-    (interactive)
-    (corfu-mode -1)
-    (company-mode +1))
 
   (defun rh/outline-lean ()
     "Set outline regex for top-level declarations in Lean."
