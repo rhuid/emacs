@@ -5,7 +5,14 @@
 ;;;; You may also want gpg installed (for encrypting passwords)
 
 (use-package notmuch
-  :commands (notmuch notmuch-search notmuch-tree notmuch-show))
+  :commands (notmuch notmuch-search notmuch-tree notmuch-show)
+  :config
+  (setq sendmail-program "msmtp"
+        sendmail-extra-arguments '("--read-envelope-from")
+        mail-specify-envelope-from t
+        message-sendmail-envelope-from 'header
+        message-send-mail-function 'message-send-mail-with-sendmail)
+  )
 
 
 
