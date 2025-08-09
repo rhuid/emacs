@@ -56,16 +56,6 @@
 
 ;;;; Local keys
 
-(with-eval-after-load 'dired
-  (dolist (binding
-	         '(("g"    . dired-git-info-mode)
-	           ("r"    . dired-up-directory)
-	           ("i"    . rh/dired-open-file)
-	           ("u"    . dired-unmark)
-	           ("U"    . dired-unmark-all-marks)
-             ("<f5>" . revert-buffer-quick)))
-    (define-key dired-mode-map (kbd (car binding)) (cdr binding))))
-
 (with-eval-after-load 'magit
   (dolist (binding
 	         '(("." . rh/magit-quick-commit)
