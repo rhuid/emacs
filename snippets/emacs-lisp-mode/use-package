@@ -3,7 +3,10 @@
 # key: up
 # --
 (use-package ${1:package-name}
-  :vc (:url "https://github.com/${2:repo-name}")
+  :demand $2
+  :commands $4
+  :vc (:url "https://github.com/${5:repo-name}")
+  :bind $7
   :config
-  $3
+  $8
   )
