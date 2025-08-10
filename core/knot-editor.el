@@ -24,8 +24,8 @@
 ;;;; Global keys
 
 (dolist (binding
-	       '(("C-c SPC k" . kill-buffer-and-window)
-	         ("C-c SPC o" . other-window)
+	       '(("C-c k" . kill-buffer-and-window)
+	         ("C-c w" . other-window)
 
 	         ("C-c b m" . bookmark-set)
 	         ("C-c b j" . bookmark-jump)
