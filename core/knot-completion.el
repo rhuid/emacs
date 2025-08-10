@@ -7,10 +7,10 @@
   :vc (:url "https://github.com/minad/vertico")
   :config (vertico-mode)
   :bind (("C-x f" . find-file)
-	 :map vertico-map
-	 ("C-j"   . vertico-exit-input)
-	 ("C-M-p" . vertico-prev-group)
-	 ("C-M-n" . vertico-next-group))
+         :map vertico-map
+         ("C-j"   . vertico-exit-input)
+	       ("C-M-p" . vertico-prev-group)
+	       ("C-M-n" . vertico-next-group))
   :custom
   (vertico-resize t)
   (vertico-cycle t))
