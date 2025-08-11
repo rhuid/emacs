@@ -29,12 +29,20 @@
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
+  ;; Show inline diagnostics and evaluations (important for Lean 4)
   (lsp-ui-sideline-show-diagnostics t)
-  (lsp-ui-sideline-show-hover t)
-  (lsp-ui-doc-enable t))
+  ;; Disable doc/info of symbols and variables on the sideline
+  (lsp-ui-sideline-show-hover nil)
+  ;; Disable the pop-up doc over mouse hover
+  (lsp-ui-doc-enable nil))
 
 (use-package flycheck
-  :commands (flycheck-mode))
+  :commands (flycheck-mode)
+  :config
+  (setq flycheck-display-errors-delay 0.2
+        ;; Don't underline (it's mildly annoying)
+        flycheck-highlighting-mode 'nil
+        flycheck-indication-mode 'left-fringe))
 
 (use-package haskell-mode
   :commands haskell-mode
@@ -77,7 +85,7 @@
       (setq rh/lean4-minimal-mode-enabled t)
       (flycheck-mode -1)
       (setq-local flycheck-highlighting-mode nil) ; never underline (it's annoying)
-      (company-mode -1)
+      (company-mode -1) ; some lean4-mode always pulls in company-mode
       (lsp-ui-sideline-toggle-symbols-info) ; turning it off
       (message "Minimal UI mode.")))
 
