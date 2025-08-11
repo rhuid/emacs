@@ -44,7 +44,8 @@
 
   :bind (:map lean4-mode-map
               ("<f5>" . rh/lean4-minimal-mode-toggle)
-              ("<f7>" . lean4-toggle-info))
+              ("<f7>" . lean4-toggle-info)
+              ("F"    . flycheck-mode))
 
   :hook ((lean4-mode . lsp-mode)
 	       (lean4-mode . rh/lean-highlight-types)
