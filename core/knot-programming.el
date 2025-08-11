@@ -1,4 +1,4 @@
-;;; knot-programming.el --- All things related to writing source code -*- lexical-binding: t; -*-
+;;; knot-programming.el --- Things related to writing source code -*- lexical-binding: t; -*-
 
 (use-package prog-mode
   :ensure nil
@@ -33,30 +33,9 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
-(use-package company
-  :disabled t
-  :commands company-mode
-  :config
-  (setq company-idle-delay 0.2
-        company-minimum-prefix-length 2
-	      company-insertion-on-trigger nil
-	      company-insertion-triggers nil)
-
-  (define-key company-active-map (kbd "TAB") nil)
-  (define-key company-active-map (kbd "<tab>") nil)
-  (define-key company-active-map (kbd "RET") #'company-abort)
-  (define-key company-active-map (kbd "<ret>") #'company-abort)
-
-  (define-key company-active-map (kbd "C-l") #'company-complete-selection)
-  (define-key company-mode-map (kbd "C-l") #'company-complete))
-
 (use-package haskell-mode
   :commands haskell-mode
   :mode "\\.hs\\'" )
-
-(use-package haskell-tng-mode
-  ;; :mode "\\.hs\\"
-  )
 
 (use-package lean4-mode
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
@@ -168,43 +147,41 @@
   :ensure nil
   :mode ("\\.el\\'" . emacs-lisp-mode)
   :hook ((emacs-lisp-mode . eldoc-mode)
-	 (emacs-lisp-mode . rh/elisp-tab-hook)
-	 (emacs-lisp-mode . rh/elisp-highlight-custom-keywords)
-	 (emacs-lisp-mode . rh/outline-elisp)
-	 (lisp-interaction-mode . rh/elisp-tab-hook)
-	 (lisp-interaction-mode . rh/elisp-highlight-custom-keywords)
-	 (emacs-lisp-mode . (lambda ()
-			      (require 'rh-elisp))))
+	       (emacs-lisp-mode . rh/elisp-tab-hook)
+	       (emacs-lisp-mode . rh/elisp-highlight-custom-keywords)
+	       (emacs-lisp-mode . rh/outline-elisp)
+	       (lisp-interaction-mode . rh/elisp-tab-hook)
+	       (lisp-interaction-mode . rh/elisp-highlight-custom-keywords)
+	       (emacs-lisp-mode . (lambda () (require 'rh-elisp))))
   :config
   (defun rh/outline-elisp ()
     "Set outline regex for top-level declarations in Emacs Lisp."
     (setq-local outline-regexp
-		(rx line-start
+		            (rx line-start
                     (* space)
                     "("
                     (or  "use-package" "require" "provide" "defun"
-			 "with-eval-after-load" "setq" "defvar"
-			 "add-to-list" "add-hook")))
+			                   "with-eval-after-load" "setq" "defvar"
+			                   "add-to-list" "add-hook")))
     (outline-hide-body)))
 
 (use-package rust-mode
   :mode "\\.rs\\'"
   :hook ((rust-mode . outline-minor-mode)
-	 (rust-mode . rh/outline-rust)
-	 (rust-mode . flycheck-rust-setup)
-	 (rust-mode . (lambda ()
-			(require 'rh-rust))))
+	       (rust-mode . rh/outline-rust)
+	       (rust-mode . (lambda () (require 'rh-rust))))
   :config
   (setq rust-format-on-save t)
 
   (defun rh/outline-rust ()
     (setq-local outline-regexp
-		(rx line-start (* space)
+		            (rx line-start (* space)
                     (or "fn" "pub" "struct" "enum" "impl")))
     (outline-hide-body)))
 
 (use-package flycheck-rust
-  :after rust)
+  :after rust
+  (rust-mode . flycheck-rust-setup))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
@@ -223,8 +200,8 @@
          ("\\.timer\\'"   . systemd-mode)
          ("\\.mount\\'"   . systemd-mode)
          ("\\.target\\'"  . systemd-mode)
-	 ("\\.conf\\'"    . conf-unix-mode)
-	 ("\\.ini\\'"     . conf-unix-mode)))
+         ("\\.conf\\'"    . conf-unix-mode)
+	       ("\\.ini\\'"     . conf-unix-mode)))
 
 (use-package csv-mode
   :mode ("\\.csv\\'" . csv-mode)
