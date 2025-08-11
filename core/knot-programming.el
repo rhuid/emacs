@@ -33,6 +33,9 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable t))
 
+(use-package flycheck
+  :commands (flycheck-mode))
+
 (use-package haskell-mode
   :commands haskell-mode
   :mode "\\.hs\\'" )
