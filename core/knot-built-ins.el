@@ -59,6 +59,13 @@
 (use-package calc
   :ensure nil)
 
+(use-package eldoc
+  :ensure nil
+  :commands eldoc-mode
+  :config
+  (setq eldoc-idle-delay 0.2)
+  )
+
 (use-package eww
   :ensure nil
   :bind (("C-c w" . eww))
