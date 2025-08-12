@@ -25,7 +25,8 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
-  (setq lsp-completion-provider :none)
+  ;; Don't use company or any completion backend provider (important for Lean 4, as LSP always pulls in company)
+  (lsp-completion-provider :none)
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-enable-symbol-highlighting nil)
   (lsp-signature-auto-activate nil)
@@ -62,15 +63,14 @@
 
   :bind (:map lean4-mode-map
               ("<f5>" . rh/lean4-minimal-mode-toggle)
-              ("<f7>" . lean4-toggle-info)
-              ("D"    . eldoc-mode)
-              ("F"    . flycheck-mode))
+              ("<f7>" . lean4-toggle-info))
 
   :hook ((lean4-mode . lsp-mode)
 	       (lean4-mode . rh/lean-highlight-types)
 	       (lean4-mode . rh/lean-highlight-values)
 	       (lean4-mode . rh/lean-highlight-typeclasses)
 	       (lean4-mode . rh/outline-lean)
+         (lean4-mode . (lambda () (company-mode -1))) ;; Actually turning it off
 	       (lean4-mode . (lambda () (require 'rh-lean))))
 
   :config
