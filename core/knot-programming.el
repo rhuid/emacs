@@ -8,6 +8,13 @@
 		            tab-width 2)
   (setq standard-indent 2))
 
+(use-package aggressive-indent
+  :hook ((emacs-lisp-mode . aggressive-indent-mode)
+         (lisp-interaction-mode . aggressive-indent-mode)
+         (lisp-mode . aggressive-indent-mode))
+  :config
+  (setq aggressive-indent-comments-too t))
+
 (use-package yasnippet
   :demand t
   :config
