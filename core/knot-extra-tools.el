@@ -4,13 +4,22 @@
 ;;  :config
 ;;  (ac-config-default))
 
+;;; Avy lets you jump to any visible part of emacs without manual navigation
 (use-package avy
-  :bind (("C-:" . avy-goto-char)
-         ("C-'" . avy-goto-char-2))
+  :bind (("C-,"   . avy-goto-char-timer)
+         ("C-'"   . avy-goto-char-2)
+         ("M-g f" . avy-goto-line))
   :custom
-  (avy-background t)
-  )
+  (avy-background nil)
+  (avy-style 'pre)
+  ;; Use all windows on the selected frame
+  (avy-all-windows t)
+  ;; How long avy-goto-char-timer should wait
+  (avy-timeout-seconds 0.2)
+  ;; Optimized for Colemak-DH
+  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
 
+;;; Play music with EMMS. I am using mpv as backend
 (use-package emms
   :vc (:url "https://git.savannah.gnu.org/git/emms.git")
   :config
@@ -46,8 +55,11 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
+;; Rainbow mode: Colorize stings that represent colors
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
+
+;; Edit files as sudo user
 
 (use-package sudo-edit
   :commands (sudo-edit))
