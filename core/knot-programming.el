@@ -4,8 +4,11 @@
   :ensure nil
   :config
   (global-font-lock-mode 1)
+  ;; Always use spaces, never tabs
+  ;; By default, 1 TAB = 2 spaces
   (setq-default indent-tabs-mode nil
 		            tab-width 2)
+  ;; Default indentation is 2 spaces, but can be overridden by major modes
   (setq standard-indent 2))
 
 (use-package aggressive-indent
@@ -62,7 +65,6 @@
   :mode "\\.lean\\'"
 
   :bind (:map lean4-mode-map
-              ("<f5>" . rh/lean4-minimal-mode-toggle)
               ("<f7>" . lean4-toggle-info))
 
   :hook ((lean4-mode . lsp-mode)
@@ -200,8 +202,8 @@
     (outline-hide-body)))
 
 (use-package flycheck-rust
-  :after rust
-  (rust-mode . flycheck-rust-setup))
+  :after rust-mode
+  :hook (rust-mode . flycheck-rust-setup))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
