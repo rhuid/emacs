@@ -1,31 +1,18 @@
 ;;; knot-extra-tools.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
-(use-package aggressive-indent
-  :hook ((emacs-lisp-mode . aggressive-indent-mode)
-         (lisp-mode . aggressive-indent-mode))
-  :config
-  (setq aggressive-indent-comments-too t))
-
 ;; (use-package auto-complete
 ;;  :config
 ;;  (ac-config-default))
 
-(use-package centaur-tabs :disabled t
-  :demand nil
-  :config
-  (centaur-tabs-mode t)
-  (setq centaur-tabs-style "chamfer")
-  (setq centaur-tabs-height 24)
-  (setq centaur-tabs-set-icons t)
-  (setq centaur-tabs-icon-type 'all-the-icons)  ; or 'nerd-icons
-  (setq centaur-tabs-set-close-button nil)
-  :bind
-  ("C-<prior>" . centaur-tabs-backward)
-  ("C-<next>" . centaur-tabs-forward))
+(use-package avy
+  :bind (("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2))
+  :custom
+  (avy-background t)
+  )
 
 (use-package emms
   :vc (:url "https://git.savannah.gnu.org/git/emms.git")
-
   :config
   (setq emms-player-list '(emms-player-mpv)
         emms-source-file-default-directory "~/Downloads/DB Scores/")
