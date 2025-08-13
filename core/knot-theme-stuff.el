@@ -11,7 +11,10 @@
   :demand t
   :config
   (mapc #'disable-theme custom-enabled-themes)
-  (ef-themes-select 'ef-dream))
+  (ef-themes-select 'ef-dream)
+  ;; Set face for (selected) regions
+  (set-face-attribute 'region nil
+                      :background "#353237"))
 
 (use-package all-the-icons :disabled
   :config
