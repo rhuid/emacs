@@ -1,5 +1,6 @@
 ;;; knot-theme-stuff.el --- Modeline, themes, icons, etc -*- lexical-binding: t; -*-
 
+;;; A minimal modeline
 (setq-default mode-line-format
               '(" " mode-line-buffer-identification " | "
                 mode-name " | "
@@ -23,9 +24,5 @@
   (when (display-graphic-p)
     (unless (member "Symbols Nerd Font Mono" (font-family-list))
       (nerd-icons-install-fonts t))))
-
-;; Different color for each pair of parenthesis
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 (provide 'knot-theme-stuff)

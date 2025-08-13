@@ -1,5 +1,6 @@
 ;;; knot-programming.el --- Things related to writing source code -*- lexical-binding: t; -*-
 
+;;; For all programming modes
 (use-package prog-mode
   :ensure nil
   :config
@@ -11,6 +12,7 @@
   ;; Default indentation is 2 spaces, but can be overridden by major modes
   (setq standard-indent 2))
 
+;;; Indent aggressively for Lisp and its derivatives
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
          (lisp-interaction-mode . aggressive-indent-mode)
@@ -18,6 +20,11 @@
   :config
   (setq aggressive-indent-comments-too t))
 
+;;; Different color for each pair of parenthesis
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;;; Snippets
 (use-package yasnippet
   :demand t
   :config
@@ -35,6 +42,7 @@
   (lsp-signature-auto-activate nil)
   (lsp-log-io nil))
 
+;;; Extra nice UI for LSP
 (use-package lsp-ui
   :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
@@ -47,6 +55,7 @@
   ;; Disable the pop-up doc over mouse hover
   (lsp-ui-doc-enable nil))
 
+;;; Syntax checking
 (use-package flycheck
   :commands (flycheck-mode)
   :config
@@ -213,10 +222,12 @@
 (use-package julia-mode
   :mode "\\.jl\\'")
 
+;;; Mode for KMonad config files
 (use-package kbd-mode
   :vc (:url "https://github.com/kmonad/kbd-mode" :rev :newest)
   :mode "\\.kbd\\'")
 
+;;; Mode for systemd and other config files
 (use-package systemd
   :mode (("\\.service\\'" . systemd-mode)
          ("\\.timer\\'"   . systemd-mode)
@@ -238,7 +249,7 @@
 
 (add-hook 'sh-mode-hook #'eglot-ensure)
 
-;; markdown live preview
+;; Markdown live preview
 (use-package flymd)
 
 (provide 'knot-programming)
