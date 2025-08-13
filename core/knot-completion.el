@@ -21,10 +21,10 @@
   :load-path "~/.emacs.d/elpa/vertico/extensions/"
   :ensure nil
   :bind (:map vertico-map
-	      ("DEL" . vertico-directory-delete-char)
-	      ("C-w" . vertico-directory-delete-word)))
+	            ("DEL" . vertico-directory-delete-char)
+	            ("C-w" . vertico-directory-delete-word)))
 
-;; Type multiple words in any order to match candidates
+;;; Type multiple words in any order to match candidates
 (use-package orderless
   :demand t
   :vc (:url "https://github.com/oantolin/orderless")
@@ -32,7 +32,7 @@
   (setq completion-styles '(orderless partial-completion)
         completion-category-defaults nil))
 
-;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
+;;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
 (use-package marginalia
   :demand t
   :vc (:url "https://github.com/minad/marginalia")
@@ -43,9 +43,9 @@
   :vc (:url "https://github.com/minad/consult")
   :bind
   (("C-c f"  . consult-find)
-   ("C-c l"  . consult-locate)
+   ("C-c L"  . consult-locate)
    ("C-c r"  . consult-recent-file)
-   ("C-s"    . consult-line)
+   ("C-c l"  . consult-line)
    ("C-M-s"  . consult-line-multi)
    ("C-M-g"  . consult-ripgrep)
    ("C-x b"  . consult-buffer)
@@ -66,12 +66,13 @@
 		            (let ((default-directory (expand-file-name "~")))
                   (apply orig args)))))
 
+;;; Jump to recent directories
 (use-package consult-dir
   :demand t
   :bind (("C-x C-d" . consult-dir)
          :map vertico-map
          ("C-x C-d" . consult-dir)
-	 ("C-x C-j" . consult-dir-jump-file)))
+	       ("C-x C-j" . consult-dir-jump-file)))
 
 (use-package embark
   :demand t
@@ -112,6 +113,7 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+;;; Pop up available keybindings in the minibuffer as you type the keys
 (use-package which-key
   :demand t
   :config
@@ -119,6 +121,7 @@
         which-key-popup-type 'minibuffer)
   (which-key-mode))
 
+;;; I prefer corfu over company for completion
 (use-package corfu
   :demand t
   :after orderless
