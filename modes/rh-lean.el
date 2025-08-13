@@ -5,16 +5,25 @@
 (require 'rh-snip)
 (require 'rh-faces)
 
-(define-abbrev-table 'lean4-abbrev-table
-  '(("ex"    "example"  nil 0)
-    ("ax"    "axiom"    nil 0)
-    ("th"    "theorem"  nil 0)
-    ("ev"    "#eval"    nil 0)
-    ("ch"    "#check"   nil 0)
-    ("prnt"  "#print"   nil 0)
-    ("rd"    "reduce"   nil 0)
-    ;; ... add more when needed
-    ))
+;; (define-abbrev-table 'lean4-abbrev-table
+;;   '(("ev"    "#eval"   nil 0)
+;;     ("ch"    "#check"  nil 0)
+;;     ("arr"   "#["      nil 0)
+;;     ("df"    ":="      nil 0)
+;;     ("ty"    ":"       nil 0)
+;;     ("to"    "→"       nil 0)
+;;     ("ftor"  "<$>"     nil 0)
+;;     ("im"    "=>"      nil 0)
+;;     ("str"   "String"  nil 0)
+
+;;     ("ex"    "example" nil 0)
+;;     ("ax"    "axiom"   nil 0)
+;;     ("th"    "theorem" nil 0)
+
+;;     ("prnt"  "#print"  nil 0)
+;;     ("rd"    "reduce"  nil 0)
+;;     ;; ... add more when needed
+;;     ))
 
 (defvar rh/lean4-snippet-alist
   '(("c"   . "/- ? -/?")
@@ -53,8 +62,8 @@
   "Highlight types in `lean4-mode`."
   (let ((rh/lean-types
          '("Nat"   "Int"    "Char"    "Bool"  "Unit"  "Empty"   "PUnit"  "String"
-	   "List"  "Array"  "Option"  "Prod"  "Sum"   "Except"  
-	   )))
+	         "List"  "Array"  "Option"  "Prod"  "Sum"   "Except"
+	         )))
     (font-lock-add-keywords
      nil
      `((,(concat "\\<" (regexp-opt rh/lean-types t) "\\>")
@@ -63,8 +72,8 @@
 (defun rh/lean-highlight-values ()
   "Highlight values in `lean4-mode`."
   (let ((rh/lean-values
-         '("none" "some" "true" "false" 
-	   )))
+         '("none" "some" "true" "false"
+	         )))
     (font-lock-add-keywords
      nil
      `((,(concat "\\<" (regexp-opt rh/lean-values t) "\\>")

@@ -116,7 +116,31 @@
 			                   "theorem" "axiom" "lemma" "def"
 		                     "instance" "example" "opaque"
 			                   "namespace")))
-    (outline-hide-body)))
+    (outline-hide-body))
+
+  ;; Defining abbreviations for Lean here
+  (define-abbrev-table 'lean4-abbrev-table
+    '(("ev"    "#eval"   nil 0)
+      ("ch"    "#check"  nil 0)
+      ;; Commonly used symbols
+      ("df"    ":="      nil 0)
+      ("ty"    ":"       nil 0)
+      ("to"    "→"       nil 0)
+      ("im"    "=>"      nil 0)
+      ("ftor"  "<$>"     nil 0)
+      ("cdot"  "·"       nil 0)
+      ;; Common data types or containers
+      ("arr"   "#["      nil 0)
+      ("str"   "String"  nil 0)
+      ;; Proof stuffs
+      ("ex"    "example" nil 0)
+      ("ax"    "axiom"   nil 0)
+      ("th"    "theorem" nil 0)
+
+      ("prnt"  "#print"  nil 0)
+      ("rd"    "reduce"  nil 0)
+      ;; ... add more when needed
+      )))
 
 (use-package sh-script
   :ensure nil
