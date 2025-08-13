@@ -74,10 +74,10 @@
   :mode "\\.lean\\'"
 
   :bind (:map lean4-mode-map
+              ("<f5>" . rh/lean4-lsp-toggle)
               ("<f7>" . lean4-toggle-info))
 
-  :hook ((lean4-mode . lsp-mode)
-	       (lean4-mode . rh/lean-highlight-types)
+  :hook ((lean4-mode . rh/lean-highlight-types)
 	       (lean4-mode . rh/lean-highlight-values)
 	       (lean4-mode . rh/lean-highlight-typeclasses)
 	       (lean4-mode . rh/outline-lean)
@@ -85,27 +85,26 @@
 	       (lean4-mode . (lambda () (require 'rh-lean))))
 
   :config
-  (defvar rh/lean4-minimal-mode-enabled nil
+  (defvar rh/lean4-lsp-enabled nil
     "If non-nil, Lean 4 is in minimal UI mode.")
 
-  (defun rh/lean4-minimal-mode-toggle ()
-    "Toggle between full Lean UI and minimal UI. Minimal UI keeps goal feedback and inline evaluation"
+  ;; LSP is a necessary evil
+  (defun rh/lean4-lsp-toggle ()
+    "Toggle between LSP and minimal UI.
+  LSP keeps goal feedback, inline evaluation and eldoc. Minimal UI has only syntax highlighting"
     (interactive)
-    (if rh/lean4-minimal-mode-enabled
-        ;; Switch to full UI mode
+    (if rh/lean4-lsp-enabled
+        ;; Turn LSP off
         (progn
-          (setq rh/lean4-minimal-mode-enabled nil)
-          (flycheck-mode +1)
-          (setq-local flycheck-highlighting-mode 'symbols) ; underline symbols
-          (lsp-ui-sideline-toggle-symbols-info) ; (the sideline pop up info of variables and stuff)
-          (message "Full UI mode."))
-      ;; Switch to minimal UI mode
-      (setq rh/lean4-minimal-mode-enabled t)
-      (flycheck-mode -1)
-      (setq-local flycheck-highlighting-mode nil) ; never underline (it's annoying)
-      (company-mode -1) ; some lean4-mode always pulls in company-mode
-      (lsp-ui-sideline-toggle-symbols-info) ; turning it off
-      (message "Minimal UI mode.")))
+          (setq rh/lean4-lsp-enabled nil)
+          (lsp-disconnect)
+          (message "LSP off")
+          )
+      ;; Turn LSP on
+      (setq rh/lean4-lsp-enabled t)
+      (lsp)
+      (message "LSP on")
+      ))
 
   (defun rh/outline-lean ()
     "Set outline regex for top-level declarations in Lean."
