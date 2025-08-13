@@ -125,6 +125,7 @@
    '("s" . meow-insert)
    '("S" . meow-open-above)
    '("t" . meow-till)
+   '("T" . meow-till-expand)
    '("u" . meow-undo)
    '("U" . meow-undo-in-selection)
    '("v" . meow-search)
