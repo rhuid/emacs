@@ -57,8 +57,10 @@
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
+  (lsp-ui-sideline-ignore-duplicate t)
   ;; Show inline diagnostics and evaluations (important for Lean 4)
   (lsp-ui-sideline-show-diagnostics t)
+  (lsp-ui-sideline-diagnostic-max-lines 3)
   ;; Disable doc/info of symbols and variables on the sideline
   (lsp-ui-sideline-show-hover nil)
   ;; Disable the pop-up doc over mouse hover
