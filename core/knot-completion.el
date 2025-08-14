@@ -129,7 +129,7 @@
   (global-corfu-mode)
   :custom
   (corfu-auto t)                        ;; Enable auto popup
-  (corfu-auto-delay 0.1)
+  (corfu-auto-delay 0.2)
   (corfu-minimum-prefix-length 2)
   (corfu-preview-current t)
   (corfu-on-exact-match t)              ;; Auto-select exact match
