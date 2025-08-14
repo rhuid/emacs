@@ -35,11 +35,20 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
+  (read-process-output-max (* 1024 1024))
   ;; Don't use company or any completion backend provider (important for Lean 4, as LSP always pulls in company)
   (lsp-completion-provider :none)
-  (lsp-headerline-breadcrumb-enable nil)
+  ;; For better performance (delay after typing before requesting LSP)
+  (lsp-idle-delay 0.6)
+  (lsp-enable-folding nil)
+  (lsp-enable-on-type-formatting nil)
   (lsp-enable-symbol-highlighting nil)
+  (lsp-enable-text-document-color nil)
+  (lsp-headerline-breadcrumb-enable nil)
+  (lsp-modeline-code-actions-mode nil)
+  (lsp-modeline-diagnostics-mode nil)
   (lsp-signature-auto-activate nil)
+  ;; For faster communication with LSP, disable logging
   (lsp-log-io nil))
 
 ;;; Extra nice UI for LSP
@@ -125,9 +134,10 @@
       ("df"    ":="      nil 0)
       ("ty"    ":"       nil 0)
       ("to"    "→"       nil 0)
+      ("lar"   "←"       nil 0)
       ("im"    "=>"      nil 0)
-      ("ftor"  "<$>"     nil 0)
       ("cdot"  "·"       nil 0)
+      ("ftor"  "<$>"     nil 0)
       ;; Common data types or containers
       ("arr"   "#["      nil 0)
       ("str"   "String"  nil 0)
