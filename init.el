@@ -12,7 +12,9 @@
     (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
     (exec-path-from-shell-initialize)))
 
+;; Don't mess up my init. Use a temporary custom file
 (setq custom-file (make-temp-file "temp_custom"))
+;; Always follow symlikes without asking
 (setq vc-follow-symlinks t)
 
 (setq-default default-directory "~/")
@@ -40,11 +42,23 @@
       use-package-always-defer     t
       use-package-vc-prefer-newest t) ; :rev :newest by default
 
+;; To track startup time for different packages (currently unused but keeping it here disabled)
 (use-package benchmark-init
   :disabled t
   :ensure nil
   :init (benchmark-init/activate)
   :hook (after-init . benchmark-init/deactivate))
+
+;; Tweaks for the garbage collector to make Emacs more responsive
+(use-package gcmh
+  :demand t
+  :custom
+  ;; Run GC after 20 secs idle
+  (gcmh-idle-delay 20)
+  ;; During typing/active peroid, don't run GC until (threshold 256 MB)
+  (gcmh-high-cons-threshold (* 256 1024 1024))
+  :config
+  (gcmh-mode 1))
 
 ;;;; Local modules
 
@@ -52,7 +66,7 @@
 (use-package knot-theme-stuff  :ensure nil :defer nil)
 (use-package knot-built-ins    :ensure nil :defer nil)
 (use-package knot-editor       :ensure nil :defer nil)
-(use-package knot-org	       :ensure nil :defer nil)
+(use-package knot-org          :ensure nil :defer nil)
 (use-package knot-programming  :ensure nil :defer nil)
 (use-package knot-latex	       :ensure nil :defer nil)
 (use-package knot-dired	       :ensure nil :defer nil)
