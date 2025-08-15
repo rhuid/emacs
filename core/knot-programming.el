@@ -130,13 +130,17 @@
   (define-abbrev-table 'lean4-abbrev-table
     '(("ev"    "#eval"   nil 0)
       ("ch"    "#check"  nil 0)
-      ;; Commonly used symbols
+      ;; Common symbols
       ("df"    ":="      nil 0)
-      ("ar"    "→"       nil 0)
+      ("to"    "→"       nil 0)
       ("lar"   "←"       nil 0)
       ("im"    "=>"      nil 0)
       ("cdot"  "·"       nil 0)
       ("ftor"  "<$>"     nil 0)
+      ;; Common operators
+      ("and"   "∧"       nil 0)
+      ("or"    "∨"       nil 0)
+      ("not"   "¬"       nil 0)
       ;; Common data types or containers
       ("arr"   "#["      nil 0)
       ("str"   "String"  nil 0)
@@ -148,7 +152,10 @@
       ("prnt"  "#print"  nil 0)
       ("rd"    "reduce"  nil 0)
       ;; ... add more when needed
-      )))
+      ))
+
+  ;; Make abbrevs case sensitive (important)
+  (abbrev-table-put lean4-abbrev-table :case-fixed t))
 
 (use-package sh-script
   :ensure nil
