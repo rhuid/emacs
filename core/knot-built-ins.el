@@ -1,7 +1,5 @@
 ;;; knot-built-ins.el --- tools which came built-in with emacs -*- lexical-binding: t; -*-
 
-;; (require 'rh-capitalize)
-
 (use-package emacs
   :demand t
   :ensure nil
@@ -47,6 +45,13 @@
 
   ;; Calendar
   (add-hook 'calendar-today-visible-hook #'calendar-mark-today))
+
+(defun rh/context-sensitive-abbrev-expand (fun &rest args)
+  "Advice to prevent abbrev expansion inside comments and strings."
+  (unless (nth 8 (syntax-ppss))
+    (apply fun args)))
+
+(advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
 
 (use-package bookmark
   :demand t
