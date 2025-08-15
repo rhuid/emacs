@@ -37,22 +37,27 @@
   ;; All confirmations prompts be y or n
   (fset 'yes-or-no-p 'y-or-n-p)
 
-  ;; Abbreviations
-  (setq-default abbrev-mode t)
-  (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
-  (read-abbrev-file abbrev-file-name)
-  (setq save-abbrevs 'silently)
-
   ;; Calendar
   (add-hook 'calendar-today-visible-hook #'calendar-mark-today))
 
-(defun rh/context-sensitive-abbrev-expand (fun &rest args)
-  "Advice to prevent abbrev expansion inside comments and strings."
-  (unless (nth 8 (syntax-ppss))
-    (apply fun args)))
+;;; Abbreviations
+(use-package abbrev
+  :ensure nil
+  :init
+  (defun rh/context-sensitive-abbrev-expand (fun &rest args)
+    "Advice to prevent abbrev expansion inside comments and strings."
+    (unless (nth 8 (syntax-ppss))
+      (apply fun args)))
 
-(advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
+  (advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
 
+  :config
+  (setq-default abbrev-mode t)
+  (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
+  (read-abbrev-file abbrev-file-name)
+  (setq save-abbrevs 'silently))
+
+;;; Bookmarks can be really handy although I seldom use it now
 (use-package bookmark
   :demand t
   :ensure nil
