@@ -32,6 +32,11 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
+;;; The modeline is expendable in some major modes
+(use-package hide-mode-line
+  :demand t
+  :hook ((dired-mode org-mode) . hide-mode-line-mode))
+
 (use-package magit
   :commands (magit-status magit-log)
   :bind (:map magit-mode-map
