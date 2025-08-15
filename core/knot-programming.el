@@ -109,13 +109,11 @@
         (progn
           (setq rh/lean4-lsp-enabled nil)
           (lsp-disconnect)
-          (message "LSP off")
-          )
+          (message "LSP off"))
       ;; Turn LSP on
       (setq rh/lean4-lsp-enabled t)
       (lsp)
-      (message "LSP on")
-      ))
+      (message "LSP on")))
 
   (defun rh/outline-lean ()
     "Set outline regex for top-level declarations in Lean."
@@ -134,8 +132,7 @@
       ("ch"    "#check"  nil 0)
       ;; Commonly used symbols
       ("df"    ":="      nil 0)
-      ("ty"    ":"       nil 0)
-      ("to"    "→"       nil 0)
+      ("ar"    "→"       nil 0)
       ("lar"   "←"       nil 0)
       ("im"    "=>"      nil 0)
       ("cdot"  "·"       nil 0)
