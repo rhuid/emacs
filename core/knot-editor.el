@@ -24,7 +24,9 @@
 ;;;; Global keys
 
 (dolist (binding
-	       '(("C-c k" . kill-buffer-and-window)
+	       '(("<f9>" . rh/cycle-font-size)
+
+           ("C-c k" . kill-buffer-and-window)
 	         ("C-c w" . other-window)
 
 	         ("C-c b m" . bookmark-set)
