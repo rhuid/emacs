@@ -1,22 +1,21 @@
 ;;; knot-org.el --- For all things org? -*- lexical-binding: t; -*-
 
-;; (ensure-use-package '(org :type built-in))
-
-(use-package org :ensure nil :defer (not (daemonp))
+(use-package org
+  :ensure nil
+  :defer (not (daemonp))
   :commands (org-mode)
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
-	 (org-mode . rh/org-custom-faces)
-	 (org-mode . org-fragtog-mode))
+	 (org-mode . rh/org-custom-faces))
   :init
   (defun rh/org-init ()
     (require 'org)
     (setq display-line-numbers nil)
     (setq org-startup-indented t
 	  org-hide-emphasis-markers t
-	  org-ellipsis " ▾ "                                      ; folding symbol
-	  org-pretty-entities t                                   ; pretty TeX symbols
-	  org-log-done 'time                                      ; log time when a task is marked done
+	  org-ellipsis " ▾ "               ; folding symbol
+	  org-pretty-entities t            ; pretty TeX symbols
+	  org-log-done 'time               ; log time when a task is marked done
 	  org-hide-leading-stars t
 	  org-startup-folded 'content))
 
@@ -88,12 +87,16 @@
   ;; prettify list bullets
   (setq org-superstar-prettify-item-bullets t))
 
-;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
-(use-package org-fragtog :after org)
-;; :hook (org-mode . org-fragtog-mode))
+(use-package org-preview
+  :vc (:url "https://github.com/karthink/org-preview"))
 
-(use-package org-latex-preview :ensure nil :after org
-  :hook (org-mode. org-latex-preview-auto-mode))
+;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
+(use-package org-fragtog
+  :after org
+  :hook (org-mode . org-fragtog-mode))
+
+;; (use-package org-latex-preview :ensure nil :after org
+;;   :hook (org-mode. org-latex-preview-auto-mode))
 
 (use-package ox-reveal :after org
   ;; nice looking HTML presentations
