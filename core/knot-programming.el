@@ -92,7 +92,6 @@
 	       (lean4-mode . rh/lean-highlight-values)
 	       (lean4-mode . rh/lean-highlight-typeclasses)
 	       (lean4-mode . rh/outline-lean)
-         (lean4-mode . (lambda () (company-mode -1))) ;; Actually turning it off
 	       (lean4-mode . (lambda () (require 'rh-lean))))
 
   :config
