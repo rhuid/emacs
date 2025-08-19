@@ -24,34 +24,41 @@
 ;;;; Global keys
 
 (dolist (binding
-	       '(("<f9>" . rh/cycle-font-size)
+         '(("<f9>"    . balance-windows)
+           ("<f10>"   . rh/cycle-font-size)
+           ("C-<f10>" . text-scale-adjust)
 
-           ("C-c k" . kill-buffer-and-window)
-	         ("C-c w" . other-window)
+           ;;; Window management
 
-	         ("C-c b m" . bookmark-set)
-	         ("C-c b j" . bookmark-jump)
-	         ("C-c b l" . list-bookmarks)
+           ("C-c k"   . delete-window)
+           ("C-c K"   . kill-buffer-and-window)
+           ("C-c n"   . split-window-horizontally)
+           ("C-c N"   . split-window-vertically)
+           ("C-c w"   . other-window)
 
-	         ("C-c e p" . emms-pause)
-	         ("C-c e s" . emms-stop)
-	         ("C-c e n" . emms-next)
-	         ("C-c e b" . emms-previous)
+           ("C-c b m" . bookmark-set)
+           ("C-c b j" . bookmark-jump)
+           ("C-c b l" . list-bookmarks)
 
-	         ("C-c o t" . rh/outline-toggle-heading)
-	         ("C-c o a" . rh/outline-toggle-visibility)
+           ("C-c e p" . emms-pause)
+           ("C-c e s" . emms-stop)
+           ("C-c e n" . emms-next)
+           ("C-c e b" . emms-previous)
 
-	         ("C-c s r" . replace-string)
-	         ("C-c s w" . delete-trailing-whitespace)
-	         ("C-c s a" . abbrev-mode)
+           ("C-c o t" . rh/outline-toggle-heading)
+           ("C-c o a" . rh/outline-toggle-visibility)
 
-	         ("C-c u g" . magit-status)
-	         ("C-c u l" . rh/toggle-lean-scratch)
+           ("C-c s r" . replace-string)
+           ("C-c s w" . delete-trailing-whitespace)
+           ("C-c s a" . abbrev-mode)
+
+           ("C-c u g" . magit-status)
+           ("C-c u l" . rh/toggle-lean-scratch)
            ("C-c u m" . notmuch)
-	         ("C-c u o" . rh/toggle-org-scratch)
-	         ("C-c u r" . recentf-open-files)
-	         ("C-c u s" . rh/eshell-toggle)
-	         ("C-c u v" . rh/vterm-toggle)
+           ("C-c u o" . rh/toggle-org-scratch)
+           ("C-c u r" . recentf-open-files)
+           ("C-c u s" . rh/eshell-toggle)
+           ("C-c u v" . rh/vterm-toggle)
 
 	         ("C-x C-b" . ibuffer)))
   (global-set-key (kbd (car binding)) (cdr binding)))
@@ -119,6 +126,7 @@
    '("O" . meow-to-block)
    '("p" . meow-yank)
    '("q" . meow-quit)
+   '("Q" . delete-window)
    '("r" . meow-replace)
    '("s" . meow-insert)
    '("S" . meow-open-above)
