@@ -28,14 +28,6 @@
            ("<f10>"   . rh/cycle-font-size)
            ("C-<f10>" . text-scale-adjust)
 
-           ;;; Window management
-
-           ("C-c k"   . delete-window)
-           ("C-c K"   . kill-buffer-and-window)
-           ("C-c n"   . split-window-horizontally)
-           ("C-c N"   . split-window-vertically)
-           ("C-c w"   . other-window)
-
            ("C-c b m" . bookmark-set)
            ("C-c b j" . bookmark-jump)
            ("C-c b l" . list-bookmarks)

@@ -4,7 +4,33 @@
 ;;  :config
 ;;  (ac-config-default))
 
-;;; Avy lets you jump to any visible part of emacs without manual navigation
+;;;; Ace-window for quicker window switching
+
+(use-package ace-window
+  :bind (("C-c t" . ace-window)) ;; t for tabs?, no t for windows!
+  :custom
+  ;; Optimized for Colemak-DH
+  (aw-keys '(?t ?n ?e ?i ?o ?s ?r ?a))
+  (aw-background nil))
+
+;;;; Things about windows
+
+(use-package window
+  :ensure nil
+  :bind (("C-c k" . delete-window)
+         ("C-c K" . kill-buffer-and-window)
+         ("C-c n" . split-window-horizontally)
+         ("C-c N" . split-window-vertically))
+  :config
+  (dolist (command
+           '(delete-window
+             kill-buffer-and-window
+             split-window-horizontally
+             split-window-vertically))
+    (advice-add command :after #'balance-windows)))
+
+;;;; Avy lets you jump to any visible part of emacs without manual navigation
+
 (use-package avy
   :bind (("C-,"   . avy-goto-char-timer)
          ("C-'"   . avy-goto-char-2)
@@ -19,7 +45,8 @@
   ;; Optimized for Colemak-DH
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
 
-;;; Play music with EMMS. I am using mpv as backend
+;;;; Play music with EMMS. I am using mpv as backend
+
 (use-package emms
   :vc (:url "https://git.savannah.gnu.org/git/emms.git")
   :config
@@ -32,10 +59,13 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-;;; The modeline is expendable in some major modes
+;;;; The modeline is expendable in some major modes
+
 (use-package hide-mode-line
   :demand t
   :hook ((dired-mode org-mode) . hide-mode-line-mode))
+
+;;;; Magit is a super good interface for Git
 
 (use-package magit
   :commands (magit-status magit-log)
@@ -60,11 +90,12 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
-;; Rainbow mode: Colorize stings that represent colors
+;;;; Rainbow mode: Colorize stings that represent colors
+
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
-;; Edit files as sudo user
+;;;; Edit files as sudo user
 
 (use-package sudo-edit
   :commands (sudo-edit))
