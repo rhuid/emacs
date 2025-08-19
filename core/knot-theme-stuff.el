@@ -9,7 +9,7 @@
 
 ;;; Cycle through font sizes: maximum lines per window vs. comfortable reading
 
-(defvar rh/font-sizes '(13 14 16)
+(defvar rh/font-sizes '(13 14 18)
   "List of font sizes to cycle through.")
 
 (defvar rh/current-font-size-index 0
