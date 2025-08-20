@@ -102,6 +102,7 @@
    '("B" . meow-back-symbol)
    '("c" . meow-change)
    '("e" . meow-prev-expand)
+   '("E" . scroll-down-command)
    '("f" . avy-goto-char-timer)
    '("g" . meow-cancel-selection)
    '("G" . meow-grab)
@@ -114,6 +115,7 @@
    '("L" . meow-goto-line)
    '("m" . meow-left-expand)
    '("n" . meow-next-expand)
+   '("N" . scroll-up-command)
    '("o" . meow-block)
    '("O" . meow-to-block)
    '("p" . meow-yank)
@@ -139,6 +141,8 @@
    '(":" . mode-line-other-buffer)
    '("J" . rh/join-line)
    '("K" . kill-whole-line)))
+
+;;;; Meow! A customizable modal editing system for Emacs
 
 (use-package meow
   :demand t
