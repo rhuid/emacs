@@ -91,6 +91,7 @@
    '("9" . meow-expand-9)
    '("-" . negative-argument)
    '(";" . meow-reverse)
+   '(":" . mode-line-other-buffer)
    '("," . meow-inner-of-thing)
    '("." . meow-bounds-of-thing)
    '("<" . meow-beginning-of-thing)
@@ -110,7 +111,9 @@
    '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)
    '("j" . meow-join)
+   '("J" . rh/join-line)
    '("k" . meow-kill)
+   '("K" . kill-whole-line)
    '("l" . meow-line)
    '("L" . meow-goto-line)
    '("m" . meow-left-expand)
@@ -135,12 +138,7 @@
    '("y" . meow-save)
    '("z" . meow-pop-selection)
    '("'" . repeat)
-   '("<escape>" . ignore)
-
-   ;; extras
-   '(":" . mode-line-other-buffer)
-   '("J" . rh/join-line)
-   '("K" . kill-whole-line)))
+   '("<escape>" . ignore))
 
 ;;;; Meow! A customizable modal editing system for Emacs
 
