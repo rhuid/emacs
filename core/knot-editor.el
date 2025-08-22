@@ -138,15 +138,17 @@
    '("y" . meow-save)
    '("z" . meow-pop-selection)
    '("'" . repeat)
-   '("<escape>" . ignore))
+   '("<escape>" . ignore)))
 
 ;;;; Meow! A customizable modal editing system for Emacs
 
 (use-package meow
   :demand t
   :vc (:url "https://github.com/meow-edit/meow")
+  :hook ((post-self-insert-hook . rh/go-normal-state))
   :config
   (meow-setup)
+  (meow-global-mode 1)
 
   ;; Remove cursor in motion mode
   (setq meow-cursor-type-motion '(bar . 0))
@@ -154,7 +156,18 @@
   ;; Remove that annoying position hint while selecting
   (setq meow-expand-hint-remove-delay 0)
 
-  (setq meow-use-clipboard t)
-  (meow-global-mode 1))
+  (setq meow-keypad-message nil
+        meow-keypad-self-insert-undefined nil
+        meow-use-clipboard t)
+
+  (defun rh/go-normal-state ()
+    "Type 'ntn' to go to normal state from insert state."
+    (when (and (eq meow--current-state 'insert)
+               (>= (point) 3)
+               (string= (buffer-substring-no-properties (-(point) 3) (point)) "ntn"))
+      ;; Delete "ntn"
+      (delete-region (- (point) 3) (point))
+      ;; Switch to normal state by sending <escape> key event
+      (execute-kbd-macro (kbd "<escape>")) t)))
 
 (provide 'knot-editor)
