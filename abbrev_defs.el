@@ -63,10 +63,10 @@
     ("y" "$y$" nil :count 0)
     ("z" "$z$" nil :count 0)
 
-    ("cts" "continuous" nil :count 0)
-    ("fn"  "function"   nil :count 0)
-
-
+    ("assoc"  "associative" nil :count 0)
+    ("comm"   "commutative" nil :count 0)
+    ("cts"    "continuous"  nil :count 0)
+    ("fn"     "function"    nil :count 0)
    ))
 
 (define-abbrev-table 'lean4-abbrev-table

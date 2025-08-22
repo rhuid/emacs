@@ -4,8 +4,9 @@
   :mode (( "\\.tex\\'" . LaTeX-mode)
 	       ( "\\.cls\\'" . LaTeX-mode)
 	       ( "\\.sty\\'" . LaTeX-mode))
-  :hook ((post-command . rh/toggle-latex-abbrev)
-         (LaTeX-mode   . rh/setup-math-completion))
+  :hook
+  (post-command . rh/toggle-latex-abbrev)
+  (LaTeX-mode   . rh/setup-math-completion)
   :config
   (setq TeX-view-program-selection '((output-pdf "Sioyek")))
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
@@ -16,16 +17,6 @@
              (texmathp))
         (abbrev-mode -1)
       (abbrev-mode 1)))
-
-  ;; Defining abbreviations for LaTeX here
-  (defun rh/latex-add-math-abbrevs ()
-    "Define abbrevs so single letters expand to math mode, e.g. x → $x$."
-    (define-abbrev-table 'LaTeX-mode-abbrev-table ()) ;; ensure table exists
-    (dolist (ch (append (number-sequence ?b ?z)
-                        (number-sequence ?0 ?9)))
-      (let* ((s (char-to-string ch))
-             (expansion (format "$%s$" s)))
-        (define-abbrev LaTeX-mode-abbrev-table s expansion nil :count 0))))
 
   ;;; Math completions for corfu (wont work for now)
 

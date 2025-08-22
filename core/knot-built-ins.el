@@ -53,7 +53,7 @@
 
   :config
   (setq-default abbrev-mode t)
-  (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
+  (setq abbrev-file-name (expand-file-name "abbrev_defs.el" user-emacs-directory))
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
@@ -73,8 +73,7 @@
   :ensure nil
   :commands eldoc-mode
   :config
-  (setq eldoc-idle-delay 0.2)
-  )
+  (setq eldoc-idle-delay 0.2))
 
 (use-package eww
   :ensure nil
