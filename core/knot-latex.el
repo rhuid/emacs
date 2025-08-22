@@ -7,6 +7,7 @@
   :hook
   (post-command . rh/toggle-latex-abbrev)
   (LaTeX-mode   . rh/swap-keys-in-latex)
+  (LaTeX-mode   . yas-minor-mode)
   (LaTeX-mode   . rh/setup-math-completion)
   :config
   (setq TeX-view-program-selection '((output-pdf "Sioyek")))
@@ -60,11 +61,26 @@
 
 (use-package cdlatex
   :after auctex
-  :hook ((LaTeX-mode . turn-on-cdlatex)
-         (org-mode   . turn-on-org-cdlatex))
+  :hook
+  (LaTeX-mode . turn-on-cdlatex)
+  (org-mode   . turn-on-org-cdlatex)
   :custom
   (cdlatex-paired-parens "$([{")
   :config
+
+  ;;; Use CDLaTeX along with yasnippets without conflict
+
+  (defun rh/latex-tab-action ()
+    "Try yasnippet first, then fall back to CDLaTeX."
+    (interactive)
+    (if (and (bound-and-true-p yas-minor-mode)
+             (yas-expand)) t
+      (cdlatex-tab)))
+
+  (define-key cdlatex-mode-map (kbd "TAB") #'rh/latex-tab-action)
+
+  ;;; Quickly drop latex environments
+
   (setq cdlatex-env-alist
 	      '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
 	        ("defintion"    "\\begin{definition}\nAUTOLABEL\n?\n\\end{definition}\n" nil)
