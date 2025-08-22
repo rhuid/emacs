@@ -1,8 +1,16 @@
 ;;; knot-extra-tools.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
-;; (use-package auto-complete
-;;  :config
-;;  (ac-config-default))
+;;;; Things about windows
+
+;; Make windows proportional while adding or deleting windows
+(setq window-combination-resize t)
+
+(use-package window
+  :ensure nil
+  :bind (("C-c k" . delete-window)
+         ("C-c K" . kill-buffer-and-window)
+         ("C-c n" . split-window-horizontally)
+         ("C-c N" . split-window-vertically)))
 
 ;;;; Ace-window for quicker window switching
 
@@ -12,22 +20,6 @@
   ;; Optimized for Colemak-DH
   (aw-keys '(?t ?n ?e ?i ?o ?s ?r ?a))
   (aw-background nil))
-
-;;;; Things about windows
-
-(use-package window
-  :ensure nil
-  :bind (("C-c k" . delete-window)
-         ("C-c K" . kill-buffer-and-window)
-         ("C-c n" . split-window-horizontally)
-         ("C-c N" . split-window-vertically))
-  :config
-  (dolist (command
-           '(delete-window
-             kill-buffer-and-window
-             split-window-horizontally
-             split-window-vertically))
-    (advice-add command :after #'balance-windows)))
 
 ;;;; Avy lets you jump to any visible part of emacs without manual navigation
 
