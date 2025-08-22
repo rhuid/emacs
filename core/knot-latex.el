@@ -6,10 +6,13 @@
 	       ( "\\.sty\\'" . LaTeX-mode))
   :hook
   (post-command . rh/toggle-latex-abbrev)
+  (LaTeX-mode   . rh/swap-keys-in-latex)
   (LaTeX-mode   . rh/setup-math-completion)
   :config
   (setq TeX-view-program-selection '((output-pdf "Sioyek")))
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
+
+  ;;; Abbrevs should work only outside math mode
 
   (defun rh/toggle-latex-abbrev ()
     "Enable abbrev only outside math mode in LaTeX."
@@ -17,6 +20,14 @@
              (texmathp))
         (abbrev-mode -1)
       (abbrev-mode 1)))
+
+  ;;; It's a chore to stretch the pinky to type \, so let's do some key swapping
+
+  (defun rh/swap-keys-in-latex ()
+    "Swap some keys for faster typing in LaTeX-mode."
+    (local-set-key (kbd ";")  (lambda () (interactive) (insert "\\")))
+    (local-set-key (kbd "\\") (lambda () (interactive) (insert ";")))
+    )
 
   ;;; Math completions for corfu (wont work for now)
 
@@ -42,10 +53,10 @@
                 (append completion-at-point-functions
                         '(rh/cape-math)))))
 
-  (use-package auctex-latexmk
-    :after auctex
-    :config
-    (auctex-latexmk-setup))
+(use-package auctex-latexmk
+  :after auctex
+  :config
+  (auctex-latexmk-setup))
 
 (use-package cdlatex
   :after auctex
@@ -55,7 +66,7 @@
   (cdlatex-paired-parens "$([{")
   :config
   (setq cdlatex-env-alist
-	      '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)                 ; AUTOLABEL
+	      '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
 	        ("defintion"    "\\begin{definition}\nAUTOLABEL\n?\n\\end{definition}\n" nil)
 	        ("lemma"        "\\begin{lemma}\nAUTOLABEL\n?\n\\end{lemma}\n" nil)
 	        ("proposition"  "\\begin{proposition}\nAUTOLABEL\n?\n\\end{proposition}\n" nil)
@@ -68,9 +79,8 @@
 	        ("prop" "Insert proposition env" "" cdlatex-environment ("proposition") t nil)
 	        ("th"   "Insert theorem env"     "" cdlatex-environment ("theorem") t nil)
 	        ("cor"  "Insert corollary env"   "" cdlatex-environment ("corollary") t nil)
-	        ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil))))
-
-
+	        ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil)
+          ("dp"   "Insert definition env"  "" cdlatex-environment ("displaymath") t nil))))
 
 (use-package latex-preview-pane)
 

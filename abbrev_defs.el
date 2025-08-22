@@ -37,11 +37,15 @@
     ("X" "$X$" nil :count 3)
     ("Y" "$Y$" nil :count 1)
     ("Z" "$Z$" nil :count 5)
+    ("assoc" "associative" nil :count 0)
     ("b" "$b$" nil :count 0)
     ("c" "$c$" nil :count 0)
+    ("comm" "commutative" nil :count 0)
+    ("cts" "continuous" nil :count 0)
     ("d" "$d$" nil :count 0)
     ("e" "$e$" nil :count 2)
     ("f" "$f$" nil :count 0)
+    ("fn" "function" nil :count 0)
     ("g" "$g$" nil :count 0)
     ("h" "$h$" nil :count 0)
     ("i" "$i$" nil :count 0)
@@ -62,11 +66,6 @@
     ("x" "$x$" nil :count 0)
     ("y" "$y$" nil :count 0)
     ("z" "$z$" nil :count 0)
-
-    ("assoc"  "associative" nil :count 0)
-    ("comm"   "commutative" nil :count 0)
-    ("cts"    "continuous"  nil :count 0)
-    ("fn"     "function"    nil :count 0)
    ))
 
 (define-abbrev-table 'lean4-abbrev-table
@@ -90,3 +89,4 @@
     ("th" "theorem" nil :count 0)
     ("to" "→" nil :count 2)
    ))
+
