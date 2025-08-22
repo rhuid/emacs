@@ -4,7 +4,8 @@
   :mode (( "\\.tex\\'" . LaTeX-mode)
 	       ( "\\.cls\\'" . LaTeX-mode)
 	       ( "\\.sty\\'" . LaTeX-mode))
-  :hook ((post-command . rh/toggle-latex-abbrev))
+  :hook ((post-command . rh/toggle-latex-abbrev)
+         (LaTeX-mode   . rh/latex-add-math-abbrevs))
   :config
   (setq TeX-view-program-selection '((output-pdf "Sioyek")))
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
@@ -17,22 +18,14 @@
       (abbrev-mode 1)))
 
   ;; Defining abbreviations for LaTeX here
-  (define-abbrev-table 'LaTeX-mode-abbrev-table
-    '(
-      ;; Type x and it becomes $x$ (works for upper-case too)
-      ("p" "$p$" nil 0)
-      ("q" "$q$" nil 0)
-      ("r" "$r$" nil 0)
-      ("s" "$s$" nil 0)
-      ("t" "$t$" nil 0)
-      ("u" "$u$" nil 0)
-      ("v" "$v$" nil 0)
-      ("w" "$w$" nil 0)
-      ("x" "$x$" nil 0)
-      ("y" "$y$" nil 0)
-      ("z" "$z$" nil 0)
-      ))
-  )
+  (defun rh/latex-add-math-abbrevs ()
+    "Define abbrevs so single letters expand to math mode, e.g. x → $x$."
+    (define-abbrev-table 'LaTeX-mode-abbrev-table ()) ;; ensure table exists
+    (dolist (ch (append (number-sequence ?b ?z)
+                        (number-sequence ?0 ?9)))
+      (let* ((s (char-to-string ch))
+             (expansion (format "$%s$" s)))
+        (define-abbrev LaTeX-mode-abbrev-table s expansion nil :count 0)))))
 
 (use-package auctex-latexmk
   :after auctex

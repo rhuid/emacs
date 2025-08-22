@@ -1,4 +1,33 @@
 ;;-*-coding: utf-8;-*-
+(define-abbrev-table 'LaTeX-mode-abbrev-table
+  '(
+    ("b" "$b$" nil :count 0)
+    ("c" "$c$" nil :count 0)
+    ("d" "$d$" nil :count 0)
+    ("e" "$e$" nil :count 0)
+    ("f" "$f$" nil :count 0)
+    ("g" "$g$" nil :count 0)
+    ("h" "$h$" nil :count 0)
+    ("i" "$i$" nil :count 0)
+    ("j" "$j$" nil :count 0)
+    ("k" "$k$" nil :count 0)
+    ("l" "$l$" nil :count 0)
+    ("m" "$m$" nil :count 0)
+    ("n" "$n$" nil :count 0)
+    ("o" "$o$" nil :count 0)
+    ("p" "$p$" nil :count 0)
+    ("q" "$q$" nil :count 0)
+    ("r" "$r$" nil :count 0)
+    ("s" "$s$" nil :count 0)
+    ("t" "$t$" nil :count 0)
+    ("u" "$u$" nil :count 0)
+    ("v" "$v$" nil :count 0)
+    ("w" "$w$" nil :count 0)
+    ("x" "$x$" nil :count 3)
+    ("y" "$y$" nil :count 2)
+    ("z" "$z$" nil :count 0)
+   ))
+
 (define-abbrev-table 'lean4-abbrev-table
   '(
     ("and" "∧" nil :count 1)
@@ -20,4 +49,3 @@
     ("th" "theorem" nil :count 0)
     ("to" "→" nil :count 2)
    ))
-
