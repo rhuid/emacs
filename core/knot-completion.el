@@ -125,6 +125,9 @@
 (use-package corfu
   :demand t
   :after orderless
+  :hook ((corfu-mode . corfu-history-mode)
+         (corfu-mode . corfu-indexed-mode)
+         (corfu-mode . corfu-popupinfo-mode))
   :init
   (global-corfu-mode)
   :custom
@@ -155,12 +158,23 @@
 
 (use-package cape
   :after corfu
-  :init
-  (setq completion-at-point-functions
-	      (list #'cape-symbol
-	            #'cape-dabbrev
-	            #'cape-file
-	            #'cape-history
-	            #'cape-tex)))
+  :demant t
+  :config
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-abbrev)
+
+  ;; :init
+  ;; (setq completion-at-point-functions
+	;;       (list #'cape-symbol
+	;;             #'cape-dabbrev
+	;;             #'cape-file
+	;;             #'cape-history
+	;;             #'cape-tex
+  ;;             #'cape-keyword
+  ;;             #'cape-dict
+  ;;             ))
+
+  )
 
 (provide 'knot-completion)
