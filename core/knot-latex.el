@@ -1,5 +1,7 @@
 ;;; knot-latex.el --- For all things LaTeX -*- lexical-binding: t; -*-
 
+;;;; Auctex is the definitive LaTeX experience on Emacs
+
 (use-package auctex
   :mode (( "\\.tex\\'" . LaTeX-mode)
 	       ( "\\.cls\\'" . LaTeX-mode)
@@ -59,11 +61,15 @@
   :config
   (auctex-latexmk-setup))
 
+;;;; CDLatex for quick typing (it's all about speed)
+
 (use-package cdlatex
   :after auctex
   :hook
   (LaTeX-mode . turn-on-cdlatex)
   (org-mode   . turn-on-org-cdlatex)
+  :bind (:map cdlatex-mode-map
+              ("TAB" . rh/latex-tab-action))
   :custom
   (cdlatex-paired-parens "$([{")
   :config
@@ -77,8 +83,6 @@
              (yas-expand)) t
       (cdlatex-tab)))
 
-  (define-key cdlatex-mode-map (kbd "TAB") #'rh/latex-tab-action)
-
   ;;; Quickly drop latex environments
 
   (setq cdlatex-env-alist
@@ -88,6 +92,7 @@
 	        ("proposition"  "\\begin{proposition}\nAUTOLABEL\n?\n\\end{proposition}\n" nil)
 	        ("theorem"      "\\begin{theorem}\nAUTOLABEL\n?\n\\end{theorem}\n" nil)
 	        ("corollary"    "\\begin{corollary}\nAUTOLABEL\n?\n\\end{corollary}\n" nil)))
+
   (setq cdlatex-command-alist
 	      '(("ax"   "Insert axiom env"       "" cdlatex-environment ("axiom") t nil)
 	        ("def"  "Insert definition env"  "" cdlatex-environment ("definition") t nil)
@@ -96,7 +101,7 @@
 	        ("th"   "Insert theorem env"     "" cdlatex-environment ("theorem") t nil)
 	        ("cor"  "Insert corollary env"   "" cdlatex-environment ("corollary") t nil)
 	        ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil)
-          ("dp"   "Insert definition env"  "" cdlatex-environment ("displaymath") t nil))))
+          ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil))))
 
 (use-package latex-preview-pane)
 
