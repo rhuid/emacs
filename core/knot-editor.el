@@ -11,6 +11,14 @@
     (delete-char 1)
     (just-one-space)))
 
+;;;; Remap keys based on frequency of use cases.. in specific major modes
+
+(defun rh/remap-local-keys ()
+  "Remap some keys for faster typing."
+  (local-set-key (kbd ";")  (lambda () (interactive) (insert "\\")))
+  (local-set-key (kbd "\\") (lambda () (interactive) (insert ";")))
+  )
+
 ;;;; Prefixes for which-key
 
 (with-eval-after-load 'which-key

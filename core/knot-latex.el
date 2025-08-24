@@ -8,9 +8,10 @@
 	       ( "\\.sty\\'" . LaTeX-mode))
   :hook
   (post-command . rh/toggle-latex-abbrev)
-  (LaTeX-mode   . rh/swap-keys-in-latex)
+  (LaTeX-mode   . rh/remap-local-keys)
   (LaTeX-mode   . yas-minor-mode)
   (LaTeX-mode   . rh/setup-math-completion)
+
   :config
   (setq TeX-view-program-selection '((output-pdf "Sioyek")))
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
@@ -23,14 +24,6 @@
              (texmathp))
         (abbrev-mode -1)
       (abbrev-mode 1)))
-
-  ;;; It's a chore to stretch the pinky to type \, so let's do some key swapping
-
-  (defun rh/swap-keys-in-latex ()
-    "Swap some keys for faster typing in LaTeX-mode."
-    (local-set-key (kbd ";")  (lambda () (interactive) (insert "\\")))
-    (local-set-key (kbd "\\") (lambda () (interactive) (insert ";")))
-    )
 
   ;;; Math completions for corfu (wont work for now)
 
