@@ -78,6 +78,7 @@
     ("df" ":=" nil :count 1)
     ("ev" "#eval" nil :count 0)
     ("ex" "example" nil :count 0)
+    ("fa" "∀" nil :count 0)
     ("ftor" "<$>" nil :count 0)
     ("im" "=>" nil :count 0)
     ("lar" "←" nil :count 3)
@@ -88,5 +89,4 @@
     ("str" "String" nil :count 0)
     ("th" "theorem" nil :count 0)
     ("to" "→" nil :count 2)
-   ))
-
+    ))
