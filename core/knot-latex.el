@@ -8,8 +8,8 @@
 	       ( "\\.sty\\'" . LaTeX-mode))
   :hook
   (post-command . rh/toggle-latex-abbrev)
-  (LaTeX-mode   . rh/remap-local-keys)
-  (LaTeX-mode   . yas-minor-mode)
+  ;; (LaTeX-mode   . rh/remap-local-keys)
+  ;; (LaTeX-mode   . yas-minor-mode)
   (LaTeX-mode   . rh/setup-math-completion)
 
   :config
@@ -24,6 +24,14 @@
              (texmathp))
         (abbrev-mode -1)
       (abbrev-mode 1)))
+
+  ;; Make math delimiters less visible (stolen from https://gitlab.com/slotThe/dotfiles/-/blob/master/emacs/lisp/hopf-latex.el)
+  (defvar rh/latex-math-face (make-face 'rh/latex-math-face))
+  (set-face-attribute 'rh/latex-math-face
+                      nil
+                      :inherit 'font-lock-comment-face :weight 'thin :slant 'normal)
+  (font-lock-add-keywords
+   'LaTeX-mode '(("\\\\[]()[]\\|\\$" 0 rh/latex-math-face t)))
 
   ;;; Math completions for corfu (wont work for now)
 
