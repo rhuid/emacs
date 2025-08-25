@@ -7,23 +7,18 @@
                 (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | "
                 (vc-mode vc-mode)))
 
-;;; Cycle through font sizes: maximum lines per window vs. comfortable reading
+;;; Toggle font size: maximum lines per window vs. comfortable reading
 
-(defvar rh/font-sizes '(13 14 18)
-  "List of font sizes to cycle through.")
+(defvar rh/current-font-size 13.5
+  "This is the default font size at startup.")
 
-(defvar rh/current-font-size-index 0
-  "Index of the current font size in `rh/font-sizes`.")
-
-(defun rh/cycle-font-size ()
-  "Cycle through predefined font sizes in all frames."
+(defun rh/toggle-global-font-size ()
+  "Toggle font size between edit mode and presentation mode."
   (interactive)
-  (setq rh/current-font-size-index
-        (mod (1+ rh/current-font-size-index) (length rh/font-sizes)))
-  (let ((size (nth rh/current-font-size-index rh/font-sizes)))
-    (dolist (frame (frame-list))
-      (set-frame-font (format "Iosevka-%d" size) nil (list frame)))
-    (message "Font size set to %d" size)))
+  (setq rh/current-font-size (if (= rh/current-font-size 13.5) 18 13.5))
+  (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t))
+
+;;; Ef-themes is indeed a beautiful collection of themes
 
 (use-package ef-themes
   :demand t
@@ -34,6 +29,16 @@
   (set-face-attribute 'region nil
                       :background "#353237"
                       ))
+
+;;; Nano theme?
+
+;; (use-package nano-theme
+;;   :demand t
+;;   :vc (:url "https://github.com/rougier/nano-theme")
+;;   :config
+;;   (map #'disable-theme custom-enabled-themes)
+;;   (nano-mode)
+;;   )
 
 (use-package all-the-icons :disabled
   :config

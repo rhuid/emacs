@@ -11,14 +11,6 @@
     (delete-char 1)
     (just-one-space)))
 
-;;;; Remap keys based on frequency of use cases.. in specific major modes
-
-(defun rh/remap-local-keys ()
-  "Remap some keys for faster typing."
-  (local-set-key (kbd ";")  (lambda () (interactive) (insert "\\")))
-  (local-set-key (kbd "\\") (lambda () (interactive) (insert ";")))
-  )
-
 ;;;; Prefixes for which-key
 
 (with-eval-after-load 'which-key
@@ -33,7 +25,7 @@
 
 (dolist (binding
          '(("<f9>"    . balance-windows)
-           ("<f10>"   . rh/cycle-font-size)
+           ("<f10>"   . rh/toggle-global-font-size)
            ("C-<f10>" . text-scale-adjust)
 
            ("C-c b m" . bookmark-set)
