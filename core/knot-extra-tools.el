@@ -55,6 +55,7 @@
 
 (use-package hide-mode-line
   :demand t
+  :bind ("C-<f7>" . global-hide-mode-line-mode)
   :hook ((dired-mode org-mode) . hide-mode-line-mode))
 
 ;;;; Magit is a super good interface for Git
