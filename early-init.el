@@ -4,7 +4,7 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 
-(setq default-frame-alist '((font . "Iosevka Term-13")))
+(setq default-frame-alist '((font . "Iosevka Term-13.5")))
 
 ;; Prevent frame resizing (very expensive)
 (setq frame-inhibit-implied-resize t)
@@ -14,7 +14,6 @@
 (fset 'display-startup-echo-area-message #'ignore)
 (fset 'display-startup-screen #'ignore)
 
-;; Disable UI elements
 (menu-bar-mode   -1)
 (tool-bar-mode   -1)
 (scroll-bar-mode -1)
