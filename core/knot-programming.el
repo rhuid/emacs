@@ -88,17 +88,17 @@
               ("<f5>" . rh/lean4-lsp-toggle)
               ("<f7>" . lean4-toggle-info))
 
-  :hook ((lean4-mode . rh/lean-highlight-types)
-	       (lean4-mode . rh/lean-highlight-values)
-	       (lean4-mode . rh/lean-highlight-typeclasses)
-	       (lean4-mode . rh/outline-lean)
-	       (lean4-mode . (lambda () (require 'rh-lean))))
+  :hook
+  (lean4-mode . rh/lean-highlight-types)
+	(lean4-mode . rh/lean-highlight-values)
+	(lean4-mode . rh/lean-highlight-typeclasses)
+	(lean4-mode . rh/outline-lean)
+	(lean4-mode . (lambda () (require 'rh-lean)))
 
   :config
   (defvar rh/lean4-lsp-enabled nil
     "If non-nil, Lean 4 is in minimal UI mode.")
 
-  ;; LSP is a necessary evil
   (defun rh/lean4-lsp-toggle ()
     "Toggle between LSP and minimal UI.
   LSP keeps goal feedback, inline evaluation and eldoc. Minimal UI has only syntax highlighting"
