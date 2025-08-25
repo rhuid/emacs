@@ -1,6 +1,6 @@
 ;;; knot-completion.el --- Enhancements of the minibuffer -*- lexical-binding: t; -*-
 
-;;; Mostly completion frameworks. There are lots of individual packages which all work together well.
+;;;; Mostly completion frameworks. There are lots of individual packages which all work together well.
 
 (use-package vertico
   :demand t
@@ -24,7 +24,8 @@
 	            ("DEL" . vertico-directory-delete-char)
 	            ("C-w" . vertico-directory-delete-word)))
 
-;;; Type multiple words in any order to match candidates
+;;;; Type multiple words in any order to match candidates
+
 (use-package orderless
   :demand t
   :vc (:url "https://github.com/oantolin/orderless")
@@ -32,7 +33,8 @@
   (setq completion-styles '(orderless partial-completion)
         completion-category-defaults nil))
 
-;;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
+;;;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
+
 (use-package marginalia
   :demand t
   :vc (:url "https://github.com/minad/marginalia")
@@ -66,7 +68,8 @@
 		            (let ((default-directory (expand-file-name "~")))
                   (apply orig args)))))
 
-;;; Jump to recent directories
+;;;; Jump to recent directories
+
 (use-package consult-dir
   :demand t
   :bind (("C-x C-d" . consult-dir)
@@ -113,7 +116,8 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-;;; Pop up available keybindings in the minibuffer as you type the keys
+;;;; Pop up available keybindings in the minibuffer as you type the keys
+
 (use-package which-key
   :demand t
   :config
@@ -121,7 +125,8 @@
         which-key-popup-type 'minibuffer)
   (which-key-mode))
 
-;;; I prefer corfu over company for completion
+;;;; I prefer corfu over company for completion
+
 (use-package corfu
   :demand t
   :after orderless
