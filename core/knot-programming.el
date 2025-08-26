@@ -4,6 +4,7 @@
 (use-package prog-mode
   :ensure nil
   :config
+  (electric-pair-mode 1)
   (global-font-lock-mode 1)
   ;; Always use spaces, never tabs
   ;; By default, 1 TAB = 2 spaces
