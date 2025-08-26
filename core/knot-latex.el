@@ -7,12 +7,15 @@
 	       ( "\\.cls\\'" . LaTeX-mode)
 	       ( "\\.sty\\'" . LaTeX-mode))
   :hook
-  (post-command . rh/toggle-latex-abbrev)
-  ;; (LaTeX-mode   . rh/remap-local-keys)
-  ;; (LaTeX-mode   . yas-minor-mode)
   (LaTeX-mode   . rh/setup-math-completion)
+  (LaTeX-mode   . LaTeX-math-mode)
+  (LaTeX-mode   . TeX-fold-mode)
+  (LaTeX-mode   . turn-on-reftex)
+  (post-command . rh/toggle-latex-abbrev)
 
   :config
+  (setq TeX-auto-save t
+        TeX-parse-self t)
   (setq TeX-view-program-selection '((output-pdf "Sioyek")))
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
 
@@ -105,5 +108,8 @@
           ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil))))
 
 (use-package latex-preview-pane)
+
+(with-eval-after-load 'tex-fold
+  (define-key TeX-fold-mode-map (kbd "C-c o b") #'TeX-fold-buffer))
 
 (provide 'knot-latex)
