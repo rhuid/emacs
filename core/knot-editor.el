@@ -11,6 +11,10 @@
     (delete-char 1)
     (just-one-space)))
 
+(use-package expand-region
+  :demand t
+  :bind ("C-=" . er/expand-region))
+
 ;;;; Prefixes for which-key
 
 (with-eval-after-load 'which-key
@@ -26,7 +30,7 @@
 (dolist (binding
          '(("<f9>"    . balance-windows)
            ("<f10>"   . rh/toggle-global-font-size)
-           ("C-<f10>" . text-scale-adjust)
+           ("C-<f10>" . global-text-scale-adjust)
 
            ("C-c b m" . bookmark-set)
            ("C-c b j" . bookmark-jump)
@@ -145,6 +149,7 @@
 ;;;; Meow! A customizable modal editing system for Emacs
 
 (use-package meow
+  :disabled t
   :demand t
   :vc (:url "https://github.com/meow-edit/meow")
   :hook ((post-self-insert-hook . rh/go-normal-state))
