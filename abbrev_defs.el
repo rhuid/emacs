@@ -81,6 +81,7 @@
     ("fa" "∀" nil :count 0)
     ("ftor" "<$>" nil :count 0)
     ("im" "=>" nil :count 0)
+    ("ind" "induction" nil :count 0)
     ("lar" "←" nil :count 3)
     ("not" "¬" nil :count 2)
     ("or" "∨" nil :count 1)
