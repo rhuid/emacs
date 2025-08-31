@@ -149,7 +149,6 @@
 ;;;; Meow! A customizable modal editing system for Emacs
 
 (use-package meow
-  :disabled t
   :demand t
   :vc (:url "https://github.com/meow-edit/meow")
   :hook ((post-self-insert-hook . rh/go-normal-state))
