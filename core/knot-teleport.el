@@ -3,6 +3,9 @@
 ;; All config that let me teleport across space (buffers, windows, frames, files)
 ;; and time (history, recent items).
 
+
+(winner-mode)
+
 ;;; `ace-window'
 ;; Teleport to any window on the visible screen
 (use-package ace-window
@@ -66,7 +69,7 @@
   :bind (("C-|"  . point-to-register)
          ("C-\\" . jump-to-register))
   :custom
-  (register-preview-delay 0)) ; no delay
+  (register-use-preview nil)) ; preview without delay
 
 (desktop-save-mode 1)
 
