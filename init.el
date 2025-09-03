@@ -63,7 +63,7 @@
 ;;;; Local modules
 
 (use-package knot-startup-page :ensure nil :defer nil)
-(use-package knot-theme-stuff  :ensure nil :defer nil)
+(use-package knot-visuals      :ensure nil :defer nil)
 (use-package knot-built-ins    :ensure nil :defer nil)
 (use-package knot-org          :ensure nil :defer nil)
 (use-package knot-programming  :ensure nil :defer nil)
