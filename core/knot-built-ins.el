@@ -57,9 +57,9 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
-;;; Bookmarks can be really handy although I seldom use it now
+;;; Bookmarks (Minato's Flying Raijin) are one of the many forms of teleportation in Emacs
+
 (use-package bookmark
-  :demand t
   :ensure nil
   :config
   (setq bookmark-save-flag 1)
@@ -94,13 +94,22 @@
   :demand t
   :ensure nil)
 
+;;; Registers (a faster variant of Minato's Flying Raijin)
+
+(use-package register
+  :ensure nil
+  :custom
+  (register-preview-delay 0.2))
+
+;;; `recentf'
+;;; Time travel (teleport back to the past), made better with `consult-recent-file'
+
 (use-package recentf
-  :demand t
   :ensure nil
   :init
   (recentf-mode 1)
   :custom
-  (recentf-max-saved-items 100)
+  (recentf-max-saved-items 200)
   (recentf-max-menu-items 25)
   (recentf-save-file (expand-file-name "recentf" user-emacs-directory))
   (recentf-auto-cleanup 'never)
