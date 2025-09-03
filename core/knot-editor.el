@@ -11,9 +11,18 @@
     (delete-char 1)
     (just-one-space)))
 
+;;; Expand regions
+
 (use-package expand-region
   :demand t
   :bind ("C-=" . er/expand-region))
+
+;;; Multiple cursors (an army of shadow clones)
+
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->"         . mc/mark-next-like-this)
+         ("C-c C-<"     . mc/mark-all-like-this)))
 
 ;;;; Prefixes for which-key
 
