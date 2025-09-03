@@ -68,7 +68,7 @@
 
 (use-package eww
   :ensure nil
-  :bind (("C-c w" . eww))
+  :bind (("C-c w w" . eww))
   :config
   (setq eww-search-prefix "https://duckduckgo.com/html/?q-")
   (setq shr-use-colors nil)

@@ -3,9 +3,6 @@
 ;; All config that let me teleport across space (buffers, windows, frames, files)
 ;; and time (history, recent items).
 
-
-(winner-mode)
-
 ;;; `ace-window'
 ;; Teleport to any window on the visible screen
 (use-package ace-window
@@ -66,12 +63,11 @@
 ;; Set markers, save regions, and jump back, yank saved regions instantly
 (use-package register
   :ensure nil
-  :bind (("C-|"  . point-to-register)
-         ("C-\\" . jump-to-register))
+  :bind (("C-|"   . point-to-register)
+         ("C-M-|" . window-configuration-to-register)
+         ("C-\\"  . jump-to-register))
   :custom
   (register-use-preview nil)) ; preview without delay
-
-(desktop-save-mode 1)
 
 ;;; `savehist'
 ;; Save minibuffer-history
@@ -87,5 +83,13 @@
      register-alist
      search-ring
      regexp-search-ring)))
+
+;;; `winner'
+;; To restore or go back to previous window configurations
+(use-package winner
+  :ensure nil
+  :init (winner-mode)
+  :bind (("C-c w u" . winner-undo)
+         ("C-c w r" . winner-redo)))
 
 (provide 'knot-teleport)
