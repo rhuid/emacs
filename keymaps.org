@@ -1,0 +1,15 @@
+* Keymaps
+** Teleportation
+*** C-x r m   \to Set a bookmark at point
+*** C-x r b   \to Jump to bookmark
+*** C-x r SPC \to Save point to a register
+*** C-x r j   \to Jump to register
+*** C-x r s   \to Save text to register
+*** C-x r i   \to Insert text from a register
+** Transforms
+*** M-%       \to Query replace
+*** C-M-%     \to Query replace regexp
+*** C-M-o     \to Split line
+*** C-t       \to Transpose characters
+*** M-t       \to Transpose words
+*** C-x C-t   \to Transpose lines
