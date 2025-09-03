@@ -90,6 +90,8 @@
   :ensure nil
   :init (winner-mode)
   :bind (("C-c w u" . winner-undo)
-         ("C-c w r" . winner-redo)))
+         ("C-c w r" . winner-redo))
+  :custom
+  (winner-boring-buffers '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*")))
 
 (provide 'knot-teleport)
