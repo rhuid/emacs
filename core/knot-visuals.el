@@ -1,5 +1,15 @@
 ;;; knot-visuals.el --- UI, themes, modeline, pretty symbols, icons and all that -*- lexical-binding: t; -*-
 
+;;; `paren'
+;; Highlight matching parentheses, braces and brackets
+(use-package paren
+  :ensure nil
+  :demand t
+  :config (show-paren-mode)
+  :custom
+  (show-paren-delay 0)
+  (show-paren-when-point-inside-paren t))
+
 ;;; A minimal modeline
 (setq-default mode-line-format
               '(" " mode-line-buffer-identification " | "
@@ -26,8 +36,7 @@
   (ef-themes-select 'ef-dream)
   ;; Set face for (selected) regions
   (set-face-attribute 'region nil
-                      :background "#353237"
-                      ))
+                      :background "#353237"))
 
 ;;; Nano theme?
 
