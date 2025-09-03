@@ -6,10 +6,9 @@
 ;;; `ace-window'
 ;; Teleport to any window on the visible screen
 (use-package ace-window
-  :bind (("C-c t" . ace-window)) ;; t for tabs?, no t for windows!
+  :bind (("C-c t" . ace-window))
   :custom
-  ;; Optimized for Colemak-DH
-  (aw-keys '(?t ?n ?e ?i ?o ?s ?r ?a))
+  (aw-keys '(?t ?n ?e ?i ?o ?s ?r ?a)) ; Colemak-DH optimization
   (aw-background nil))
 
 ;;; `avy' --- Goku's Instant Transmission
@@ -21,18 +20,16 @@
   :custom
   (avy-background nil)
   (avy-style 'pre)
-  ;; Use all windows on the selected frame
-  (avy-all-windows t)
-  ;; How long avy-goto-char-timer should wait
-  (avy-timeout-seconds 0.2)
-  ;; Optimized for Colemak-DH
-  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
+  (avy-all-windows t) ; Use all windows on the selected frame
+  (avy-timeout-seconds 0.2) ; How long avy-goto-char-timer should wait
+  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))) ; Colemak-DH optimization
 
 ;;; `bookmark' --- A variant of Minato's Flying Raijin
 ;; Set a marker, jump back instantly (markers persist across restarts)
 ;; Intergration with 'consult' via 'consult-bookmark'
 (use-package bookmark
   :ensure nil
+  :bind(("C-c B" . bookmark-set))
   :config
   (setq bookmark-save-flag 1)
   (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
@@ -50,7 +47,7 @@
   (search-whitespace-regexp ".*?")) ; search for "te n" matches "teleportation"
 
 ;;; `recentf'
-;; Time travel (teleport back to the past), made better with `consult-recent-file'
+;; Instant time travel, made better with `consult-recent-file'
 (use-package recentf
   :ensure nil
   :init (recentf-mode 1)
@@ -62,19 +59,23 @@
   :config
   (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
 
-;;; `register' --- A faster variant of Minato's Flying Raijin
+;;; `register' --- A super fast variant of Minato's Flying Raijin
 ;; Set markers, save regions, and jump back, yank saved regions instantly
 (use-package register
   :ensure nil
+  :bind (("C-|"  . point-to-register)
+         ("C-\\" . jump-to-register))
   :custom
-  (register-preview-delay 0.2))
+  (register-preview-delay 0)) ; no delay
+
+(desktop-save-mode 1)
 
 ;;; `savehist'
 ;; Save minibuffer-history
 (use-package savehist
   :demand t
   :ensure nil
-  :init (savehist-mode)
+  :init (savehist-mode 1)
   :custom
   (savehist-file (locate-user-emacs-file "history"))
   (history-length 2000)
