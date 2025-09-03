@@ -38,12 +38,16 @@
   (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
   (setq bookmark-bmenu-toggle-filenames t))
 
-;;; `register' --- A faster variant of Minato's Flying Raijin
-;; Set markers, save regions, and jump back, yank saved regions instantly
-(use-package register
+;;; `isearch'
+;; Integration with avy
+(use-package isearch
   :ensure nil
   :custom
-  (register-preview-delay 0.2))
+  (isearch-allow-scroll 'unlimited)
+  (isearch-lazy-count t)
+  (isearch-repeat-on-direction-change t)
+  (search-default-mode 'char-fold-to-regexp) ; matches accented letters too
+  (search-whitespace-regexp ".*?")) ; search for "te n" matches "teleportation"
 
 ;;; `recentf'
 ;; Time travel (teleport back to the past), made better with `consult-recent-file'
@@ -56,8 +60,14 @@
   (recentf-save-file (expand-file-name "recentf" user-emacs-directory))
   (recentf-auto-cleanup 'never)
   :config
-  ;; Save recentf list every 5 minutes
-  (run-at-time nil (* 5 60) #'recentf-save-list))
+  (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
+
+;;; `register' --- A faster variant of Minato's Flying Raijin
+;; Set markers, save regions, and jump back, yank saved regions instantly
+(use-package register
+  :ensure nil
+  :custom
+  (register-preview-delay 0.2))
 
 ;;; `savehist'
 ;; Save minibuffer-history
