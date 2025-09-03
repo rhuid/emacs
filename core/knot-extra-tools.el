@@ -12,32 +12,6 @@
          ("C-c n" . split-window-horizontally)
          ("C-c N" . split-window-vertically)))
 
-;;; Ace-window --- Teleport to any window on the visible screen
-
-(use-package ace-window
-  :bind (("C-c t" . ace-window)) ;; t for tabs?, no t for windows!
-  :custom
-  ;; Optimized for Colemak-DH
-  (aw-keys '(?t ?n ?e ?i ?o ?s ?r ?a))
-  (aw-background nil))
-
-;;; Avy --- Goku's Instant Transmission
-;;; Teleport anywhere in the visible frame instantly
-
-(use-package avy
-  :bind (("C-,"   . avy-goto-char-timer)
-         ("C-'"   . avy-goto-char-2)
-         ("M-g f" . avy-goto-line))
-  :custom
-  (avy-background nil)
-  (avy-style 'pre)
-  ;; Use all windows on the selected frame
-  (avy-all-windows t)
-  ;; How long avy-goto-char-timer should wait
-  (avy-timeout-seconds 0.2)
-  ;; Optimized for Colemak-DH
-  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
-
 ;;; Play music with EMMS. I am using mpv as backend
 
 (use-package emms

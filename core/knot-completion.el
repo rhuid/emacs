@@ -44,20 +44,21 @@
   :demand t
   :vc (:url "https://github.com/minad/consult")
   :bind
-  (("C-c f"  . consult-find)
-   ("C-c L"  . consult-locate)
-   ("C-c r"  . consult-recent-file)
-   ("C-c l"  . consult-line)
-   ("C-M-s"  . consult-line-multi)
-   ("C-M-g"  . consult-ripgrep)
-   ("C-x b"  . consult-buffer)
-   ("C-M-e"  . consult-buffer)
-   ("M-y"    . consult-yank-pop)
-   ("C-M-b"  . consult-bookmark)
-   ("C-<f5>" . consult-theme)
-   ("M-m"    . consult-imenu)
-   ("M-p"    . consult-project-buffer)
-   ("M-o"    . consult-outline))
+  (("C-c f"   . consult-find)
+   ("C-c L"   . consult-locate)
+   ("C-c r"   . consult-recent-file)
+   ("C-c l"   . consult-line)
+   ("C-M-s"   . consult-line-multi)
+   ("C-M-g"   . consult-ripgrep)
+   ("C-x b"   . consult-buffer)
+   ("C-M-e"   . consult-buffer)
+   ("M-y"     . consult-yank-pop)
+   ("C-M-b"   . consult-bookmark)
+   ("C-x r j" . consult-register-load)
+   ("C-<f5>"  . consult-theme)
+   ("M-m"     . consult-imenu)
+   ("M-p"     . consult-project-buffer)
+   ("M-o"     . consult-outline))
 
   :config
   (setq consult-preview-key 'any)
@@ -104,9 +105,9 @@
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  ;; nil
-		 (display-buffer-in-side-window)
-		 (side . bottom)
-		 (window-height . 0.3 )
+		             (display-buffer-in-side-window)
+		             (side . bottom)
+		             (window-height . 0.3 )
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
@@ -163,7 +164,7 @@
 
 (use-package cape
   :after corfu
-  :demant t
+  :demand t
   :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
