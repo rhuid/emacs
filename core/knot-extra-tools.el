@@ -1,6 +1,6 @@
 ;;; knot-extra-tools.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
-;;;; Things about windows
+;;; Things about windows
 
 ;; Make windows proportional while adding or deleting windows
 (setq window-combination-resize t)
@@ -12,7 +12,7 @@
          ("C-c n" . split-window-horizontally)
          ("C-c N" . split-window-vertically)))
 
-;;;; Ace-window for quicker window switching
+;;; Ace-window --- Teleport to any window on the visible screen
 
 (use-package ace-window
   :bind (("C-c t" . ace-window)) ;; t for tabs?, no t for windows!
@@ -21,7 +21,8 @@
   (aw-keys '(?t ?n ?e ?i ?o ?s ?r ?a))
   (aw-background nil))
 
-;;;; Avy lets you jump to any visible part of emacs without manual navigation
+;;; Avy --- Goku's Instant Transmission
+;;; Teleport anywhere in the visible frame instantly
 
 (use-package avy
   :bind (("C-,"   . avy-goto-char-timer)
@@ -37,7 +38,7 @@
   ;; Optimized for Colemak-DH
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
 
-;;;; Play music with EMMS. I am using mpv as backend
+;;; Play music with EMMS. I am using mpv as backend
 
 (use-package emms
   :vc (:url "https://git.savannah.gnu.org/git/emms.git")
@@ -51,14 +52,14 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-;;;; The modeline is expendable in some major modes
+;;; The modeline is expendable in some major modes
 
 (use-package hide-mode-line
   :demand t
   :bind ("C-<f7>" . global-hide-mode-line-mode)
   :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
 
-;;;; Magit is a super good interface for Git
+;;; Magit is a super good interface for Git
 
 (use-package magit
   :commands (magit-status magit-log)
@@ -83,12 +84,12 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
-;;;; Rainbow mode: Colorize stings that represent colors
+;;; Rainbow mode: Colorize stings that represent colors
 
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
-;;;; Edit files as sudo user
+;;; Edit files as sudo user
 
 (use-package sudo-edit
   :commands (sudo-edit))
