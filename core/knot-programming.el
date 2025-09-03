@@ -4,7 +4,6 @@
 (use-package prog-mode
   :ensure nil
   :config
-  (electric-pair-mode 1)
   (global-font-lock-mode 1)
   ;; Always use spaces, never tabs
   ;; By default, 1 TAB = 2 spaces
@@ -12,6 +11,19 @@
 		            tab-width 2)
   ;; Default indentation is 2 spaces, but can be overridden by major modes
   (setq standard-indent 2))
+
+;;; `electric-pair-mode`
+;; Automatically insert matching delimiters (parentheses, quotes, braces, etc)
+(use-package elec-pair
+  :ensure nil
+  :demand t
+  :config (electric-pair-mode)
+  :hook (org-mode . rh/org-electric-pairs)
+  :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\]) (?\".?\")))
+  :config
+  (defun rh/org-electric-pairs ()
+    "Org pairs for electric-pair-mode."
+    (setq-local electric-pair-pairs (append '((?/.?/) (?_.?_) (?~.?~))))))
 
 ;;; Indent aggressively for Lisp and its derivatives
 (use-package aggressive-indent
