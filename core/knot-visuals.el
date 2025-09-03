@@ -1,4 +1,4 @@
-;;; knot-theme-stuff.el --- Modeline, themes, icons, etc -*- lexical-binding: t; -*-
+;;; knot-visuals.el --- UI, themes, modeline, pretty symbols, icons and all that -*- lexical-binding: t; -*-
 
 ;;; A minimal modeline
 (setq-default mode-line-format
@@ -15,11 +15,10 @@
 (defun rh/toggle-global-font-size ()
   "Toggle font size between edit mode and presentation mode."
   (interactive)
-  (setq rh/current-font-size (if (= rh/current-font-size 13.5) 18 13.5))
+  (setq rh/current-font-size (if (= rh/current-font-size 13.5) 20 13.5))
   (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t))
 
-;;; Ef-themes is indeed a beautiful collection of themes
-
+;;; `ef-themes'
 (use-package ef-themes
   :demand t
   :config
@@ -40,16 +39,31 @@
 ;;   (nano-mode)
 ;;   )
 
-(use-package all-the-icons :disabled
+;;; Pretty symbols
+
+(setq-default prettify-symbols-alist
+              '(("lambda" . ?λ)
+                ("->" . ?→)
+                ("<-" . ?←)
+                (">=" . ?≥)
+                ("<=" . ?≤)
+                ("!=" . ?≠)
+                ))
+
+(global-prettify-symbols-mode 1)
+
+;;; Icons
+
+(use-package all-the-icons
   :config
   (when (display-graphic-p)
     (unless (member "all-the-icons" (font-family-list))
       (all-the-icons-install-fonts t))))
 
-(use-package nerd-icons :disabled t
+(use-package nerd-icons
   :config
   (when (display-graphic-p)
     (unless (member "Symbols Nerd Font Mono" (font-family-list))
       (nerd-icons-install-fonts t))))
 
-(provide 'knot-theme-stuff)
+(provide 'knot-visuals)
