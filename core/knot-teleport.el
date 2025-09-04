@@ -85,11 +85,13 @@
      regexp-search-ring)))
 
 ;;; `windmove'
-;; Teleport to any neighbour window (I rarely use it, will rebind the keys later)
+;; Teleport to any neighbour window (made slightly better with `repeat-mode')
 (use-package windmove
   :ensure nil
-  :init (windmove-default-keybindings)
-  :custom (windmove-wrap-around))
+  :bind (("C-c w m" . windmove-left)
+         ("C-c w i" . windmove-right)
+         ("C-c w e" . windmove-up)
+         ("C-c w n" . windmove-down)))
 
 ;;; `winner'
 ;; To restore or go back to previous window configurations
