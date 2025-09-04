@@ -11,14 +11,21 @@
     (delete-char 1)
     (just-one-space)))
 
-;;; Expand regions
+;;; `repeat'
+;; Repeat commands without retyping the prefix key
+(use-package repeat
+  :ensure nil
+  :init (repeat-mode)
+  :custom (repeat-exit-timeout 5))
 
+;;; `expand-region'
+;; Select regions by semantics
 (use-package expand-region
   :demand t
   :bind ("C-=" . er/expand-region))
 
-;;; Multiple cursors (an army of shadow clones)
-
+;;; `multiple-cursors'
+;; An army of shadow clones
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C->"         . mc/mark-next-like-this)
@@ -27,8 +34,7 @@
 ;;;; Prefixes for which-key
 
 (with-eval-after-load 'which-key
-  (dolist (binding '(("C-c b" . "bookmark")
-                     ("C-c e" . "emms")
+  (dolist (binding '(("C-c e" . "emms")
 		                 ("C-c o" . "outline")
 		                 ("C-c s" . "string-manipulation")
 		                 ("C-c u" . "utilities")))
@@ -40,10 +46,6 @@
          '(("<f9>"    . balance-windows)
            ("<f10>"   . rh/toggle-global-font-size)
            ("C-<f10>" . global-text-scale-adjust)
-
-           ("C-c b m" . bookmark-set)
-           ("C-c b j" . bookmark-jump)
-           ("C-c b l" . list-bookmarks)
 
            ("C-c e p" . emms-pause)
            ("C-c e s" . emms-stop)
@@ -117,6 +119,7 @@
    '("b" . meow-back-word)
    '("B" . meow-back-symbol)
    '("c" . meow-change)
+   '("d" . delete-region)
    '("e" . meow-prev-expand)
    '("E" . scroll-down-command)
    '("f" . avy-goto-char-timer)
@@ -136,7 +139,7 @@
    '("N" . scroll-up-command)
    '("o" . meow-block)
    '("O" . meow-to-block)
-   '("p" . meow-yank)
+   '("p" . meow-save)
    '("q" . meow-quit)
    '("Q" . delete-window)
    '("r" . meow-replace)
@@ -150,7 +153,7 @@
    '("W" . meow-next-symbol)
    '("x" . meow-delete)
    '("X" . meow-backward-delete)
-   '("y" . meow-save)
+   '("y" . meow-yank)
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore)))
