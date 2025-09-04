@@ -13,3 +13,8 @@
 *** C-t       \to Transpose characters
 *** M-t       \to Transpose words
 *** C-x C-t   \to Transpose lines
+** Make it faster
+*** C-u       \to universal-argument (repeat 4 times...like C-u C-f)
+** Extras
+*** M-y       \to consult-yank-pop
+*** C-x C-o   \to Remove blank lines, leave only one

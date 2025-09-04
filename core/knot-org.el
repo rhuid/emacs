@@ -147,12 +147,14 @@
                             rh/org-snippet-alist
                             rh/snippet-placeholder-positions))))))
 
+
+
 ;; The following are default keybindings
 ;;
 ;; C-c C-n    Next heading
 ;; C-c C-p    Previous heading
 ;; C-c C-f    Next heading at the same level
-;; C-c C-b    Previous heading at the same level
+;; C-c C-b    Previqous heading at the same level
 ;; C-c C-u    Move up to the parent heading
 ;;
 ;; C-c C-l    Insert a link

@@ -87,7 +87,7 @@
              (yas-expand)) t
       (cdlatex-tab)))
 
-  ;;; Quickly drop latex environments
+  ;; Quickly drop latex environments
 
   (setq cdlatex-env-alist
 	      '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
@@ -106,6 +106,14 @@
 	        ("cor"  "Insert corollary env"   "" cdlatex-environment ("corollary") t nil)
 	        ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil)
           ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil))))
+
+;; (use-package ass
+;;   :hook (LaTeX-mode . ass-activate-for-major-mode)
+;;   :config
+e;;   (setq ass-snippets
+;;         '("forall" . "∀"))
+;;   )
+
 
 (use-package latex-preview-pane)
 

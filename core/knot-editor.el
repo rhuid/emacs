@@ -47,6 +47,8 @@
            ("<f10>"   . rh/toggle-global-font-size)
            ("C-<f10>" . global-text-scale-adjust)
 
+           ("M-n"     . save-buffer)
+
            ("C-c e p" . emms-pause)
            ("C-c e s" . emms-stop)
            ("C-c e n" . emms-next)

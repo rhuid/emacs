@@ -27,9 +27,9 @@
 ;;; `bicycle'
 (use-package bicycle
   :after outline
+  :commands (bicycle-cycle)
   :bind (:map outline-minor-mode-map
-              ("C-M-i" . bicycle-cycle)
-              ("C-M-I" . bicycle-cycle-global)))
+              ("C-M-i" . bicycle-cycle)))
 
 ;;; `bookmark' --- A variant of Minato's Flying Raijin
 ;; Set a marker, jump back instantly (markers persist across restarts)

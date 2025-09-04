@@ -8,10 +8,10 @@
     ("pro"  . "(provide '?)")
     ("ahk"  . "(add-hook '?-mode-hook #'?)")
     ("use"  . "(use-package ?)")
-    ("cf"   . ":config") 
+    ("cf"   . ":config")
     ;; ... add more when needed
     ))
- 
+
 (defun rh/elisp-tab-hook ()
   "Setup Elisp snippet and placeholder support on TAB."
   (local-set-key (kbd "TAB")

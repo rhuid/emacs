@@ -12,6 +12,9 @@
          ("C-c n" . split-window-horizontally)
          ("C-c N" . split-window-vertically)))
 
+(use-package achievements
+  :init (achievements-mode))
+
 ;;; Play music with EMMS. I am using mpv as backend
 
 (use-package emms
