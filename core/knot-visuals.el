@@ -3,9 +3,7 @@
 ;;; `paren'
 ;; Highlight matching parentheses, braces and brackets
 (use-package paren
-  :ensure nil
-  :demand t
-  :config (show-paren-mode)
+  :init (show-paren-mode)
   :custom
   (show-paren-delay 0)
   (show-paren-when-point-inside-paren t))
@@ -16,6 +14,18 @@
                 mode-name " | "
                 (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | "
                 (vc-mode vc-mode)))
+
+;;; `hide-mode-line'
+;; The modeline is expendable in some major modes
+(use-package hide-mode-line
+  :demand t
+  :bind ("C-<f7>" . global-hide-mode-line-mode)
+  :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
+
+;;; `rainbow-mode'
+;; Colorize stings that represent colors
+(use-package rainbow-mode
+  :hook (prog-mode . rainbow-mode))
 
 ;;; Toggle font size: maximum lines per window vs. comfortable reading
 

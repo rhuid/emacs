@@ -26,13 +26,6 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-;;; The modeline is expendable in some major modes
-
-(use-package hide-mode-line
-  :demand t
-  :bind ("C-<f7>" . global-hide-mode-line-mode)
-  :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
-
 ;;; Magit is a super good interface for Git
 
 (use-package magit
@@ -57,11 +50,6 @@
     (interactive)
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
-
-;;; Rainbow mode: Colorize stings that represent colors
-
-(use-package rainbow-mode
-  :hook (prog-mode . rainbow-mode))
 
 ;;; Edit files as sudo user
 
