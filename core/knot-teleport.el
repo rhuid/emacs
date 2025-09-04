@@ -84,6 +84,13 @@
      search-ring
      regexp-search-ring)))
 
+;;; `windmove'
+;; Teleport to any neighbour window (I rarely use it, will rebind the keys later)
+(use-package windmove
+  :ensure nil
+  :init (windmove-default-keybindings)
+  :custom (windmove-wrap-around))
+
 ;;; `winner'
 ;; To restore or go back to previous window configurations
 (use-package winner
