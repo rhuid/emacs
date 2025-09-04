@@ -1,6 +1,7 @@
 ;;; knot-programming.el --- Things related to writing source code -*- lexical-binding: t; -*-
 
-;;; For all programming modes
+;;; `prog-mode'
+;; For all programming modes
 (use-package prog-mode
   :ensure nil
   :config
@@ -15,7 +16,6 @@
 ;;; `electric-pair-mode`
 ;; Automatically insert matching delimiters (parentheses, quotes, braces, etc)
 (use-package elec-pair
-  :ensure nil
   :demand t
   :config (electric-pair-mode)
   :hook (org-mode . rh/org-electric-pairs)
@@ -25,7 +25,8 @@
     "Org pairs for electric-pair-mode."
     (setq-local electric-pair-pairs (append '((?/.?/) (?_.?_) (?~.?~))))))
 
-;;; Indent aggressively for Lisp and its derivatives
+;;; `aggressive-indent'
+;; Indent aggressively for Lisp and its derivatives
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
          (lisp-interaction-mode . aggressive-indent-mode)
@@ -33,11 +34,13 @@
   :config
   (setq aggressive-indent-comments-too t))
 
-;;; Different color for each pair of parenthesis
+;;; `rainbow-delimiters'
+;; Different color for each pair of parenthesis
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;;; Snippets
+;;; `yasnippets'
+;; Use them when abbrevs don't cut it
 (use-package yasnippet
   :demand t
   :config
@@ -45,6 +48,7 @@
   :custom
   (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
+;;; `lsp'
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
@@ -64,7 +68,8 @@
   ;; For faster communication with LSP, disable logging
   (lsp-log-io nil))
 
-;;; Extra nice UI for LSP
+;;; `lsp-ui'
+;; Extra nice UI for LSP
 (use-package lsp-ui
   :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
@@ -92,6 +97,8 @@
   :commands haskell-mode
   :mode "\\.hs\\'" )
 
+;;; `lean4-mode'
+;; The ultimate theorem prover and function programming language
 (use-package lean4-mode
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
   :commands lean4-mode
