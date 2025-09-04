@@ -24,6 +24,13 @@
   (avy-timeout-seconds 0.2) ; How long avy-goto-char-timer should wait
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))) ; Colemak-DH optimization
 
+;;; `bicycle'
+(use-package bicycle
+  :after outline
+  :bind (:map outline-minor-mode-map
+              ("C-M-i" . bicycle-cycle)
+              ("C-M-I" . bicycle-cycle-global)))
+
 ;;; `bookmark' --- A variant of Minato's Flying Raijin
 ;; Set a marker, jump back instantly (markers persist across restarts)
 ;; Intergration with 'consult' via 'consult-bookmark'
@@ -48,14 +55,16 @@
 
 ;;; `project'
 ;; Launch and manage projects, and teleport between project files instantly
+;; Intergration with `consult' via `consult-project-buffer'
 (use-package project
   :demand t
   :bind (("C-x C-f" . project-find-file))
   :custom
   (project-switch-commands
-   '((magit-project-status "Magit" ?m)
-     (project-dired        "Dired" ?d)))
-  )
+   '((magit-project-status "Magit"     ?m)
+     (project-find-file    "Find file" ?f)
+     (project-dired        "Dired"     ?d)
+     (project-eshell       "Eshell"    ?e))))
 
 ;;; `recentf'
 ;; Instant time travel, made better with `consult-recent-file'
