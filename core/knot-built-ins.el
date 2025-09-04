@@ -41,6 +41,7 @@
   (add-hook 'calendar-today-visible-hook #'calendar-mark-today))
 
 ;;; Abbreviations
+;; An underrated killer feature, a double-edged sword, snippets on steroids
 (use-package abbrev
   :ensure nil
   :init
@@ -80,9 +81,5 @@
   :hook (minibuffer-mode . savehist-mode)
   :config (recentf-mode)
   :custom (history-delete-duplicates t))
-
-(use-package project
-  :demand t
-  :ensure nil)
 
 (provide 'knot-built-ins)

@@ -6,7 +6,7 @@
 ;;; `ace-window'
 ;; Teleport to any window on the visible screen
 (use-package ace-window
-  :bind (("C-c t" . ace-window))
+  :bind (("M-o" . ace-window))
   :custom
   (aw-keys '(?t ?n ?e ?i ?o ?s ?r ?a)) ; Colemak-DH optimization
   (aw-background nil))
@@ -45,6 +45,13 @@
   (isearch-repeat-on-direction-change t)
   (search-default-mode 'char-fold-to-regexp) ; matches accented letters too
   (search-whitespace-regexp ".*?")) ; search for "te n" matches "teleportation"
+
+;;; `project'
+;; Launch and manage projects, and teleport between project files instantly
+(use-package project
+  :demand t
+  :ensure nil
+  :bind (("C-x C-f" . project-find-file)))
 
 ;;; `recentf'
 ;; Instant time travel, made better with `consult-recent-file'
