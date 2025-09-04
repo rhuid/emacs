@@ -33,6 +33,9 @@
       native-comp-speed 3
       native-comp-defer t)
 
+;; Prefer .el over .eln or .elc if it's more recent
+(setq load-prefer-newer t)
+
 ;; For native-compiling manually with make, temporarily not defer
 (setq use-package-always-defer (not (bound-and-true-p byte-compile-current-file)))
 
