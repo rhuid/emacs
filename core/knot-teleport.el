@@ -50,8 +50,12 @@
 ;; Launch and manage projects, and teleport between project files instantly
 (use-package project
   :demand t
-  :ensure nil
-  :bind (("C-x C-f" . project-find-file)))
+  :bind (("C-x C-f" . project-find-file))
+  :custom
+  (project-switch-commands
+   '((magit-project-status "Magit" ?m)
+     (project-dired        "Dired" ?d)))
+  )
 
 ;;; `recentf'
 ;; Instant time travel, made better with `consult-recent-file'
