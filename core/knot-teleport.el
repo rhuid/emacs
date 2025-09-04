@@ -50,7 +50,7 @@
 ;; Instant time travel, made better with `consult-recent-file'
 (use-package recentf
   :ensure nil
-  :init (recentf-mode 1)
+  :init (recentf-mode)
   :custom
   (recentf-max-saved-items 200)
   (recentf-max-menu-items 25)
@@ -72,9 +72,8 @@
 ;;; `savehist'
 ;; Save minibuffer-history
 (use-package savehist
-  :demand t
   :ensure nil
-  :init (savehist-mode 1)
+  :init (savehist-mode)
   :custom
   (savehist-file (locate-user-emacs-file "history"))
   (history-length 2000)
@@ -91,7 +90,14 @@
   :bind (("C-c w m" . windmove-left)
          ("C-c w i" . windmove-right)
          ("C-c w e" . windmove-up)
-         ("C-c w n" . windmove-down)))
+         ("C-c w n" . windmove-down))
+  :config
+  (defvar-keymap rh/windmove-repeat-map
+    :repeat t
+    "m" #'windmove-left
+    "i" #'windmove-right
+    "e" #'windmove-up
+    "n" #'windmove-down))
 
 ;;; `winner'
 ;; To restore or go back to previous window configurations
@@ -100,7 +106,13 @@
   :init (winner-mode)
   :bind (("C-c w u" . winner-undo)
          ("C-c w r" . winner-redo))
+  :config
+  (defvar-keymap rh/winner-repeat-map
+    :repeat t
+    "u" #'winner-undo
+    "r" #'winner-redo)
   :custom
-  (winner-boring-buffers '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*")))
+  (winner-boring-buffers
+   '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*")))
 
 (provide 'knot-teleport)
