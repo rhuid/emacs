@@ -115,7 +115,7 @@
            ("C-c o a" . rh/outline-toggle-visibility)
            ("C-c o b" . TeX-fold-buffer)
            ("C-c o B" . TeX-fold-clearout-buffer)
-           ("C-c o t" . rh/outline-toggle-heading)
+           ("C-M-i"   . rh/outline-toggle-heading)
 
            ("C-c s r" . replace-string)
            ("C-c s w" . delete-trailing-whitespace)
