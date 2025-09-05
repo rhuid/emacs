@@ -1,6 +1,9 @@
 ;;; knot-editor.el --- Edit at the speed of thought (well, not literally) -*- lexical-binding: t; -*-
 
 ;;; Some commands for faster editing
+;; Most of them are written using built-in functions;
+;; If there is dependency on external package, it is commented;
+;; Helper functions tagged `helper'
 
 ;; This command is context-specific. In most cases, it inserts a space character while joining
 ;; but when the starting character of the next non-empty line is a closing parenthesis, it leaves no space.
@@ -18,20 +21,34 @@
   "Return non-nil if the character at point is )."
   (looking-at-p "[)]"))
 
-;; Clean up trash without cluttering the kill ring!
-(defun rh/delete ()
-  "Delete region (if selected), otherwise delete all surrounding blank lines leaving just one."
+;; A multipurpose trash cleaner without cluttering the kill ring!
+(defun rh/delete-region-or-line-or-blank-lines ()
+  "Delete region (if selected), else delete current line (if non-empty), else delete-blank-lines."
   (interactive)
-  (if (use-region-p)
-      (let ((inhibit-read-only t))
-        (delete-region (region-beginning) (region-end)))
-    (delete-blank-lines)))
+  (cond ((use-region-p)
+         ;; If there is a region
+         (let ((inhibit-read-only t))
+           (delete-region (region-beginning) (region-end))))
+        ;; If the line has a non-whitespace chracter
+        ((not (string-blank-p (string-trim (thing-at-point 'line t))))
+         (let ((inhibit-read-only t))
+           (delete-region (line-beginning-position) (line-end-position))))
+        ;; If the line is just whitespace
+        (t (delete-blank-lines))))
 
 ;; helper (lol)
 (defun rh/insert-space ()
   "Insert a space character."
   (interactive)
   (insert " "))
+
+;; dependency on meow library (meow itself does not need to be active)
+(defun rh/contextual-line-expand ()
+  "Select current line. If region already exists, expand line."
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'meow-line-expand)
+    (call-interactively 'meow-line)))
 
 ;;; `repeat'
 ;; Repeat commands without retyping the prefix key
@@ -144,7 +161,7 @@
    '("B" . meow-back-symbol)
    '("c" . meow-change)
 
-   '("d" . rh/delete)
+   '("d" . rh/delete-region-or-line-or-blank-lines)
    '("D" . delete-all-space)
    '("e" . meow-prev-expand)
    '("E" . scroll-down-command)
