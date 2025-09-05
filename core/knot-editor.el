@@ -1,15 +1,19 @@
 ;;; knot-editor.el --- Things about editing and keybindings -*- lexical-binding: t; -*-
 
-;;;; Some functions for more efficient editing
+;;; Some commands for faster editing
 
 (defun rh/join-line ()
-  "Join the current line with the next line, collapsing all whitespace between them to a single space."
+  "Join the current line with the next non-empty line, collapsing all whitespace between them to a single space."
   (interactive)
   (save-excursion
     (end-of-line)
-    (delete-horizontal-space t)
-    (delete-char 1)
-    (just-one-space)))
+    (delete-all-space)
+    (rh/insert-space)))
+
+(defun rh/insert-space ()
+  "Insert a space character."
+  (interactive)
+  (insert " "))
 
 ;;; `repeat'
 ;; Repeat commands without retyping the prefix key
@@ -121,17 +125,23 @@
    '("b" . meow-back-word)
    '("B" . meow-back-symbol)
    '("c" . meow-change)
+
    '("d" . delete-region)
+   '("D" . delete-all-space)
    '("e" . meow-prev-expand)
    '("E" . scroll-down-command)
-   '("f" . avy-goto-char-timer)
+
+   '("f" . rh/insert-space)
+
    '("g" . meow-cancel-selection)
    '("G" . meow-grab)
    '("h" . meow-mark-word)
    '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)
    '("j" . meow-join)
+
    '("J" . rh/join-line)
+
    '("k" . meow-kill)
    '("K" . kill-whole-line)
    '("l" . meow-line)
