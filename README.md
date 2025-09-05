@@ -17,6 +17,5 @@ Over the years, I have realized that it's best to stay as close to vanilla emacs
 - To enable Emacs keybindings for all GTK text fields (including Firefox), run in shell:
 
 ```bash
-gsettings set org.gnome.desktop.interface
 gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
 ```
