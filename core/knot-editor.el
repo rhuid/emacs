@@ -1,8 +1,8 @@
 ;;; knot-editor.el --- Edit at the speed of thought (well, not literally) -*- lexical-binding: t; -*-
 
 ;;; Some commands for faster editing
-;; Most of them are written using built-in functions
-;; Helper functions tagged `helper'
+;; Most of them are written using built-in functions. Some use functions from `avy'.
+;; Helper functions are tagged `helper'.
 
 ;; This command is context-specific. In most cases, it inserts a space character while joining
 ;; but when the starting character of the next non-empty line is a closing parenthesis, it leaves no space.
@@ -35,19 +35,25 @@
         ;; If the line is just whitespace, delete all surrounding lines
         (t (delete-blank-lines))))
 
-;; Two-in-one killer! For double kills
+;; Two-in-one killer! And kill from a distance. Uses `avy'
 (defun rh/kill-in-context ()
-  "Kill region (if selected), else kill-whole-line (if non-empty), else delete-blank-lines."
+  "Kill region (if selected), else kill any line visible on the screen."
   (interactive)
-  (cond ((use-region-p)
-         (let ((inhibit-read-only t))
-           (call-interactively 'kill-region)))
+  (if (use-region-p)
+      (let ((inhibit-read-only t))
+        (call-interactively 'kill-region))
+    (let ((inhibit-read-only t))
+      (call-interactively 'avy-kill-whole-line))))
 
-        ((not (string-blank-p (string-trim (thing-at-point 'line t))))
-         (let ((inhibit-read-only t))
-           (kill-whole-line)))
-
-        (t (delete-blank-lines))))
+;; Like kill-ring-save, but with super powers. Uses `avy'
+(defun rh/put-into-kill-ring ()
+  "Put region (if selected) into kill-ring. Else teleport any line from visible screen into kill-ring."
+  (interactive)
+  (if (use-region-p)
+      (let ((inhibit-read-only t))
+        (call-interactively 'kill-ring-save))
+    (let ((inhibit-read-only t))
+      (call-interactively 'avy-kill-ring-save-whole-line))))
 
 ;; helper (lol)
 (defun rh/insert-space ()
@@ -126,9 +132,9 @@
 	         ("C-x C-b" . ibuffer)))
   (global-set-key (kbd (car binding)) (cdr binding)))
 
-;;; A super efficient modal design
-;; Requires `consult'
-(defun meow-setup ()
+;;; My modal design built on `meow'
+;; Requires `avy' and `consult'
+(defun rh/modal-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
 
   (meow-motion-define-key
@@ -138,16 +144,11 @@
 
   (meow-leader-define-key
    '("?" . meow-cheatsheet)
-   '("1" . meow-digit-argument)
-   '("2" . meow-digit-argument)
-   '("3" . meow-digit-argument)
-   '("4" . meow-digit-argument)
-   '("5" . meow-digit-argument)
-   '("6" . meow-digit-argument)
-   '("7" . meow-digit-argument)
-   '("8" . meow-digit-argument)
-   '("9" . meow-digit-argument)
-   '("0" . meow-digit-argument))
+   '("1" . meow-digit-argument)    '("2" . meow-digit-argument)
+   '("3" . meow-digit-argument)    '("4" . meow-digit-argument)
+   '("6" . meow-digit-argument)    '("5" . meow-digit-argument)
+   '("7" . meow-digit-argument)    '("8" . meow-digit-argument)
+   '("9" . meow-digit-argument)    '("0" . meow-digit-argument))
 
   (meow-normal-define-key
    '("0" . meow-expand-0)           '("1" . meow-expand-1)
@@ -171,12 +172,12 @@
    '("h" . meow-mark-word)          '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)
    '("j" . meow-join)               '("J" . rh/join-line)
-   '("k" . rh/kill-in-context)      '("K" . kill-whole-line)
+   '("k" . rh/kill-in-context)      '("K" . avy-kill-region)
    '("l" . meow-line)               '("L" . consult-goto-line)
    '("m" . meow-left-expand)
    '("n" . meow-next-expand)        '("N" . scroll-up-command)
    '("o" . meow-block)              '("O" . meow-to-block)
-   '("p" . meow-save)
+   '("p" . rh/put-into-kill-ring)   '("P" . avy-kill-ring-save-region)
    '("q" . meow-quit)               '("Q" . delete-window)
    '("r" . meow-replace)
    '("s" . meow-insert)             '("S" . meow-open-above)
@@ -196,7 +197,7 @@
   :vc (:url "https://github.com/meow-edit/meow")
   :hook ((post-self-insert-hook . rh/go-normal-state))
   :config
-  (meow-setup)
+  (rh/modal-setup)
   (meow-global-mode 1)
 
   (setq meow-cursor-type-motion '(bar . 0)) ; Remove cursor in motion mode
