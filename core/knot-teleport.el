@@ -14,24 +14,16 @@
 ;;; `avy' --- Goku's Instant Transmission
 ;; Teleport to any text in the visible frame instantly
 (use-package avy
-  :bind (("C-,"   . avy-goto-char-timer)
-         ("C-'"   . avy-goto-char-2)
-         ("M-g f" . avy-goto-line)
+  :bind (("C-," . avy-goto-char-timer)
+         ("C-'" . avy-goto-line)
          :map isearch-mode-map
-         ("C-,"   . avy-isearch))
+         ("C-," . avy-isearch))
   :custom
   (avy-background nil)
   (avy-style 'pre)
   (avy-all-windows t) ; Use all windows on the selected frame
   (avy-timeout-seconds 0.2) ; How long avy-goto-char-timer should wait
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))) ; Colemak-DH optimization
-
-;;; `bicycle'
-;; (use-package bicycle
-;;   :after outline
-;;   :commands (bicycle-cycle)
-;;   :bind (:map outline-minor-mode-map
-;;               ("C-M-i" . bicycle-cycle)))
 
 ;;; `bookmark' --- A variant of Minato's Flying Raijin
 ;; Set a marker, jump back instantly (markers persist across restarts)
