@@ -1,20 +1,24 @@
-;;; knot-editor.el --- Things about editing and keybindings -*- lexical-binding: t; -*-
+;;; knot-editor.el --- Edit at the speed of thought (well, not literally) -*- lexical-binding: t; -*-
 
 ;;; Some commands for faster editing
 
+;; This command is context-specific. In most cases, it inserts a space character while joining
+;; but when the starting character of the next non-empty line is a closing parenthesis, it leaves no space.
 (defun rh/join-line ()
-  "Join the current line with the next non-empty line, collapsing all whitespace between them to a single space."
+  "Join the current line with the next non-empty line."
   (interactive)
   (save-excursion
     (end-of-line)
     (delete-all-space)
-    (rh/insert-space)))
+    (unless (rh/at-parenthesis-end-p)
+      (insert " "))))
 
-(defun rh/insert-space ()
-  "Insert a space character."
-  (interactive)
-  (insert " "))
+;; helper
+(defun rh/at-parenthesis-end-p ()
+  "Return non-nil if the character at point is )."
+  (looking-at-p "[)]"))
 
+;; Clean up trash without cluttering the kill ring!
 (defun rh/delete ()
   "Delete region (if selected), otherwise delete all surrounding blank lines leaving just one."
   (interactive)
@@ -22,6 +26,12 @@
       (let ((inhibit-read-only t))
         (delete-region (region-beginning) (region-end)))
     (delete-blank-lines)))
+
+;; helper (lol)
+(defun rh/insert-space ()
+  "Insert a space character."
+  (interactive)
+  (insert " "))
 
 ;;; `repeat'
 ;; Repeat commands without retyping the prefix key
