@@ -22,7 +22,7 @@
 
 ;; A multipurpose trash cleaner without cluttering the kill ring!
 (defun rh/delete-in-context ()
-  "Delete region (if selected), else delete current line (if non-empty), else delete-blank-lines."
+  "Delete region (if active), else delete current line (if non-empty), else delete-blank-lines."
   (interactive)
   (cond ((use-region-p)
          ;; If there is a region, delete it
@@ -35,9 +35,10 @@
         ;; If the line is just whitespace, delete all surrounding lines
         (t (delete-blank-lines))))
 
-;; Two-in-one killer! And kill from a distance. Uses `avy'
-(defun rh/kill-in-context ()
-  "Kill region (if selected), else kill any line visible on the screen."
+;;; Teleport kill
+;; Kill active region. If there is none, teleport kill. Uses `avy'.
+(defun rh/teleport-kill ()
+  "Kill region (if active), else kill any line visible on the screen."
   (interactive)
   (if (use-region-p)
       (let ((inhibit-read-only t))
@@ -45,15 +46,14 @@
     (let ((inhibit-read-only t))
       (call-interactively 'avy-kill-whole-line))))
 
-;; Like kill-ring-save, but with super powers. Uses `avy'
-(defun rh/put-into-kill-ring ()
-  "Put region (if selected) into kill-ring. Else teleport any line from visible screen into kill-ring."
+;;; Teleport kill-ring-save
+;; Like kill-ring-save. But with teleportation powers. Uses `avy'.
+(defun rh/teleport-kill-ring-save ()
+  "Put region (if active) into kill-ring. Else teleport any line from visible screen into kill-ring."
   (interactive)
   (if (use-region-p)
-      (let ((inhibit-read-only t))
-        (call-interactively 'kill-ring-save))
-    (let ((inhibit-read-only t))
-      (call-interactively 'avy-kill-ring-save-whole-line))))
+      (call-interactively 'kill-ring-save)
+    (call-interactively 'avy-kill-ring-save-whole-line)))
 
 ;; helper (lol)
 (defun rh/insert-space ()
@@ -61,7 +61,7 @@
   (interactive)
   (insert " "))
 
-;; dependency on meow library (meow itself does not need to be active)
+;; dependency on meow library
 (defun rh/contextual-line-expand ()
   "Select current line. If region already exists, expand line."
   (interactive)
@@ -144,49 +144,49 @@
 
   (meow-leader-define-key
    '("?" . meow-cheatsheet)
-   '("1" . meow-digit-argument)    '("2" . meow-digit-argument)
-   '("3" . meow-digit-argument)    '("4" . meow-digit-argument)
-   '("6" . meow-digit-argument)    '("5" . meow-digit-argument)
-   '("7" . meow-digit-argument)    '("8" . meow-digit-argument)
-   '("9" . meow-digit-argument)    '("0" . meow-digit-argument))
+   '("1" . meow-digit-argument)         '("2" . meow-digit-argument)
+   '("3" . meow-digit-argument)         '("4" . meow-digit-argument)
+   '("6" . meow-digit-argument)         '("5" . meow-digit-argument)
+   '("7" . meow-digit-argument)         '("8" . meow-digit-argument)
+   '("9" . meow-digit-argument)         '("0" . meow-digit-argument))
 
   (meow-normal-define-key
-   '("0" . meow-expand-0)           '("1" . meow-expand-1)
-   '("2" . meow-expand-2)           '("3" . meow-expand-3)
-   '("4" . meow-expand-4)           '("5" . meow-expand-5)
-   '("6" . meow-expand-6)           '("7" . meow-expand-7)
-   '("8" . meow-expand-8)           '("9" . meow-expand-9)
+   '("0" . meow-expand-0)               '("1" . meow-expand-1)
+   '("2" . meow-expand-2)               '("3" . meow-expand-3)
+   '("4" . meow-expand-4)               '("5" . meow-expand-5)
+   '("6" . meow-expand-6)               '("7" . meow-expand-7)
+   '("8" . meow-expand-8)               '("9" . meow-expand-9)
    '("-" . negative-argument)
    '(";" . meow-reverse)
    '(":" . mode-line-other-buffer)
-   '("," . meow-inner-of-thing)     '("." . meow-bounds-of-thing)
-   '("<" . meow-beginning-of-thing) '(">" . meow-end-of-thing)
+   '("," . meow-inner-of-thing)         '("." . meow-bounds-of-thing)
+   '("<" . meow-beginning-of-thing)     '(">" . meow-end-of-thing)
    '("/" . meow-visit)
-   '("a" . meow-append)             '("A" . meow-open-below)
-   '("b" . meow-back-word)          '("B" . meow-back-symbol)
+   '("a" . meow-append)                 '("A" . meow-open-below)
+   '("b" . meow-back-word)              '("B" . meow-back-symbol)
    '("c" . meow-change)
-   '("d" . rh/delete-in-context)    '("D" . delete-all-space)
-   '("e" . meow-prev-expand)        '("E" . scroll-down-command)
+   '("d" . rh/delete-in-context)        '("D" . delete-all-space)
+   '("e" . meow-prev-expand)            '("E" . scroll-down-command)
    '("f" . rh/insert-space)
-   '("g" . meow-cancel-selection)   '("G" . meow-grab)
-   '("h" . meow-mark-word)          '("H" . meow-mark-symbol)
+   '("g" . meow-cancel-selection)       '("G" . meow-grab)
+   '("h" . meow-mark-word)              '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)
-   '("j" . meow-join)               '("J" . rh/join-line)
-   '("k" . rh/kill-in-context)      '("K" . avy-kill-region)
-   '("l" . meow-line)               '("L" . consult-goto-line)
+   '("j" . meow-join)                   '("J" . rh/join-line)
+   '("k" . rh/teleport-kill)            '("K" . avy-kill-region)
+   '("l" . meow-line)                   '("L" . consult-goto-line)
    '("m" . meow-left-expand)
-   '("n" . meow-next-expand)        '("N" . scroll-up-command)
-   '("o" . meow-block)              '("O" . meow-to-block)
-   '("p" . rh/put-into-kill-ring)   '("P" . avy-kill-ring-save-region)
-   '("q" . meow-quit)               '("Q" . delete-window)
+   '("n" . meow-next-expand)            '("N" . scroll-up-command)
+   '("o" . meow-block)                  '("O" . meow-to-block)
+   '("p" . rh/teleport-kill-ring-save)  '("P" . avy-kill-ring-save-region)
+   '("q" . meow-quit)                   '("Q" . delete-window)
    '("r" . meow-replace)
-   '("s" . meow-insert)             '("S" . meow-open-above)
+   '("s" . meow-insert)                 '("S" . meow-open-above)
    '("t" . meow-till-expand)
-   '("u" . meow-undo)               '("U" . meow-undo-in-selection)
+   '("u" . meow-undo)                   '("U" . meow-undo-in-selection)
    '("v" . meow-search)
-   '("w" . meow-next-word)          '("W" . meow-next-symbol)
-   '("x" . delete-char)             '("X" . meow-backward-delete)
-   '("y" . yank)                    '("Y" . yank-pop)
+   '("w" . meow-next-word)              '("W" . meow-next-symbol)
+   '("x" . delete-char)                 '("X" . meow-backward-delete)
+   '("y" . yank)                        '("Y" . yank-pop)
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore)))
