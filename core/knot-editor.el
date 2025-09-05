@@ -25,14 +25,28 @@
   "Delete region (if selected), else delete current line (if non-empty), else delete-blank-lines."
   (interactive)
   (cond ((use-region-p)
-         ;; If there is a region
+         ;; If there is a region, delete it
          (let ((inhibit-read-only t))
            (delete-region (region-beginning) (region-end))))
-        ;; If the line has a non-whitespace chracter
+        ;; Else, if the line has a non-whitespace chracter, delete the line
         ((not (string-blank-p (string-trim (thing-at-point 'line t))))
          (let ((inhibit-read-only t))
            (delete-region (line-beginning-position) (line-beginning-position 2))))
-        ;; If the line is just whitespace
+        ;; If the line is just whitespace, delete all surrounding lines
+        (t (delete-blank-lines))))
+
+;; Two-in-one killer! For double kills
+(defun rh/kill-in-context ()
+  "Kill region (if selected), else kill-whole-line (if non-empty), else delete-blank-lines."
+  (interactive)
+  (cond ((use-region-p)
+         (let ((inhibit-read-only t))
+           (call-interactively 'kill-region)))
+
+        ((not (string-blank-p (string-trim (thing-at-point 'line t))))
+         (let ((inhibit-read-only t))
+           (kill-whole-line)))
+
         (t (delete-blank-lines))))
 
 ;; helper (lol)
@@ -157,7 +171,7 @@
    '("h" . meow-mark-word)          '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)
    '("j" . meow-join)               '("J" . rh/join-line)
-   '("k" . meow-kill)               '("K" . kill-whole-line)
+   '("k" . rh/kill-in-context)      '("K" . kill-whole-line)
    '("l" . meow-line)               '("L" . consult-goto-line)
    '("m" . meow-left-expand)
    '("n" . meow-next-expand)        '("N" . scroll-up-command)
@@ -176,8 +190,7 @@
    '("'" . repeat)
    '("<escape>" . ignore)))
 
-;;;; Meow! A customizable modal editing system for Emacs
-
+;;; `meow'
 (use-package meow
   :demand t
   :vc (:url "https://github.com/meow-edit/meow")
@@ -186,12 +199,8 @@
   (meow-setup)
   (meow-global-mode 1)
 
-  ;; Remove cursor in motion mode
-  (setq meow-cursor-type-motion '(bar . 0))
-
-  ;; Remove that annoying position hint while selecting
-  (setq meow-expand-hint-remove-delay 0)
-
+  (setq meow-cursor-type-motion '(bar . 0)) ; Remove cursor in motion mode
+  (setq meow-expand-hint-remove-delay 0) ; Remove that annoying position hint while selecting
   (setq meow-keypad-message nil
         meow-keypad-self-insert-undefined nil
         meow-use-clipboard t)
