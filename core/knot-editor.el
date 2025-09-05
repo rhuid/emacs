@@ -1,8 +1,7 @@
 ;;; knot-editor.el --- Edit at the speed of thought (well, not literally) -*- lexical-binding: t; -*-
 
 ;;; Some commands for faster editing
-;; Most of them are written using built-in functions;
-;; If there is dependency on external package, it is commented;
+;; Most of them are written using built-in functions
 ;; Helper functions tagged `helper'
 
 ;; This command is context-specific. In most cases, it inserts a space character while joining
@@ -22,7 +21,7 @@
   (looking-at-p "[)]"))
 
 ;; A multipurpose trash cleaner without cluttering the kill ring!
-(defun rh/delete-region-or-line-or-blank-lines ()
+(defun rh/delete-in-context ()
   "Delete region (if selected), else delete current line (if non-empty), else delete-blank-lines."
   (interactive)
   (cond ((use-region-p)
@@ -32,7 +31,7 @@
         ;; If the line has a non-whitespace chracter
         ((not (string-blank-p (string-trim (thing-at-point 'line t))))
          (let ((inhibit-read-only t))
-           (delete-region (line-beginning-position) (line-end-position))))
+           (delete-region (line-beginning-position) (line-beginning-position 2))))
         ;; If the line is just whitespace
         (t (delete-blank-lines))))
 
@@ -113,8 +112,8 @@
 	         ("C-x C-b" . ibuffer)))
   (global-set-key (kbd (car binding)) (cdr binding)))
 
-;;;; Customizations to meow
-
+;;; A super efficient modal design
+;; Requires `consult'
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
 
@@ -137,70 +136,42 @@
    '("0" . meow-digit-argument))
 
   (meow-normal-define-key
-   '("0" . meow-expand-0)
-   '("1" . meow-expand-1)
-   '("2" . meow-expand-2)
-   '("3" . meow-expand-3)
-   '("4" . meow-expand-4)
-   '("5" . meow-expand-5)
-   '("6" . meow-expand-6)
-   '("7" . meow-expand-7)
-   '("8" . meow-expand-8)
-   '("9" . meow-expand-9)
+   '("0" . meow-expand-0)           '("1" . meow-expand-1)
+   '("2" . meow-expand-2)           '("3" . meow-expand-3)
+   '("4" . meow-expand-4)           '("5" . meow-expand-5)
+   '("6" . meow-expand-6)           '("7" . meow-expand-7)
+   '("8" . meow-expand-8)           '("9" . meow-expand-9)
    '("-" . negative-argument)
    '(";" . meow-reverse)
    '(":" . mode-line-other-buffer)
-   '("," . meow-inner-of-thing)
-   '("." . meow-bounds-of-thing)
-   '("<" . meow-beginning-of-thing)
-   '(">" . meow-end-of-thing)
+   '("," . meow-inner-of-thing)     '("." . meow-bounds-of-thing)
+   '("<" . meow-beginning-of-thing) '(">" . meow-end-of-thing)
    '("/" . meow-visit)
-   '("a" . meow-append)
-   '("A" . meow-open-below)
-   '("b" . meow-back-word)
-   '("B" . meow-back-symbol)
+   '("a" . meow-append)             '("A" . meow-open-below)
+   '("b" . meow-back-word)          '("B" . meow-back-symbol)
    '("c" . meow-change)
-
-   '("d" . rh/delete-region-or-line-or-blank-lines)
-   '("D" . delete-all-space)
-   '("e" . meow-prev-expand)
-   '("E" . scroll-down-command)
-
+   '("d" . rh/delete-in-context)    '("D" . delete-all-space)
+   '("e" . meow-prev-expand)        '("E" . scroll-down-command)
    '("f" . rh/insert-space)
-
-   '("g" . meow-cancel-selection)
-   '("G" . meow-grab)
-   '("h" . meow-mark-word)
-   '("H" . meow-mark-symbol)
+   '("g" . meow-cancel-selection)   '("G" . meow-grab)
+   '("h" . meow-mark-word)          '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)
-   '("j" . meow-join)
-
-   '("J" . rh/join-line)
-
-   '("k" . meow-kill)
-   '("K" . kill-whole-line)
-   '("l" . meow-line)
-   '("L" . meow-goto-line)
+   '("j" . meow-join)               '("J" . rh/join-line)
+   '("k" . meow-kill)               '("K" . kill-whole-line)
+   '("l" . meow-line)               '("L" . consult-goto-line)
    '("m" . meow-left-expand)
-   '("n" . meow-next-expand)
-   '("N" . scroll-up-command)
-   '("o" . meow-block)
-   '("O" . meow-to-block)
+   '("n" . meow-next-expand)        '("N" . scroll-up-command)
+   '("o" . meow-block)              '("O" . meow-to-block)
    '("p" . meow-save)
-   '("q" . meow-quit)
-   '("Q" . delete-window)
+   '("q" . meow-quit)               '("Q" . delete-window)
    '("r" . meow-replace)
-   '("s" . meow-insert)
-   '("S" . meow-open-above)
+   '("s" . meow-insert)             '("S" . meow-open-above)
    '("t" . meow-till-expand)
-   '("u" . meow-undo)
-   '("U" . meow-undo-in-selection)
+   '("u" . meow-undo)               '("U" . meow-undo-in-selection)
    '("v" . meow-search)
-   '("w" . meow-next-word)
-   '("W" . meow-next-symbol)
-   '("x" . meow-delete)
-   '("X" . meow-backward-delete)
-   '("y" . meow-yank)
+   '("w" . meow-next-word)          '("W" . meow-next-symbol)
+   '("x" . delete-char)             '("X" . meow-backward-delete)
+   '("y" . yank)                    '("Y" . yank-pop)
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore)))
