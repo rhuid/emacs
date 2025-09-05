@@ -16,7 +16,9 @@
 (use-package avy
   :bind (("C-,"   . avy-goto-char-timer)
          ("C-'"   . avy-goto-char-2)
-         ("M-g f" . avy-goto-line))
+         ("M-g f" . avy-goto-line)
+         :map isearch-mode-map
+         ("C-,"   . avy-isearch))
   :custom
   (avy-background nil)
   (avy-style 'pre)
@@ -25,11 +27,11 @@
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))) ; Colemak-DH optimization
 
 ;;; `bicycle'
-(use-package bicycle
-  :after outline
-  :commands (bicycle-cycle)
-  :bind (:map outline-minor-mode-map
-              ("C-M-i" . bicycle-cycle)))
+;; (use-package bicycle
+;;   :after outline
+;;   :commands (bicycle-cycle)
+;;   :bind (:map outline-minor-mode-map
+;;               ("C-M-i" . bicycle-cycle)))
 
 ;;; `bookmark' --- A variant of Minato's Flying Raijin
 ;; Set a marker, jump back instantly (markers persist across restarts)
