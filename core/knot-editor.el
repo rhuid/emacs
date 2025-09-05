@@ -15,6 +15,14 @@
   (interactive)
   (insert " "))
 
+(defun rh/delete ()
+  "Delete region (if selected), otherwise delete all surrounding blank lines leaving just one."
+  (interactive)
+  (if (use-region-p)
+      (let ((inhibit-read-only t))
+        (delete-region (region-beginning) (region-end)))
+    (delete-blank-lines)))
+
 ;;; `repeat'
 ;; Repeat commands without retyping the prefix key
 (use-package repeat
@@ -126,7 +134,7 @@
    '("B" . meow-back-symbol)
    '("c" . meow-change)
 
-   '("d" . delete-region)
+   '("d" . rh/delete)
    '("D" . delete-all-space)
    '("e" . meow-prev-expand)
    '("E" . scroll-down-command)
