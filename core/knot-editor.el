@@ -44,7 +44,7 @@
       (let ((inhibit-read-only t))
         (call-interactively 'kill-region))
     (let ((inhibit-read-only t))
-      (call-interactively 'avy-kill-whole-line))))
+      (call-interactively 'avy-move-line))))
 
 ;;; Teleport kill-ring-save
 ;; Like kill-ring-save. But with teleportation powers. Uses `avy'.
@@ -53,7 +53,7 @@
   (interactive)
   (if (use-region-p)
       (call-interactively 'kill-ring-save)
-    (call-interactively 'avy-kill-ring-save-whole-line)))
+    (call-interactively 'avy-copy-line)))
 
 ;; helper (lol)
 (defun rh/insert-space ()
@@ -172,12 +172,12 @@
    '("h" . meow-mark-word)              '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)
    '("j" . meow-join)                   '("J" . rh/join-line)
-   '("k" . rh/teleport-kill)            '("K" . avy-kill-region)
+   '("k" . rh/teleport-kill)            '("K" . avy-move-region)
    '("l" . meow-line)                   '("L" . consult-goto-line)
    '("m" . meow-left-expand)
    '("n" . meow-next-expand)            '("N" . scroll-up-command)
    '("o" . meow-block)                  '("O" . meow-to-block)
-   '("p" . rh/teleport-kill-ring-save)  '("P" . avy-kill-ring-save-region)
+   '("p" . rh/teleport-kill-ring-save)  '("P" . avy-copy-region)
    '("q" . meow-quit)                   '("Q" . delete-window)
    '("r" . meow-replace)
    '("s" . meow-insert)                 '("S" . meow-open-above)
