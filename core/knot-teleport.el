@@ -14,16 +14,38 @@
 ;;; `avy' --- Goku's Instant Transmission
 ;; Teleport to any text in the visible frame instantly
 (use-package avy
-  :bind (("C-," . avy-goto-char-timer)
-         ("C-'" . avy-goto-line)
+  :bind (("C-," . rh/avy-goto-char-timer-select)
+         ("C-'" . rh/avy-goto-line-select)
          :map isearch-mode-map
          ("C-," . avy-isearch))
+  :config
+  ;; My personal modifications to two avy commands that I use
+  (defun rh/avy-goto-char-timer-select ()
+    "Like avy-goto-char-timer, but selects or expands region."
+    (interactive)
+    (unless (region-active-p)
+      (set-mark (point))
+      (activate-mark))
+    (call-interactively 'avy-goto-char-timer))
+
+  (defun rh/avy-goto-line-select ()
+    "Like avy-goto-line, but selects or expands region."
+    (interactive)
+    (unless (region-active-p)
+      (set-mark (point))
+      (activate-mark))
+    (call-interactively 'avy-goto-line))
+
   :custom
   (avy-background nil)
   (avy-style 'pre)
   (avy-all-windows t) ; Use all windows on the selected frame
   (avy-timeout-seconds 0.2) ; How long avy-goto-char-timer should wait
-  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))) ; Colemak-DH optimization
+  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)) ; Colemak-DH optimization
+  (avy-dispatch-alist
+   '((?c . avy-action-copy)
+     (?s . avy-action-swap)
+     (?m . avy-action-mark))))
 
 ;;; `bookmark' --- A variant of Minato's Flying Raijin
 ;; Set a marker, jump back instantly (markers persist across restarts)
@@ -37,7 +59,6 @@
   (setq bookmark-bmenu-toggle-filenames t))
 
 ;;; `isearch'
-;; Integration with avy
 (use-package isearch
   :ensure nil
   :custom
@@ -52,7 +73,6 @@
 ;; Intergration with `consult' via `consult-project-buffer'
 (use-package project
   :demand t
-  :bind (("C-x C-f" . project-find-file))
   :custom
   (project-switch-commands
    '((magit-project-status "Magit"     ?m)
@@ -79,9 +99,23 @@
   :ensure nil
   :bind (("C-|"   . point-to-register)
          ("C-M-|" . window-configuration-to-register)
-         ("C-\\"  . jump-to-register))
+         ("C-\\"  . jump-to-register)
+         ("C-M-m" . rh/set-to-register-1)
+         ("C-M-j" . rh/jump-to-register-1))
   :custom
-  (register-use-preview nil)) ; preview without delay
+  (register-use-preview nil) ; preview without delay
+  :config
+  (defun rh/set-to-register-1 ()
+    "Store current point in register 1."
+    (interactive)
+    (point-to-register ?1)
+    (message "Point marked."))
+
+  (defun rh/jump-to-register-1 ()
+    "Jump to position stored in register 1."
+    (interactive)
+    (jump-to-register ?1)
+    (message "Teleported to the mark.")))
 
 ;;; `savehist'
 ;; Save minibuffer-history
