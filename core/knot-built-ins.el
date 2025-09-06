@@ -7,11 +7,8 @@
   :hook ((before-save . delete-trailing-whitespace)
 	       (prog-mode   . glyphless-display-mode))
 
-  ;; Colemak-DH optimizations
-  :bind (("C-m"   . backward-delete-char) ; Move index finger left
-         ("C-S-m" . backward-kill-word) ; Similar, but with Shift, it kills word instead
-         ("DEL"   . backward-kill-word) ; Good-old backspace key, won't be used anyway
-         ("C-h"   . newline) ; Move index finger down
+  :bind (("C-h"   . backward-delete-char)
+         ("C-S-h" . backward-kill-word) ; Similar, but with Shift, it kills word instead
          )
   :config
   ;; Automatically refresh the buffer when files change on disk
