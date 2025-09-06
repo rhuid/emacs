@@ -1,12 +1,19 @@
 ;;; knot-built-ins.el --- tools which came built-in with emacs -*- lexical-binding: t; -*-
 
+;; Not-so-sane defaults? Beware
 (use-package emacs
   :demand t
   :ensure nil
   :hook ((before-save . delete-trailing-whitespace)
 	       (prog-mode   . glyphless-display-mode))
-  :config
 
+  ;; Colemak-DH optimizations
+  :bind (("C-m"   . backward-delete-char) ; Move index finger left
+         ("C-S-m" . backward-kill-word) ; Similar, but with Shift, it kills word instead
+         ("DEL"   . backward-kill-word) ; Good-old backspace key, won't be used anyway
+         ("C-h"   . newline) ; Move index finger down
+         )
+  :config
   ;; Automatically refresh the buffer when files change on disk
   (global-auto-revert-mode)
 
@@ -27,6 +34,9 @@
 
   ;; Remove indentation from text in kill-ring
   (kill-ring-deindent-mode)
+
+  ;; Shift better reserved to be used as modifier
+  (setq shift-select-mode nil)
 
   ;; Don't generate backup files
   (setq make-backup-files nil)
