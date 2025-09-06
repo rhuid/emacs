@@ -4,7 +4,7 @@
 ;; Most of them are written using built-in functions. Some use functions from `avy'.
 ;; Helper functions are tagged `helper'.
 
-;; This command is context-specific. In most cases, it inserts a space character while joining
+;; This command is context-sensitive. In most cases, it inserts a space character while joining
 ;; but when the starting character of the next non-empty line is a closing parenthesis, it leaves no space.
 (defun rh/join-line ()
   "Join the current line with the next non-empty line."
@@ -35,25 +35,33 @@
         ;; If the line is just whitespace, delete all surrounding lines
         (t (delete-blank-lines))))
 
-;;; Teleport kill
-;; Kill active region. If there is none, teleport kill. Uses `avy'.
-(defun rh/teleport-kill ()
-  "Kill region (if active), else kill any line visible on the screen."
+;; Kill but in a context-sensitive way
+(defun rh/kill-in-context ()
+  "Kill region (if active), else kill current line (if non-empty), else delete-blank-lines."
   (interactive)
-  (if (use-region-p)
-      (let ((inhibit-read-only t))
-        (call-interactively 'kill-region))
-    (let ((inhibit-read-only t))
-      (call-interactively 'avy-move-line))))
+  (cond ((use-region-p)
+         (let ((inhibit-read-only t))
+           (call-interactively 'kill-region)))
 
-;;; Teleport kill-ring-save
-;; Like kill-ring-save. But with teleportation powers. Uses `avy'.
-(defun rh/teleport-kill-ring-save ()
-  "Put region (if active) into kill-ring. Else teleport any line from visible screen into kill-ring."
+        ((not (string-blank-p (string-trim (thing-at-point 'line t))))
+         (let ((inhibit-read-only t))
+           (call-interactively 'kill-whole-line)))
+
+        (t nil)))
+
+;; Like kill-ring-save, but context-sensitive
+(defun rh/put-into-kill-ring ()
+  "Put region (if active) into kill-ring. Else copy any line from visible screen."
   (interactive)
-  (if (use-region-p)
-      (call-interactively 'kill-ring-save)
-    (call-interactively 'avy-copy-line)))
+  (cond ((use-region-p)
+         (let ((inhibit-read-only t))
+           (call-interactively 'kill-ring-save)))
+
+        ((not (string-blank-p (string-trim (thing-at-point 'line t))))
+         (let ((inhibit-read-only t))
+           (kill-ring-save (line-beginning-position) (line-beginning-position 2))))
+
+        (t nil)))
 
 ;; helper (lol)
 (defun rh/insert-space ()
@@ -70,14 +78,14 @@
     (call-interactively 'meow-line)))
 
 ;;; `repeat'
-;; Repeat commands without retyping the prefix key
+; Repeat commands without retyping the prefix key
 (use-package repeat
   :ensure nil
   :init (repeat-mode)
   :custom (repeat-exit-timeout 5))
 
 ;;; `expand-region'
-;; Select regions by semantics
+;; Select regions by semantic units
 (use-package expand-region
   :demand t
   :bind ("C-=" . er/expand-region))
@@ -165,19 +173,19 @@
    '("a" . meow-append)                 '("A" . meow-open-below)
    '("b" . meow-back-word)              '("B" . meow-back-symbol)
    '("c" . meow-change)
-   '("d" . rh/delete-in-context)        '("D" . delete-all-space)
+   '("d" . rh/delete-in-context)        '("D" . avy-kill-region)
    '("e" . meow-prev-expand)            '("E" . scroll-down-command)
    '("f" . rh/insert-space)
    '("g" . meow-cancel-selection)       '("G" . meow-grab)
    '("h" . meow-mark-word)              '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)
    '("j" . meow-join)                   '("J" . rh/join-line)
-   '("k" . rh/teleport-kill)            '("K" . avy-move-region)
+   '("k" . rh/kill-in-context)          '("K" . avy-move-region)
    '("l" . meow-line)                   '("L" . consult-goto-line)
    '("m" . meow-left-expand)
    '("n" . meow-next-expand)            '("N" . scroll-up-command)
    '("o" . meow-block)                  '("O" . meow-to-block)
-   '("p" . rh/teleport-kill-ring-save)  '("P" . avy-copy-region)
+   '("p" . rh/put-into-kill-ring)       '("P" . avy-copy-region)
    '("q" . meow-quit)                   '("Q" . delete-window)
    '("r" . meow-replace)
    '("s" . meow-insert)                 '("S" . meow-open-above)
@@ -185,7 +193,7 @@
    '("u" . meow-undo)                   '("U" . meow-undo-in-selection)
    '("v" . meow-search)
    '("w" . meow-next-word)              '("W" . meow-next-symbol)
-   '("x" . delete-char)                 '("X" . meow-backward-delete)
+   '("x" . delete-char)                 ;'("X" . meow-backward-delete)
    '("y" . yank)                        '("Y" . yank-pop)
    '("z" . meow-pop-selection)
    '("'" . repeat)
@@ -193,6 +201,7 @@
 
 ;;; `meow'
 (use-package meow
+
   :demand t
   :vc (:url "https://github.com/meow-edit/meow")
   :hook ((post-self-insert-hook . rh/go-normal-state))
