@@ -221,10 +221,32 @@
     (when (and (eq meow--current-state 'insert)
                (>= (point) 3)
                (string= (buffer-substring-no-properties (-(point) 3) (point)) "ntn"))
-      ;; Delete "ntn"
-      (delete-region (- (point) 3) (point))
-      ;; Switch to normal state
+      (delete-region (- (point) 3) (point)) ; Delete "ntn"
       (meow-normal-mode)
-      t)))
+      t))
+
+  (defcustom rh/esc-timeout 0.15
+    "Timeout (seconds) to wait after ESC in insert state for a following key.
+If no key arrives within this interval, ESC will switch to normal (meow)."
+    :type 'number
+    :group 'rh)
+
+  (defun rh/esc-in-insert-state ()
+    "If another key follows within `rh/esc-timeout`, let ESC act as Meta prefix.
+If nothing follows within the timeout, switch to meow normal state."
+    (interactive)
+    ;; read an event with timeout; returns nil if none
+    (let ((evt (read-event nil nil rh/esc-timeout)))
+      (if evt
+          ;; A key was pressed: push ESC then the key back onto unread events, so Emacs will process ESC followed by that key (i.e. Meta+key).
+          (let ((esc-events (listify-key-sequence (kbd "ESC")))
+                (evt-list (if (vectorp evt)
+                              (append (listify-key-sequence evt) nil) (list evt))))
+            (setq unread-command-events
+                  (append esc-events evt-list unread-command-events)))
+
+        (meow-normal-mode))))
+
+  (define-key meow-insert-state-keymap (kbd "<escape>") #'rh/esc-in-insert-state))
 
 (provide 'knot-editor)
