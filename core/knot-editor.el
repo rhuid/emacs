@@ -147,8 +147,7 @@
 
   (meow-motion-define-key
    '(":" . mode-line-other-buffer)
-   '("e" . meow-prev)
-   '("<escape>" . ignore))
+   '("e" . meow-prev))
 
   (meow-leader-define-key
    '("?" . meow-cheatsheet)
@@ -193,21 +192,23 @@
    '("u" . meow-undo)                   '("U" . meow-undo-in-selection)
    '("v" . meow-search)
    '("w" . meow-next-word)              '("W" . meow-next-symbol)
-   '("x" . delete-char)                 ;'("X" . meow-backward-delete)
+   '("x" . delete-char)
    '("y" . yank)                        '("Y" . yank-pop)
    '("z" . meow-pop-selection)
    '("'" . repeat)
-   '("<escape>" . ignore)))
+   ;; '("<escape>" . ignore)
+   ))
 
 ;;; `meow'
 (use-package meow
-
   :demand t
   :vc (:url "https://github.com/meow-edit/meow")
   :hook ((post-self-insert-hook . rh/go-normal-state))
   :config
   (rh/modal-setup)
   (meow-global-mode 1)
+  (define-key meow-insert-state-keymap [escape] nil)
+  (define-key meow-motion-state-keymap [escape] nil)
 
   (setq meow-cursor-type-motion '(bar . 0)) ; Remove cursor in motion mode
   (setq meow-expand-hint-remove-delay 0) ; Remove that annoying position hint while selecting
@@ -222,7 +223,8 @@
                (string= (buffer-substring-no-properties (-(point) 3) (point)) "ntn"))
       ;; Delete "ntn"
       (delete-region (- (point) 3) (point))
-      ;; Switch to normal state by sending <escape> key event
-      (execute-kbd-macro (kbd "<escape>")) t)))
+      ;; Switch to normal state
+      (meow-normal-mode)
+      t)))
 
 (provide 'knot-editor)
