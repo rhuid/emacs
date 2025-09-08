@@ -61,6 +61,8 @@
 ;;; `isearch'
 (use-package isearch
   :ensure nil
+  :bind (:map isearch-mode-map
+              ("C-h" . isearch-del-char))
   :custom
   (isearch-allow-scroll 'unlimited)
   (isearch-lazy-count t)
@@ -72,7 +74,7 @@
 ;; Launch and manage projects, and teleport between project files instantly
 ;; Intergration with `consult' via `consult-project-buffer'
 (use-package project
-  :demand t
+  :defer 1
   :custom
   (project-switch-commands
    '((magit-project-status "Magit"     ?m)
@@ -132,20 +134,13 @@
      regexp-search-ring)))
 
 ;;; `windmove'
-;; Teleport to any neighbour window (made slightly better with `repeat-mode')
+;; Teleport to any neighbour window
 (use-package windmove
   :ensure nil
-  :bind (("C-c w m" . windmove-left)
-         ("C-c w i" . windmove-right)
-         ("C-c w e" . windmove-up)
-         ("C-c w n" . windmove-down))
+  :init
+  (windmove-default-keybindings)
   :config
-  (defvar-keymap rh/windmove-repeat-map
-    :repeat t
-    "m" #'windmove-left
-    "i" #'windmove-right
-    "e" #'windmove-up
-    "n" #'windmove-down))
+  (setq windmove-wrap-around t))
 
 ;;; `winner'
 ;; To restore or go back to previous window configurations
