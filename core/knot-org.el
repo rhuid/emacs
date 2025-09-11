@@ -2,25 +2,25 @@
 
 (use-package org
   :ensure nil
-  :defer (not (daemonp))
+  :defer 3
   :commands (org-mode)
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
-	 (org-mode . rh/org-custom-faces))
+	       (org-mode . rh/org-custom-faces))
   :init
   (defun rh/org-init ()
     (require 'org)
     (setq display-line-numbers nil)
     (setq org-startup-indented t
-	  org-hide-emphasis-markers t
-	  org-ellipsis " ▾ "               ; folding symbol
-	  org-pretty-entities t            ; pretty TeX symbols
-	  org-log-done 'time               ; log time when a task is marked done
-	  org-hide-leading-stars t
-	  org-startup-folded 'content))
+	        org-hide-emphasis-markers t
+	        org-ellipsis " ▾ "               ; folding symbol
+	        org-pretty-entities t            ; pretty TeX symbols
+	        org-log-done 'time               ; log time when a task is marked done
+	        org-hide-leading-stars t
+	        org-startup-folded 'content))
 
   (setq org-todo-keywords
-	'((sequence "TODO" "WAITING" "IN-PROGRESS" "|" "DONE" "CANCELLED")))
+	      '((sequence "TODO" "WAITING" "IN-PROGRESS" "|" "DONE" "CANCELLED")))
 
   ;; (setq org-preview-latex-default-process 'dvisvgm)
 
