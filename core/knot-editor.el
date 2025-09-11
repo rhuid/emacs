@@ -78,7 +78,7 @@
     (call-interactively 'meow-line)))
 
 ;;; `repeat'
-; Repeat commands without retyping the prefix key
+;; Repeat commands without retyping the prefix key
 (use-package repeat
   :ensure nil
   :init (repeat-mode)
@@ -112,8 +112,6 @@
          '(("<f9>"    . balance-windows)
            ("<f10>"   . rh/toggle-global-font-size)
            ("C-<f10>" . global-text-scale-adjust)
-
-           ("M-n"     . save-buffer)
 
            ("C-c e p" . emms-pause)
            ("C-c e s" . emms-stop)
@@ -172,7 +170,7 @@
    '("a" . meow-append)                 '("A" . meow-open-below)
    '("b" . meow-back-word)              '("B" . meow-back-symbol)
    '("c" . meow-change)
-   '("d" . rh/delete-in-context)        '("D" . avy-kill-region)
+   '("d" . rh/delete-in-context)        '("D" . delete-all-space)
    '("e" . meow-prev-expand)            '("E" . scroll-down-command)
    '("f" . rh/insert-space)
    '("g" . meow-cancel-selection)       '("G" . meow-grab)
@@ -195,9 +193,7 @@
    '("x" . delete-char)
    '("y" . yank)                        '("Y" . yank-pop)
    '("z" . meow-pop-selection)
-   '("'" . repeat)
-   ;; '("<escape>" . ignore)
-   ))
+   '("'" . repeat)))
 
 ;;; `meow'
 (use-package meow
@@ -225,7 +221,7 @@
       (meow-normal-mode)
       t))
 
-  (defcustom rh/esc-timeout 0.15
+  (defcustom rh/esc-timeout 0.125
     "Timeout (seconds) to wait after ESC in insert state for a following key.
 If no key arrives within this interval, ESC will switch to normal (meow)."
     :type 'number
@@ -238,7 +234,7 @@ If nothing follows within the timeout, switch to meow normal state."
     ;; read an event with timeout; returns nil if none
     (let ((evt (read-event nil nil rh/esc-timeout)))
       (if evt
-          ;; A key was pressed: push ESC then the key back onto unread events, so Emacs will process ESC followed by that key (i.e. Meta+key).
+          ;; A key was pressed: push ESC then the key back onto unread events, so process ESC followed by that key (i.e. Meta+key).
           (let ((esc-events (listify-key-sequence (kbd "ESC")))
                 (evt-list (if (vectorp evt)
                               (append (listify-key-sequence evt) nil) (list evt))))
