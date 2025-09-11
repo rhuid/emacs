@@ -29,13 +29,13 @@
 
 ;;; Toggle font size: maximum lines per window vs. comfortable reading
 
-(defvar rh/current-font-size 13.5
+(defvar rh/current-font-size 14
   "This is the default font size at startup.")
 
 (defun rh/toggle-global-font-size ()
   "Toggle font size between edit mode and presentation mode."
   (interactive)
-  (setq rh/current-font-size (if (= rh/current-font-size 13.5) 20 13.5))
+  (setq rh/current-font-size (if (= rh/current-font-size 14) 20 14))
   (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t))
 
 ;;; `ef-themes'
