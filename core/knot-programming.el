@@ -19,7 +19,8 @@
   :demand t
   :config (electric-pair-mode)
   :hook (org-mode . rh/org-electric-pairs)
-  :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\]) (?\".?\")))
+  :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\])
+                                 (?\".?\") (?\<.?\>)))
   :config
   (defun rh/org-electric-pairs ()
     "Org pairs for electric-pair-mode."
@@ -100,6 +101,7 @@
 ;;; `lean4-mode'
 ;; The ultimate theorem prover and function programming language
 (use-package lean4-mode
+  :defer 3
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
   :commands lean4-mode
   :mode "\\.lean\\'"
