@@ -1,4 +1,4 @@
-;;; knot-built-ins.el --- tools which came built-in with emacs -*- lexical-binding: t; -*-
+;;; knot-defaults.el --- tools which came built-in with emacs -*- lexical-binding: t; -*-
 
 ;; Not-so-sane defaults? Beware
 (use-package emacs
@@ -9,7 +9,7 @@
 
   :bind (("C-h"   . backward-delete-char)
          ("C-S-h" . backward-kill-word) ; Similar, but with Shift, it kills word instead
-         )
+         ("C-S-d" . kill-word))
   :config
   ;; Automatically refresh the buffer when files change on disk
   (global-auto-revert-mode)
@@ -89,4 +89,4 @@
   :config (recentf-mode)
   :custom (history-delete-duplicates t))
 
-(provide 'knot-built-ins)
+(provide 'knot-defaults)

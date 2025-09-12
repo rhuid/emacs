@@ -67,7 +67,7 @@
 
 (use-package knot-startup-page :ensure nil :defer nil)
 (use-package knot-visuals      :ensure nil :defer nil)
-(use-package knot-built-ins    :ensure nil :defer nil)
+(use-package knot-defaults     :ensure nil :defer nil)
 (use-package knot-org          :ensure nil :defer nil)
 (use-package knot-programming  :ensure nil :defer nil)
 (use-package knot-latex	       :ensure nil :defer nil)
