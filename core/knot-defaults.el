@@ -68,6 +68,7 @@
 (use-package calc
   :ensure nil)
 
+;;; `eldoc'
 (use-package eldoc
   :ensure nil
   :commands eldoc-mode
@@ -82,6 +83,7 @@
   (setq shr-use-colors nil)
   (setq shr-width fill-column))
 
+;;; `minibuffer'
 (use-package minibuffer
   :demand t
   :ensure nil
