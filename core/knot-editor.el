@@ -93,9 +93,11 @@
 ;;; `multiple-cursors'
 ;; An army of shadow clones
 (use-package multiple-cursors
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->"         . mc/mark-next-like-this)
-         ("C-c C-<"     . mc/mark-all-like-this)))
+  :bind (("C-S-l" . mc/edit-lines)
+         ("C-S-n" . mc/mark-next-like-this)
+         ("C-S-p" . mc/mark-previous-like-this)
+         ("C->"   . mc/skip-to-next-like-this)
+         ("C-<"   . mc/skip-to-previous-like-this)))
 
 ;;;; Prefixes for which-key
 
