@@ -116,15 +116,16 @@
            ("<f10>"   . rh/toggle-global-font-size)
            ("C-<f10>" . global-text-scale-adjust)
 
-           ("C-c e p" . emms-pause)
+           ("C-c e p" . emm-spause)
            ("C-c e s" . emms-stop)
            ("C-c e n" . emms-next)
            ("C-c e b" . emms-previous)
 
-           ("C-c o a" . rh/outline-toggle-visibility)
+           ("C-S-o"   . rh/outline-toggle-visibility)
+           ("C-S-t"   . rh/outline-toggle-heading)
            ("C-c o b" . TeX-fold-buffer)
            ("C-c o B" . TeX-fold-clearout-buffer)
-           ("C-M-i"   . rh/outline-toggle-heading)
+
 
            ("C-c s r" . replace-string)
            ("C-c s w" . delete-trailing-whitespace)
