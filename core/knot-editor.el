@@ -94,6 +94,7 @@
 ;; An army of shadow clones
 (use-package multiple-cursors
   :bind (("C-S-l" . mc/edit-lines)
+         ("C-S-a" . mc/mark-all-like-this)
          ("C-S-n" . mc/mark-next-like-this)
          ("C-S-p" . mc/mark-previous-like-this)
          ("C->"   . mc/skip-to-next-like-this)
