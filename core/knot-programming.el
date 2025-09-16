@@ -83,7 +83,7 @@
   ;; Disable doc/info of symbols and variables on the sideline
   (lsp-ui-sideline-show-hover nil)
   ;; Disable the pop-up doc over mouse hover
-  (lsp-ui-doc-enable nil))
+  (lsp-ui-doc-enable t))
 
 ;;; Syntax checking
 (use-package flycheck
@@ -101,7 +101,8 @@
 ;;; `lean4-mode'
 ;; The ultimate theorem prover and function programming language
 (use-package lean4-mode
-  :defer 3
+  :defer 1
+
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
   :commands lean4-mode
   :mode "\\.lean\\'"
