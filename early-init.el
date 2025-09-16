@@ -4,7 +4,7 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 
-(setq default-frame-alist '((font . "Iosevka Term-14")
+(setq default-frame-alist '((font . "Iosevka Term-15")
                             (fullscreen . maximized))) ; Use fullboth for absolute fullscreen
 
 ;; Prevent frame resizing (very expensive)
