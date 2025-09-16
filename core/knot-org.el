@@ -2,7 +2,6 @@
 
 (use-package org
   :ensure nil
-  :defer 3
   :commands (org-mode)
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
@@ -38,6 +37,8 @@
     )
 
   :config
+  (define-key org-mode-map (kbd "C-,") nil)
+  (define-key org-mode-map (kbd "C-'") nil)
   (setq org-directory "~/org")
 
   ;; (setq org-latex-preview-debug t)
@@ -54,6 +55,10 @@
   ;;                 :image-size-adjust (1.0 . 1.0)
   ;;                 :latex-compiler ("latex -interaction nonstopmode -output-directory %o %f")
   ;;                 :image-converter ("dvipng -D %D -T tight -o %O %f"))))
+
+  :bind
+  (:map org-mode-map
+        ("C-S-o" . org-shifttab))
   )
 
 ;; (use-package evil-org :ensure t :after (evil org)
@@ -82,7 +87,7 @@
 
   ;; replace * of headings with these emojis
   (setq org-superstar-headline-bullets-list
-	'("✿" "❀" "✦" "❂"))
+	      '("✿" "❀" "✦" "❂"))
 
   ;; prettify list bullets
   (setq org-superstar-prettify-item-bullets t))
