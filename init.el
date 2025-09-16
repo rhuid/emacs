@@ -65,18 +65,19 @@
 
 ;;;; Local modules
 
-(use-package knot-startup-page :ensure nil :defer nil)
-(use-package knot-visuals      :ensure nil :defer nil)
-(use-package knot-defaults     :ensure nil :defer nil)
-(use-package knot-org          :ensure nil :defer nil)
-(use-package knot-programming  :ensure nil :defer nil)
-(use-package knot-latex	       :ensure nil :defer nil)
-(use-package knot-dired	       :ensure nil :defer nil)
-(use-package knot-completion   :ensure nil :defer nil)
-(use-package knot-extra-tools  :ensure nil :defer nil)
-(use-package knot-shells       :ensure nil :defer nil)
-(use-package knot-email        :ensure nil :defer nil)
-(use-package knot-teleport     :ensure nil :defer nil)
-(use-package knot-editor       :ensure nil :defer nil)
-(use-package knot-scratch      :ensure nil
+(use-package knot-startup-page      :ensure nil :defer nil)
+(use-package knot-visuals           :ensure nil :defer nil)
+(use-package knot-defaults          :ensure nil :defer nil)
+(use-package knot-org               :ensure nil :defer nil)
+(use-package knot-programming       :ensure nil :defer nil)
+(use-package knot-latex	            :ensure nil :defer nil)
+(use-package knot-dired	            :ensure nil :defer nil)
+(use-package knot-completion        :ensure nil :defer nil)
+(use-package knot-extra-tools       :ensure nil :defer nil)
+(use-package knot-shells            :ensure nil :defer nil)
+(use-package knot-email             :ensure nil :defer nil)
+(use-package knot-teleport          :ensure nil :defer nil)
+(use-package knot-editor            :ensure nil :defer nil)
+(use-package knot-window-management :ensure nil :defer nil)
+(use-package knot-scratch           :ensure nil
   :commands (rh/toggle-org-scratch rh/toggle-lean-scratch))
