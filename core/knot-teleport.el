@@ -147,7 +147,7 @@
 (use-package winner
   :ensure nil
   :init (winner-mode)
-  :bind (("C-c w u" . winner-undo)
+  :bind (("C-S-W" . winner-undo)
          ("C-c w r" . winner-redo))
   :config
   (defvar-keymap rh/winner-repeat-map
