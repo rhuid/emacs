@@ -170,6 +170,6 @@
     "r" #'winner-redo)
   :custom
   (winner-boring-buffers
-   '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*")))
+   '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*")))
 
 (provide 'knot-teleport)
