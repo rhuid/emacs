@@ -30,15 +30,38 @@
 ;;; Toggle font size
 ;; I usually toggle between two font sizes: one for most work and
 ;; the other for presentations using a projector
+(use-package emacs
+  :bind
+  ("<f10>"   . rh/toggle-global-font-size)
+  ("C-<f10>" . global-text-scale-adjust)
+  :config
+  (defvar rh/current-font-size 15
+    "This is the default font size at startup.")
 
-(defvar rh/current-font-size 15
-  "This is the default font size at startup.")
+  (defun rh/toggle-global-font-size ()
+    "Toggle font size between edit mode and presentation mode."
+    (interactive)
+    (setq rh/current-font-size (if (= rh/current-font-size 15) 20 15))
+    (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t)))
 
-(defun rh/toggle-global-font-size ()
-  "Toggle font size between edit mode and presentation mode."
-  (interactive)
-  (setq rh/current-font-size (if (= rh/current-font-size 15) 20 15))
-  (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t))
+;;; `themes'
+(use-package emacs
+  :bind ("C-c t t" . rh/toggle-light-dark-theme-mode)
+  :config
+  (defun rh/toggle-light-dark-theme-mode ()
+    "Toggle between light and dark variants of the current theme."
+    (interactive)
+    (if-let ((theme (car custom-enabled-themes)))
+        (let* ((name (symbol-name theme)))
+          (cond
+           ((string-suffix-p "-dark" name)
+            (disable-theme theme)
+            (load-theme (intern (concat (string-remove-suffix "-dark" name) "-light")) t))
+           ((string-suffix-p "-light" name)
+            (disable-theme theme)
+            (load-theme (intern (concat (string-remove-suffix "-light" name) "-dark")) t))
+           (t (message "The current theme (%s) does not have a dark/light mode." theme))))
+      (message "No theme is currently enabled."))))
 
 ;;; `ef-themes'
 ;; A beautiful collection of themes but I am using nano (below) now.
@@ -60,23 +83,6 @@
   (load-theme 'nano-dark t)
   ;; (nano-mode)
   )
-
-(defun rh/toggle-light-dark-theme-mode ()
-  "Toggle between light and dark variants of the current theme."
-  (interactive)
-  (if-let ((theme (car custom-enabled-themes)))
-      (let* ((name (symbol-name theme)))
-        (cond
-         ((string-suffix-p "-dark" name)
-          (disable-theme theme)
-          (load-theme (intern (concat (string-remove-suffix "-dark" name) "-light")) t))
-         ((string-suffix-p "-light" name)
-          (disable-theme theme)
-          (load-theme (intern (concat (string-remove-suffix "-light" name) "-dark")) t))
-         (t (message "The current theme (%s) does not have a dark/light mode." theme))))
-    (message "No theme is currently enabled.")))
-
-(global-set-key (kbd "C-c t t") #'rh/toggle-light-dark-theme-mode)
 
 ;;; `prettify-symbols'
 (use-package emacs
