@@ -58,34 +58,30 @@
 ;;   (nano-mode)
 ;;   )
 
-;;; Pretty symbols
+;;; `prettify-symbols'
+(use-package emacs
+  :ensure nil
+  :hook ((prog-mode . rh/provide-pretty-symbols))
+  :config
+  (global-prettify-symbols-mode 1)
+  (defun rh/provide-pretty-symbols ()
+    "Provide some pretty symbols."
+    (interactive)
+    (setq prettify-symbols-alist
+          '(("->" . ?→)
+            ("=>" . ?⇒)
+            (">=" . ?≥)
+            ("<=" . ?≤)
+            ("!=" . ?≠)))))
 
-(setq-default prettify-symbols-alist
-              '(("lambda" . ?λ)
-                ("->" . ?→)
-                ("<-" . ?←)
-                (">=" . ?≥)
-                ("<=" . ?≤)
-                ("!=" . ?≠)
-                ))
-
-(global-prettify-symbols-mode 1)
-
-(defun rh/prettify-symbols ()
-  "Provide some pretty symbols."
-  (interactive)
-  (setq prettify-symbols-alist
-        '(("=>" . ?⇒)
-          ("->" . ?→))))
-
-;;; Icons
-
+;;; `all-the-icons'
 (use-package all-the-icons
   :config
   (when (display-graphic-p)
     (unless (member "all-the-icons" (font-family-list))
       (all-the-icons-install-fonts t))))
 
+;;; `nerd-icons'
 (use-package nerd-icons
   :config
   (when (display-graphic-p)
