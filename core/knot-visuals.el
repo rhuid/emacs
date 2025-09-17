@@ -57,9 +57,26 @@
   :vc (:url "https://github.com/rougier/nano-theme")
   :config
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'nano-light t)
+  (load-theme 'nano-dark t)
   ;; (nano-mode)
   )
+
+(defun rh/toggle-light-dark-theme-mode ()
+  "Toggle between light and dark variants of the current theme."
+  (interactive)
+  (if-let ((theme (car custom-enabled-themes)))
+      (let* ((name (symbol-name theme)))
+        (cond
+         ((string-suffix-p "-dark" name)
+          (disable-theme theme)
+          (load-theme (intern (concat (string-remove-suffix "-dark" name) "-light")) t))
+         ((string-suffix-p "-light" name)
+          (disable-theme theme)
+          (load-theme (intern (concat (string-remove-suffix "-light" name) "-dark")) t))
+         (t (message "The current theme (%s) does not have a dark/light mode." theme))))
+    (message "No theme is currently enabled.")))
+
+(global-set-key (kbd "C-c t t") #'rh/toggle-light-dark-theme-mode)
 
 ;;; `prettify-symbols'
 (use-package emacs
