@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Kill running daemon (ignore error if not running)
-emacsclient -e "(kill-emacs)" 2>/dev/null
-
-sleep 1
-emacs --daemon
