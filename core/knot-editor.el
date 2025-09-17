@@ -125,7 +125,6 @@
            ("C-c o b" . TeX-fold-buffer)
            ("C-c o B" . TeX-fold-clearout-buffer)
 
-
            ("C-c s r" . replace-string)
            ("C-c s w" . delete-trailing-whitespace)
            ("C-c s a" . abbrev-mode)
@@ -133,12 +132,9 @@
            ("C-c u g" . magit-status)
            ("C-c u l" . rh/toggle-lean-scratch)
            ("C-c u m" . notmuch)
-           ("C-c u o" . rh/toggle-org-scratch)
            ("C-c u r" . recentf-open-files)
            ("C-c u s" . rh/eshell-toggle)
-           ("C-c u v" . rh/vterm-toggle)
-
-	         ("C-x C-b" . ibuffer)))
+           ("C-c u v" . rh/vterm-toggle)))
   (global-set-key (kbd (car binding)) (cdr binding)))
 
 ;;; My modal design built on `meow'
