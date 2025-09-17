@@ -108,8 +108,7 @@
   :mode "\\.lean\\'"
 
   :bind (:map lean4-mode-map
-              ("<f5>" . rh/lean4-lsp-toggle)
-              ("<f7>" . lean4-toggle-info))
+              ("C-c C-t" . rh/lean4-lsp-toggle))
 
   :hook
   (lean4-mode . rh/lean-highlight-types)
