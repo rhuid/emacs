@@ -116,6 +116,8 @@
            ("<f10>"   . rh/toggle-global-font-size)
            ("C-<f10>" . global-text-scale-adjust)
 
+           ("C-S-f"   . follow-mode)
+
            ("C-c e p" . emm-spause)
            ("C-c e s" . emms-stop)
            ("C-c e n" . emms-next)
