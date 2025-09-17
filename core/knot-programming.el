@@ -116,6 +116,10 @@
 	(lean4-mode . rh/lean-highlight-typeclasses)
 	(lean4-mode . rh/outline-lean)
 	(lean4-mode . (lambda () (require 'rh-lean)))
+  (lean4-mode . rh/prettify-symbols)
+  ;; (lean4-mode . (lambda () (setq prettify-symbols-alist
+  ;;                           '(("=>" . ?⇒)
+  ;;                             ("->" . ?→)))))
 
   :config
   (defvar rh/lean4-lsp-enabled nil
