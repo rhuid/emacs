@@ -102,22 +102,36 @@
   :bind (("C-|"   . point-to-register)
          ("C-M-|" . window-configuration-to-register)
          ("C-\\"  . jump-to-register)
-         ("C-M-m" . rh/set-to-register-1)
-         ("C-M-j" . rh/jump-to-register-1))
+         ("C-M-m" . rh/set-point-to-register-1)
+         ("C-M-j" . rh/jump-to-register-1)
+         ("C-S-m" . rh/set-window-config-to-register-2)
+         ("C-S-j" . rh/jump-to-window-config-2))
   :custom
   (register-use-preview nil) ; preview without delay
   :config
-  (defun rh/set-to-register-1 ()
+  (defun rh/set-point-to-register-1 ()
     "Store current point in register 1."
     (interactive)
     (point-to-register ?1)
     (message "Point marked."))
 
+  (defun rh/set-window-config-to-register-2 ()
+    "Store current window configuration in register 2."
+    (interactive)
+    (window-configuration-to-register ?2)
+    (message "Window configuration marked."))
+
   (defun rh/jump-to-register-1 ()
     "Jump to position stored in register 1."
     (interactive)
     (jump-to-register ?1)
-    (message "Teleported to the mark.")))
+    (message "Teleported to the mark."))
+
+  (defun rh/jump-to-window-config-2 ()
+    "Jump to position stored in register 1."
+    (interactive)
+    (jump-to-register ?2)
+    (message "Teleported to the window configuration.")))
 
 ;;; `savehist'
 ;; Save minibuffer-history
