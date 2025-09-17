@@ -54,7 +54,7 @@
    ("M-y"     . consult-yank-pop)
    ("C-c b"   . consult-bookmark)
    ("C-M-b"   . consult-bookmark)
-   ("C-<f>"   . consult-theme)
+   ("C-<f5>"  . consult-theme)
    ("M-m"     . consult-imenu)
    ("M-p"     . consult-project-buffer)
    ("M-O"     . consult-outline))
