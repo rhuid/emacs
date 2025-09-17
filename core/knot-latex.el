@@ -110,7 +110,7 @@
 ;; (use-package ass
 ;;   :hook (LaTeX-mode . ass-activate-for-major-mode)
 ;;   :config
-e;;   (setq ass-snippets
+;;   (setq ass-snippets
 ;;         '("forall" . "∀"))
 ;;   )
 

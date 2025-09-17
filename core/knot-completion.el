@@ -82,9 +82,9 @@
   :vc (:url "https://github.com/oantolin/embark")
 
   :bind
-  (("C-."   . embark-act)
-   ("C-;"   . embark-dwim)
-   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  (("C-."    . embark-act)
+   ("C-;"    . embark-dwim)
+   ("<f1>-B" . embark-bindings)) ;; alternative for `describe-bindings'
 
   :init
 
