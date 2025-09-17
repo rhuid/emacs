@@ -27,7 +27,9 @@
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
-;;; Toggle font size: maximum lines per window vs. comfortable reading
+;;; Toggle font size
+;; I usually toggle between two font sizes: one for most work and
+;; the other for presentations using a projector
 
 (defvar rh/current-font-size 15
   "This is the default font size at startup.")
@@ -39,8 +41,9 @@
   (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t))
 
 ;;; `ef-themes'
+;; A beautiful collection of themes but I am using nano (below) now.
 (use-package ef-themes
-  :demand t
+  :disabled t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (ef-themes-select 'ef-dream)
@@ -48,15 +51,15 @@
   (set-face-attribute 'region nil
                       :background "#353237"))
 
-;;; Nano theme?
-
-;; (use-package nano-theme
-;;   :demand t
-;;   :vc (:url "https://github.com/rougier/nano-theme")
-;;   :config
-;;   (map #'disable-theme custom-enabled-themes)
-;;   (nano-mode)
-;;   )
+;;; `nano-theme'
+(use-package nano-theme
+  :demand t
+  :vc (:url "https://github.com/rougier/nano-theme")
+  :config
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme 'nano-light t)
+  ;; (nano-mode)
+  )
 
 ;;; `prettify-symbols'
 (use-package emacs
