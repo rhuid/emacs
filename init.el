@@ -78,6 +78,5 @@
 (use-package knot-email             :ensure nil :defer nil)
 (use-package knot-teleport          :ensure nil :defer nil)
 (use-package knot-editor            :ensure nil :defer nil)
-(use-package knot-window-management :ensure nil :defer nil)
 (use-package knot-scratch           :ensure nil
   :commands (rh/toggle-org-scratch rh/toggle-lean-scratch))
