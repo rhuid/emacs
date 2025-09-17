@@ -71,6 +71,13 @@
 
 (global-prettify-symbols-mode 1)
 
+(defun rh/prettify-symbols ()
+  "Provide some pretty symbols."
+  (interactive)
+  (setq prettify-symbols-alist
+        '(("=>" . ?⇒)
+          ("->" . ?→))))
+
 ;;; Icons
 
 (use-package all-the-icons
