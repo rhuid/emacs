@@ -104,7 +104,6 @@
 
 (with-eval-after-load 'which-key
   (dolist (binding '(("C-c e" . "emms")
-		                 ("C-c o" . "outline")
 		                 ("C-c s" . "string-manipulation")
 		                 ("C-c u" . "utilities")))
     (which-key-add-key-based-replacements (car binding) (cdr binding))))
@@ -113,8 +112,6 @@
 
 (dolist (binding
          '(("<f9>"    . balance-windows)
-           ("<f10>"   . rh/toggle-global-font-size)
-           ("C-<f10>" . global-text-scale-adjust)
 
            ("C-S-f"   . follow-mode)
 
