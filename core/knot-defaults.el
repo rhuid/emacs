@@ -93,7 +93,7 @@
   :bind
   ("C-S-t" . rh/outline-toggle-heading)
   ("C-S-o" . rh/outline-toggle-visibility)
-  ("C-c e p" . emm-spause)
+  ("C-c e p" . emms-pause)
   ("C-c e s" . emms-stop)
   ("C-c e n" . emms-next)
   ("C-c e b" . emms-previous)
