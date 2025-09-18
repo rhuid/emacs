@@ -73,7 +73,7 @@
 (use-package knot-latex	            :ensure nil :defer nil)
 (use-package knot-dired	            :ensure nil :defer nil)
 (use-package knot-completion        :ensure nil :defer nil)
-(use-package knot-extra-tools       :ensure nil :defer nil)
+(use-package knot-packages          :ensure nil :defer nil)
 (use-package knot-shells            :ensure nil :defer nil)
 (use-package knot-email             :ensure nil :defer nil)
 (use-package knot-teleport          :ensure nil :defer nil)
