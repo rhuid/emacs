@@ -13,19 +13,6 @@
   ;; Default indentation is 2 spaces, but can be overridden by major modes
   (setq standard-indent 2))
 
-;;; `electric-pair-mode`
-;; Automatically insert matching delimiters (parentheses, quotes, braces, etc)
-(use-package elec-pair
-  :demand t
-  :config (electric-pair-mode)
-  :hook (org-mode . rh/org-electric-pairs)
-  :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\])
-                                 (?\".?\") (?\<.?\>)))
-  :config
-  (defun rh/org-electric-pairs ()
-    "Org pairs for electric-pair-mode."
-    (setq-local electric-pair-pairs (append '((?/.?/) (?_.?_) (?~.?~))))))
-
 ;;; `aggressive-indent'
 ;; Indent aggressively for Lisp and its derivatives
 (use-package aggressive-indent
@@ -34,20 +21,6 @@
          (lisp-mode . aggressive-indent-mode))
   :config
   (setq aggressive-indent-comments-too t))
-
-;;; `rainbow-delimiters'
-;; Different color for each pair of parenthesis
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-;;; `yasnippets'
-;; Use them when abbrevs don't cut it
-(use-package yasnippet
-  :demand t
-  :config
-  (yas-global-mode)
-  :custom
-  (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
 ;;; `lsp'
 (use-package lsp-mode
@@ -98,18 +71,16 @@
   :commands haskell-mode
   :mode "\\.hs\\'" )
 
-;;; `lean4-mode'
+;;; `lean4'
 ;; The ultimate theorem prover and function programming language
 (use-package lean4-mode
   :defer 1
-
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
   :commands lean4-mode
   :mode "\\.lean\\'"
 
   :bind (:map lean4-mode-map
               ("C-c C-t" . rh/lean4-lsp-toggle))
-
   :hook
   (lean4-mode . rh/lean-highlight-types)
 	(lean4-mode . rh/lean-highlight-values)
@@ -157,54 +128,6 @@
 	       (sh-mode . rh/sh-highlight-custom-keywords)
 	       (sh-mode . (lambda ()
 		                  (require 'rh-shell)))))
-
-(use-package outline
-  :demand t
-  :hook ((prog-mode . outline-minor-mode)
-         (text-mode . outline-minor-mode)
-         (outline-minor-mode . outline-show-all)
-	       (outline-minor-mode . outline-hide-body))
-  :init
-  ;; Set the keybinding prefix for built-in outline commands
-  (setq outline-minor-mode-prefix (kbd "C-c @"))
-
-  :config
-  ;; Custom folding indicator (like +)
-  (set-display-table-slot
-   standard-display-table
-   'selective-display
-   (let ((face-offset (* (face-id 'shadow) (ash 1 22))))
-     (vconcat (mapcar (lambda (c) (+ face-offset c)) " +"))))
-
-  (defun rh/outline-toggle-heading ()
-    "Toggle visibility of current outline heading."
-    (interactive)
-    (save-excursion
-      (outline-back-to-heading)
-      (if (outline-invisible-p (line-end-position))
-          (outline-show-subtree)
-        (outline-hide-subtree))))
-
-  (defun rh/outline-toggle-visibility ()
-    "Toggle between fully expanded and folded view of the outline buffer."
-    (interactive)
-    (save-excursion
-      (goto-char (point-min))
-      (if (cl-some (lambda (pos)
-                     (goto-char pos)
-                     (outline-invisible-p (line-end-position)))
-                   (rh/outline-all-heading-positions))
-          (outline-show-all)
-	      (outline-hide-body))))
-
-  (defun rh/outline-all-heading-positions ()
-    "Return a list of positions of all headings in the buffer."
-    (let (positions)
-      (save-excursion
-	      (goto-char (point-min))
-	      (while (re-search-forward outline-regexp nil t)
-          (push (point) positions)))
-      positions)))
 
 (use-package lisp-mode
   :ensure nil
