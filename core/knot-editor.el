@@ -123,7 +123,6 @@
 
            ("C-c s r" . replace-string)
            ("C-c s w" . delete-trailing-whitespace)
-           ("C-c s a" . abbrev-mode)
 
            ("C-c u g" . magit-status)
            ("C-c u m" . notmuch)

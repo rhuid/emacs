@@ -1,11 +1,20 @@
 ;;; knot-defaults.el --- tools which came built-in with emacs -*- lexical-binding: t; -*-
 
+;;; `files'
+(use-package files
+  :ensure nil
+  :demand t
+  :hook (before-save . delete-trailing-whitespace)
+  :config
+  ;; Automatically save place in each file
+  (save-place-mode)
+  ;; Don't generate backup files
+  (setq make-backup-files nil))
+
 ;; Not-so-sane defaults? Beware
 (use-package emacs
   :demand t
-  :ensure nil
-  :hook ((before-save . delete-trailing-whitespace)
-	       (prog-mode   . glyphless-display-mode))
+  :hook (prog-mode . glyphless-display-mode)
 
   :bind (("C-h"   . backward-delete-char)
          ("C-S-h" . backward-kill-word) ; Similar, but with Shift, it kills word instead
@@ -26,17 +35,11 @@
   (setq-default cursor-in-non-selected-windows nil)
   (blink-cursor-mode 0)
 
-  ;; Automatically save place in each file
-  (save-place-mode)
-
   ;; Remove indentation from text in kill-ring
   (kill-ring-deindent-mode)
 
   ;; Shift better reserved to be used as modifier
   (setq shift-select-mode nil)
-
-  ;; Don't generate backup files
-  (setq make-backup-files nil)
 
   ;; Don't ask for confirmation while killing buffers
   (setq kill-buffer-query-functions nil)
@@ -51,6 +54,7 @@
 ;; An underrated killer feature, a double-edged sword, snippets on steroids
 (use-package abbrev
   :ensure nil
+  :bind ("C-c s a" . abbrev-mode)
   :init
   (defun rh/context-sensitive-abbrev-expand (fun &rest args)
     "Advice to prevent abbrev expansion inside comments and strings."
@@ -65,6 +69,7 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
+;;; Calculator
 (use-package calc
   :ensure nil)
 
