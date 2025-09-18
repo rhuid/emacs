@@ -4,6 +4,7 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 
+(defvar rh/default-font-size 15)
 (setq default-frame-alist '((font . "Iosevka Term-15")
                             (fullscreen . maximized))) ; Use fullboth for absolute fullscreen
 

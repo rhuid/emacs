@@ -35,13 +35,19 @@
   ("<f10>"   . rh/toggle-global-font-size)
   ("C-<f10>" . global-text-scale-adjust)
   :config
-  (defvar rh/current-font-size 15
+  (defvar rh/current-font-size rh/default-font-size
     "This is the default font size at startup.")
+
+  (defvar rh/bigger-font-size 20
+    "This is the font size for presentations.")
 
   (defun rh/toggle-global-font-size ()
     "Toggle font size between edit mode and presentation mode."
     (interactive)
-    (setq rh/current-font-size (if (= rh/current-font-size 15) 20 15))
+    (setq rh/current-font-size
+          (if (= rh/current-font-size rh/default-font-size)
+              rh/bigger-font-size
+            rh/default-font-size))
     (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t)))
 
 ;;; `themes'
