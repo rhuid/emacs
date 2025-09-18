@@ -1,8 +1,9 @@
 ;;; knot-special-buffers.el --- For special buffers like ibuffer, magit-section, custom scratch buffers, etc. -*- lexical-binding: t; -*-
 
 (use-package ibuffer
-  :bind (("C-x C-b" . ibuffer)))
+  :bind ("C-x C-b" . ibuffer))
 
+;; Custom scratch buffers
 (use-package emacs
   :bind ("C-c u o" . rh/toggle-org-scratch)
   :config
@@ -24,12 +25,22 @@
   (defun rh/toggle-org-scratch ()
     "Toggle `*org-scratch*` buffer."
     (interactive)
-    (rh/toggle-scratch-buffer "*org-scratch*" #'org-mode "#+TITLE: Org Scratch\n\n"))
+    (rh/toggle-scratch-buffer "*org-scratch*" #'org-mode "#+TITLE: Org Scratch\n\n")))
 
+;; Lean playground (a overpowered scratch buffer)
+(use-package emacs
+  :bind ("C-c u l" . rh/toggle-lean-scratch)
+  :config
   (defun rh/toggle-lean-scratch ()
-    "Toggle `*lean-scratch*` buffer."
+    "Open/reset Lean scratch buffer at ~/.emacs.d/lean-scratch/Main.lean."
     (interactive)
-    (require 'lean4-mode)
-    (rh/toggle-scratch-buffer "*lean-scratch*" #'lean4-mode "/- Lean Scratch Buffer -/\n\n")))
+    (let* ((scratch-dir (expand-file-name "lean-scratch/" user-emacs-directory))
+           (scratch-file (expand-file-name "Main.lean" scratch-dir))
+           (template "import LeanScratch\n\n/- Lean Scratch Buffer -/\n\n"))
+      (with-current-buffer (find-file scratch-file)
+        (erase-buffer)
+        (insert template)
+        (save-buffer)
+        (switch-to-buffer (current-buffer))))))
 
 (provide 'knot-special-buffers)
