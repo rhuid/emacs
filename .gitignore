@@ -6,6 +6,8 @@
 /lib
 /snippets
 
+keymaps.org
+
 # Emacs backup & auto-save
 *~
 \#*\#
@@ -16,12 +18,13 @@ recentf
 history
 lat.tex
 ac-comphist.dat
+.achievements
+.mc-lists.el
 
 # Transient state
 .lsp-session-v1
 projects
 games
-eln-cache/
 elpa/
 cnf/
 
