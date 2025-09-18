@@ -34,13 +34,17 @@
   (defun rh/open-lean-playground ()
     "Lean playground is like a scratch buffer for Lean."
     (interactive)
-    (let* ((scratch-dir (expand-file-name "lean-scratch/" user-emacs-directory))
+    (let* ((scratch-dir (expand-file-name "lib/lean-playground/" user-emacs-directory))
            (scratch-file (expand-file-name "*lean-playground*" scratch-dir))
-           (template "import LeanScratch\n\n/- This is like scratch buffer but for Lean. Play with Lean 4 here. Start proving theorems. -/\n\n"))
+           (template "import LeanPlayground\n\n/- Play with Lean 4 here. Start proving theorems. -/\n\n"))
       (with-current-buffer (find-file scratch-file)
         (erase-buffer)
         (insert template)
-        (save-buffer)
+        (let ((inhibit-message t)) (save-buffer))
+        (setq buffer-offer-save nil
+              make-backup-files nil
+              auto-save-default nil
+              buffer-save-without-query t)
         (lean4-mode)
         (rh/lean4-lsp-toggle)
         (switch-to-buffer (current-buffer))))))
