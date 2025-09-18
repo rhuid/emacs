@@ -130,7 +130,6 @@
            ("C-c s a" . abbrev-mode)
 
            ("C-c u g" . magit-status)
-           ("C-c u l" . rh/toggle-lean-scratch)
            ("C-c u m" . notmuch)
            ("C-c u r" . recentf-open-files)
            ("C-c u s" . rh/eshell-toggle)

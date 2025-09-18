@@ -29,18 +29,20 @@
 
 ;; Lean playground (a overpowered scratch buffer)
 (use-package emacs
-  :bind ("C-c u l" . rh/toggle-lean-scratch)
+  :bind ("C-c u l" . rh/open-lean-playground)
   :config
-  (defun rh/toggle-lean-scratch ()
-    "Open/reset Lean scratch buffer at ~/.emacs.d/lean-scratch/Main.lean."
+  (defun rh/open-lean-playground ()
+    "Lean playground is like a scratch buffer for Lean."
     (interactive)
     (let* ((scratch-dir (expand-file-name "lean-scratch/" user-emacs-directory))
-           (scratch-file (expand-file-name "Main.lean" scratch-dir))
-           (template "import LeanScratch\n\n/- Lean Scratch Buffer -/\n\n"))
+           (scratch-file (expand-file-name "*lean-playground*" scratch-dir))
+           (template "import LeanScratch\n\n/- This is like scratch buffer but for Lean. Play with Lean 4 here. Start proving theorems. -/\n\n"))
       (with-current-buffer (find-file scratch-file)
         (erase-buffer)
         (insert template)
         (save-buffer)
+        (lean4-mode)
+        (rh/lean4-lsp-toggle)
         (switch-to-buffer (current-buffer))))))
 
 (provide 'knot-special-buffers)
