@@ -3,6 +3,8 @@
 /private
 /emms/
 /places
+lib/*
+snippets/*
 
 # Emacs backup & auto-save
 *~
@@ -55,4 +57,4 @@ tramp
 # Literate programming outputs
 *.pdf
 *.html
-*.tex
+*.tex/.lake
