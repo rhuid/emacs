@@ -111,11 +111,7 @@
 ;;;; Global keys
 
 (dolist (binding
-         '(("<f9>"    . balance-windows)
-
-           ("C-S-f"   . follow-mode)
-
-           ("C-c e p" . emm-spause)
+         '(("C-c e p" . emm-spause)
            ("C-c e s" . emms-stop)
            ("C-c e n" . emms-next)
            ("C-c e b" . emms-previous)
