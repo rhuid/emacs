@@ -91,8 +91,6 @@
 (use-package keymap
   :ensure nil
   :bind
-  ("C-S-t" . rh/outline-toggle-heading)
-  ("C-S-o" . rh/outline-toggle-visibility)
   ("C-c e p" . emms-pause)
   ("C-c e s" . emms-stop)
   ("C-c e n" . emms-next)
@@ -104,7 +102,6 @@
   ("C-c s r" . replace-string)
   ("C-c s w" . delete-trailing-whitespace)
 
-  ("C-c u g" . magit-status)
   ("C-c u m" . notmuch)
   ("C-c u r" . recentf-open-files)
   ("C-c u s" . rh/eshell-toggle)
