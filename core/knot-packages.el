@@ -1,4 +1,4 @@
-;;; knot-extra-tools.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
+;;; knot-packages.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
 ;;; Things about windows
 
@@ -19,7 +19,6 @@
   :init (achievements-mode))
 
 ;;; Play music with EMMS. I am using mpv as backend
-
 (use-package emms
   :vc (:url "https://git.savannah.gnu.org/git/emms.git")
   :config
@@ -32,13 +31,13 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-;;; Magit is a super good interface for Git
-
+;;; Magit is a superb interface for Git
 (use-package magit
   :commands (magit-status magit-log)
-  :bind (:map magit-mode-map
-              ("." . rh/magit-quick-commit)
-              ("," . rh/magit-quick-amend))
+  :bind ("C-c u g" .  magit-status)
+  (:map magit-mode-map
+        ("." . rh/magit-quick-commit)
+        ("," . rh/magit-quick-amend))
 
   :config
   (setq magit-display-buffer-function
@@ -62,4 +61,4 @@
 (use-package sudo-edit
   :commands (sudo-edit))
 
-(provide 'knot-extra-tools)
+(provide 'knot-packages)
