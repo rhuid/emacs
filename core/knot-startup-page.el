@@ -24,23 +24,24 @@
 
 ;; Visual customizations
 (add-hook 'emacs-startup-hook
-	        (lambda ()
-	          (with-current-buffer "*scratch*"
-	            (setq-local buffer-read-only   t
-			                    left-margin-width  2
-			                    right-margin-width 2
-			                    display-line-numbers nil
-			                    meow-cursor-type-normal '(bar . 0)
-		                      meow-cursor-type-keypad '(bar . 0))
-	            (set-window-buffer (selected-window) (current-buffer)))))
+          (lambda ()
+            (with-current-buffer "*scratch*"
+              (setq-local buffer-read-only   t
+                          left-margin-width  2
+                          right-margin-width 2
+                          display-line-numbers nil
+                          meow-cursor-type-normal '(bar . 0)
+                          meow-cursor-type-keypad '(bar . 0))
+              (set-window-buffer (selected-window) (current-buffer)))))
 
-;; Delete other windows and return home (startup screen)
-(defun rh/return-home ()
-  "Delete other windows and return to the startup screen."
-  (interactive)
-  (delete-other-windows)
-  (switch-to-buffer "*scratch*"))
-
-(global-set-key (kbd "C-S-q") #'rh/return-home)
+;; Return home
+(use-package emacs
+  :bind ("C-S-q" . rh/return-home)
+  :config
+  (defun rh/return-home ()
+    "Delete other windows and return to the startup screen."
+    (interactive)
+    (delete-other-windows)
+    (switch-to-buffer "*scratch*")))
 
 (provide 'knot-startup-page)
