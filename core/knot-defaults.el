@@ -127,6 +127,12 @@
   :init (repeat-mode)
   :custom (repeat-exit-timeout 5))
 
+;;; `vundo'
+(use-package vundo
+  :bind (("C-/"   . undo)
+         ("C-x u" . vundo)
+         ("M-U"   . undo-redo)))
+
 ;;; Date formats for use in yasnippet
 (defun rh/date-format-candidates ()
   "Return an alist of (display . format-string) for yasnippet date choices."
