@@ -44,10 +44,7 @@
   (setq kill-buffer-query-functions nil)
 
   ;; All confirmations prompts be y or n
-  (fset 'yes-or-no-p 'y-or-n-p)
-
-  ;; Calendar
-  (add-hook 'calendar-today-visible-hook #'calendar-mark-today))
+  (fset 'yes-or-no-p 'y-or-n-p))
 
 ;;; Abbreviations
 ;; An underrated killer feature, a double-edged sword, snippets on steroids
@@ -68,9 +65,16 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
-;;; Calculator
+;;; `calc'
 (use-package calc
-  :ensure nil)
+  :ensure nil
+  :bind ("C-c c c" . calc))
+
+;;; `calendar'
+(use-package calendar
+  :ensure nil
+  :bind ("C-c x c" . calendar)
+  :hook (calendar-today-visible . calendar-mark-today))
 
 ;;; `eldoc'
 (use-package eldoc
@@ -79,6 +83,7 @@
   :config
   (setq eldoc-idle-delay 0.2))
 
+;;; `eww'
 (use-package eww
   :ensure nil
   :bind (("C-c w w" . eww))
@@ -121,5 +126,16 @@
   :ensure nil
   :init (repeat-mode)
   :custom (repeat-exit-timeout 5))
+
+;;; Date formats for use in yasnippet
+(defun rh/date-format-candidates ()
+  "Return an alist of (display . format-string) for yasnippet date choices."
+  (mapcar (lambda (fmt)
+            (cons (format "%-20s → %s" fmt (format-time-string fmt)) fmt))
+          '("%Y-%m-%d"          ;; 2025-09-19
+            "%d/%m/%Y"          ;; 19/09/2025
+            "%A, %B %d, %Y"     ;; Friday, September 19, 2025
+            "%b %d, %Y"         ;; Sep 19, 2025
+            "%Y-%m-%d %H:%M"))) ;; 2025-09-19 20:31
 
 (provide 'knot-defaults)
