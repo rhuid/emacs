@@ -1,4 +1,4 @@
-;;; knot-defaults.el --- tools which came built-in with emacs -*- lexical-binding: t; -*-
+;;; knot-defaults.el --- Some not-so-sane defaults? -*- lexical-binding: t; -*-
 
 ;;; `files'
 (use-package files
@@ -11,7 +11,6 @@
   ;; Don't generate backup files
   (setq make-backup-files nil))
 
-;; Not-so-sane defaults? Beware
 (use-package emacs
   :demand t
   :hook (prog-mode . glyphless-display-mode)
@@ -88,6 +87,29 @@
   (setq shr-use-colors nil)
   (setq shr-width fill-column))
 
+;;; Some global keys here instead of lots of `global-set-key'
+(use-package keymap
+  :ensure nil
+  :bind
+  ("C-S-t" . rh/outline-toggle-heading)
+  ("C-S-o" . rh/outline-toggle-visibility)
+  ("C-c e p" . emm-spause)
+  ("C-c e s" . emms-stop)
+  ("C-c e n" . emms-next)
+  ("C-c e b" . emms-previous)
+
+  ("C-c o b" . TeX-fold-buffer)
+  ("C-c o B" . TeX-fold-clearout-buffer)
+
+  ("C-c s r" . replace-string)
+  ("C-c s w" . delete-trailing-whitespace)
+
+  ("C-c u g" . magit-status)
+  ("C-c u m" . notmuch)
+  ("C-c u r" . recentf-open-files)
+  ("C-c u s" . rh/eshell-toggle)
+  ("C-c u v" . rh/vterm-toggle))
+
 ;;; `minibuffer'
 (use-package minibuffer
   :demand t
@@ -95,5 +117,12 @@
   :hook (minibuffer-mode . savehist-mode)
   :config (recentf-mode)
   :custom (history-delete-duplicates t))
+
+;;; `repeat'
+;; Repeat commands without retyping the prefix key
+(use-package repeat
+  :ensure nil
+  :init (repeat-mode)
+  :custom (repeat-exit-timeout 5))
 
 (provide 'knot-defaults)
