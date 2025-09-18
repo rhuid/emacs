@@ -8,17 +8,19 @@
   (show-paren-delay 0)
   (show-paren-when-point-inside-paren t))
 
-;;; A minimal modeline
-(setq-default mode-line-format
-              '(" " mode-line-buffer-identification " | "
-                mode-name " | "
-                (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | "
-                (vc-mode vc-mode)))
+;;; `modeline'
+(use-package mode-line
+  :ensure nil
+  :init
+  (setq-default mode-line-format
+                '(" " mode-line-buffer-identification " | "
+                  mode-name " | "
+                  (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | "
+                  (vc-mode vc-mode))))
 
 ;;; `hide-mode-line'
 ;; The modeline is expendable in some major modes
 (use-package hide-mode-line
-  :demand t
   :bind ("C-<f7>" . global-hide-mode-line-mode)
   :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
 
@@ -92,7 +94,6 @@
 
 ;;; `prettify-symbols'
 (use-package emacs
-  :ensure nil
   :hook ((prog-mode . rh/provide-pretty-symbols))
   :config
   (global-prettify-symbols-mode 1)
