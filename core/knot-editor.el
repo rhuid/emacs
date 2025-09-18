@@ -77,13 +77,6 @@
       (call-interactively 'meow-line-expand)
     (call-interactively 'meow-line)))
 
-;;; `repeat'
-;; Repeat commands without retyping the prefix key
-(use-package repeat
-  :ensure nil
-  :init (repeat-mode)
-  :custom (repeat-exit-timeout 5))
-
 ;;; `expand-region'
 ;; Select regions by semantic units
 (use-package expand-region
@@ -99,37 +92,6 @@
          ("C-S-p" . mc/mark-previous-like-this)
          ("C->"   . mc/skip-to-next-like-this)
          ("C-<"   . mc/skip-to-previous-like-this)))
-
-;;;; Prefixes for which-key
-
-(with-eval-after-load 'which-key
-  (dolist (binding '(("C-c e" . "emms")
-		                 ("C-c s" . "string-manipulation")
-		                 ("C-c u" . "utilities")))
-    (which-key-add-key-based-replacements (car binding) (cdr binding))))
-
-;;;; Global keys
-
-(dolist (binding
-         '(("C-c e p" . emm-spause)
-           ("C-c e s" . emms-stop)
-           ("C-c e n" . emms-next)
-           ("C-c e b" . emms-previous)
-
-           ("C-S-o"   . rh/outline-toggle-visibility)
-           ("C-S-t"   . rh/outline-toggle-heading)
-           ("C-c o b" . TeX-fold-buffer)
-           ("C-c o B" . TeX-fold-clearout-buffer)
-
-           ("C-c s r" . replace-string)
-           ("C-c s w" . delete-trailing-whitespace)
-
-           ("C-c u g" . magit-status)
-           ("C-c u m" . notmuch)
-           ("C-c u r" . recentf-open-files)
-           ("C-c u s" . rh/eshell-toggle)
-           ("C-c u v" . rh/vterm-toggle)))
-  (global-set-key (kbd (car binding)) (cdr binding)))
 
 ;;; My modal design built on `meow'
 ;; Requires `avy' and `consult'

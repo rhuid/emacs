@@ -116,14 +116,16 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-;;;; Pop up available keybindings in the minibuffer as you type the keys
-
+;;; Pop up available keybindings as you type the keys
 (use-package which-key
-  :demand t
+  :init (which-key-mode)
   :config
   (setq which-key-idle-delay 0.5
         which-key-popup-type 'minibuffer)
-  (which-key-mode))
+  (dolist (binding '(("C-c e" . "emms")
+                     ("C-c s" . "string-manipulation")
+                     ("C-c u" . "utilities")))
+    (which-key-add-key-based-replacements (car binding) (cdr binding))))
 
 ;;;; I prefer corfu over company for completion
 
