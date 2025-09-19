@@ -69,9 +69,21 @@
   (emms-mode-line-mode 1))
 
 ;;; `hippie-expand'
-(use-package hippie-expand
-  :ensure nil
-  :bind ("C-M-/" . hippie-expand))
+(use-package hippie-exp
+  :bind ("C-E" . hippie-expand)
+  :custom
+  (hippie-expand-try-functions-list
+   '(try-complete-file-name
+     try-complete-file-name-partially
+     try-expand-dabbrev-visible
+     try-expand-dabbrev
+     try-expand-dabbrev-all-buffers
+     try-expand-list
+     try-expand-line
+     try-expand-dabbrev-from-kill
+     try-complete-lisp-symbol
+     try-complete-lisp-symbol-partially
+     try-expand-all-abbrevs)))
 
 ;;; `magit'
 (use-package magit
