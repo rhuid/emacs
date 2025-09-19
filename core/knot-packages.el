@@ -85,6 +85,14 @@
      try-complete-lisp-symbol-partially
      try-expand-all-abbrevs)))
 
+;;; `jinx' : https://github.com/minad/jinx
+;; Requires enchant and dictionary backend
+;; I am using `hunspell-en_us'
+(use-package jinx
+  :init (global-jinx-mode)
+  :bind ("C-S-c" . jinx-correct)
+  :custom (jinx-languages "en_US-large"))
+
 ;;; `magit'
 (use-package magit
   :commands (magit-status magit-log)
