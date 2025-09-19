@@ -73,13 +73,10 @@
 (use-package emacs
   :bind ("C-c s e" . rh/enclose-region)
   :config
-  (defun rh/enclose-region (beg end opener)
-    "Enclose region with OPENER and its matching closer."
-    (interactive
-     (list (region-beginning) (region-end)
-           (let ((electric-pair-mode nil)) ;; disable pairing in prompt
-             (read-string "Open (default \"): "))))
-    (let* ((open (if (string-empty-p opener) "\"" opener))
+  (defun rh/enclose-region (beg end char)
+    "Surround region with CHAR and its matching pair."
+    (interactive "r\ncEnter opener: ")
+    (let* ((open (string char))
            (close (pcase open
                     ("(" ")")
                     ("[" "]")
@@ -87,7 +84,8 @@
                     ("<" ">")
                     ("'" "'")
                     ("`" "`")
-                    (_ "\"")))) ;; fallback
+                    ("\"" "\"")
+                    (_ open)))) ;; fallback: repeat same char
       (save-excursion
         (goto-char end)
         (insert close)
