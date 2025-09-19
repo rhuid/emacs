@@ -68,6 +68,11 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
+;;; `hippie-expand'
+(use-package hippie-expand
+  :ensure nil
+  :bind ("C-M-/" . hippie-expand))
+
 ;;; `magit'
 (use-package magit
   :commands (magit-status magit-log)
