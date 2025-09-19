@@ -70,7 +70,7 @@
 
 ;;; `hippie-expand'
 (use-package hippie-exp
-  :bind ("C-E" . hippie-expand)
+  :bind ("C-S-e" . hippie-expand)
   :custom
   (hippie-expand-try-functions-list
    '(try-complete-file-name
@@ -161,6 +161,11 @@
         (while (re-search-forward outline-regexp nil t)
           (push (point) positions)))
       positions)))
+
+;;; Move where I mean
+(use-package mwim
+  :bind (("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)))
 
 ;;; `rainbow-delimiters'
 ;; Different color for each pair of parenthesis
