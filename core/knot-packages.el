@@ -154,6 +154,15 @@
 (use-package sudo-edit
   :commands (sudo-edit))
 
+;;; `vundo'
+(use-package vundo
+  :bind (("C-/"   . undo)
+         ("C-x u" . vundo)
+         ("M-U"   . undo-redo))
+  :custom
+  (vundo-compact-display t)
+  (undo-limit (6 * 1024 * 1024)))
+
 ;;; `yasnippet'
 ;; Use them when abbrevs don't cut it
 (use-package yasnippet
