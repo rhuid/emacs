@@ -96,7 +96,7 @@
 (use-package emacs
   :hook ((prog-mode . rh/provide-pretty-symbols))
   :config
-  (global-prettify-symbols-mode 1)
+  (global-prettify-symbols-mode)
   (defun rh/provide-pretty-symbols ()
     "Provide some pretty symbols."
     (interactive)

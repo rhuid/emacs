@@ -1,6 +1,6 @@
 ;;; knot-startup-page.el --- A minimal no-bullshit startup page -*- lexical-binding: t; -*-
 
-;; A random line or poem every time you start emacs!
+;; A random line or poem every time you start Emacs!
 (defun rh/random-excerpt (file)
   "Return a random quote or poem from FILE, separated by lines with ---."
   (with-temp-buffer

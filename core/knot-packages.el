@@ -57,6 +57,10 @@
 
 ;;; Play music with EMMS. I am using mpv as backend
 (use-package emms
+  :bind (("C-c e p" . emms-pause)
+         ("C-c e s" . emms-stop)
+         ("C-c e n" . emms-next)
+         ("C-c e b" . emms-previous))
   :vc (:url "https://git.savannah.gnu.org/git/emms.git")
   :config
   (setq emms-player-list '(emms-player-mpv)
@@ -191,7 +195,8 @@
          ("M-U"   . undo-redo))
   :custom
   (vundo-compact-display t)
-  (undo-limit (6 * 1024 * 1024)))
+  ;; (undo-limit (6 * 1024 * 1024))
+  )
 
 ;;; `yasnippet'
 ;; Use them when abbrevs don't cut it

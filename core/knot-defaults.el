@@ -11,23 +11,38 @@
   ;; Don't generate backup files
   (setq make-backup-files nil))
 
-(use-package emacs
-  :demand t
-  :hook (prog-mode . glyphless-display-mode)
+;;; `keymap'
+;; Remap some of the basic commands
+;; Shift is better used as a modifier
+(use-package keymap
+  :ensure nil
+  :config
+  (setq shift-select-mode nil)
+  :bind
+  ("C-h"   . backward-delete-char)
+  ("C-S-h" . backward-kill-word)
+  ("C-S-d" . kill-word)
 
-  :bind (("C-h"   . backward-delete-char)
-         ("C-S-h" . backward-kill-word) ; Similar, but with Shift, it kills word instead
-         ("C-S-d" . kill-word))
+  ("C-c o b" . TeX-fold-buffer)
+  ("C-c o B" . TeX-fold-clearout-buffer)
+
+  ("C-c s r" . replace-string)
+  ("C-c s w" . delete-trailing-whitespace))
+
+;;; Concerning lines
+(use-package emacs
+  :config
+  (setq-default fill-column 80)
+  (global-visual-line-mode)
+  (global-hl-line-mode)
+  (global-display-line-numbers-mode))
+
+(use-package emacs
+  :hook (prog-mode . glyphless-display-mode)
   :config
   ;; Automatically refresh the buffer when files change on disk
   (global-auto-revert-mode)
 
-  ;; Automatic line wrapping
-  (global-visual-line-mode)
-
-  (global-hl-line-mode)
-  (global-prettify-symbols-mode)
-  (global-display-line-numbers-mode)
   (global-subword-mode)
 
   (setq-default cursor-type 'bar)
@@ -36,9 +51,6 @@
 
   ;; Remove indentation from text in kill-ring
   (kill-ring-deindent-mode)
-
-  ;; Shift better reserved to be used as modifier
-  (setq shift-select-mode nil)
 
   ;; Don't ask for confirmation while killing buffers
   (setq kill-buffer-query-functions nil)
@@ -92,26 +104,6 @@
   (setq shr-use-colors nil)
   (setq shr-width fill-column))
 
-;;; Some global keys here instead of lots of `global-set-key'
-(use-package keymap
-  :ensure nil
-  :bind
-  ("C-c e p" . emms-pause)
-  ("C-c e s" . emms-stop)
-  ("C-c e n" . emms-next)
-  ("C-c e b" . emms-previous)
-
-  ("C-c o b" . TeX-fold-buffer)
-  ("C-c o B" . TeX-fold-clearout-buffer)
-
-  ("C-c s r" . replace-string)
-  ("C-c s w" . delete-trailing-whitespace)
-
-  ("C-c u m" . notmuch)
-  ("C-c u r" . recentf-open-files)
-  ("C-c u s" . rh/eshell-toggle)
-  ("C-c u v" . rh/vterm-toggle))
-
 ;;; `minibuffer'
 (use-package minibuffer
   :demand t
@@ -127,7 +119,7 @@
   :init (repeat-mode)
   :custom (repeat-exit-timeout 5))
 
-;;; Date formats for use in yasnippet
+;;; Date formats for use in `yasnippet'
 (defun rh/date-format-candidates ()
   "Return an alist of (display . format-string) for yasnippet date choices."
   (mapcar (lambda (fmt)

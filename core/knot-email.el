@@ -8,7 +8,7 @@
 (use-package notmuch
   :load-path (lambda () (getenv "NOTMUCH_EMACS"))
   :commands (notmuch notmuch-search notmuch-tree notmuch-show)
-  :bind
+  :bind ("C-c u m" . notmuch)
   (:map notmuch-hello-mode-map
         ("<f5>" . rh/mbsync-sync))
   (:map notmuch-search-mode-map
