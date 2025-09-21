@@ -46,6 +46,8 @@
 ;; Extra nice UI for LSP
 (use-package lsp-ui
   :after lsp-mode
+  :bind (:map lsp-ui-mode-map
+              ("C-c C-u" . lsp-ui-doc-glance))
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
@@ -55,8 +57,10 @@
   (lsp-ui-sideline-diagnostic-max-lines 3)
   ;; Disable doc/info of symbols and variables on the sideline
   (lsp-ui-sideline-show-hover nil)
-  ;; Disable the pop-up doc over mouse hover
-  (lsp-ui-doc-enable t))
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-max-width 120)
+  (lsp-ui-doc-max-height 30))
 
 ;;; Syntax checking
 (use-package flycheck
