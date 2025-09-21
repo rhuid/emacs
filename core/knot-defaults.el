@@ -6,6 +6,7 @@
   :demand t
   :hook (before-save . delete-trailing-whitespace)
   :config
+  (setq-default require-final-newline t)
   ;; Automatically save place in each file
   (save-place-mode)
   ;; Don't generate backup files
@@ -40,21 +41,20 @@
 (use-package emacs
   :hook (prog-mode . glyphless-display-mode)
   :config
-  ;; Automatically refresh the buffer when files change on disk
-  (global-auto-revert-mode)
-
-  (global-subword-mode)
-
   (setq-default cursor-type 'bar)
   (setq-default cursor-in-non-selected-windows nil)
   (blink-cursor-mode 0)
-
+  ;; Disable mouse pointer as while typing
+  (setq make-pointer-invisible t)
+  ;; Enable all disabled commands
+  (setq disabled-command-function nil)
+  ;; Automatically refresh the buffer when files change on disk
+  (global-auto-revert-mode)
+  (global-subword-mode)
   ;; Remove indentation from text in kill-ring
   (kill-ring-deindent-mode)
-
   ;; Don't ask for confirmation while killing buffers
   (setq kill-buffer-query-functions nil)
-
   ;; All confirmations prompts be y or n
   (fset 'yes-or-no-p 'y-or-n-p))
 
