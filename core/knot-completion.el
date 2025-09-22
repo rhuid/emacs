@@ -3,9 +3,7 @@
 ;;;; Mostly completion frameworks. There are lots of individual packages which all work together well.
 
 (use-package vertico
-  :demand t
-  :vc (:url "https://github.com/minad/vertico")
-  :config (vertico-mode)
+  :init (vertico-mode)
   :bind (("C-x f" . find-file)
          :map vertico-map
          ("C-j"   . vertico-exit-input)
@@ -24,20 +22,14 @@
 	            ("DEL" . vertico-directory-delete-char)
 	            ("C-w" . vertico-directory-delete-word)))
 
-;;;; Type multiple words in any order to match candidates
-
+;;; `orderless' : Type words in any order to match candidates
 (use-package orderless
-  :demand t
-  :vc (:url "https://github.com/oantolin/orderless")
   :init
   (setq completion-styles '(orderless partial-completion)
         completion-category-defaults nil))
 
-;;;; Add extra info to candidates in the minibuffer, such as docstring summaries and more
-
+;;; `marginalia' : Add documentation to minibuffer results
 (use-package marginalia
-  :demand t
-  :vc (:url "https://github.com/minad/marginalia")
   :init (marginalia-mode))
 
 (use-package consult
@@ -127,41 +119,35 @@
                      ("C-c u" . "utilities")))
     (which-key-add-key-based-replacements (car binding) (cdr binding))))
 
-;;;; I prefer corfu over company for completion
-
+;;; `corfu'
 (use-package corfu
-  :demand t
+  :init (global-corfu-mode)
   :after orderless
   :hook ((corfu-mode . corfu-history-mode)
          (corfu-mode . corfu-indexed-mode)
          (corfu-mode . corfu-popupinfo-mode))
-  :init
-  (global-corfu-mode)
   :custom
-  (corfu-auto t)                        ;; Enable auto popup
+  (corfu-auto t)                    ;; Enable auto popup
   (corfu-auto-delay 0.2)
   (corfu-minimum-prefix-length 2)
   (corfu-preview-current t)
-  (corfu-on-exact-match t)              ;; Auto-select exact match
+  (corfu-on-exact-match t)          ;; Auto-select exact match
   (corfu-quit-at-boundary t)
   (corfu-quit-no-match t)
-  (corfu-preselect 'prompt)             ;; Preselect candidate
-  (corfu-cycle t))                      ;; Cycle through candidates
+  (corfu-preselect 'prompt)         ;; Preselect candidate
+  (corfu-cycle t)
+  :config
 
-(with-eval-after-load 'corfu
-
-  ;; Disable some annoying stuffs like inserting on TAB or RET
+  (define-key corfu-map (kbd "C-n") 'corfu-next)
+  (define-key corfu-map (kbd "C-e") 'corfu-previous)
+  (define-key corfu-map (kbd "C-i") 'corfu-insert)
   (define-key corfu-map (kbd "RET") nil)
   (define-key corfu-map (kbd "<return>") nil)
-  (define-key corfu-map (kbd "TAB") nil)
-  (define-key corfu-map (kbd "<tab>") nil)
-  (define-key corfu-map (kbd "C-j") nil)
-  (define-key corfu-map (kbd "C-m") nil)
 
-  ;; Use C-p and C-n to navigate through the corfu suggestions, and C-SPC to insert the selection
-  (define-key corfu-map (kbd "C-n") #'corfu-next)
-  (define-key corfu-map (kbd "C-p") #'corfu-previous)
-  (define-key corfu-map (kbd "C-SPC") #'corfu-insert))
+  (define-key corfu-mode-map (kbd "TAB") nil)
+  (define-key corfu-mode-map (kbd "<tab>") nil)
+  (define-key corfu-mode-map (kbd "C-j") nil)
+  (define-key corfu-mode-map (kbd "C-m") nil))
 
 (use-package cape
   :after corfu
