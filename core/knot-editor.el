@@ -106,22 +106,6 @@
       (call-interactively 'meow-line-expand)
     (call-interactively 'meow-line)))
 
-;;; `expand-region'
-;; Select regions by semantic units
-(use-package expand-region
-  :demand t
-  :bind ("C-=" . er/expand-region))
-
-;;; `multiple-cursors'
-;; An army of shadow clones
-(use-package multiple-cursors
-  :bind (("C-S-l" . mc/edit-lines)
-         ("C-S-a" . mc/mark-all-like-this)
-         ("C-S-n" . mc/mark-next-like-this)
-         ("C-S-p" . mc/mark-previous-like-this)
-         ("C->"   . mc/skip-to-next-like-this)
-         ("C-<"   . mc/skip-to-previous-like-this)))
-
 ;;; My modal design built on `meow'
 ;; Requires `avy' and `consult'
 (defun rh/modal-setup ()

@@ -72,6 +72,18 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
+;;; `expand-region'
+;; Select regions by semantic units
+(use-package expand-region
+  :demand t
+  :bind (("<backspace>"   . er/expand-region)
+         ("S-<backspace>" . er/contract-region)))
+
+;;;`keyfreq' : Track commands frequency
+(use-package keyfreq
+  :init (keyfreq-mode)
+  :config (keyfreq-autosave-mode))
+
 ;;; `hippie-expand'
 (use-package hippie-exp
   :bind ("C-S-e" . hippie-expand)
@@ -121,6 +133,16 @@
     (interactive)
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
+
+;;; `multiple-cursors'
+;; An army of shadow clones
+(use-package multiple-cursors
+  :bind (("C-S-l" . mc/edit-lines)
+         ("C-S-a" . mc/mark-all-like-this)
+         ("C-S-n" . mc/mark-next-like-this)
+         ("C-S-p" . mc/mark-previous-like-this)
+         ("C->"   . mc/skip-to-next-like-this)
+         ("C-<"   . mc/skip-to-previous-like-this)))
 
 ;;; `outline'
 (use-package outline
