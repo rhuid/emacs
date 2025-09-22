@@ -137,17 +137,16 @@
   (corfu-preselect 'prompt)         ;; Preselect candidate
   (corfu-cycle t)
   :config
-
   (define-key corfu-map (kbd "C-n") 'corfu-next)
-  (define-key corfu-map (kbd "C-e") 'corfu-previous)
-  (define-key corfu-map (kbd "C-i") 'corfu-insert)
+  (define-key corfu-map (kbd "C-p") 'corfu-previous)
+  (define-key corfu-map (kbd "C-e") 'corfu-insert)
   (define-key corfu-map (kbd "RET") nil)
-  (define-key corfu-map (kbd "<return>") nil)
+  (define-key corfu-map (kbd "TAB") nil)
 
-  (define-key corfu-mode-map (kbd "TAB") nil)
-  (define-key corfu-mode-map (kbd "<tab>") nil)
-  (define-key corfu-mode-map (kbd "C-j") nil)
-  (define-key corfu-mode-map (kbd "C-m") nil))
+  (define-key corfu-map (kbd "<return>") nil)
+  (define-key corfu-map (kbd "<tab>") nil)
+  (define-key corfu-map (kbd "C-j") nil)
+  (define-key corfu-map (kbd "C-m") nil))
 
 (use-package cape
   :after corfu

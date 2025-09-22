@@ -223,9 +223,7 @@
 ;;; `yasnippet'
 ;; Use them when abbrevs don't cut it
 (use-package yasnippet
-  :demand t
-  :config
-  (yas-global-mode)
+  :init (yas-global-mode)
   :custom
   (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
