@@ -20,9 +20,10 @@
   :config
   (setq shift-select-mode nil)
   :bind
-  ("C-h"   . backward-delete-char)
-  ("C-S-h" . backward-kill-word)
-  ("C-S-d" . kill-word)
+  ("C-h"           . backward-delete-char)
+  ("C-S-h"         . backward-kill-word)
+  ("C-<backspace>" . mode-line-other-buffer)
+  ("C-S-d"         . kill-word)
 
   ("C-c o b" . TeX-fold-buffer)
   ("C-c o B" . TeX-fold-clearout-buffer)
