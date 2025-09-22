@@ -131,33 +131,34 @@
    '("8" . meow-expand-8)               '("9" . meow-expand-9)
    '("-" . negative-argument)
    '(";" . meow-reverse)
-   '(":" . mode-line-other-buffer)
+   '(":" . mode-line-other-buffer) ;; redundant?
    '("," . meow-inner-of-thing)         '("." . meow-bounds-of-thing)
    '("<" . meow-beginning-of-thing)     '(">" . meow-end-of-thing)
    '("/" . meow-visit)
-   '("a" . meow-append)                 '("A" . meow-open-below)
-   '("b" . meow-back-word)              '("B" . meow-back-symbol)
+   ;; '("a" . rh/avy-goto-char-timer-select)                 '("A" . meow-open-below)
+   '("b" . meow-block)                  '("B" . meow-to-block)
    '("c" . meow-change)
    '("d" . rh/delete-in-context)        '("D" . delete-all-space)
    '("e" . meow-prev-expand)            '("E" . scroll-down-command)
-   '("f" . rh/insert-space)
+   '("f" . meow-next-word)              '("F" . forward-paragraph)
    '("g" . meow-cancel-selection)       '("G" . meow-grab)
    '("h" . meow-mark-word)              '("H" . meow-mark-symbol)
+
    '("i" . meow-right-expand)
-   '("j" . meow-join)                   '("J" . rh/join-line)
+   '("j" . rh/join-line)                '("J" . meow-join)
    '("k" . rh/kill-in-context)          '("K" . avy-move-region)
    '("l" . meow-line)                   '("L" . consult-goto-line)
    '("m" . meow-left-expand)
    '("n" . meow-next-expand)            '("N" . scroll-up-command)
-   '("o" . meow-block)                  '("O" . meow-to-block)
+   '("o" . meow-open-below)             '("O" . meow-open-above)
    '("p" . rh/put-into-kill-ring)       '("P" . avy-copy-region)
    '("q" . meow-quit)                   '("Q" . delete-window)
    '("r" . meow-replace)
-   '("s" . meow-insert)                 '("S" . meow-open-above)
+   '("s" . meow-insert-mode)            ;; '("S" . meow-open-above)
    '("t" . meow-till-expand)            '("T" . meow-swap-grab)
    '("u" . meow-undo)                   '("U" . meow-undo-in-selection)
    '("v" . meow-search)
-   '("w" . meow-next-word)              '("W" . meow-next-symbol)
+   '("w" . meow-back-word)              '("W" . backward-paragraph)
    '("x" . delete-char)
    '("y" . yank)                        '("Y" . yank-pop)
    '("z" . meow-pop-selection)
@@ -166,51 +167,14 @@
 ;;; `meow'
 (use-package meow
   :demand t
-  :vc (:url "https://github.com/meow-edit/meow")
-  :hook ((post-self-insert-hook . rh/go-normal-state))
   :config
   (rh/modal-setup)
   (meow-global-mode 1)
-  (define-key meow-insert-state-keymap [escape] nil)
   (define-key meow-motion-state-keymap [escape] nil)
-
-  (setq meow-cursor-type-motion '(bar . 0)) ; Remove cursor in motion mode
-  (setq meow-expand-hint-remove-delay 0) ; Remove that annoying position hint while selecting
+  (setq meow-cursor-type-motion '(bar . 0))
+  (setq meow-expand-hint-remove-delay 0)
   (setq meow-keypad-message nil
         meow-keypad-self-insert-undefined nil
-        meow-use-clipboard t)
-
-  (defun rh/go-normal-state ()
-    "Type 'ntn' to go to normal state from insert state."
-    (when (and (eq meow--current-state 'insert)
-               (>= (point) 3)
-               (string= (buffer-substring-no-properties (-(point) 3) (point)) "ntn"))
-      (delete-region (- (point) 3) (point)) ; Delete "ntn"
-      (meow-normal-mode)
-      t))
-
-  (defcustom rh/esc-timeout 0.125
-    "Timeout (seconds) to wait after ESC in insert state for a following key.
-If no key arrives within this interval, ESC will switch to normal (meow)."
-    :type 'number
-    :group 'rh)
-
-  (defun rh/esc-in-insert-state ()
-    "If another key follows within `rh/esc-timeout`, let ESC act as Meta prefix.
-If nothing follows within the timeout, switch to meow normal state."
-    (interactive)
-    ;; read an event with timeout; returns nil if none
-    (let ((evt (read-event nil nil rh/esc-timeout)))
-      (if evt
-          ;; A key was pressed: push ESC then the key back onto unread events, so process ESC followed by that key (i.e. Meta+key).
-          (let ((esc-events (listify-key-sequence (kbd "ESC")))
-                (evt-list (if (vectorp evt)
-                              (append (listify-key-sequence evt) nil) (list evt))))
-            (setq unread-command-events
-                  (append esc-events evt-list unread-command-events)))
-
-        (meow-normal-mode))))
-
-  (define-key meow-insert-state-keymap (kbd "<escape>") #'rh/esc-in-insert-state))
+        meow-use-clipboard t))
 
 (provide 'knot-editor)
