@@ -56,11 +56,9 @@
   (cond ((use-region-p)
          (let ((inhibit-read-only t))
            (call-interactively 'kill-ring-save)))
-
         ((not (string-blank-p (string-trim (thing-at-point 'line t))))
          (let ((inhibit-read-only t))
            (kill-ring-save (line-beginning-position) (line-beginning-position 2))))
-
         (t nil)))
 
 ;; helper (lol)
@@ -112,7 +110,6 @@
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
 
   (meow-motion-define-key
-   '(":" . mode-line-other-buffer)
    '("e" . meow-prev))
 
   (meow-leader-define-key
@@ -131,32 +128,31 @@
    '("8" . meow-expand-8)               '("9" . meow-expand-9)
    '("-" . negative-argument)
    '(";" . meow-reverse)
-   '(":" . mode-line-other-buffer) ;; redundant?
+   '(":" . align-regexp)
    '("," . meow-inner-of-thing)         '("." . meow-bounds-of-thing)
    '("<" . meow-beginning-of-thing)     '(">" . meow-end-of-thing)
    '("/" . meow-visit)
-   ;; '("a" . rh/avy-goto-char-timer-select)                 '("A" . meow-open-below)
+   '("a" . er/expand-region)            '("A" . er/contract-region)
    '("b" . meow-block)                  '("B" . meow-to-block)
    '("c" . meow-change)
    '("d" . rh/delete-in-context)        '("D" . delete-all-space)
-   '("e" . meow-prev-expand)            '("E" . scroll-down-command)
+   '("e" . meow-prev-expand)            '("E" . backward-sentence)
    '("f" . meow-next-word)              '("F" . forward-paragraph)
    '("g" . meow-cancel-selection)       '("G" . meow-grab)
    '("h" . meow-mark-word)              '("H" . meow-mark-symbol)
-
-   '("i" . meow-right-expand)
+   '("i" . meow-right-expand)           '("I" . forward-word)
    '("j" . rh/join-line)                '("J" . meow-join)
    '("k" . rh/kill-in-context)          '("K" . avy-move-region)
    '("l" . meow-line)                   '("L" . consult-goto-line)
-   '("m" . meow-left-expand)
-   '("n" . meow-next-expand)            '("N" . scroll-up-command)
+   '("m" . meow-left-expand)            '("M" . backward-word)
+   '("n" . meow-next-expand)            '("N" . forward-sentence)
    '("o" . meow-open-below)             '("O" . meow-open-above)
    '("p" . rh/put-into-kill-ring)       '("P" . avy-copy-region)
    '("q" . meow-quit)                   '("Q" . delete-window)
    '("r" . meow-replace)
-   '("s" . meow-insert-mode)            ;; '("S" . meow-open-above)
+   '("s" . meow-insert-mode)
    '("t" . meow-till-expand)            '("T" . meow-swap-grab)
-   '("u" . meow-undo)                   '("U" . meow-undo-in-selection)
+   '("u" . meow-undo)                   '("U" . vundo)
    '("v" . meow-search)
    '("w" . meow-back-word)              '("W" . backward-paragraph)
    '("x" . delete-char)
