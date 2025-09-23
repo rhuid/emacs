@@ -17,19 +17,38 @@
 ;; Shift is better used as a modifier
 (use-package keymap
   :ensure nil
-  :config
-  (setq shift-select-mode nil)
+  :config (setq shift-select-mode nil)
+  :hook (after-init . rh/ensure-region)
   :bind
   ("C-h"           . backward-delete-char)
   ("C-S-h"         . backward-kill-word)
   ("C-<backspace>" . mode-line-other-buffer)
   ("C-S-d"         . kill-word)
+  ("C-x C-c"       . nil)
+  ("C-x r q"       . save-buffers-kill-terminal)
 
   ("C-c o b" . TeX-fold-buffer)
   ("C-c o B" . TeX-fold-clearout-buffer)
 
   ("C-c s r" . replace-string)
-  ("C-c s w" . delete-trailing-whitespace))
+  ("C-c s w" . delete-trailing-whitespace)
+  :config
+  (defun rh/ensure-region ()
+    "Make motion commands select or extend regions."
+    (interactive)
+    (dolist (fn
+             '(forward-word
+               backward-word
+               forward-sentence
+               backward-sentence
+               forward-paragraph
+               backward-paragraph))
+      (advice-add fn :around
+                  (lambda (orig-fn &rest args)
+                    (if (region-active-p)
+                        (apply orig-fn args)
+                      (set-mark (point))
+                      (apply orig-fn args)))))))
 
 ;;; Concerning lines
 (use-package emacs
@@ -69,9 +88,7 @@
     "Advice to prevent abbrev expansion inside comments and strings."
     (unless (nth 8 (syntax-ppss))
       (apply fun args)))
-
   (advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
-
   :config
   (setq-default abbrev-mode t)
   (setq abbrev-file-name (expand-file-name "abbrev_defs.el" user-emacs-directory))
