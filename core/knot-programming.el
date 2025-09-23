@@ -76,78 +76,24 @@
   :mode "\\.hs\\'" )
 
 ;;; `lean4'
-;; The ultimate theorem prover and function programming language
 (use-package lean4-mode
-  :defer 1
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
-  :commands lean4-mode
-  :mode "\\.lean\\'"
-
   :bind (:map lean4-mode-map
-              ("C-c C-t" . rh/lean4-lsp-toggle)
-              ("C-m"     . rh/lean-newline-indent))
+              ("C-m" . electric-newline-and-maybe-indent))
   :hook
-  (lean4-mode . rh/lean-highlight-types)
-	(lean4-mode . rh/lean-highlight-values)
-	(lean4-mode . rh/lean-highlight-typeclasses)
+  (lean4-mode . lsp-mode)
 	(lean4-mode . rh/outline-lean)
 	(lean4-mode . (lambda () (require 'rh-lean)))
-
   :config
-  (defvar rh/lean4-lsp-enabled nil
-    "If non-nil, Lean 4 is in minimal UI mode.")
-
-  (defun rh/lean4-lsp-toggle ()
-    "Toggle between LSP and minimal UI.
-  LSP keeps goal feedback, inline evaluation and eldoc. Minimal UI has only syntax highlighting"
-    (interactive)
-    (if rh/lean4-lsp-enabled
-        ;; Turn LSP off
-        (progn
-          (setq rh/lean4-lsp-enabled nil)
-          (lsp-disconnect)
-          (message "LSP off"))
-      ;; Turn LSP on
-      (setq rh/lean4-lsp-enabled t)
-      (lsp)
-      (message "LSP on")))
-
-  ;; A better (but not foolproof) indentation
-  (defun rh/lean-newline-indent ()
-    "Insert and/or indent to match the previous line."
-    (interactive)
-    (let ((prev-indent
-           (save-excursion
-             (forward-line -1)
-             (while (and (not (bobp)) (looking-at-p "^[ \t]*$"))
-               (forward-line -1))
-             (back-to-indentation)
-             (current-column))))
-      ;; inhibit electric indent so the major mode doesn't race with us
-      (let ((electric-indent-inhibit t))
-        (newline)
-        ;; remove any auto-inserted indentation on the new line (if present)
-        (save-excursion
-          (let ((beg (line-beginning-position))
-                (end (progn (back-to-indentation) (point))))
-            (when (< beg end)
-              (delete-region beg end))))
-        ;; insert exact number of spaces to match prev-indent
-        (when (> prev-indent 0)
-          (insert (make-string prev-indent ?\s))))))
-
   (defun rh/outline-lean ()
     "Set outline regex for top-level declarations in Lean."
     (setq-local outline-regexp
-		            (rx line-start
-		                (* space)
-		                (or  "structure" "inductive" "class"
-			                   "theorem" "axiom" "lemma" "def"
-		                     "instance" "example" "opaque"
-			                   "namespace")))
+		            (rx line-start (* space)
+		                (or  "structure" "inductive" "class" "theorem"
+                         "axiom" "lemma" "def" "instance" "example"
+                         "opaque" "namespace")))
     (outline-hide-body))
-
-  ;; Make abbrevs case sensitive (important)
+  ;; Case sensitive abbrevs
   (abbrev-table-put lean4-abbrev-table :case-fixed t))
 
 (use-package sh-script
