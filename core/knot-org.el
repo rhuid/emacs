@@ -6,6 +6,10 @@
   :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
 	       (org-mode . rh/org-custom-faces))
+  :config
+  (setq org-table-auto-align t)
+  :custom
+  (display-line-numbers-mode 0)
   :init
   (defun rh/org-init ()
     (require 'org)
