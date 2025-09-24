@@ -210,6 +210,11 @@
 (use-package sudo-edit
   :commands (sudo-edit))
 
+;;; `pdf-tools'
+(use-package pdf-tools
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :config (pdf-tools-install))
+
 ;;; `vundo'
 (use-package vundo
   :bind (("C-/"   . undo)
@@ -224,6 +229,7 @@
 ;; Use them when abbrevs don't cut it
 (use-package yasnippet
   :init (yas-global-mode)
+  :bind ("M-/" . yas-expand)
   :custom
   (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
