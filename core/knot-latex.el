@@ -65,43 +65,43 @@
   (auctex-latexmk-setup))
 
 ;;; `cdlatex'
-(use-package cdlatex
-  :after auctex
-  :hook
-  (LaTeX-mode . turn-on-cdlatex)
-  (org-mode   . turn-on-org-cdlatex)
-  :bind (:map cdlatex-mode-map
-              ("TAB" . rh/latex-tab-action))
-  :custom
-  (cdlatex-paired-parens "$([{")
-  :config
+;; (use-package cdlatex
+;;   :after auctex
+;;   :hook
+;;   (LaTeX-mode . turn-on-cdlatex)
+;;   (org-mode   . turn-on-org-cdlatex)
+;;   :bind (:map cdlatex-mode-map
+;;               ("TAB" . rh/latex-tab-action))
+;;   :custom
+;;   (cdlatex-paired-parens "$([{")
+;;   :config
 
-  ;;; Use CDLaTeX along with yasnippets without conflict
-  (defun rh/latex-tab-action ()
-    "Try yasnippet first, then fall back to CDLaTeX."
-    (interactive)
-    (unless (and (bound-and-true-p yas-minor-mode) (yas-expand))
-      (cdlatex-tab)))
+;;   ;;; Use CDLaTeX along with yasnippets without conflict
+;;   (defun rh/latex-tab-action ()
+;;     "Try yasnippet first, then fall back to CDLaTeX."
+;;     (interactive)
+;;     (unless (and (bound-and-true-p yas-minor-mode) (yas-expand))
+;;       (cdlatex-tab)))
 
-  ;; Quickly drop latex environments
-  ;; (setq cdlatex-env-alist
-	;;       '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
-	;;         ("defintion"    "\\begin{definition}\nAUTOLABEL\n?\n\\end{definition}\n" nil)
-	;;         ("lemma"        "\\begin{lemma}\nAUTOLABEL\n?\n\\end{lemma}\n" nil)
-	;;         ("proposition"  "\\begin{proposition}\nAUTOLABEL\n?\n\\end{proposition}\n" nil)
-  ;;         ;; ("theorem"      "\\begin{theorem}\nAUTOLABEL\n?\n\\end{theorem}\n" nil)
-	;;         ("corollary"    "\\begin{corollary}\nAUTOLABEL\n?\n\\end{corollary}\n" nil)))
-  ;; (setq cdlatex-command-alist
-	;;       '(("ax"   "Insert axiom env"       "" cdlatex-environment ("axiom") t nil)
-	;;         ("def"  "Insert definition env"  "" cdlatex-environment ("definition") t nil)
-	;;         ("lem"  "Insert lemma env"       "" cdlatex-environment ("lemma") t nil)
-	;;         ("prop" "Insert proposition env" "" cdlatex-environment ("proposition") t nil)
-	;;         ("th"   "Insert theorem env"     "" cdlatex-environment ("theorem") t nil)
-	;;         ("cor"  "Insert corollary env"   "" cdlatex-environment ("corollary") t nil)
-	;;         ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil)
-  ;;         ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil)))
+;;   Quickly drop latex environments
+;;   (setq cdlatex-env-alist
+;; 	      '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
+;; 	        ("defintion"    "\\begin{definition}\nAUTOLABEL\n?\n\\end{definition}\n" nil)
+;; 	        ("lemma"        "\\begin{lemma}\nAUTOLABEL\n?\n\\end{lemma}\n" nil)
+;; 	        ("proposition"  "\\begin{proposition}\nAUTOLABEL\n?\n\\end{proposition}\n" nil)
+;;           ;; ("theorem"      "\\begin{theorem}\nAUTOLABEL\n?\n\\end{theorem}\n" nil)
+;; 	        ("corollary"    "\\begin{corollary}\nAUTOLABEL\n?\n\\end{corollary}\n" nil)))
+;;   (setq cdlatex-command-alist
+;; 	      '(("ax"   "Insert axiom env"       "" cdlatex-environment ("axiom") t nil)
+;; 	        ("def"  "Insert definition env"  "" cdlatex-environment ("definition") t nil)
+;; 	        ("lem"  "Insert lemma env"       "" cdlatex-environment ("lemma") t nil)
+;; 	        ("prop" "Insert proposition env" "" cdlatex-environment ("proposition") t nil)
+;; 	        ("th"   "Insert theorem env"     "" cdlatex-environment ("theorem") t nil)
+;; 	        ("cor"  "Insert corollary env"   "" cdlatex-environment ("corollary") t nil)
+;; 	        ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil)
+;;           ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil)))
 
-  )
+;;   )
 
 (use-package latex-preview-pane)
 
