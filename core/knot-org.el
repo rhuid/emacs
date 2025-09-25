@@ -3,18 +3,12 @@
 (use-package org
   :ensure nil
   :commands (org-mode)
-  :mode (("\\.org\\'" . org-mode))
   :hook ((org-mode . rh/org-init)
 	       (org-mode . rh/org-custom-faces))
   :config
   (setq org-table-auto-align t)
-  :custom
-  (display-line-numbers-mode 0)
-  :init
   (defun rh/org-init ()
-    (require 'org)
-    (setq display-line-numbers nil)
-    (setq org-startup-indented t
+    (setq org-startup-indented nil
 	        org-hide-emphasis-markers t
 	        org-ellipsis " ▾ "               ; folding symbol
 	        org-pretty-entities t            ; pretty TeX symbols
@@ -33,40 +27,18 @@
      '(org-level-1 ((t (:inherit outline-1 :height 1.8 :weight bold :foreground "#ff79c6"))))
      '(org-level-2 ((t (:inherit outline-2 :height 1.5 :weight bold :foreground "#8be9fd"))))
      '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#50fa7b"))))
-     '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c")))))
-
-    ;; prettify code blocks (SRC)
-    ;;(custom-set-faces
-    ;; '(org-block ((t (:background "#282a36" :foreground "#f8f8f2")))))
-    )
+     '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c"))))))
 
   :config
   (define-key org-mode-map (kbd "C-,") nil)
   (define-key org-mode-map (kbd "C-'") nil)
   (setq org-directory "~/org")
 
-  ;; (setq org-latex-preview-debug t)
-
-  ;; (setq org-preview-latex-default-process 'dvipng)
-
-  ;; (setq org-preview-latex-process-alist
-  ;; 	'((dvipng :programs ("latex" "dvipng")
-  ;;                 :description "dvi > png"
-  ;;                 :message "you need to install latex and dvipng."
-  ;;                 :use-xcolor t
-  ;;                 :image-input-type "dvi"
-  ;;                 :image-output-type "png"
-  ;;                 :image-size-adjust (1.0 . 1.0)
-  ;;                 :latex-compiler ("latex -interaction nonstopmode -output-directory %o %f")
-  ;;                 :image-converter ("dvipng -D %D -T tight -o %O %f"))))
-
   :bind
   (:map org-mode-map
         ("C-S-o" . org-shifttab))
-  )
-
-;; (use-package evil-org :ensure t :after (evil org)
-;;   :hook (org-mode . evil-org-mode))
+  :custom
+  (display-line-numbers-mode -1))
 
 (use-package org-modern :after org
   ;; visual improvements for org mode
