@@ -201,6 +201,11 @@
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
 
+;;; `pdf-tools'
+(use-package pdf-tools
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :config (pdf-tools-install))
+
 ;;; `rainbow-delimiters'
 ;; Different color for each pair of parenthesis
 (use-package rainbow-delimiters
@@ -210,10 +215,10 @@
 (use-package sudo-edit
   :commands (sudo-edit))
 
-;;; `pdf-tools'
-(use-package pdf-tools
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :config (pdf-tools-install))
+;;; `tempel'
+(use-package tempel
+  :demand t
+  :bind (("M-/" . tempel-complete)))
 
 ;;; `vundo'
 (use-package vundo
@@ -226,11 +231,8 @@
   )
 
 ;;; `yasnippet'
-;; Use them when abbrevs don't cut it
 (use-package yasnippet
   :init (yas-global-mode)
-  :bind ("M-/" . yas-expand)
-  :custom
-  (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
+  :custom (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
 (provide 'knot-packages)
