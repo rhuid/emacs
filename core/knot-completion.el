@@ -19,7 +19,7 @@
   :load-path "~/.emacs.d/elpa/vertico/extensions/"
   :ensure nil
   :bind (:map vertico-map
-	            ("DEL" . vertico-directory-delete-char)
+	            ("C-h" . vertico-directory-delete-char)
 	            ("C-w" . vertico-directory-delete-word)))
 
 ;;; `orderless' : Type words in any order to match candidates
