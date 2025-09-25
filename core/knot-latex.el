@@ -19,8 +19,7 @@
   (setq TeX-view-program-selection '((output-pdf "Sioyek")))
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
 
-  ;;; Abbrevs should work only outside math mode
-
+  ;; Abbrevs should work only outside math mode
   (defun rh/toggle-latex-abbrev ()
     "Enable abbrev only outside math mode in LaTeX."
     (if (and (derived-mode-p 'LaTeX-mode)
@@ -36,7 +35,7 @@
   (font-lock-add-keywords
    'LaTeX-mode '(("\\\\[]()[]\\|\\$" 0 rh/latex-math-face t)))
 
-  ;;; Math completions for corfu (wont work for now)
+  ;; Math completions for corfu (wont work for now)
 
   ;; Create the math terms file if it doesn't exist
   (setq rh/math-dict-file (concat user-emacs-directory "math-dict"))
@@ -65,8 +64,7 @@
   :config
   (auctex-latexmk-setup))
 
-;;;; CDLatex for quick typing (it's all about speed)
-
+;;; `cdlatex'
 (use-package cdlatex
   :after auctex
   :hook
@@ -79,41 +77,31 @@
   :config
 
   ;;; Use CDLaTeX along with yasnippets without conflict
-
   (defun rh/latex-tab-action ()
     "Try yasnippet first, then fall back to CDLaTeX."
     (interactive)
-    (if (and (bound-and-true-p yas-minor-mode)
-             (yas-expand)) t
+    (unless (and (bound-and-true-p yas-minor-mode) (yas-expand))
       (cdlatex-tab)))
 
   ;; Quickly drop latex environments
+  ;; (setq cdlatex-env-alist
+	;;       '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
+	;;         ("defintion"    "\\begin{definition}\nAUTOLABEL\n?\n\\end{definition}\n" nil)
+	;;         ("lemma"        "\\begin{lemma}\nAUTOLABEL\n?\n\\end{lemma}\n" nil)
+	;;         ("proposition"  "\\begin{proposition}\nAUTOLABEL\n?\n\\end{proposition}\n" nil)
+  ;;         ;; ("theorem"      "\\begin{theorem}\nAUTOLABEL\n?\n\\end{theorem}\n" nil)
+	;;         ("corollary"    "\\begin{corollary}\nAUTOLABEL\n?\n\\end{corollary}\n" nil)))
+  ;; (setq cdlatex-command-alist
+	;;       '(("ax"   "Insert axiom env"       "" cdlatex-environment ("axiom") t nil)
+	;;         ("def"  "Insert definition env"  "" cdlatex-environment ("definition") t nil)
+	;;         ("lem"  "Insert lemma env"       "" cdlatex-environment ("lemma") t nil)
+	;;         ("prop" "Insert proposition env" "" cdlatex-environment ("proposition") t nil)
+	;;         ("th"   "Insert theorem env"     "" cdlatex-environment ("theorem") t nil)
+	;;         ("cor"  "Insert corollary env"   "" cdlatex-environment ("corollary") t nil)
+	;;         ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil)
+  ;;         ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil)))
 
-  (setq cdlatex-env-alist
-	      '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
-	        ("defintion"    "\\begin{definition}\nAUTOLABEL\n?\n\\end{definition}\n" nil)
-	        ("lemma"        "\\begin{lemma}\nAUTOLABEL\n?\n\\end{lemma}\n" nil)
-	        ("proposition"  "\\begin{proposition}\nAUTOLABEL\n?\n\\end{proposition}\n" nil)
-	        ("theorem"      "\\begin{theorem}\nAUTOLABEL\n?\n\\end{theorem}\n" nil)
-	        ("corollary"    "\\begin{corollary}\nAUTOLABEL\n?\n\\end{corollary}\n" nil)))
-
-  (setq cdlatex-command-alist
-	      '(("ax"   "Insert axiom env"       "" cdlatex-environment ("axiom") t nil)
-	        ("def"  "Insert definition env"  "" cdlatex-environment ("definition") t nil)
-	        ("lem"  "Insert lemma env"       "" cdlatex-environment ("lemma") t nil)
-	        ("prop" "Insert proposition env" "" cdlatex-environment ("proposition") t nil)
-	        ("th"   "Insert theorem env"     "" cdlatex-environment ("theorem") t nil)
-	        ("cor"  "Insert corollary env"   "" cdlatex-environment ("corollary") t nil)
-	        ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil)
-          ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil))))
-
-;; (use-package ass
-;;   :hook (LaTeX-mode . ass-activate-for-major-mode)
-;;   :config
-;;   (setq ass-snippets
-;;         '("forall" . "∀"))
-;;   )
-
+  )
 
 (use-package latex-preview-pane)
 
