@@ -116,18 +116,15 @@
   (:map magit-mode-map
         ("." . rh/magit-quick-commit)
         ("," . rh/magit-quick-amend))
-
   :config
   (setq magit-display-buffer-function
 	      #'magit-display-buffer-same-window-except-diff-v1)
   (setq magit-restore-window-configuration-after-quit nil)
-
   (defun rh/magit-quick-commit ()
     "Prompt for a commit message in minibuffer and commit immediately."
     (interactive)
     (let ((msg (read-string "Commit message: ")))
       (magit-commit-create `("-m" ,msg))))
-
   (defun rh/magit-quick-amend ()
     "Quickly amend last commit with a new message via minibuffer."
     (interactive)
@@ -146,9 +143,8 @@
 
 ;;; `outline'
 (use-package outline
-  :bind
-  ("C-S-t" . rh/outline-toggle-heading)
-  ("C-S-o" . rh/outline-toggle-visibility)
+  :bind (("C-S-t" . rh/outline-toggle-heading)
+         ("C-S-o" . rh/outline-toggle-visibility))
   :hook
   (prog-mode . outline-minor-mode)
   (text-mode . outline-minor-mode)
@@ -157,7 +153,6 @@
   :init
   ;; Set the keybinding prefix for built-in outline commands
   (setq outline-minor-mode-prefix (kbd "C-c @"))
-
   :config
   ;; Custom folding indicator (like +)
   (set-display-table-slot
@@ -165,7 +160,6 @@
    'selective-display
    (let ((face-offset (* (face-id 'shadow) (ash 1 22))))
      (vconcat (mapcar (lambda (c) (+ face-offset c)) " +"))))
-
   (defun rh/outline-toggle-heading ()
     "Toggle visibility of current outline heading."
     (interactive)
@@ -174,7 +168,6 @@
       (if (outline-invisible-p (line-end-position))
           (outline-show-subtree)
         (outline-hide-subtree))))
-
   (defun rh/outline-toggle-visibility ()
     "Toggle between fully expanded and folded view of the outline buffer."
     (interactive)
@@ -186,7 +179,6 @@
                    (rh/outline-all-heading-positions))
           (outline-show-all)
         (outline-hide-body))))
-
   (defun rh/outline-all-heading-positions ()
     "Return a list of positions of all headings in the buffer."
     (let (positions)
@@ -217,7 +209,7 @@
 
 ;;; `tempel'
 (use-package tempel
-  :demand t
+  :init (global-tempel-abbrev-mode)
   :bind (("M-/" . tempel-complete)))
 
 ;;; `vundo'
