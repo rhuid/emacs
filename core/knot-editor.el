@@ -130,7 +130,7 @@
    '(":" . align-regexp)
    '("," . meow-inner-of-thing)         '("." . meow-bounds-of-thing)
    '("<" . meow-beginning-of-thing)     '(">" . meow-end-of-thing)
-   '("/" . meow-visit)
+   '("/" . meow-visit)                  '("?" . rh/insert-space)
    '("a" . er/expand-region)            '("A" . er/contract-region)
    '("b" . meow-block)                  '("B" . meow-to-block)
    '("c" . meow-change)
