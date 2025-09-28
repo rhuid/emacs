@@ -20,6 +20,14 @@
   "Return non-nil if the character at point is )."
   (looking-at-p "[)]"))
 
+;; A dual of C-k, maybe bind C-S-k to it?
+(defun rh/backward-kill-line ()
+  "Kill from beginning of line to point."
+  (interactive)
+  (set-mark (point))
+  (beginning-of-line)
+  (call-interactively 'kill-region))
+
 ;; A multipurpose trash cleaner without cluttering the kill ring!
 (defun rh/delete-in-context ()
   "Delete region (if active), else delete current line (if non-empty), else delete-blank-lines."
@@ -120,7 +128,7 @@
    '("/" . rh/insert-space)         '("?" . meow-visit)
    '("a" . er/expand-region)        '("A" . er/contract-region)
    '("b" . meow-block)              '("B" . meow-to-block)
-   '("c" . meow-change)             '("C" . rh/comment-dwim)
+   '("c" . meow-change)
    '("d" . rh/delete-in-context)    '("D" . delete-all-space)
    '("e" . meow-prev-expand)        '("E" . backward-sentence)
    '("f" . forward-word)            '("F" . forward-paragraph)
@@ -129,7 +137,7 @@
    '("i" . meow-right-expand)       '("I" . scroll-up-command)
    '("j" . rh/join-line)            '("J" . meow-join)
    '("k" . rh/kill-in-context)      '("K" . avy-move-region)
-   '("l" . rh/line-or-expand)       '("L" . consult-goto-line)
+   '("l" . meow-line)               '("L" . consult-goto-line)
    '("m" . meow-left-expand)        '("M" . scroll-down-command)
    '("n" . meow-next-expand)        '("N" . forward-sentence)
    '("o" . meow-open-below)         '("O" . meow-open-above)
@@ -157,20 +165,6 @@
   (setq meow-expand-hint-remove-delay 0)
   (setq meow-keypad-message nil
         meow-keypad-self-insert-undefined nil
-        meow-use-clipboard t)
-  (defun rh/line-or-expand ()
-    "Like 'meow-line' but expand if there is a region."
-    (interactive)
-    (if (use-region-p)
-        (call-interactively 'meow-line-expand)
-      (call-interactively 'meow-line)))
-  (defun rh/comment-dwim ()
-    "Like comment-dwim but meow-ready."
-    (interactive)
-    (if (use-region-p)
-        (call-interactively 'comment-dwim)
-      (progn
-        (call-interactively 'comment-dwim)
-        (meow-insert-mode)))))
+        meow-use-clipboard t))
 
 (provide 'knot-editor)

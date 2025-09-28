@@ -13,7 +13,7 @@
   (setq make-backup-files nil))
 
 ;;; `keymap'
-;; Remap some of the basic and built-in commands
+;; Remap some of the basic and built-in commands time
 ;; Shift is better used as a modifier
 (use-package keymap
   :ensure nil
@@ -22,6 +22,7 @@
   :bind
   ("C-h"     . backward-delete-char)
   ("C-S-h"   . backward-kill-word)
+  ("C-S-k"   . rh/backward-kill-line)
   ("C-S-d"   . kill-word)
   ("C-x C-c" . nil)
   ("C-x r q" . save-buffers-kill-terminal)
