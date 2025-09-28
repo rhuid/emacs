@@ -164,6 +164,14 @@
     (interactive)
     (if (use-region-p)
         (call-interactively 'meow-line-expand)
-      (call-interactively 'meow-line))))
+      (call-interactively 'meow-line)))
+  (defun rh/comment-dwim ()
+    "Like comment-dwim but meow-ready."
+    (interactive)
+    (if (use-region-p)
+        (call-interactively 'comment-dwim)
+      (progn
+        (call-interactively 'comment-dwim)
+        (meow-insert-mode)))))
 
 (provide 'knot-editor)
