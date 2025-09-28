@@ -191,7 +191,17 @@
 ;;; Move where I mean
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line)))
+         ("C-e" . mwim-end-of-code-or-line))
+  :config
+  (dolist (fn
+           '(mwim-beginning-of-code-or-line
+             mwim-end-of-code-or-line))
+    (advice-add fn :around
+                (lambda (orig-fn &rest args)
+                  (if (region-active-p)
+                      (apply orig-fn args)
+                    (set-mark (point))
+                    (apply orig-fn args))))))
 
 ;;; `pdf-tools'
 (use-package pdf-tools
