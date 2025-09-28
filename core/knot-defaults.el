@@ -13,19 +13,31 @@
   (setq make-backup-files nil))
 
 ;;; `keymap'
-;; Remap some of the basic commands
+;; Remap some of the basic and built-in commands
 ;; Shift is better used as a modifier
 (use-package keymap
   :ensure nil
   :config (setq shift-select-mode nil)
   :hook (after-init . rh/ensure-region)
   :bind
-  ("C-h"           . backward-delete-char)
-  ("C-S-h"         . backward-kill-word)
+  ("C-h"     . backward-delete-char)
+  ("C-S-h"   . backward-kill-word)
+  ("C-S-d"   . kill-word)
+  ("C-x C-c" . nil)
+  ("C-x r q" . save-buffers-kill-terminal)
+
   ("C-<backspace>" . mode-line-other-buffer)
-  ("C-S-d"         . kill-word)
-  ("C-x C-c"       . nil)
-  ("C-x r q"       . save-buffers-kill-terminal)
+
+  ;; Things about transposing
+  ("C-t"   . nil)
+  ("C-t w" . transpose-words)
+  ("C-t c" . transpose-chars)
+  ("C-t d" . subword-transpose)
+  ("C-t s" . transposE-sentences)
+  ("C-t p" . transpose-paragraphs)
+  ("C-t l" . transpose-lines)
+  ("C-t x" . transpose-sexps)
+  ("C-t r" . transpose-regions)
 
   ("C-c o b" . TeX-fold-buffer)
   ("C-c o B" . TeX-fold-clearout-buffer)
