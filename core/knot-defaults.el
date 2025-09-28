@@ -25,6 +25,7 @@
   ("C-S-d"   . kill-word)
   ("C-x C-c" . nil)
   ("C-x r q" . save-buffers-kill-terminal)
+  ("C-S-r"   . replace-string)
 
   ("C-<backspace>" . mode-line-other-buffer)
 
@@ -33,7 +34,7 @@
   ("C-t w" . transpose-words)
   ("C-t c" . transpose-chars)
   ("C-t d" . subword-transpose)
-  ("C-t s" . transposE-sentences)
+  ("C-t s" . transpose-sentences)
   ("C-t p" . transpose-paragraphs)
   ("C-t l" . transpose-lines)
   ("C-t x" . transpose-sexps)
@@ -41,9 +42,6 @@
 
   ("C-c o b" . TeX-fold-buffer)
   ("C-c o B" . TeX-fold-clearout-buffer)
-
-  ("C-c s r" . replace-string)
-  ("C-c s w" . delete-trailing-whitespace)
   :config
   (defun rh/ensure-region ()
     "Make motion commands select or extend regions."
