@@ -25,7 +25,7 @@
   "Kill from beginning of line to point."
   (interactive)
   (set-mark (point))
-  (beginning-of-line)
+  (mwim-beginning-of-code-or-line)
   (call-interactively 'kill-region))
 
 ;; A multipurpose trash cleaner without cluttering the kill ring!
