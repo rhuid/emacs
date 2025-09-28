@@ -130,8 +130,9 @@
    '(":" . align-regexp)
    '("," . meow-inner-of-thing)         '("." . meow-bounds-of-thing)
    '("<" . meow-beginning-of-thing)     '(">" . meow-end-of-thing)
-   '("/" . meow-visit)                  '("?" . rh/insert-space)
-   '("a" . er/expand-region)            '("A" . er/contract-region)
+   '("[" . kmacro-start-macro)          '("]" . kmacro-end-or-call-macro-repeat)
+   '("/" . rh/insert-space)             '("?" . meow-visit)
+   '("a" . er/expand-regionon)          '("A" . er/contract-region)
    '("b" . meow-block)                  '("B" . meow-to-block)
    '("c" . meow-change)
    '("d" . rh/delete-in-context)        '("D" . delete-all-space)
@@ -142,7 +143,7 @@
    '("i" . meow-right-expand)           '("I" . scroll-up-command)
    '("j" . rh/join-line)                '("J" . meow-join)
    '("k" . rh/kill-in-context)          '("K" . avy-move-region)
-   '("l" . meow-line)                   '("L" . consult-goto-line)
+   '("l" . rh/line-or-expand)           '("L" . consult-goto-line)
    '("m" . meow-left-expand)            '("M" . scroll-down-command)
    '("n" . meow-next-expand)            '("N" . forward-sentence)
    '("o" . meow-open-below)             '("O" . meow-open-above)
@@ -170,6 +171,12 @@
   (setq meow-expand-hint-remove-delay 0)
   (setq meow-keypad-message nil
         meow-keypad-self-insert-undefined nil
-        meow-use-clipboard t))
+        meow-use-clipboard t)
+  (defun rh/line-or-expand ()
+    "Like 'meow-line' but expand if there is a region."
+    (interactive)
+    (if (use-region-p)
+        (call-interactively 'meow-line-expand)
+      (call-interactively 'meow-line))))
 
 (provide 'knot-editor)
