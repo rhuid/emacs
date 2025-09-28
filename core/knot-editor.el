@@ -25,28 +25,23 @@
   "Delete region (if active), else delete current line (if non-empty), else delete-blank-lines."
   (interactive)
   (cond ((use-region-p)
-         ;; If there is a region, delete it
          (let ((inhibit-read-only t))
            (delete-region (region-beginning) (region-end))))
-        ;; Else, if the line has a non-whitespace chracter, delete the line
         ((not (string-blank-p (string-trim (thing-at-point 'line t))))
          (let ((inhibit-read-only t))
            (delete-region (line-beginning-position) (line-beginning-position 2))))
-        ;; If the line is just whitespace, delete all surrounding lines
         (t (delete-blank-lines))))
 
-;; Kill but in a context-sensitive way
+;; Kill in a context-sensitive way
 (defun rh/kill-in-context ()
   "Kill region (if active), else kill current line (if non-empty), else delete-blank-lines."
   (interactive)
   (cond ((use-region-p)
          (let ((inhibit-read-only t))
            (call-interactively 'kill-region)))
-
         ((not (string-blank-p (string-trim (thing-at-point 'line t))))
          (let ((inhibit-read-only t))
            (call-interactively 'kill-whole-line)))
-
         (t nil)))
 
 ;; Like kill-ring-save, but context-sensitive
