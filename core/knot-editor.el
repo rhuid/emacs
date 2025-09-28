@@ -95,14 +95,6 @@
         (goto-char beg)
         (delete-char 1)))))
 
-;; dependency on meow library
-(defun rh/contextual-line-expand ()
-  "Select current line. If region already exists, expand line."
-  (interactive)
-  (if (use-region-p)
-      (call-interactively 'meow-line-expand)
-    (call-interactively 'meow-line)))
-
 ;;; My modal design built on `meow'
 ;; Requires `avy' and `consult'
 (defun rh/modal-setup ()
