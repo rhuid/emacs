@@ -219,8 +219,7 @@
          ("M-U"   . undo-redo))
   :custom
   (vundo-compact-display t)
-  ;; (undo-limit (6 * 1024 * 1024))
-  )
+  (undo-limit (* 6 1024 1024)))
 
 ;;; `yasnippet'
 (use-package yasnippet
