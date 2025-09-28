@@ -58,7 +58,7 @@
   :custom
   ;; Run GC after 20 secs idle
   (gcmh-idle-delay 20)
-  ;; During typing/active peroid, don't run GC until (threshold 256 MB)
+  ;; During typing/active period, don't run GC until (threshold 256 MB)
   (gcmh-high-cons-threshold (* 256 1024 1024))
   :config
   (gcmh-mode 1))
