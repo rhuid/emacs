@@ -52,7 +52,7 @@
    ("M-O"     . consult-outline))
 
   :config
-  (setq consult-preview-key 'any)
+  (setq consult-preview-key nil)
 
   ;; To always start searching from home directory
   (advice-add 'consult-find :around
