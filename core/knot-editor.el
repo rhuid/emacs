@@ -15,6 +15,8 @@
     (unless (rh/at-parenthesis-end-p)
       (insert " "))))
 
+(global-set-key (kbd "C-x j") 'rh/join-line)
+
 ;; helper
 (defun rh/at-parenthesis-end-p ()
   "Return non-nil if the character at point is )."
@@ -156,7 +158,7 @@
 
 ;;; `Meow'
 (use-package meow
-  :demand t
+  :disabled t
   :config
   (rh/modal-setup)
   (meow-global-mode 1)
