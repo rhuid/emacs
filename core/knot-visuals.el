@@ -72,7 +72,6 @@
       (message "No theme is currently enabled."))))
 
 ;;; `ef-themes'
-;; A beautiful collection of themes but I am using nano (below) now.
 (use-package ef-themes
   :disabled t
   :config
@@ -82,7 +81,6 @@
   (set-face-attribute 'region nil
                       :background "#353237"))
 
-;;; `nano-theme'
 (use-package nano-theme
   :demand t
   :vc (:url "https://github.com/rougier/nano-theme")
@@ -107,14 +105,15 @@
             ("<=" . ?≤)
             ("!=" . ?≠)))))
 
-;;; `all-the-icons'
+(use-package spacious-padding
+  :init (spacious-padding-mode))
+
 (use-package all-the-icons
   :config
   (when (display-graphic-p)
     (unless (member "all-the-icons" (font-family-list))
       (all-the-icons-install-fonts t))))
 
-;;; `nerd-icons'
 (use-package nerd-icons
   :config
   (when (display-graphic-p)
