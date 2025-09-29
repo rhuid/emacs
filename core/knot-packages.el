@@ -15,6 +15,13 @@
   ("C-c n" . split-window-horizontally)
   ("C-c N" . split-window-vertically))
 
+;; (use-package visual-fill-column
+;;   :hook (prog-mode . visual-fill-column-mode)
+;;   :custom
+;;   (visual-fill-column-width 100)
+;;   (visual-fill-column-center-text t)
+;;   )
+
 (use-package achievements
   :init (achievements-mode))
 

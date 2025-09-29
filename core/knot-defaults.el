@@ -1,6 +1,5 @@
 ;;; knot-defaults.el --- Some not-so-sane defaults? -*- lexical-binding: t; -*-
 
-;;; `files'
 (use-package files
   :ensure nil
   :demand t
@@ -12,7 +11,6 @@
   ;; Don't generate backup files
   (setq make-backup-files nil))
 
-;;; `keymap'
 ;; Remap some of the basic and built-in commands time
 ;; Shift is better used as a modifier
 (use-package keymap
@@ -31,8 +29,6 @@
   ("M-j"     . nil)
   ("M-j"     . rh/join-line)
   ("M-L"     . duplicate-dwim)
-
-  ;; need to make a keybinding for duplicate-dwim
 
   ("C-<backspace>" . mode-line-other-buffer)
 
@@ -97,8 +93,6 @@
   ;; All confirmations prompts be y or n
   (fset 'yes-or-no-p 'y-or-n-p))
 
-;;; Abbreviations
-;; An underrated killer feature, a double-edged sword, snippets on steroids
 (use-package abbrev
   :ensure nil
   :bind ("C-c s a" . abbrev-mode)
@@ -114,25 +108,20 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
-;;; `calc'
 (use-package calc
   :ensure nil
   :bind ("C-c c c" . calc))
 
-;;; `calendar'
 (use-package calendar
   :ensure nil
   :bind ("C-c x c" . calendar)
   :hook (calendar-today-visible . calendar-mark-today))
 
-;;; `eldoc'
 (use-package eldoc
   :ensure nil
   :commands eldoc-mode
-  :config
-  (setq eldoc-idle-delay 0.2))
+  :config (setq eldoc-idle-delay 0.2))
 
-;;; `eww'
 (use-package eww
   :ensure nil
   :bind (("C-c w w" . eww))
@@ -141,7 +130,6 @@
   (setq shr-use-colors nil)
   (setq shr-width fill-column))
 
-;;; `minibuffer'
 (use-package minibuffer
   :demand t
   :ensure nil
@@ -149,7 +137,6 @@
   :config (recentf-mode)
   :custom (history-delete-duplicates t))
 
-;;; `repeat'
 ;; Repeat commands without retyping the prefix key
 (use-package repeat
   :ensure nil

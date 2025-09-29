@@ -1,20 +1,16 @@
 ;;; knot-programming.el --- Things related to writing source code -*- lexical-binding: t; -*-
 
-;;; `prog-mode'
-;; For all programming modes
+;;;; For all programming modes
 (use-package prog-mode
   :ensure nil
   :config
   (global-font-lock-mode 1)
   ;; Always use spaces, never tabs
-  ;; By default, 1 TAB = 2 spaces
   (setq-default indent-tabs-mode nil
 		            tab-width 2)
-  ;; Default indentation is 2 spaces, but can be overridden by major modes
   (setq standard-indent 2))
 
-;;; `aggressive-indent'
-;; Indent aggressively for Lisp and its derivatives
+;;;; Indent aggressively for Lisp and its derivatives
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode . aggressive-indent-mode)
          (lisp-interaction-mode . aggressive-indent-mode)
@@ -22,7 +18,6 @@
   :config
   (setq aggressive-indent-comments-too t))
 
-;;; `lsp'
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
@@ -42,8 +37,7 @@
   ;; For faster communication with LSP, disable logging
   (lsp-log-io nil))
 
-;;; `lsp-ui'
-;; Extra nice UI for LSP
+;;;; Extra nice UI for LSP
 (use-package lsp-ui
   :after lsp-mode
   :bind (:map lsp-ui-mode-map
@@ -62,7 +56,7 @@
   (lsp-ui-doc-max-width 120)
   (lsp-ui-doc-max-height 30))
 
-;;; Syntax checking
+;;;; Syntax checking
 (use-package flycheck
   :commands (flycheck-mode)
   :config
@@ -71,15 +65,11 @@
         flycheck-highlighting-mode 'nil
         flycheck-indication-mode 'left-fringe))
 
-(use-package haskell-mode
-  :commands haskell-mode
-  :mode "\\.hs\\'" )
+(use-package haskell-mode)
 
-;;; `lean4'
 (use-package lean4-mode
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
-  :bind (:map lean4-mode-map
-              ("C-m" . electric-newline-and-maybe-indent))
+  :bind (:map lean4-mode-map ("C-m" . electric-newline-and-maybe-indent))
   :hook
   (lean4-mode . lsp-mode)
 	(lean4-mode . rh/outline-lean)
@@ -127,13 +117,11 @@
     (outline-hide-body)))
 
 (use-package rust-mode
-  :mode "\\.rs\\'"
   :hook ((rust-mode . outline-minor-mode)
 	       (rust-mode . rh/outline-rust)
 	       (rust-mode . (lambda () (require 'rh-rust))))
   :config
   (setq rust-format-on-save t)
-
   (defun rh/outline-rust ()
     (setq-local outline-regexp
 		            (rx line-start (* space)
@@ -149,10 +137,9 @@
   :config
   (setq nix-indent-function 'nix-indent-line))
 
-(use-package julia-mode
-  :mode "\\.jl\\'")
+(use-package julia-mode)
 
-;;; Mode for KMonad config files
+;;;; Mode for editing KMonad config files
 (use-package kbd-mode
   :vc (:url "https://github.com/kmonad/kbd-mode" :rev :newest)
   :mode "\\.kbd\\'")

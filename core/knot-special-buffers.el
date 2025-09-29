@@ -5,7 +5,8 @@
 
 ;; Custom scratch buffers
 (use-package emacs
-  :bind ("C-c u o" . rh/toggle-org-scratch)
+  :bind (("C-c u o" . rh/toggle-org-scratch)
+         ("C-c u e" . rh/toggle-lisp-scratch))
   :config
   (defun rh/toggle-scratch-buffer (name mode initial-content)
     "Toggle a named scratch buffer NAME in MODE with optional INITIAL-CONTENT."
@@ -21,11 +22,14 @@
             (insert initial-content)
             (goto-char (point-max)))
           (switch-to-buffer new-buf)))))
-
   (defun rh/toggle-org-scratch ()
     "Toggle `*org-scratch*` buffer."
     (interactive)
-    (rh/toggle-scratch-buffer "*org-scratch*" #'org-mode "#+TITLE: Org Scratch\n\n")))
+    (rh/toggle-scratch-buffer "*org-scratch*" #'org-mode "#+TITLE: Org Scratch\n\n"))
+  (defun rh/toggle-lisp-scratch ()
+    "Toggle `*lisp-scratch*'."
+    (interactive)
+    (rh/toggle-scratch-buffer "*lisp-scratch*" #'lisp-interaction-mode ";; Lisp Scratch\n\n")))
 
 ;; Lean playground (a overpowered scratch buffer)
 (use-package emacs
