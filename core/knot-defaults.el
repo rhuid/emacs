@@ -28,6 +28,8 @@
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
   ("C-w"     . rh/kill-in-context)
+  ("M-j"     . nil)
+  ("M-j"     . rh/join-line)
 
   ;; need to make a keybinding for duplicate-dwim
 
