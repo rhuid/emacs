@@ -15,8 +15,6 @@
     (unless (rh/at-parenthesis-end-p)
       (insert " "))))
 
-(global-set-key (kbd "C-x j") 'rh/join-line)
-
 ;; helper
 (defun rh/at-parenthesis-end-p ()
   "Return non-nil if the character at point is )."
@@ -99,6 +97,9 @@
         (backward-delete-char 1)
         (goto-char beg)
         (delete-char 1)))))
+
+;; Some bunch of advice
+(advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
 ;;; My modal design built on `meow'
 ;; Requires `avy' and `consult'
