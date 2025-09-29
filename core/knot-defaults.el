@@ -19,9 +19,9 @@
   :hook (after-init . rh/ensure-region)
   :bind
   ("C-h"     . backward-delete-char)
-  ("C-S-h"   . backward-kill-word)
+  ("C-S-h"   . puni-backward-kill-word)
   ("C-S-k"   . rh/backward-kill-line)
-  ("C-S-d"   . kill-word)
+  ("C-S-d"   . puni-forward-kill-word)
   ("C-x C-c" . nil)
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
