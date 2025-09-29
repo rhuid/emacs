@@ -18,7 +18,6 @@
 (use-package achievements
   :init (achievements-mode))
 
-;;; `dictionary'
 (use-package dictionary
   :bind (("C-c d l" . dictionary-lookup-definition)
          ("C-c d s" . dictionary-search)))
@@ -55,7 +54,6 @@
     "Org pairs for electric-pair-mode."
     (setq-local electric-pair-pairs (append '((?/.?/) (?_.?_) (?~.?~))))))
 
-;;; Play music with EMMS. I am using mpv as backend
 (use-package emms
   :bind (("C-c e p" . emms-pause)
          ("C-c e s" . emms-stop)
@@ -109,7 +107,6 @@
   :bind ("C-S-c" . jinx-correct)
   :custom (jinx-languages "en_US-large"))
 
-;;; `magit'
 (use-package magit
   :commands (magit-status magit-log)
   :bind ("C-x g" .  magit-status)
@@ -131,8 +128,6 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
-;;; `multiple-cursors'
-;; An army of shadow clones
 (use-package multiple-cursors
   :bind (("C-S-l" . mc/edit-lines)
          ("C-S-a" . mc/mark-all-like-this)
@@ -141,7 +136,6 @@
          ("C->"   . mc/skip-to-next-like-this)
          ("C-<"   . mc/skip-to-previous-like-this)))
 
-;;; `outline'
 (use-package outline
   :bind (("C-S-t" . rh/outline-toggle-heading)
          ("C-S-o" . rh/outline-toggle-visibility))
@@ -191,34 +185,24 @@
 ;;; Move where I mean
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line))
-  :config
-  (dolist (fn
-           '(mwim-beginning-of-code-or-line
-             mwim-end-of-code-or-line))
-    (advice-add fn :around
-                (lambda (orig-fn &rest args)
-                  (if (region-active-p)
-                      (apply orig-fn args)
-                    (set-mark (point))
-                    (apply orig-fn args))))))
+         ("C-e" . mwim-end-of-code-or-line)))
 
-;;; `pdf-tools'
 (use-package pdf-tools
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :config (pdf-tools-install))
 
-;;; `rainbow-delimiters'
+(use-package puni
+  :hook ((prog-mode LaTeX-mode org-mode text-mode) . puni-mode))
+
 ;; Different color for each pair of parenthesis
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;;; Edit files as sudo user
 (use-package sudo-edit
   :commands (sudo-edit))
 
-;;; `tempel'
 (use-package tempel
+  :disabled t
   :init (global-tempel-abbrev-mode)
   :bind (("M-/" . tempel-complete)))
 
@@ -231,7 +215,6 @@
   (vundo-compact-display t)
   (undo-limit (* 6 1024 1024)))
 
-;;; `yasnippet'
 (use-package yasnippet
   :init (yas-global-mode)
   :custom (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
