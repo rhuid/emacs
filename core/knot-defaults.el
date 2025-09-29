@@ -27,6 +27,9 @@
   ("C-x C-c" . nil)
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
+  ("C-w"     . rh/kill-in-context)
+
+  ;; need to make a keybinding for duplicate-dwim
 
   ("C-<backspace>" . mode-line-other-buffer)
 
@@ -34,6 +37,7 @@
   ("C-t"   . nil)
   ("C-t w" . transpose-words)
   ("C-t c" . transpose-chars)
+  ("C-t t" . transpose-chars)
   ("C-t d" . subword-transpose)
   ("C-t s" . transpose-sentences)
   ("C-t p" . transpose-paragraphs)
@@ -67,12 +71,13 @@
   (setq-default fill-column 80)
   (global-visual-line-mode)
   (global-hl-line-mode)
+  (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode))
 
 (use-package emacs
   :hook (prog-mode . glyphless-display-mode)
   :config
-  (setq-default cursor-type 'bar)
+  (setq-default cursor-type t)
   (setq-default cursor-in-non-selected-windows nil)
   (blink-cursor-mode 0)
   ;; Disable mouse pointer as while typing
