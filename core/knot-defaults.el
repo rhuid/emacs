@@ -30,6 +30,7 @@
   ("C-w"     . rh/kill-in-context)
   ("M-j"     . nil)
   ("M-j"     . rh/join-line)
+  ("M-L"     . duplicate-dwim)
 
   ;; need to make a keybinding for duplicate-dwim
 
