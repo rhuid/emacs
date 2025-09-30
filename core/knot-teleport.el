@@ -8,7 +8,7 @@
   :custom
   (avy-timeout-seconds 0.2)
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
-
+e
 ;;;; A variant of Minato's Flying Raijin
 (use-package bookmark
   :ensure nil
@@ -36,7 +36,6 @@
      (project-dired        "Dired"     ?d)
      (project-eshell       "Eshell"    ?e))))
 
-;; Instant time travel, made better with `consult-recent-file'
 (use-package recentf
   :ensure nil
   :init (recentf-mode)
@@ -97,14 +96,6 @@
      register-alist
      search-ring
      regexp-search-ring)))
-
-;; Teleport to any neighbor window
-(use-package windmove
-  :ensure nil
-  :init
-  (windmove-default-keybindings)
-  :config
-  (setq windmove-wrap-around t))
 
 ;; To restore or go back to previous window configurations
 (use-package winner
