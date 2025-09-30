@@ -1,26 +1,16 @@
 ;;; knot-defaults.el --- Some not-so-sane defaults? -*- lexical-binding: t; -*-
 
-(use-package files
-  :ensure nil
-  :demand t
-  :hook (before-save . delete-trailing-whitespace)
-  :config
-  (setq-default require-final-newline t)
-  (save-place-mode) ; save place in each file
-  (setq make-backup-files nil))
-
-;;;; Files
-;; (setq-default require-final-newline t)
-;; (save-place-mode) ; save place in each file
-;; (setq make-backup-files nil)
-;; (add-hook 'before-save-hook #'delete-trailing-whitespace)
+;;;; Concerning files
+(setq-default require-final-newline t)
+(save-place-mode) ; save place in each file
+(setq make-backup-files nil)
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 ;; Remap some of the basic and built-in commands time
 ;; Shift is better used as a modifier
 (use-package keymap
   :ensure nil
   :config (setq shift-select-mode nil)
-  ;; :hook (after-init . rh/ensure-region)
   :bind
   ("C-h"     . backward-delete-char)
   ("C-S-h"   . puni-backward-kill-word)
