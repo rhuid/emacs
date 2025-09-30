@@ -25,12 +25,9 @@
   ("C-h"     . backward-delete-char)
   ("C-S-h"   . puni-backward-kill-word)
   ("C-S-k"   . rh/backward-kill-line)
-  ;; ("C-S-d"   . puni-forward-kill-word)
   ("C-x C-c" . nil)
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
-  ("C-w"     . rh/kill-in-context)
-  ("C-j"     . nil)
   ("C-j"     . rh/join-line)
   ("M-L"     . duplicate-dwim)
 
@@ -109,6 +106,11 @@
   :hook (minibuffer-mode . savehist-mode)
   :config (recentf-mode)
   :custom (history-delete-duplicates t))
+
+;;;; `minibuffer'
+;; (add-hook 'minibuffer-mode-hook 'savehist-mode)
+;; (recentf-mode)
+;; (history-delete-duplicates t)
 
 ;; Repeat commands without retyping the prefix key
 (use-package repeat
