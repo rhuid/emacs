@@ -47,29 +47,12 @@
   ("C-c o b" . TeX-fold-buffer)
   ("C-c o B" . TeX-fold-clearout-buffer))
 
-(defmacro rh/ensure-region (&rest functions)
-  "Make commands select or expand regions."
-  `(dolist (fn ',functions)
-     (advice-add fn :around
-                 (lambda (orig-fn &rest args)
-                   (if (region-active-p)
-                       (apply orig-fn args)
-                     (push-mark (point) nil t)
-                     (apply orig-fn args))))))
-
-(rh/ensure-region next-line previous-line
-                  forward-word backward-word
-                  forward-sentence backward-sentence
-                  forward-paragraph backward-paragraph)
-
-;;; Concerning lines
-(use-package emacs
-  :config
-  (setq-default fill-column 80)
-  (global-visual-line-mode)
-  (global-hl-line-mode)
-  (setq display-line-numbers-type 'relative)
-  (global-display-line-numbers-mode))
+;;;; Concerning lines
+(setq-default fill-column 80)
+(global-visual-line-mode)
+(global-hl-line-mode)
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode)
 
 (use-package emacs
   :hook (prog-mode . glyphless-display-mode)
