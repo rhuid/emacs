@@ -14,38 +14,18 @@
 ;;; `avy' --- Goku's Instant Transmission
 ;; Teleport to any text in the visible frame instantly
 (use-package avy
-  :bind (("C-," . rh/avy-goto-char-timer-select)
-         ("C-'" . rh/avy-goto-line-select)
+  :bind (("C-," . avy-goto-char-timer)
+         ("C-'" . avy-goto-line)
          :map isearch-mode-map
          ("C-," . avy-isearch))
   :config
-  ;; My personal modifications to two avy commands that I use
-  (defun rh/avy-goto-char-timer-select ()
-    "Like avy-goto-char-timer, but selects or expands region."
-    (interactive)
-    (unless (region-active-p)
-      (set-mark (point))
-      (activate-mark))
-    (call-interactively 'avy-goto-char-timer))
-
-  (defun rh/avy-goto-line-select ()
-    "Like avy-goto-line, but selects or expands region."
-    (interactive)
-    (unless (region-active-p)
-      (set-mark (point))
-      (activate-mark))
-    (call-interactively 'avy-goto-line))
-
+  (rh/ensure-region avy-goto-char-timer avy-goto-line)
   :custom
   (avy-background nil)
   (avy-style 'pre)
   (avy-all-windows t) ; Use all windows on the selected frame
   (avy-timeout-seconds 0.2) ; How long avy-goto-char-timer should wait
-  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)) ; Colemak-DH optimization
-  (avy-dispatch-alist
-   '((?c . avy-action-copy)
-     (?s . avy-action-swap)
-     (?m . avy-action-mark))))
+  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))) ; Colemak-DH optimization
 
 ;;; `bookmark' --- A variant of Minato's Flying Raijin
 ;; Set a marker, jump back instantly (markers persist across restarts)
@@ -74,7 +54,6 @@
 ;; Launch and manage projects, and teleport between project files instantly
 ;; Intergration with `consult' via `consult-project-buffer'
 (use-package project
-  :defer 1
   :custom
   (project-switch-commands
    '((magit-project-status "Magit"     ?m)
