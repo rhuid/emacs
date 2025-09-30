@@ -1,6 +1,4 @@
-;;; knot-completion.el --- Enhancements of the minibuffer -*- lexical-binding: t; -*-
-
-;;;; Mostly completion frameworks. There are lots of individual packages which all work together well.
+;;; knot-completion.el --- Minibuffer completions and at-point completions -*- lexical-binding: t; -*-
 
 (use-package vertico
   :init (vertico-mode)
@@ -14,7 +12,6 @@
   (vertico-cycle t))
 
 (use-package vertico-directory
-  :demand t
   :after vertico
   :load-path "~/.emacs.d/elpa/vertico/extensions/"
   :ensure nil
@@ -22,19 +19,17 @@
 	            ("C-h" . vertico-directory-delete-char)
 	            ("C-w" . vertico-directory-delete-word)))
 
-;;; `orderless' : Type words in any order to match candidates
+;;;; Type words in any order to match candidates
 (use-package orderless
-  :init
-  (setq completion-styles '(orderless partial-completion)
-        completion-category-defaults nil))
+  :init (setq completion-styles '(orderless partial-completion)
+              completion-category-defaults nil))
 
-;;; `marginalia' : Add documentation to minibuffer results
+;;;; Add documentation to minibuffer results
 (use-package marginalia
   :init (marginalia-mode))
 
 (use-package consult
   :demand t
-  :vc (:url "https://github.com/minad/consult")
   :bind
   (("C-c f"   . consult-find)
    ("C-c L"   . consult-locate)
@@ -50,20 +45,17 @@
    ("M-m"     . consult-imenu)
    ("M-p"     . consult-project-buffer)
    ("M-O"     . consult-outline))
-
   :config
   (setq consult-preview-key nil)
-
   ;; To always start searching from home directory
-  (advice-add 'consult-find :around
-              (lambda (orig &rest args)
-		            (let ((default-directory (expand-file-name "~")))
-                  (apply orig args)))))
+  ;; (advice-add 'consult-find :around
+  ;;             (lambda (orig &rest args)
+	;; 	            (let ((default-directory (expand-file-name "~")))
+  ;;                 (apply orig args))))
+  )
 
 ;;;; Jump to recent directories
-
 (use-package consult-dir
-  :demand t
   :bind (("C-x C-d" . consult-dir)
          :map vertico-map
          ("C-x C-d" . consult-dir)
@@ -71,27 +63,20 @@
 
 (use-package embark
   :demand t
-  :vc (:url "https://github.com/oantolin/embark")
-
   :bind
   (("C-."    . embark-act)
    ("C-;"    . embark-dwim)
    ("<f1>-B" . embark-bindings)) ;; alternative for `describe-bindings'
-
   :init
-
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
-
   ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
   ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
 
   ;; Add Embark to the mouse context menu. Also enable `context-menu-mode'.
   ;; (context-menu-mode 1)
   ;; (add-hook 'context-menu-functions #'embark-context-menu 100)
-
   :config
-
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
@@ -104,11 +89,9 @@
 (use-package embark-consult
   :demand t
   :after consult
-  :vc (:url "https://github.com/oantolin/embark")
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-;;; Pop up available keybindings as you type the keys
 (use-package which-key
   :init (which-key-mode)
   :config
@@ -119,7 +102,6 @@
                      ("C-c u" . "utilities")))
     (which-key-add-key-based-replacements (car binding) (cdr binding))))
 
-;;; `corfu'
 (use-package corfu
   :init (global-corfu-mode)
   :after orderless
@@ -142,7 +124,6 @@
   (define-key corfu-map (kbd "C-e") 'corfu-insert)
   (define-key corfu-map (kbd "RET") nil)
   (define-key corfu-map (kbd "TAB") nil)
-
   (define-key corfu-map (kbd "<return>") nil)
   (define-key corfu-map (kbd "<tab>") nil)
   (define-key corfu-map (kbd "C-j") nil)
