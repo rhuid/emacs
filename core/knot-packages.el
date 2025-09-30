@@ -77,19 +77,16 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-;;; `expand-region'
-;; Select regions by semantic units
+;;;; Select regions by semantic units
 (use-package expand-region
-  :demand t
   :bind (("<backspace>"   . er/expand-region)
          ("S-<backspace>" . er/contract-region)))
 
-;;;`keyfreq' : Track commands frequency
+;;;; Track commands frequency
 (use-package keyfreq
   :init (keyfreq-mode)
   :config (keyfreq-autosave-mode))
 
-;;; `hippie-expand'
 (use-package hippie-exp
   :bind ("C-S-e" . hippie-expand)
   :custom
@@ -189,12 +186,9 @@
           (push (point) positions)))
       positions)))
 
-;;; Move where I mean
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line))
-  :config
-  (rh/ensure-region mwim-beginning-of-code-or-line mwim-end-of-code-or-line))
+         ("C-e" . mwim-end-of-code-or-line)))
 
 (use-package pdf-tools
   :mode ("\\.pdf\\'" . pdf-view-mode)
@@ -203,7 +197,7 @@
 (use-package puni
   :hook ((prog-mode LaTeX-mode org-mode text-mode) . puni-mode))
 
-;; Different color for each pair of parenthesis
+;;;; Different color for each pair of parenthesis
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
@@ -215,10 +209,8 @@
   :init (global-tempel-abbrev-mode)
   :bind (("M-/" . tempel-complete)))
 
-;;; `vundo'
 (use-package vundo
-  :bind (("C-/"   . undo)
-         ("C-x u" . vundo)
+  :bind (("C-x u" . vundo)
          ("M-U"   . undo-redo))
   :custom
   (vundo-compact-display t)
