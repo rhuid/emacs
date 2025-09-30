@@ -16,7 +16,7 @@
 (use-package keymap
   :ensure nil
   :config (setq shift-select-mode nil)
-  :hook (after-init . rh/ensure-region)
+  ;; :hook (after-init . rh/ensure-region)
   :bind
   ("C-h"     . backward-delete-char)
   ("C-S-h"   . puni-backward-kill-word)
@@ -45,24 +45,22 @@
   ("C-t r" . transpose-regions)
 
   ("C-c o b" . TeX-fold-buffer)
-  ("C-c o B" . TeX-fold-clearout-buffer)
-  :config
-  (defun rh/ensure-region ()
-    "Make motion commands select or extend regions."
-    (interactive)
-    (dolist (fn
-             '(forward-word
-               backward-word
-               forward-sentence
-               backward-sentence
-               forward-paragraph
-               backward-paragraph))
-      (advice-add fn :around
-                  (lambda (orig-fn &rest args)
-                    (if (region-active-p)
-                        (apply orig-fn args)
-                      (set-mark (point))
-                      (apply orig-fn args)))))))
+  ("C-c o B" . TeX-fold-clearout-buffer))
+
+(defmacro rh/ensure-region (&rest functions)
+  "Make commands select or expand regions."
+  `(dolist (fn ',functions)
+     (advice-add fn :around
+                 (lambda (orig-fn &rest args)
+                   (if (region-active-p)
+                       (apply orig-fn args)
+                     (push-mark (point) nil t)
+                     (apply orig-fn args))))))
+
+(rh/ensure-region next-line previous-line
+                  forward-word backward-word
+                  forward-sentence backward-sentence
+                  forward-paragraph backward-paragraph)
 
 ;;; Concerning lines
 (use-package emacs
