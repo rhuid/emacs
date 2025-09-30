@@ -70,7 +70,6 @@
 
 (use-package abbrev
   :ensure nil
-  :bind ("C-c s a" . abbrev-mode)
   :init
   (defun rh/context-sensitive-abbrev-expand (fun &rest args)
     "Advice to prevent abbrev expansion inside comments and strings."
@@ -91,14 +90,6 @@
   :ensure nil
   :commands eldoc-mode
   :config (setq eldoc-idle-delay 0.2))
-
-(use-package eww
-  :ensure nil
-  :bind (("C-c w w" . eww))
-  :config
-  (setq eww-search-prefix "https://duckduckgo.com/html/?q-")
-  (setq shr-use-colors nil)
-  (setq shr-width fill-column))
 
 (use-package minibuffer
   :demand t
