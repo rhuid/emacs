@@ -18,8 +18,6 @@
          ("C-'" . avy-goto-line)
          :map isearch-mode-map
          ("C-," . avy-isearch))
-  :config
-  (rh/ensure-region avy-goto-char-timer avy-goto-line)
   :custom
   (avy-background nil)
   (avy-style 'pre)
