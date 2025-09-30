@@ -45,12 +45,14 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
+;;;; Concerning cursors
+(setq-default cursor-type t)
+(setq-default cursor-in-non-selected-windows nil)
+(blink-cursor-mode 0)
+(setq make-pointer-invisible t) ; Disable mouse pointer while typing
+
 (use-package emacs
   :config
-  (setq-default cursor-type t)
-  (setq-default cursor-in-non-selected-windows nil)
-  (blink-cursor-mode 0)
-  (setq make-pointer-invisible t) ; Disable mouse pointer while typing
   (setq disabled-command-function nil) ; Enable all disabled commands
   (global-auto-revert-mode) ;; Refresh the buffer when files change on disk
   (global-subword-mode)
