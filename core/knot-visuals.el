@@ -1,6 +1,5 @@
 ;;; knot-visuals.el --- UI, themes, modeline, pretty symbols, icons and all that -*- lexical-binding: t; -*-
 
-;;; `paren'
 ;; Highlight matching parentheses, braces and brackets
 (use-package paren
   :init (show-paren-mode)
@@ -8,7 +7,6 @@
   (show-paren-delay 0)
   (show-paren-when-point-inside-paren t))
 
-;;; `modeline'
 (use-package mode-line
   :ensure nil
   :init
@@ -18,14 +16,11 @@
                   (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | "
                   (vc-mode vc-mode))))
 
-;;; `hide-mode-line'
-;; The modeline is expendable in some major modes
 (use-package hide-mode-line
   :bind ("C-<f7>" . global-hide-mode-line-mode)
   :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
 
-;;; `rainbow-mode'
-;; Colorize stings that represent colors
+;;;; Colorize stings that represent colors
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
@@ -52,7 +47,7 @@
             rh/default-font-size))
     (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t)))
 
-;;; `themes'
+;;;; General things about themes
 (use-package emacs
   :bind ("C-c t t" . rh/toggle-light-dark-theme-mode)
   :config
@@ -90,14 +85,13 @@
   ;; (nano-mode)
   )
 
-;;; `prettify-symbols'
+;;;; Prettify symbols
 (use-package emacs
   :hook ((prog-mode . rh/provide-pretty-symbols))
   :config
   (global-prettify-symbols-mode)
   (defun rh/provide-pretty-symbols ()
     "Provide some pretty symbols."
-    (interactive)
     (setq prettify-symbols-alist
           '(("->" . ?→)
             ("=>" . ?⇒)
