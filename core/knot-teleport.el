@@ -8,7 +8,7 @@
   :custom
   (avy-timeout-seconds 0.2)
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
-e
+
 ;;;; A variant of Minato's Flying Raijin
 (use-package bookmark
   :ensure nil
