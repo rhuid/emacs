@@ -39,17 +39,16 @@
   ("C-c o B" . TeX-fold-clearout-buffer))
 
 ;;;; Concerning lines
-(setq-default fill-column 80)
 (global-visual-line-mode)
 (global-hl-line-mode)
-(setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
+(setq-default fill-column 80)
+(setq display-line-numbers-type 'relative)
 
 ;;;; Concerning cursors
-(setq-default cursor-type t)
-(setq-default cursor-in-non-selected-windows nil)
 (blink-cursor-mode 0)
-(setq make-pointer-invisible t) ; Disable mouse pointer while typing
+(setq-default cursor-in-non-selected-windows nil)
+(setq make-pointer-invisible t)
 
 (use-package emacs
   :config
