@@ -8,12 +8,7 @@
 (use-package window
   :ensure nil
   :bind
-  ("C-S-f" . follow-mode)
-  ("<f9>"  . balance-windows)
-  ("C-c k" . delete-window)
-  ("C-c K" . kill-buffer-and-window)
-  ("C-c n" . split-window-horizontally)
-  ("C-c N" . split-window-vertically))
+  ("C-S-f" . follow-mode))
 
 ;; (use-package visual-fill-column
 ;;   :hook (prog-mode . visual-fill-column-mode)
