@@ -29,30 +29,18 @@
   :init (marginalia-mode))
 
 (use-package consult
-  :demand t
-  :bind
-  (("C-c f"   . consult-find)
-   ("C-c L"   . consult-locate)
-   ("C-x C-f" . consult-recent-file)
-   ("C-M-s"   . consult-line)
-   ("C-M-g"   . consult-ripgrep)
-   ("C-x b"   . consult-buffer)
-   ("C-M-e"   . consult-buffer)
-   ("M-y"     . consult-yank-pop)
-   ("C-c b"   . consult-bookmark)
-   ("C-M-b"   . consult-bookmark)
-   ("C-<f5>"  . consult-theme)
-   ("M-m"     . consult-imenu)
-   ("M-p"     . consult-project-buffer)
-   ("M-O"     . consult-outline))
+  :bind (("C-x C-f" . consult-recent-file)
+         ("C-M-s"   . consult-line)
+         ("C-M-g"   . consult-ripgrep)
+         ("C-M-e"   . consult-buffer)
+         ("M-y"     . consult-yank-pop)
+         ("C-c b"   . consult-bookmark)
+         ("C-M-b"   . consult-bookmark)
+         ("M-m"     . consult-imenu)
+         ("M-p"     . consult-project-buffer)
+         ("M-O"     . consult-outline))
   :config
-  (setq consult-preview-key nil)
-  ;; To always start searching from home directory
-  ;; (advice-add 'consult-find :around
-  ;;             (lambda (orig &rest args)
-	;; 	            (let ((default-directory (expand-file-name "~")))
-  ;;                 (apply orig args))))
-  )
+  (setq consult-preview-key nil))
 
 ;;;; Jump to recent directories
 (use-package consult-dir
@@ -62,11 +50,9 @@
 	       ("C-x C-j" . consult-dir-jump-file)))
 
 (use-package embark
-  :demand t
-  :bind
-  (("C-."    . embark-act)
-   ("C-;"    . embark-dwim)
-   ("<f1>-B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :bind (("C-."    . embark-act)
+         ("C-;"    . embark-dwim)
+         ("<f1>-B" . embark-bindings)) ;; alternative for `describe-bindings'
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -87,10 +73,8 @@
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
-  :demand t
   :after consult
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package which-key
   :init (which-key-mode)

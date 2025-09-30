@@ -7,14 +7,12 @@
   (show-paren-delay 0)
   (show-paren-when-point-inside-paren t))
 
-(use-package mode-line
-  :ensure nil
-  :init
-  (setq-default mode-line-format
-                '(" " mode-line-buffer-identification " | "
-                  mode-name " | "
-                  (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | "
-                  (vc-mode vc-mode))))
+;; A minimalist mode-line
+(setq-default mode-line-format
+              '(" " mode-line-buffer-identification " | "
+                mode-name " | "
+                (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | "
+                (vc-mode vc-mode)))
 
 (use-package hide-mode-line
   :bind ("C-<f7>" . global-hide-mode-line-mode)
@@ -66,7 +64,6 @@
            (t (message "The current theme (%s) does not have a dark/light mode." theme))))
       (message "No theme is currently enabled."))))
 
-;;; `ef-themes'
 (use-package ef-themes
   :disabled t
   :config
@@ -102,16 +99,11 @@
 (use-package spacious-padding
   :init (spacious-padding-mode))
 
-(use-package all-the-icons
-  :config
-  (when (display-graphic-p)
-    (unless (member "all-the-icons" (font-family-list))
-      (all-the-icons-install-fonts t))))
-
-(use-package nerd-icons
-  :config
-  (when (display-graphic-p)
-    (unless (member "Symbols Nerd Font Mono" (font-family-list))
-      (nerd-icons-install-fonts t))))
+;;;; Icons
+(when (display-graphic-p)
+  (unless (member "all-the-icons" (font-family-list))
+    (all-the-icons-install-fonts t))
+  (unless (member "Symbols Nerd Font Mono" (font-family-list))
+    (nerd-icons-install-fonts t)))
 
 (provide 'knot-visuals)

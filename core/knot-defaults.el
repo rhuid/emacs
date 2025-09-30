@@ -6,10 +6,14 @@
   :hook (before-save . delete-trailing-whitespace)
   :config
   (setq-default require-final-newline t)
-  ;; Automatically save place in each file
-  (save-place-mode)
-  ;; Don't generate backup files
+  (save-place-mode) ; save place in each file
   (setq make-backup-files nil))
+
+;;;; Files
+;; (setq-default require-final-newline t)
+;; (save-place-mode) ; save place in each file
+;; (setq make-backup-files nil)
+;; (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 ;; Remap some of the basic and built-in commands time
 ;; Shift is better used as a modifier
@@ -21,13 +25,13 @@
   ("C-h"     . backward-delete-char)
   ("C-S-h"   . puni-backward-kill-word)
   ("C-S-k"   . rh/backward-kill-line)
-  ("C-S-d"   . puni-forward-kill-word)
+  ;; ("C-S-d"   . puni-forward-kill-word)
   ("C-x C-c" . nil)
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
   ("C-w"     . rh/kill-in-context)
-  ("M-j"     . nil)
-  ("M-j"     . rh/join-line)
+  ("C-j"     . nil)
+  ("C-j"     . rh/join-line)
   ("M-L"     . duplicate-dwim)
 
   ("C-<backspace>" . mode-line-other-buffer)
@@ -55,24 +59,17 @@
 (global-display-line-numbers-mode)
 
 (use-package emacs
-  :hook (prog-mode . glyphless-display-mode)
   :config
   (setq-default cursor-type t)
   (setq-default cursor-in-non-selected-windows nil)
   (blink-cursor-mode 0)
-  ;; Disable mouse pointer as while typing
-  (setq make-pointer-invisible t)
-  ;; Enable all disabled commands
-  (setq disabled-command-function nil)
-  ;; Automatically refresh the buffer when files change on disk
-  (global-auto-revert-mode)
+  (setq make-pointer-invisible t) ; Disable mouse pointer while typing
+  (setq disabled-command-function nil) ; Enable all disabled commands
+  (global-auto-revert-mode) ;; Refresh the buffer when files change on disk
   (global-subword-mode)
-  ;; Remove indentation from text in kill-ring
-  (kill-ring-deindent-mode)
-  ;; Don't ask for confirmation while killing buffers
-  (setq kill-buffer-query-functions nil)
-  ;; All confirmations prompts be y or n
-  (fset 'yes-or-no-p 'y-or-n-p))
+  (kill-ring-deindent-mode) ;; Remove indentation from text in kill-ring
+  (setq kill-buffer-query-functions nil) ;; Don't ask for confirmation while killing buffers
+  (fset 'yes-or-no-p 'y-or-n-p)) ;; All confirmations prompts be y or n
 
 (use-package abbrev
   :ensure nil

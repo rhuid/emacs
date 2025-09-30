@@ -46,8 +46,7 @@
 ;;; `electric-pair-mode`
 ;; Automatically insert matching delimiters (parentheses, quotes, braces, etc)
 (use-package elec-pair
-  :demand t
-  :config (electric-pair-mode)
+  :init (electric-pair-mode)
   :hook (org-mode . rh/org-electric-pairs)
   :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\])
                                  (?\".?\") (?\<.?\>)))

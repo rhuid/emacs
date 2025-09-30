@@ -3,10 +3,10 @@
 ;;;; For all programming modes
 (use-package prog-mode
   :ensure nil
+  :hook (prog-mode . glyphless-display-mode)
   :config
   (global-font-lock-mode 1)
-  ;; Always use spaces, never tabs
-  (setq-default indent-tabs-mode nil
+  (setq-default indent-tabs-mode nil ; Always use spaces, never tabs
 		            tab-width 2)
   (setq standard-indent 2))
 
