@@ -192,7 +192,9 @@
 ;;; Move where I mean
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line)))
+         ("C-e" . mwim-end-of-code-or-line))
+  :config
+  (rh/ensure-region mwim-beginning-of-code-or-line mwim-end-of-code-or-line))
 
 (use-package pdf-tools
   :mode ("\\.pdf\\'" . pdf-view-mode)
