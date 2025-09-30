@@ -89,13 +89,8 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
-(use-package calc
-  :ensure nil
-  :bind ("C-c c c" . calc))
-
 (use-package calendar
   :ensure nil
-  :bind ("C-c x c" . calendar)
   :hook (calendar-today-visible . calendar-mark-today))
 
 (use-package eldoc
