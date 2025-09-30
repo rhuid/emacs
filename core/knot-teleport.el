@@ -47,42 +47,9 @@
   :config
   (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
 
-;;; A super fast variant of Minato's Flying Raijin
 (use-package register
   :ensure nil
-  :bind (("C-|"   . point-to-register)
-         ("C-M-|" . window-configuration-to-register)
-         ("C-\\"  . jump-to-register)
-         ("C-M-m" . rh/set-point-to-register-1)
-         ("C-M-j" . rh/jump-to-register-1)
-         ("C-S-m" . rh/set-window-config-to-register-2)
-         ("C-S-j" . rh/jump-to-window-config-2))
-  :custom
-  (register-use-preview nil) ; preview without delay
-  :config
-  (defun rh/set-point-to-register-1 ()
-    "Store current point in register 1."
-    (interactive)
-    (point-to-register ?1)
-    (message "Point marked."))
-
-  (defun rh/set-window-config-to-register-2 ()
-    "Store current window configuration in register 2."
-    (interactive)
-    (window-configuration-to-register ?2)
-    (message "Window configuration marked."))
-
-  (defun rh/jump-to-register-1 ()
-    "Jump to position stored in register 1."
-    (interactive)
-    (jump-to-register ?1)
-    (message "Teleported to the mark."))
-
-  (defun rh/jump-to-window-config-2 ()
-    "Jump to position stored in register 1."
-    (interactive)
-    (jump-to-register ?2)
-    (message "Teleported to the window configuration.")))
+  :custom (register-use-preview nil)) ; preview without delay
 
 ;; Save minibuffer history
 (use-package savehist
@@ -97,11 +64,15 @@
      search-ring
      regexp-search-ring)))
 
-;; To restore or go back to previous window configurations
+;;;; Undo window configurations
+;; (winner-mode)
+;; (global-set-key (kbd "C-S-w") 'winner-undo)
+
+;; Undo window configurations
 (use-package winner
   :ensure nil
   :init (winner-mode)
-  :bind (("C-S-W" . winner-undo)
+  :bind (("C-S-w" . winner-undo)
          ("C-c w r" . winner-redo))
   :config
   (defvar-keymap rh/winner-repeat-map
