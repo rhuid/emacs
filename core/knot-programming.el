@@ -89,28 +89,19 @@
 (use-package sh-script
   :ensure nil
   :mode ("\\.sh\\'" . sh-mode)
-  :hook ((sh-mode . rh/sh-tab-hook)
-	       (sh-mode . rh/sh-highlight-custom-keywords)
+  :hook ((sh-mode . rh/sh-highlight-custom-keywords)
 	       (sh-mode . (lambda ()
 		                  (require 'rh-shell)))))
 
 (use-package lisp-mode
   :ensure nil
-  :mode ("\\.el\\'" . emacs-lisp-mode)
   :hook ((emacs-lisp-mode . eldoc-mode)
-	       (emacs-lisp-mode . rh/elisp-tab-hook)
-	       (emacs-lisp-mode . rh/elisp-highlight-custom-keywords)
-	       (emacs-lisp-mode . rh/outline-elisp)
-	       (lisp-interaction-mode . rh/elisp-tab-hook)
-	       (lisp-interaction-mode . rh/elisp-highlight-custom-keywords)
-	       (emacs-lisp-mode . (lambda () (require 'rh-elisp))))
+	       (emacs-lisp-mode . rh/outline-elisp))
   :config
   (defun rh/outline-elisp ()
     "Set outline regex for top-level declarations in Emacs Lisp."
     (setq-local outline-regexp
-		            (rx line-start
-                    (* space)
-                    "("
+		            (rx line-start (* space) "("
                     (or  "use-package" "require" "provide" "defun"
 			                   "with-eval-after-load" "setq" "defvar"
 			                   "add-to-list" "add-hook")))
@@ -118,10 +109,8 @@
 
 (use-package rust-mode
   :hook ((rust-mode . outline-minor-mode)
-	       (rust-mode . rh/outline-rust)
-	       (rust-mode . (lambda () (require 'rh-rust))))
+	       (rust-mode . rh/outline-rust))
   :config
-  (setq rust-format-on-save t)
   (defun rh/outline-rust ()
     (setq-local outline-regexp
 		            (rx line-start (* space)
