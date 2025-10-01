@@ -1,14 +1,8 @@
 ;;; knot-packages.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
-;;; Things about windows
-
-;; Make windows proportional while adding or deleting windows
-(setq window-combination-resize t)
-
-(use-package window
-  :ensure nil
-  :bind
-  ("C-S-f" . follow-mode))
+;;;; Concerning windows
+(setq window-combination-resize t) ; keep windows balanced
+(global-set-key (kbd "C-S-f") 'follow-mode)
 
 ;; (use-package visual-fill-column
 ;;   :hook (prog-mode . visual-fill-column-mode)
@@ -71,7 +65,6 @@
         emms-mode-line-titlebar-format "EMMS: %s")
   (emms-mode-line-mode 1))
 
-;;;; Select regions by semantic units
 (use-package expand-region
   :bind (("<backspace>"   . er/expand-region)
          ("S-<backspace>" . er/contract-region)))
@@ -97,7 +90,6 @@
      try-complete-lisp-symbol-partially
      try-expand-all-abbrevs)))
 
-;;; `jinx' : https://github.com/minad/jinx
 ;; Requires enchant and dictionary backend
 ;; I am using `hunspell-en_us'
 (use-package jinx
