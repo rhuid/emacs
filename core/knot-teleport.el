@@ -12,7 +12,6 @@
   :ensure nil
   :config
   (setq bookmark-save-flag 1)
-  (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory))
   (setq bookmark-bmenu-toggle-filenames t))
 
 (use-package isearch
@@ -40,10 +39,8 @@
   :custom
   (recentf-max-saved-items 200)
   (recentf-max-menu-items 25)
-  (recentf-save-file (expand-file-name "recentf" user-emacs-directory))
   (recentf-auto-cleanup 'never)
-  :config
-  (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
+  :config (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
 
 (use-package register
   :ensure nil
@@ -53,8 +50,8 @@
   :ensure nil
   :init (savehist-mode)
   :custom
-  (savehist-file (locate-user-emacs-file "history"))
   (history-length 2000)
+  (history-delete-duplicates t)
   (savehist-additional-variables
    '(kill-ring
      register-alist

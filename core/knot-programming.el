@@ -66,7 +66,6 @@
 (use-package rust-mode)
 (use-package julia-mode)
 (use-package systemd)
-(use-package flymd) ; markdown live preview
 
 (use-package kbd-mode
   :vc (:url "https://github.com/kmonad/kbd-mode" :rev :newest))

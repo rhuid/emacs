@@ -14,14 +14,12 @@
 (use-package vertico-directory
   :after vertico
   :load-path "~/.emacs.d/elpa/vertico/extensions/"
-  :ensure nil
   :bind (:map vertico-map
 	            ("C-h" . vertico-directory-delete-char)
 	            ("C-w" . vertico-directory-delete-word)))
 
 (use-package orderless
-  :init (setq completion-styles '(orderless partial-completion)
-              completion-category-defaults nil))
+  :init (setq completion-styles '(orderless partial-completion)))
 
 (use-package marginalia
   :init (marginalia-mode))
@@ -40,7 +38,6 @@
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
          :map vertico-map
-         ("C-x C-d" . consult-dir)
 	       ("C-x C-j" . consult-dir-jump-file)))
 
 (use-package embark
@@ -58,7 +55,6 @@
 
 (use-package corfu
   :init (global-corfu-mode)
-  :after orderless
   :hook ((corfu-mode . corfu-history-mode)
          (corfu-mode . corfu-indexed-mode)
          (corfu-mode . corfu-popupinfo-mode))

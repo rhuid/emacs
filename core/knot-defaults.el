@@ -29,7 +29,6 @@
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
   ("M-L"     . duplicate-dwim)
-
   ("C-<backspace>" . mode-line-other-buffer)
 
   ;; Things about transposing
@@ -82,26 +81,10 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
-(use-package calendar
-  :ensure nil
-  :hook (calendar-today-visible . calendar-mark-today))
-
 (use-package eldoc
   :ensure nil
   :commands eldoc-mode
   :config (setq eldoc-idle-delay 0.2))
-
-(use-package minibuffer
-  :demand t
-  :ensure nil
-  :hook (minibuffer-mode . savehist-mode)
-  :config (recentf-mode)
-  :custom (history-delete-duplicates t))
-
-;;;; `minibuffer'
-;; (add-hook 'minibuffer-mode-hook 'savehist-mode)
-;; (recentf-mode)
-;; (history-delete-duplicates t)
 
 ;; Repeat commands without retyping the prefix key
 (use-package repeat
