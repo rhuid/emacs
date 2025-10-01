@@ -1,51 +1,19 @@
 ;;; rh-lean.el --- description -*- lexical-binding: t; -*-
 
-;; Lean
+;; (lean4-mode . (lambda () (require 'rh-lean)))
+;; (lean4-mode . rh/outline-lean)
+
+(defun rh/outline-lean ()
+  "Set outline regex for top-level declarations in Lean."
+  (setq-local outline-regexp
+              (rx line-start (* space)
+                  (or  "structure" "inductive" "class" "theorem"
+                       "axiom" "lemma" "def" "instance" "example"
+                       "opaque" "namespace")))
+  (outline-hide-body))
 
 (require 'rh-snip)
 (require 'rh-faces)
-
-;; (define-abbrev-table 'lean4-abbrev-table
-;;   '(("ev"    "#eval"   nil 0)
-;;     ("ch"    "#check"  nil 0)
-;;     ("arr"   "#["      nil 0)
-;;     ("df"    ":="      nil 0)
-;;     ("ty"    ":"       nil 0)
-;;     ("to"    "→"       nil 0)
-;;     ("ftor"  "<$>"     nil 0)
-;;     ("im"    "=>"      nil 0)
-;;     ("str"   "String"  nil 0)
-
-;;     ("ex"    "example" nil 0)
-;;     ("ax"    "axiom"   nil 0)
-;;     ("th"    "theorem" nil 0)
-
-;;     ("prnt"  "#print"  nil 0)
-;;     ("rd"    "reduce"  nil 0)
-;;     ;; ... add more when needed
-;;     ))
-
-(defvar rh/lean4-snippet-alist
-  '(("c"   . "/- ? -/?")
-    ("ch"  . "#check (?)?")
-    ("ev"  . "#eval (?)?")
-    ("rd"  . "reduce (?)?")
-    ("st"  . "structure ? where \n  ?\nderiving ?")
-    ("ind" . "inductive ? where \n  | ?\nderiving ?")
-    ("mt"  . "match ? with\n| ? => ?")
-    ("a"   . "| ? => ?")
-    ("def" . "def ? : ? := ?")
-    ("fn"  . "fun ? => ?")
-    ("ins" . "instance [?]: ? where\n  ?")
-    ("cls" . "class ? where\n  ?")
-    ("l"   . "[?]?")
-    ("arr" . "#[?]?")
-
-    ("name" . "namespace ?\n\n?\n\nend ?")
-
-    ("th"   . "theorem ? : ? := ?")
-    ;; ... add more when needed
-    ))
 
 (defun rh/lean4-tab-hook ()
   "Setup Lean4 snippet and placeholder support on TAB."

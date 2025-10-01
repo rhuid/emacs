@@ -1,6 +1,12 @@
 ;;; rh-rust.el --- description -*- lexical-binding: t; -*-
 
-;; Rust customizations
+(defun rh/outline-rust ()
+  (setq-local outline-regexp
+              (rx line-start (* space)
+                  (or "fn" "pub" "struct" "enum" "impl")))
+  (outline-hide-body))
+
+;; :hook (rust-mode . rh/outline-rust)
 
 (require 'rh-snip)
 
