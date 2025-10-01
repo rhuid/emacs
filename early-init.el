@@ -6,7 +6,7 @@
 
 (defvar rh/default-font-size 15)
 (setq default-frame-alist '((font . "Iosevka Term-15")
-                            (fullscreen . maximized))) ; Use fullboth for absolute fullscreen
+                            (fullscreen . maximized)))
 
 ;; Prevent frame resizing (very expensive)
 (setq frame-inhibit-implied-resize t)

@@ -25,7 +25,7 @@
   ("C-h"     . puni-backward-delete-char)
   ("C-S-h"   . puni-backward-kill-word)
   ("C-S-k"   . rh/backward-kill-line)
-  ("C-x C-c" . nil)
+  ("C-x C-c" . rh/return-home)
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
   ("M-L"     . duplicate-dwim)

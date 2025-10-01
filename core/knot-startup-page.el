@@ -34,14 +34,10 @@
                           meow-cursor-type-keypad '(bar . 0))
               (set-window-buffer (selected-window) (current-buffer)))))
 
-;; Return home
-(use-package emacs
-  :bind ("C-x C-c" . rh/return-home)
-  :config
-  (defun rh/return-home ()
-    "Delete other windows and return to the startup screen."
-    (interactive)
-    (delete-other-windows)
-    (switch-to-buffer "*scratch*")))
+(defun rh/return-home ()
+  "Delete other windows and return to the startup screen."
+  (interactive)
+  (delete-other-windows)
+  (switch-to-buffer "*scratch*"))
 
 (provide 'knot-startup-page)
