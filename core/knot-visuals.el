@@ -23,10 +23,7 @@
   :hook (prog-mode . rainbow-mode))
 
 ;; Adjust font size globally
-(setq global-text-scale-adjust-size 2)
-(global-set-key (kbd "C-x C-=") 'global-text-scale-adjust)
-(global-set-key (kbd "C-x C--") 'global-text-scale-adjust)
-(global-set-key (kbd "C-x C-0") 'global-text-scale-adjust)
+(global-set-key [remap text-scale-adjust] 'global-text-scale-adjust)
 
 ;;;; General things about themes
 (use-package emacs
