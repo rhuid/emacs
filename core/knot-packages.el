@@ -180,6 +180,9 @@
           (push (point) positions)))
       positions)))
 
+(use-package move-text
+  :init (move-text-default-bindings))
+
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
