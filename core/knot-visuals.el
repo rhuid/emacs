@@ -15,7 +15,6 @@
                 (vc-mode vc-mode)))
 
 (use-package hide-mode-line
-  :bind ("C-<f7>" . global-hide-mode-line-mode)
   :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
 
 ;;;; Colorize stings that represent colors

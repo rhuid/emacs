@@ -1,6 +1,5 @@
 ;;; knot-teleport.el --- Spacetime teleportation in Emacs -*- lexical-binding: t; -*-
 
-;;;; Goku's Instant Transmission
 (use-package avy
   :bind (("C-," . avy-goto-char-timer)
          :map isearch-mode-map
@@ -9,7 +8,6 @@
   (avy-timeout-seconds 0.2)
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
 
-;;;; A variant of Minato's Flying Raijin
 (use-package bookmark
   :ensure nil
   :config
@@ -51,7 +49,6 @@
   :ensure nil
   :custom (register-use-preview nil)) ; preview without delay
 
-;; Save minibuffer history
 (use-package savehist
   :ensure nil
   :init (savehist-mode)

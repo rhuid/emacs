@@ -4,7 +4,6 @@
 (use-package eshell
   :ensure nil
   :demand t
-  :commands eshell
   :hook
   (eshell-first-time-mode . rh/eshell-init)
   (eshell-mode . esh-autosuggest-mode)
@@ -54,18 +53,15 @@
   :config
   (eshell-syntax-highlighting-global-mode +1))
 
-(use-package esh-autosuggest :demand t :after eshell)
+(use-package esh-autosuggest
+  :demand t
+  :after eshell)
 
 ;; Emulate A Terminal
 (use-package eat
   :after eshell
   :commands (eat eat-eshell-mode)
   :hook (eshell-mode . eat-eshell-mode))
-
-;; (use-package eshell-hist-mode
-;;   :hook (eshell-mode . eshell-hist-mode))
-
-;; (set-face-attribute 'eshell-prompt nil :foreground "#00ffcc" :weight 'bold)
 
 ;;; `vterm'
 (use-package vterm

@@ -12,15 +12,12 @@
     (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
     (exec-path-from-shell-initialize)))
 
-;; Don't mess up my init. Use a temporary custom file
-(setq custom-file (make-temp-file "temp_custom"))
-;; Always follow symlikes without asking
-(setq vc-follow-symlinks t)
+(setq custom-file (make-temp-file "temp_custom")) ; Don't mess up my init. Use a temporary custom file
+(setq vc-follow-symlinks t) ; Always follow symlikes without asking
 
 (setq-default default-directory "~/")
 
 ;;;; Set up packages
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") 'append)
 
@@ -49,15 +46,11 @@
 (use-package gcmh
   :demand t
   :custom
-  ;; Run GC after 20 secs idle
-  (gcmh-idle-delay 20)
-  ;; During typing/active period, don't run GC until (threshold 256 MB)
-  (gcmh-high-cons-threshold (* 256 1024 1024))
-  :config
-  (gcmh-mode 1))
+  (gcmh-idle-delay 20) ; run GC after 20 secs idle
+  (gcmh-high-cons-threshold (* 256 1024 1024)) ;; while typing, don't run GC until (threshold 256 MB)
+  :config (gcmh-mode 1))
 
 ;;;; Local modules
-
 (use-package knot-startup-page      :ensure nil :defer nil)
 (use-package knot-visuals           :ensure nil :defer nil)
 (use-package knot-defaults          :ensure nil :defer nil)
