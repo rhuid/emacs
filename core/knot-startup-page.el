@@ -36,7 +36,7 @@
 
 ;; Return home
 (use-package emacs
-  :bind ("C-S-q" . rh/return-home)
+  :bind ("C-x C-c" . rh/return-home)
   :config
   (defun rh/return-home ()
     "Delete other windows and return to the startup screen."
