@@ -6,19 +6,28 @@
 (setq make-backup-files nil)
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
+;; A more sane join-line
+(defun rh/join-line (&optional arg)
+  "Like join-line but inverts its behavior."
+  (interactive "P")
+  (if arg (join-line nil) (join-line -1)))
+
+(global-set-key (kbd "C-j") 'rh/join-line)
+
+(global-set-key (kbd "C-\\") 'repeat)
+
 ;; Remap some of the basic and built-in commands time
 ;; Shift is better used as a modifier
 (use-package keymap
   :ensure nil
   :config (setq shift-select-mode nil)
   :bind
-  ("C-h"     . backward-delete-char)
+  ("C-h"     . puni-backward-delete-char)
   ("C-S-h"   . puni-backward-kill-word)
   ("C-S-k"   . rh/backward-kill-line)
   ("C-x C-c" . nil)
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
-  ("C-j"     . rh/join-line)
   ("M-L"     . duplicate-dwim)
 
   ("C-<backspace>" . mode-line-other-buffer)
