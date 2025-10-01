@@ -22,28 +22,11 @@
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
-;;; Toggle font size
-;; I usually toggle between two font sizes: one for most work and
-;; the other for presentations using a projector
-(use-package emacs
-  :bind
-  ("<f10>"   . rh/toggle-global-font-size)
-  ("C-<f10>" . global-text-scale-adjust)
-  :config
-  (defvar rh/current-font-size rh/default-font-size
-    "This is the default font size at startup.")
-
-  (defvar rh/bigger-font-size 20
-    "This is the font size for presentations.")
-
-  (defun rh/toggle-global-font-size ()
-    "Toggle font size between edit mode and presentation mode."
-    (interactive)
-    (setq rh/current-font-size
-          (if (= rh/current-font-size rh/default-font-size)
-              rh/bigger-font-size
-            rh/default-font-size))
-    (set-frame-font (format "Iosevka-%s" rh/current-font-size) t t)))
+;; Adjust font size globally
+(setq global-text-scale-adjust-size 2)
+(global-set-key (kbd "C-x C-=") 'global-text-scale-adjust)
+(global-set-key (kbd "C-x C--") 'global-text-scale-adjust)
+(global-set-key (kbd "C-x C-0") 'global-text-scale-adjust)
 
 ;;;; General things about themes
 (use-package emacs
@@ -78,9 +61,7 @@
   :vc (:url "https://github.com/rougier/nano-theme")
   :config
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'nano-dark t)
-  ;; (nano-mode)
-  )
+  (load-theme 'nano-dark t))
 
 ;;;; Prettify symbols
 (use-package emacs
@@ -101,9 +82,7 @@
 
 ;;;; Icons
 (when (display-graphic-p)
-  (unless (member "all-the-icons" (font-family-list))
-    (all-the-icons-install-fonts t))
-  (unless (member "Symbols Nerd Font Mono" (font-family-list))
-    (nerd-icons-install-fonts t)))
+  (all-the-icons-install-fonts t)
+  (nerd-icons-install-fonts t))
 
 (provide 'knot-visuals)
