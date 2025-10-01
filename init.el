@@ -45,13 +45,6 @@
       use-package-always-defer     t
       use-package-vc-prefer-newest t) ; :rev :newest by default
 
-;; To track startup time for different packages (currently unused but keeping it here disabled)
-(use-package benchmark-init
-  :disabled t
-  :ensure nil
-  :init (benchmark-init/activate)
-  :hook (after-init . benchmark-init/deactivate))
-
 ;; Tweaks for the garbage collector to make Emacs more responsive
 (use-package gcmh
   :demand t
