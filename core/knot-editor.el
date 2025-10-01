@@ -6,27 +6,27 @@
 
 ;; This command is context-sensitive. In most cases, it inserts a space character while joining
 ;; but when the starting character of the next non-empty line is a closing parenthesis, it leaves no space.
-(defun rh/join-line ()
-  "Join the current line with the next non-empty line."
-  (interactive)
-  (save-excursion
-    (end-of-line)
-    (delete-all-space)
-    (unless (rh/at-parenthesis-end-p)
-      (insert " "))))
+;; (defun rh/join-line ()
+;;   "Join the current line with the next non-empty line."
+;;   (interactive)
+;;   (save-excursion
+;;     (end-of-line)
+;;     (delete-all-space)
+;;     (unless (rh/at-parenthesis-end-p)
+;;       (insert " "))))
 
 ;; helper
-(defun rh/at-parenthesis-end-p ()
-  "Return non-nil if the character at point is )."
-  (looking-at-p "[)]"))
+;; (defun rh/at-parenthesis-end-p ()
+;;   "Return non-nil if the character at point is )."
+;;   (looking-at-p "[)]"))
 
 ;; A dual of C-k, maybe bind C-S-k to it?
-(defun rh/backward-kill-line ()
-  "Kill from beginning of line to point."
-  (interactive)
-  (set-mark (point))
-  (mwim-beginning-of-code-or-line)
-  (call-interactively 'kill-region))
+;; (defun rh/backward-kill-line ()
+;;   "Kill from beginning of line to point."
+;;   (interactive)
+;;   (set-mark (point))
+;;   (mwim-beginning-of-code-or-line)
+;;   (call-interactively 'kill-region))
 
 ;; A multipurpose trash cleaner without cluttering the kill ring!
 (defun rh/delete-in-context ()
@@ -138,7 +138,7 @@
    '("g" . meow-cancel-selection)   '("G" . meow-grab)
    '("h" . meow-mark-word)          '("H" . meow-mark-symbol)
    '("i" . meow-right-expand)       '("I" . scroll-up-command)
-   '("j" . rh/join-line)            '("J" . meow-join)
+   '("j" . rh/join-line)            '("J" . join-line)
    '("k" . rh/kill-in-context)      '("K" . avy-move-region)
    '("l" . meow-line)               '("L" . consult-goto-line)
    '("m" . meow-left-expand)        '("M" . scroll-down-command)
