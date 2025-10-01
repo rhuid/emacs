@@ -47,14 +47,7 @@
   :bind (("C-."    . embark-act)
          ("C-;"    . embark-dwim)
          ("<f1>-B" . embark-bindings))
-  :init (setq prefix-help-command #'embark-prefix-help-command)
-  :config
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-		             (display-buffer-in-side-window)
-		             (side . bottom)
-		             (window-height . 0.3 )
-                 (window-parameters (mode-line-format . none)))))
+  :init (setq prefix-help-command #'embark-prefix-help-command))
 
 (use-package embark-consult
   :after consult
