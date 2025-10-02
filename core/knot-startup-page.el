@@ -15,7 +15,7 @@
       initial-scratch-message
       (with-temp-buffer
 	      (insert "\nWelcome home, Ronald.\n")
-	      (insert-file-contents (concat user-emacs-directory "logo/Emacs-ANSI-Shadow.txt"))
+	      (insert-file-contents (concat user-emacs-directory "library/logo/Emacs-ANSI-Shadow.txt"))
 	      (goto-char (point-max))
 	      (insert "\n")
 	      (insert (rh/random-excerpt (concat user-emacs-directory "library/excerpts.txt")))
