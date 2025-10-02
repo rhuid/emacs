@@ -7,6 +7,7 @@
   (LaTeX-mode . LaTeX-math-mode)
   (LaTeX-mode . TeX-fold-mode)
   (LaTeX-mode . turn-on-reftex)
+  (LaTeX-mode . rh/provide-keywords-math-face)
   (post-command . rh/toggle-latex-abbrev)
   :bind (:map LaTeX-mode-map
               ("C-c C-u" . rh/tex-fold-buffer))
@@ -14,7 +15,7 @@
   (setq TeX-auto-save t
         TeX-parse-self t)
   (setq TeX-view-program-selection
-        '((output-pdf "Sioyek")
+        '((output-pdf "Evince")
           (output-html "firefox")))
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
 
@@ -31,13 +32,26 @@
         (TeX-fold-clearout-buffer)
       (TeX-fold-buffer)))
 
-  ;; Make math delimiters less visible (stolen from https://gitlab.com/slotThe/dotfiles/-/blob/master/emacs/lisp/hopf-latex.el)
-  (defvar rh/latex-math-face (make-face 'rh/latex-math-face))
-  (set-face-attribute 'rh/latex-math-face
-                      nil
-                      :inherit 'font-lock-comment-face :weight 'thin :slant 'normal)
-  (font-lock-add-keywords
-   'LaTeX-mode '(("\\\\[]()[]\\|\\$" 0 rh/latex-math-face t)))
+  (defface rh/math-delimiter-face
+    '((t (:inherit font-lock-comment-face :weight thin :slant normal)))
+    "Face used for math delimiters in Latex."
+    :group 'latex)
+
+  (defun rh/provide-keywords-math-face ()
+    "Provide keywords that have `rh/math-delimiter-face'."
+    (font-lock-add-keywords
+     nil
+     '(;; Math delimiters
+       ("\\(\\\\[][()]\\|\\$\\)" 0 'rh/math-delimiter-face t)
+       )))
+
+  ;; Environment commands with separate highlighting
+  ;; ("\\(\\\\begin\\){\\([^}]*\\)}"
+  ;;  (1 'rh/math-delimiter-face t)
+  ;;  (2 'rh/environment-name-face t))
+  ;; ("\\(\\\\end\\){\\([^}]*\\)}"
+  ;;  (1 'rh/math-delimiter-face t)
+  ;;  (2 'rh/environment-name-face t))
 
   ;; Math completions for corfu (wont work for now)
 
