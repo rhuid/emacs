@@ -74,7 +74,7 @@
   (advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
   :config
   (setq-default abbrev-mode t)
-  (setq abbrev-file-name (expand-file-name "abbrev_defs.el" user-emacs-directory))
+  (setq abbrev-file-name (expand-file-name "library/abbrevs.el" user-emacs-directory))
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 

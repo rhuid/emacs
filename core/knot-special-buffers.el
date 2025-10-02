@@ -38,7 +38,7 @@
   (defun rh/open-lean-playground ()
     "Lean playground is like a scratch buffer for Lean."
     (interactive)
-    (let* ((scratch-dir (expand-file-name "lib/lean-playground/" user-emacs-directory))
+    (let* ((scratch-dir (expand-file-name "library/lean-playground/" user-emacs-directory))
            (scratch-file (expand-file-name "*Lean-playground*" scratch-dir))
            (template "import LeanPlayground\n\n/- Play with Lean 4 here. Start proving theorems. -/\n\n"))
       (with-current-buffer (find-file scratch-file)
