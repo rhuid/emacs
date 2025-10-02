@@ -41,10 +41,7 @@
   ("C-t p" . transpose-paragraphs)
   ("C-t l" . transpose-lines)
   ("C-t x" . transpose-sexps)
-  ("C-t r" . transpose-regions)
-
-  ("C-c o b" . TeX-fold-buffer)
-  ("C-c o B" . TeX-fold-clearout-buffer))
+  ("C-t r" . transpose-regions))
 
 ;;;; Concerning lines
 (global-visual-line-mode)
@@ -63,7 +60,7 @@
   (setq disabled-command-function nil) ; Enable all disabled commands
   (global-auto-revert-mode) ;; Refresh the buffer when files change on disk
   (global-subword-mode)
-  (kill-ring-deindent-mode) ;; Remove indentation from text in kill-ring
+  (kill-ring-deindent-mode)
   (setq kill-buffer-query-functions nil) ;; Don't ask for confirmation while killing buffers
   (fset 'yes-or-no-p 'y-or-n-p)) ;; All confirmations prompts be y or n
 
