@@ -3,50 +3,45 @@
 (use-package org
   :ensure nil
   :commands (org-mode)
-  :hook ((org-mode . rh/org-init)
-	       (org-mode . rh/org-custom-faces))
-  :config
-  (setq org-table-auto-align t)
-  (defun rh/org-init ()
-    (setq org-startup-indented nil
-	        org-hide-emphasis-markers t
-	        org-ellipsis " ▾ "               ; folding symbol
-	        org-pretty-entities t            ; pretty TeX symbols
-	        org-log-done 'time               ; log time when a task is marked done
-	        org-hide-leading-stars t
-	        org-startup-folded 'content))
-
-  (setq org-todo-keywords
-	      '((sequence "TODO" "WAITING" "IN-PROGRESS" "|" "DONE" "CANCELLED")))
-
-  ;; (setq org-preview-latex-default-process 'dvisvgm)
-
-  ;; Customize the face of the headings
-  (defun rh/org-custom-faces ()
-    (custom-set-faces
-     '(org-level-1 ((t (:inherit outline-1 :height 1.8 :weight bold :foreground "#ff79c6"))))
-     '(org-level-2 ((t (:inherit outline-2 :height 1.5 :weight bold :foreground "#8be9fd"))))
-     '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#50fa7b"))))
-     '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c"))))))
-
-  :config
-  (define-key org-mode-map (kbd "C-,") nil)
-  (define-key org-mode-map (kbd "C-'") nil)
-  (setq org-directory "~/org")
-
-  :bind
-  (:map org-mode-map
-        ("C-S-o" . org-shifttab))
+  :hook ((org-mode . rh/org-custom-faces)
+         (org-mode . (lambda () (display-line-numbers-mode -1))))
   :custom
-  (display-line-numbers-mode -1))
-
-(use-package org-modern :after org
-  ;; visual improvements for org mode
-  :hook (org-mode . org-modern-mode)
+  (org-hide-leading-stars t)
+  (org-log-done 'time)
+  (org-startup-indented t)
+  (org-hide-emphasis-markers t)
+  (org-special-ctrl-a/e t)
+  (org-pretty-entities t)
+  (org-catch-invisible-edits 'show-and-error)
+  (org-insert-heading-respect-content t)
+  (org-ellipsis "…")
+  (org-auto-align-tags nil)
+  (org-tags-column 0)
+  (org-agenda-tags-column 0)
+  (org-table-auto-align t)
+  (org-startup-folded 'content)
+  (org-directory "~/org")
+  (org-todo-keywords
+   '((sequence "TODO" "WAITING" "IN-PROGRESS" "|" "DONE" "CANCELLED")))
   :config
+  (defun rh/org-custom-faces ()
+    "Set faces of the headings."
+    (custom-set-faces
+     '(org-level-1 ((t (:inherit outline-1 :height 1.7 :weight bold :foreground "#50fa7b"))))
+     '(org-level-2 ((t (:inherit outline-2 :height 1.5 :weight bold :foreground "#8be9fd"))))
+     '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#ff79c6"))))
+     '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c"))))))
+  :bind (:map org-mode-map
+              ("C-," . nil)
+              ("C-'" . nil)
+              ("C-S-o" . org-shifttab)))
 
-  ;; disable org-modern's heading stars (let org-superstar handle them)
-  (setq org-modern-star nil))
+(use-package org-modern
+  :after org
+  :init (global-org-modern-mode)
+  :custom
+  (org-modern-star t)
+  (org-modern-block-fringe t))
 
 ;; To set variable-width characters instead of monospace, but preserve monospace for tables (for alignment) and code blocks
 ;;(set-face-attribute 'variable-pitch nil	:family "DejaVu Sans" :height 120)
@@ -56,79 +51,48 @@
 ;;            (face-remap-add-relative 'org-table 'fixed-pitch)
 ;;            (face-remap-add-relative 'org-code 'fixed-pitch)))
 
-(use-package org-superstar :after org
-  ;; prettify headings
-  :hook (org-mode . org-superstar-mode)
-  :config
-
-  ;; replace * of headings with these emojis
-  (setq org-superstar-headline-bullets-list
-	      '("✿" "❀" "✦" "❂"))
-
-  ;; prettify list bullets
-  (setq org-superstar-prettify-item-bullets t))
-
-(use-package org-preview
-  :vc (:url "https://github.com/karthink/org-preview"))
+;; (use-package org-preview
+;;   :vc (:url "https://github.com/karthink/org-preview"))
 
 ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
-(use-package org-fragtog
-  :after org
-  :hook (org-mode . org-fragtog-mode))
+;; (use-package org-fragtog
+;;   :after org
+;;   :hook (org-mode . org-fragtog-mode))
 
 ;; (use-package org-latex-preview :ensure nil :after org
 ;;   :hook (org-mode. org-latex-preview-auto-mode))
 
-(use-package ox-reveal :after org
-  ;; nice looking HTML presentations
+(use-package ox-reveal
+  :after org
   :config
-  (setq org-re-reveal-root
-	"https://cdn.jsdelivr.net/npm/reveal.js")
+  (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
   (add-to-list 'org-export-backends 'reveal))
 
-(use-package org-agenda :ensure nil :after org
+(use-package org-agenda
+  :ensure nil
+  :after org
   :commands (org-agenda org-todo-list))
 
-(with-eval-after-load 'org
-  ;; Define header function; to insert a template header to a new org file
-  (defun rh/insert-org-header ()
-    "Insert standard Org-mode header template at point."
-    (interactive)
-    (insert "#+TITLE: \n")
-    (insert "#+AUTHOR: \n")
-    (insert "#+EMAIL: \n")
-    (insert "#+DATE: \n")
-    (insert "#+STARTUP: overview\n")             ; Collapse headings on open
-    (insert "#+STARTUP: indent\n\n")             ; Indent headings visually
-    (insert "#+OPTIONS: toc:2\n")                ; Table of contents to depth 2
-    (insert "#+LATEX_CLASS: article\n")
-    (insert "#+LATEX_CLASS_OPTIONS: [a4paper,12pt]\n")
-    (insert "#+LATEX_HEADER: \\usepackage[margin=1.2in]{geometry}\n")
-    (insert "#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js\n"))
-  )
+;; (with-eval-after-load 'org
+;;   ;; Define header function; to insert a template header to a new org file
+;;   (defun rh/insert-org-header ()
+;;     "Insert standard Org-mode header template at point."
+;;     (interactive)
+;;     (insert "#+TITLE: \n")
+;;     (insert "#+AUTHOR: \n")
+;;     (insert "#+EMAIL: \n")
+;;     (insert "#+DATE: \n")
+;;     (insert "#+STARTUP: overview\n")             ; Collapse headings on open
+;;     (insert "#+STARTUP: indent\n\n")             ; Indent headings visually
+;;     (insert "#+OPTIONS: toc:2\n")                ; Table of contents to depth 2
+;;     (insert "#+LATEX_CLASS: article\n")
+;;     (insert "#+LATEX_CLASS_OPTIONS: [a4paper,12pt]\n")
+;;     (insert "#+LATEX_HEADER: \\usepackage[margin=1.2in]{geometry}\n")
+;;     (insert "#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js\n"))
+;;   )
 
-(with-eval-after-load 'org
-  (define-key org-mode-map (kbd "C-c h") #'rh/insert-org-header))
-
-(with-eval-after-load 'org
-  (require 'rh-snip)
-
-  (defvar rh/org-snippet-alist
-    '(("src" . "#+BEGIN_SRC \n\n#+END_SRC")
-      ;; ... add more when needed
-      ))
-
-  (defun rh/org-tab-hook ()
-    "Setup Org snippet and placeholder support on TAB."
-    (local-set-key (kbd "TAB")
-                   (lambda ()
-                     (interactive)
-                     (setq rh/snippet-placeholder-positions
-                           (rh/jump-or-indent
-                            rh/org-snippet-alist
-                            rh/snippet-placeholder-positions))))))
-
-
+;; (with-eval-after-load 'org
+;;   (define-key org-mode-map (kbd "C-c h") #'rh/insert-org-header))
 
 ;; The following are default keybindings
 ;;
@@ -144,8 +108,5 @@
 ;; C-c C-l    (on a link) Edit link
 ;;
 ;; C-c C-e    Export menu
-
-;; (use-package rh-org :ensure nil :after org
-;;   :hook (org-mode . rh/org-tab-hook))
 
 (provide 'knot-org)
