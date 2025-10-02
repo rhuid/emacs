@@ -59,7 +59,10 @@
          (corfu-mode . corfu-indexed-mode)
          (corfu-mode . corfu-popupinfo-mode))
   :custom (corfu-auto t) ; Enable auto popup
-  :config (define-key corfu-map (kbd "TAB") nil))
+  :config
+  (define-key corfu-map (kbd "TAB") nil)
+  (define-key corfu-map (kbd "RET") nil)
+  (define-key corfu-map (kbd "C-e") 'corfu-insert))
 
 (use-package cape
   :after corfu
