@@ -76,9 +76,4 @@
 (use-package spacious-padding
   :init (spacious-padding-mode))
 
-;;;; Icons
-(when (display-graphic-p)
-  (all-the-icons-install-fonts t)
-  (nerd-icons-install-fonts t))
-
 (provide 'knot-visuals)
