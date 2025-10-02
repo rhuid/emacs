@@ -2,8 +2,7 @@
 
 (use-package org
   :ensure nil
-  :hook ((org-mode . rh/org-custom-faces)
-         (org-mode . (lambda () (display-line-numbers-mode -1))))
+  :hook (org-mode . (lambda () (display-line-numbers-mode -1)))
   :custom
   (org-hide-leading-stars t)
   (org-log-done 'time)
@@ -27,13 +26,12 @@
    '((sequence "TODO" "WAITING" "IN-PROGRESS" "|" "DONE" "CANCELLED")))
   :config
   (add-to-list 'org-export-backends 'md)
-  (defun rh/org-custom-faces ()
-    "Set faces of the headings."
-    (custom-set-faces
-     '(org-level-1 ((t (:inherit outline-1 :height 1.7 :weight bold :foreground "#50fa7b"))))
-     '(org-level-2 ((t (:inherit outline-2 :height 1.5 :weight bold :foreground "#8be9fd"))))
-     '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#ff79c6"))))
-     '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c"))))))
+  ;; Set faces for the headings
+  (custom-set-faces
+   '(org-level-1 ((t (:inherit outline-1 :height 1.7 :weight bold :foreground "#50fa7b"))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.5 :weight bold :foreground "#8be9fd"))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#ff79c6"))))
+   '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c")))))
   :bind (:map org-mode-map
               ("C-," . nil)
               ("C-'" . nil)
@@ -42,9 +40,7 @@
 (use-package org-modern
   :after org
   :init (global-org-modern-mode)
-  :custom
-  (org-modern-star t)
-  (org-modern-block-fringe t))
+  :custom (org-modern-star t))
 
 (use-package ox-reveal
   :after org
