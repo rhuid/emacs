@@ -2,7 +2,6 @@
 
 (use-package latex
   :ensure auctex
-  :after cape
   :hook
   (LaTeX-mode . rh/setup-math-completion)
   (LaTeX-mode . LaTeX-math-mode)

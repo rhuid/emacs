@@ -66,6 +66,7 @@
 
 (use-package cape
   :after corfu
+  :demand t
   :hook ((LaTeX-mode org-mode) . rh/setup-math-completion)
   :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
