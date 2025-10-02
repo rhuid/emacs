@@ -1,4 +1,4 @@
-p;;; knot-org.el --- Here comes the org..org..org-mode -*- lexical-binding: t; -*-
+;;; knot-org.el --- Here comes the org..org..org-mode -*- lexical-binding: t; -*-
 
 (use-package org
   :ensure nil
