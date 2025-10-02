@@ -46,7 +46,7 @@
   :after org
   :init (load-library "ox-reveal")
   :config
-  (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.")
+  (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
   (add-to-list 'org-export-backends 'reveal))
 
 (use-package org-agenda
