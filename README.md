@@ -1,16 +1,29 @@
 ## Knot Emacs
 
-- Builds on vanilla Emacs, which I believe is the best way to use Emacs. No bloat, no unnecessary layers or emulations.
-- Assumes GNU Emacs 30.1 or higher.
-- Uses use-package and use-package-vc. I have tried straight.el in the past and I believe use-package-vc (built-in) is cleaner, more explicit, leaner and makes Emacs boot up faster.
+- Builds on vanilla GNU Emacs. Assumes GNU Emacs 30.1 or higher.
+- Uses use-package and use-package-vc. I have tried straight.el in the past and I believe use-package-vc (built-in) is cleaner, leaner and makes Emacs boot up faster.
 - Native compilation is enabled by default. Native compilation cuts down boot up time and Emacs starts faster overall.
-- Implements user service to invoke emacs daemon at login. Using server-client model, Emacs starts up almost instantly.
+- Using server-client model, Emacs starts up almost instantly.
+
+### Design philosophy
+
+I want an editor and personal companion for life. Minimalist, fast, extensible and stable. Accomplish more by using less. Don't keep things you don't need. When there is a choice, choose the built-in way: they are more stable and predictable. When you want some feature, first try to write it in `Emacs Lisp` yourself. Be brief. Implement only what you need. Keep it light and do things the native way.
+
+A minimalist modeline, a super lightweight but feel-good startup screen and a nice looking lightweight theme... what more visual effects do you need?
+
+### My usecase
+
+I use Emacs for editing text, writing documents, proving theorems, doing mathematics, programming, creating presentations, managing files, organizing my life and more. In each of these works, I haven't found anything that does it better than my Emacs does.
 
 ### On the editor
 
-To make editing more efficient and faster, I have redefined or reimplemented some of the built-in functions and added new ones. I will be adding new ones. Most are built from built-in functions and some extra juice (of course). One emphasis is to overload commands and make them context-sensitive, so that they behave as expected.
+To make editing more efficient and faster, I have redefined or reimplemented some of the built-in functions and added new ones. I shall add new ones (when I find myself needing one and not for the sake of just adding). Most are built from built-in functions and some extra juice (of course). One emphasis is to overload commands and make them context-sensitive, so that they behave as expected. Universal arguments can and must be exploited whenever it's convenient.
 
-Over the years, I have realized that it's best to stay as close to vanilla emacs. One of the best things (if not the best) about Emacs is its hackability or extensibility. It's much more convenient to hack or extend vanilla emacs. However, I do like modal editing and I used meow as a minimal base to create a personalized editing system which, I believe, is superior to Evil mode (Vi/Vim emulation) in terms of efficiency, speed and leanness.
+### Over the years
+
+I began my Emacs journey with vanilla keybindings. Over the years, I tried `evil-mode`, to find out what the craze was all about, and even started liking modal editing, but due to some limitations and personal desire for more quests, I tried `meow` modal editing, even found it much better than `evil` but finally after a long affair with modal editing, I came back to good old, chordy, musical, rhythmic vanilla keys. In the long run, I realized that vanilla keybindings are just better. Although modal editing does have its benefits, I found that a pure emacsy editing is just more efficient, minimalist, predictable, leaner and faster overall.
+
+I believe that one of the greatest things about Emacs is its infinite extensibility and one should not compromise that.
 
 ### Other things
 
