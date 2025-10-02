@@ -8,18 +8,29 @@
   (LaTeX-mode . TeX-fold-mode)
   (LaTeX-mode . turn-on-reftex)
   (post-command . rh/toggle-latex-abbrev)
+  :bind (:map LaTeX-mode-map
+              ("C-c C-u" . rh/tex-fold-buffer))
   :config
   (setq TeX-auto-save t
         TeX-parse-self t)
-  (setq TeX-view-program-selection '((output-pdf "Sioyek")
-                                     (output-html "firefox")))
+  (setq TeX-view-program-selection
+        '((output-pdf "Sioyek")
+          (output-html "firefox")))
   ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
 
   (defun rh/toggle-latex-abbrev ()
-    "Enable abbrev only outside math mode in Latex."
+    "Disable abbrevs inside math mode in Latex."
     (if (and (derived-mode-p 'LaTeX-mode) (texmathp))
         (abbrev-mode -1)
       (abbrev-mode 1)))
+
+  (defun rh/tex-fold-buffer (&optional prefix)
+    "Fold the buffer but clears the fold with the universal argument."
+    (interactive "P")
+    (if prefix
+        (TeX-fold-clearout-buffer)
+      (TeX-fold-buffer)))
+
   ;; Make math delimiters less visible (stolen from https://gitlab.com/slotThe/dotfiles/-/blob/master/emacs/lisp/hopf-latex.el)
   (defvar rh/latex-math-face (make-face 'rh/latex-math-face))
   (set-face-attribute 'rh/latex-math-face
@@ -69,6 +80,7 @@
     (interactive)
     (unless (and (bound-and-true-p yas-minor-mode) (yas-expand))
       (cdlatex-tab)))
+
   (setq cdlatex-env-alist
 	      '(("axiom"        "\\begin{axiom}\nAUTOLABEL\n?\n\\end{axiom}\n" nil)
 	        ("defintion"    "\\begin{definition}\nAUTOLABEL\n?\n\\end{definition}\n" nil)
@@ -87,8 +99,5 @@
           ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil))))
 
 (use-package latex-preview-pane)
-
-(with-eval-after-load 'tex-fold
-  (define-key TeX-fold-mode-map (kbd "C-c o b") #'TeX-fold-buffer))
 
 (provide 'knot-latex)
