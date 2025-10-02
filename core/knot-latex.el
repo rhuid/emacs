@@ -17,7 +17,8 @@
   (setq TeX-view-program-selection
         '((output-pdf "Evince")
           (output-html "firefox")))
-  ;; (setq TeX-view-program-list      '(("Sioyek" "sioyek --reuse-instance %o")))
+  (setq TeX-view-program-list
+        '(("Evince" "flatpak run org.gnome.Evince --page-index=%(outpage) %o")))
 
   (defun rh/toggle-latex-abbrev ()
     "Disable abbrevs inside math mode in Latex."
@@ -45,14 +46,6 @@
        ("\\(\\\\[][()]\\|\\$\\)" 0 'rh/math-delimiter-face t)
        )))
 
-  ;; Environment commands with separate highlighting
-  ;; ("\\(\\\\begin\\){\\([^}]*\\)}"
-  ;;  (1 'rh/math-delimiter-face t)
-  ;;  (2 'rh/environment-name-face t))
-  ;; ("\\(\\\\end\\){\\([^}]*\\)}"
-  ;;  (1 'rh/math-delimiter-face t)
-  ;;  (2 'rh/environment-name-face t))
-
   ;; Math completions for corfu (wont work for now)
 
   ;; Create the math terms file if it doesn't exist
@@ -60,7 +53,7 @@
 
   (defun rh/load-math-completions ()
     "Load math completion terms from file."
-    (when (file-exists-p rh/math-completion-file)
+    (when (file-exists-p rh/math-dict-file)
       (with-temp-buffer
         (insert-file-contents rh/math-dict-file)
         (split-string (buffer-string) "\n" t))))
@@ -112,6 +105,7 @@
 	        ("pr"   "Insert proof env"       "" cdlatex-environment ("proof") t nil)
           ("dp"   "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil))))
 
-(use-package latex-preview-pane)
+(use-package latex-preview-pane
+  :bind ("C-c C-p C-l" . latex-preview-pane-mode))
 
 (provide 'knot-latex)
