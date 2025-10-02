@@ -66,7 +66,7 @@
   (emms-mode-line-mode 1))
 
 (use-package expand-region
-  :bind (("<backspace>"   . er/expand-region)
+  :bind (("C-M-r" . er/expand-region)
          ("S-<backspace>" . er/contract-region)))
 
 ;;;; Track commands frequency
