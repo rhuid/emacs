@@ -184,7 +184,7 @@
   :config (pdf-tools-install))
 
 (use-package puni
-  :init (puni-mode))
+  :init (puni-global-mode))
 
 ;;;; Different color for each pair of parenthesis
 (use-package rainbow-delimiters
