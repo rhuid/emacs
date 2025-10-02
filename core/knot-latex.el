@@ -2,6 +2,7 @@
 
 (use-package latex
   :ensure auctex
+  :after cape
   :hook
   (LaTeX-mode . rh/setup-math-completion)
   (LaTeX-mode . LaTeX-math-mode)
@@ -44,31 +45,7 @@
      nil
      '(;; Math delimiters
        ("\\(\\\\[][()]\\|\\$\\)" 0 'rh/math-delimiter-face t)
-       )))
-
-  ;; Math completions for corfu (wont work for now)
-
-  ;; Create the math terms file if it doesn't exist
-  (setq rh/math-dict-file (concat user-emacs-directory "math-dict"))
-
-  (defun rh/load-math-completions ()
-    "Load math completion terms from file."
-    (when (file-exists-p rh/math-dict-file)
-      (with-temp-buffer
-        (insert-file-contents rh/math-dict-file)
-        (split-string (buffer-string) "\n" t))))
-
-  (defun rh/cape-math ()
-    "Provide completion candidates from math terms."
-    (let ((completions (rh/load-math-completions)))
-      (when completions
-        (cape-dict completions))))
-
-  (defun rh/setup-math-completion ()
-    "Setup math completion for the current buffer."
-    (setq-local completion-at-point-functions
-                (append completion-at-point-functions
-                        '(rh/cape-math)))))
+       ))))
 
 (use-package auctex-latexmk
   :after auctex
