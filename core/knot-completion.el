@@ -66,7 +66,7 @@
 
 (use-package cape
   :after corfu
-  :hook ((lean4-mode LaTeX-mode org-mode text-mode) . rh/setup-math-completion)
+  :hook ((LaTeX-mode org-mode) . rh/setup-math-completion)
   :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
@@ -77,6 +77,7 @@
     (setq rh/math-dict-file (concat user-emacs-directory "math-dict"))
     (add-to-list 'cape-dict-file rh/math-dict-file)
     (setq-local completion-at-point-functions
-                (list (cape-capf-super #'cape-dict)))))
+                (cons (cape-capf-super #'cape-dict)
+                      completion-at-point-functions))))
 
 (provide 'knot-completion)
