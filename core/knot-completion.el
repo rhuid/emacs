@@ -26,11 +26,10 @@
 
 (use-package consult
   :bind (("C-x C-f" . consult-recent-file)
+         ("C-x b"   . consult-buffer)
          ("C-M-s"   . consult-line)
          ("C-M-g"   . consult-ripgrep)
-         ("C-x b"   . consult-buffer)
          ("C-x C-y" . consult-yank-pop)
-         ("C-c b"   . consult-bookmark)
          ("M-m"     . consult-imenu)
          ("M-O"     . consult-outline))
   :config (setq consult-preview-key nil))
@@ -62,7 +61,7 @@
   :config
   (define-key corfu-map (kbd "TAB") nil)
   (define-key corfu-map (kbd "RET") nil)
-  (define-key corfu-map (kbd "C-e") 'corfu-insert))
+  (define-key corfu-map (kbd "C-t") 'corfu-insert))
 
 (use-package cape
   :after corfu
