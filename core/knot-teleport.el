@@ -53,28 +53,12 @@
   (history-length 2000)
   (history-delete-duplicates t)
   (savehist-additional-variables
-   '(kill-ring
-     register-alist
-     search-ring
-     regexp-search-ring)))
+   '(kill-ring search-ring regexp-search-ring)))
 
-;;;; Undo window configurations
-;; (winner-mode)
-;; (global-set-key (kbd "C-S-w") 'winner-undo)
-
-;; Undo window configurations
-(use-package winner
-  :ensure nil
+(use-package winner-mode
   :init (winner-mode)
-  :bind (("C-S-w" . winner-undo)
-         ("C-c w r" . winner-redo))
-  :config
-  (defvar-keymap rh/winner-repeat-map
-    :repeat t
-    "u" #'winner-undo
-    "r" #'winner-redo)
-  :custom
-  (winner-boring-buffers
-   '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*")))
+  :custom (winner-boring-buffers
+           '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
+  :ensure nil)
 
 (provide 'knot-teleport)
