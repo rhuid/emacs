@@ -1,5 +1,16 @@
 ;;; knot-defaults.el --- Some not-so-sane defaults? -*- lexical-binding: t; -*-
 
+;; Using `C-h' as `DEL' (backspace). Now <backspace> can be used for other purposes.
+(define-key key-translation-map [?\C-h] [?\C-?])
+
+(defun rh/detach-Ci-from-TAB (frame)
+  "Detach `C-i' from `TAB' in the current frame."
+  (with-selected-frame frame
+    (define-key input-decode-map "\C-i" [Ci])))
+
+;; Need to run `rh/detach-Ci-from-TAB' whenever a new frame is created.
+(add-hook 'after-make-frame-functions 'rh/detach-Ci-from-TAB)
+
 ;;;; Concerning files
 (setq-default require-final-newline t)
 (save-place-mode) ; save place in each file
@@ -22,13 +33,12 @@
   :ensure nil
   :config (setq shift-select-mode nil)
   :bind
-  ("C-h"     . puni-backward-delete-char)
-  ("C-S-h"   . puni-backward-kill-word)
-  ("C-S-k"   . rh/backward-kill-line)
+  ("M-z"   . zap-up-to-char)
   ("C-x C-c" . rh/return-home)
   ("C-x r q" . save-buffers-kill-terminal)
   ("C-S-r"   . replace-string)
   ("M-L"     . duplicate-dwim)
+  ("C-'"     . exchange-point-and-mark)
   ("C-<backspace>" . mode-line-other-buffer)
 
   ;; Things about transposing
