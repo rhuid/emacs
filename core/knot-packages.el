@@ -18,31 +18,14 @@
          ("C-c d s" . dictionary-search)))
 
 ;;; `dictrus' --- https://github.com/rhuid/dictrus
-(use-package emacs
-  :bind ("C-c d d" . rh/dictrus-lookup)
-  :config
-  (defun rh/dictrus-lookup (word)
-    "Look up WORD using the dictrus CLI and display the result in a buffer."
-    (interactive (list (read-string "Lookup word: " (thing-at-point 'word t))))
-    (let* ((buf (get-buffer-create "*Dictrus*"))
-           (result (with-temp-buffer
-                     (call-process "dictrus" nil t nil word)
-                     (buffer-string))))
-      (with-current-buffer buf
-        (read-only-mode -1)
-        (erase-buffer)
-        (insert (format "Word: %s\n\n%s" word result))
-        (goto-char (point-min))
-        (view-mode 1)) ;; view-mode for easy quit
-      (pop-to-buffer buf))))
+(use-package dictrus
+  :load-path "~/.emacs.d/experimental/"
+  :bind ("C-c d d" . rh/dictrus-lookup))
 
-;;; `electric-pair-mode`
-;; Automatically insert matching delimiters (parentheses, quotes, braces, etc)
 (use-package elec-pair
   :init (electric-pair-mode)
   :hook (org-mode . rh/org-electric-pairs)
-  :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\])
-                                 (?\".?\") (?\<.?\>)))
+  :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\]) (?\".?\") (?\<.?\>)))
   :config
   (defun rh/org-electric-pairs ()
     "Org pairs for electric-pair-mode."
