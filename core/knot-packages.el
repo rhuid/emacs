@@ -48,10 +48,9 @@
   (emms-mode-line-mode 1))
 
 (use-package expand-region
-  :bind (("C-M-r" . er/expand-region)
-         ("S-<backspace>" . er/contract-region)))
+  :bind (("<Ci>" . er/expand-region)
+         ("C-="  . er/expand-region)))
 
-;;;; Track commands frequency
 (use-package keyfreq
   :init (keyfreq-mode)
   :config (keyfreq-autosave-mode))
