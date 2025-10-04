@@ -123,26 +123,24 @@
   :config (pdf-tools-install))
 
 (use-package puni
-  :init (puni-global-mode))
+  :init (puni-global-mode)
+  :bind (:map puni-mode-map
+              ("C-S-h" . puni-backward-kill-word)
+              ("C-w"   . nil))) ; for whole-line-or-region-kill-region
 
-;;;; Different color for each pair of parenthesis
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package sudo-edit
   :commands (sudo-edit))
 
-(use-package tempel
-  :disabled t
-  :init (global-tempel-abbrev-mode)
-  :bind (("M-/" . tempel-complete)))
-
 (use-package vundo
   :bind (("C-x u" . vundo)
          ("M-U"   . undo-redo))
-  :custom
-  (vundo-compact-display t)
-  (undo-limit (* 6 1024 1024)))
+  :custom (undo-limit (* 6 1024 1024)))
+
+(use-package whole-line-or-region
+  :init (whole-line-or-region-global-mode))
 
 (use-package yasnippet
   :init (yas-global-mode)
