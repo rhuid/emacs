@@ -73,10 +73,11 @@
 (setq-default fill-column 80)
 (setq display-line-numbers-type 'relative)
 
-;;;; Concerning cursors
+;;;; Concerning mouse and cursors
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
 (setq make-pointer-invisible t)
+(pixel-scroll-precision-mode)
 
 (use-package emacs
   :config
