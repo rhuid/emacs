@@ -108,50 +108,8 @@
          ("C-<"   . mc/skip-to-previous-like-this)))
 
 (use-package outline
-  :bind (("C-S-t" . rh/outline-toggle-heading)
-         ("C-S-o" . rh/outline-toggle-visibility))
-  :hook
-  (prog-mode . outline-minor-mode)
-  (text-mode . outline-minor-mode)
-  (outline-minor-mode . outline-show-all)
-  (outline-minor-mode . outline-hide-body)
-  :init
-  ;; Set the keybinding prefix for built-in outline commands
-  (setq outline-minor-mode-prefix (kbd "C-c @"))
-  :config
-  ;; Custom folding indicator (like +)
-  (set-display-table-slot
-   standard-display-table
-   'selective-display
-   (let ((face-offset (* (face-id 'shadow) (ash 1 22))))
-     (vconcat (mapcar (lambda (c) (+ face-offset c)) " +"))))
-  (defun rh/outline-toggle-heading ()
-    "Toggle visibility of current outline heading."
-    (interactive)
-    (save-excursion
-      (outline-back-to-heading)
-      (if (outline-invisible-p (line-end-position))
-          (outline-show-subtree)
-        (outline-hide-subtree))))
-  (defun rh/outline-toggle-visibility ()
-    "Toggle between fully expanded and folded view of the outline buffer."
-    (interactive)
-    (save-excursion
-      (goto-char (point-min))
-      (if (cl-some (lambda (pos)
-                     (goto-char pos)
-                     (outline-invisible-p (line-end-position)))
-                   (rh/outline-all-heading-positions))
-          (outline-show-all)
-        (outline-hide-body))))
-  (defun rh/outline-all-heading-positions ()
-    "Return a list of positions of all headings in the buffer."
-    (let (positions)
-      (save-excursion
-        (goto-char (point-min))
-        (while (re-search-forward outline-regexp nil t)
-          (push (point) positions)))
-      positions)))
+  :hook ((prog-mode text-mode) . outline-minor-mode)
+  :init (setq outline-minor-mode-prefix (kbd "C-c o")))
 
 (use-package move-text
   :init (move-text-default-bindings))
