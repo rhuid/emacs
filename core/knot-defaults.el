@@ -1,7 +1,14 @@
 ;;; knot-defaults.el --- Some not-so-sane defaults? -*- lexical-binding: t; -*-
 
-;; Using `C-h' as `DEL' (backspace). Now <backspace> can be used for other purposes.
+;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
+
+;; Arrows keys are wrapped with Meta! Be careful!
+;; Useful for `move-text' and promoting/demoting headings in `org-mode'
+(define-key key-translation-map [left] (kbd "M-<left>"))
+(define-key key-translation-map [right] (kbd "M-<right>"))
+(define-key key-translation-map [up] (kbd "M-<up>"))
+(define-key key-translation-map [down] (kbd "M-<down>"))
 
 (defun rh/detach-Ci-from-TAB (frame)
   "Detach `C-i' from `TAB' in the current frame."
@@ -11,10 +18,16 @@
 ;; Need to run `rh/detach-Ci-from-TAB' whenever a new frame is created.
 (add-hook 'after-make-frame-functions 'rh/detach-Ci-from-TAB)
 
+;; Disable return (enter) key. Use `C-m' instead.
+(global-set-key (kbd "<return>") 'ignore)
+
+;; Disable <backspace>.
+(global-set-key (kbd "<backspace>") 'ignore)
+
 ;;;; Concerning files
 (setq-default require-final-newline t)
-(save-place-mode) ; save place in each file
 (setq make-backup-files nil)
+(save-place-mode) ; save place in each file
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 ;; A more sane join-line
