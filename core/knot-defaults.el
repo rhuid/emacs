@@ -52,7 +52,7 @@
   ("C-S-r"   . replace-string)
   ("M-L"     . duplicate-dwim)
   ("C-'"     . exchange-point-and-mark)
-  ("C-<backspace>" . mode-line-other-buffer)
+  ("S-<backspace>" . mode-line-other-buffer)
 
   ;; Things about transposing
   ("C-t"   . nil)
