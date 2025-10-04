@@ -4,12 +4,11 @@
 (setq window-combination-resize t) ; keep windows balanced
 (global-set-key (kbd "C-S-f") 'follow-mode)
 
-;; (use-package visual-fill-column
-;;   :hook (prog-mode . visual-fill-column-mode)
-;;   :custom
-;;   (visual-fill-column-width 100)
-;;   (visual-fill-column-center-text t)
-;;   )
+(use-package visual-fill-column
+  :init (global-visual-fill-column-mode)
+  :custom
+  (visual-fill-column-width 130)
+  (visual-fill-column-center-text t))
 
 (use-package achievements
   :init (achievements-mode))
