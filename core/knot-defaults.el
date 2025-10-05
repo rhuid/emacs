@@ -1,4 +1,4 @@
-;;; knot-defaults.el --- Some not-so-sane defaults? -*- lexical-binding: t; -*-
+;;; knot-defaults.el --- Some sane and not-so-sane defaults? -*- lexical-binding: t; -*-
 
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
@@ -18,19 +18,18 @@
 ;; Need to run `rh/detach-Ci-from-TAB' whenever a new frame is created.
 (add-hook 'after-make-frame-functions 'rh/detach-Ci-from-TAB)
 
-;; Disable return (enter) key. Use `C-m' instead.
+;; Disable return (enter) key and backspace. Use `C-m' and `C-h' instead.
 (global-set-key (kbd "<return>") 'ignore)
-
-;; Disable <backspace>.
 (global-set-key (kbd "<backspace>") 'ignore)
 
-;;;; Concerning files
-(setq-default require-final-newline t)
-(setq make-backup-files nil)
-(save-place-mode) ; save place in each file
+;; Concerning files
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
+(global-auto-revert-mode) ; Refresh the buffer when files change on disk
+(save-place-mode) ; Save place in each file
+(setq make-backup-files nil)
+(setq-default require-final-newline t)
 
-;; A more sane join-line
+;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)
   "Like join-line but inverts its behavior."
   (interactive "P")
@@ -38,55 +37,54 @@
 
 (global-set-key (kbd "C-j") 'rh/join-line)
 
-(global-set-key (kbd "C-\\") 'repeat)
-
-;; Remap some of the basic and built-in commands time
-;; Shift is better used as a modifier
+;; Readjusting some built-in keybindings
 (use-package keymap
   :ensure nil
-  :config (setq shift-select-mode nil)
+  :config (setq shift-select-mode nil) ; Shift is better used as a modifier
   :bind
-  ("M-z"   . zap-up-to-char)
-  ("C-x C-c" . rh/return-home)
-  ("C-x r q" . save-buffers-kill-terminal)
+  ;; Make text editing faster
+  ("M-z" . zap-up-to-char)
+  ("M-D" . duplicate-dwim)
+
+  ("C-\\"    . repeat)
   ("C-S-r"   . replace-string)
-  ("M-L"     . duplicate-dwim)
-  ("C-'"     . exchange-point-and-mark)
+  ("C-x r q" . save-buffers-kill-terminal)
   ("S-<backspace>" . mode-line-other-buffer)
 
-  ;; Things about transposing
-  ("C-t"   . nil)
-  ("C-t w" . transpose-words)
-  ("C-t c" . transpose-chars)
-  ("C-t t" . transpose-chars)
-  ("C-t d" . subword-transpose)
-  ("C-t s" . transpose-sentences)
-  ("C-t p" . transpose-paragraphs)
-  ("C-t l" . transpose-lines)
-  ("C-t x" . transpose-sexps)
-  ("C-t r" . transpose-regions))
+  ;; Changing case made easier. Also free up `M-u', `M-l' and `M-c'
+  ("C-x C-u" . upcase-dwim)
+  ("C-x C-l" . downcase-dwim)
+  ("C-x C-c" . capitalize-dwim)
 
-;;;; Concerning lines
-(global-visual-line-mode)
-(global-hl-line-mode)
+  ;; `transpose-lines' has been taken care of by `move-text'
+  ("C-x C-t" . transpose-sentences)
+  ("C-M-S-t" . transpose-paragraphs))
+
+;; Concerning kills
+(delete-selection-mode) ; Typing on a region replaces it
+(kill-ring-deindent-mode)
+(setq kill-buffer-query-functions nil) ; Don't ask for confirmation while killing buffers
+(setq kill-do-not-save-duplicates t)
+
+;; Concerning lines, sentences, words and characters
 (global-display-line-numbers-mode)
-(setq-default fill-column 80)
+(global-hl-line-mode)
+(global-subword-mode)
+(global-visual-line-mode)
+(setq sentence-end-double-space nil) ; A sentence should not need to end in double spaces.
 (setq display-line-numbers-type 'relative)
+(setq-default fill-column 80)
 
-;;;; Concerning mouse and cursors
+;; Concerning mouse and cursors
 (blink-cursor-mode 0)
-(setq-default cursor-in-non-selected-windows nil)
-(setq make-pointer-invisible t)
 (pixel-scroll-precision-mode)
+(setq make-pointer-invisible t)
+(setq mouse-yank-at-point t)
+(setq-default cursor-in-non-selected-windows nil)
 
-(use-package emacs
-  :config
-  (setq disabled-command-function nil) ; Enable all disabled commands
-  (global-auto-revert-mode) ;; Refresh the buffer when files change on disk
-  (global-subword-mode)
-  (kill-ring-deindent-mode)
-  (setq kill-buffer-query-functions nil) ;; Don't ask for confirmation while killing buffers
-  (fset 'yes-or-no-p 'y-or-n-p)) ;; All confirmations prompts be y or n
+;; Make it more convenient
+(setq disabled-command-function nil) ; Enable all disabled commands. I (kinda) know what I am doing.
+(setq use-short-answers t) ; All confirmations prompts be y or n
 
 (use-package abbrev
   :ensure nil
@@ -102,18 +100,11 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
-(use-package eldoc
-  :ensure nil
-  :commands eldoc-mode
-  :config (setq eldoc-idle-delay 0.2))
-
 ;; Repeat commands without retyping the prefix key
-(use-package repeat
-  :ensure nil
-  :init (repeat-mode)
-  :custom (repeat-exit-timeout 5))
+(repeat-mode)
+(setq repeat-exit-timeout 5)
 
-;;; Date formats for use in `yasnippet'
+;; Date formats for use in `yasnippet'
 (defun rh/date-format-candidates ()
   "Return an alist of (display . format-string) for yasnippet date choices."
   (mapcar (lambda (fmt)
