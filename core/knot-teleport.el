@@ -16,8 +16,6 @@
 
 (use-package isearch
   :ensure nil
-  :bind (:map isearch-mode-map
-              ("C-h" . isearch-del-char))
   :custom
   (isearch-allow-scroll 'unlimited)
   (isearch-lazy-count t)
@@ -57,6 +55,7 @@
 
 (use-package winner-mode
   :init (winner-mode)
+  :bind ("C-<backspace>" . winner-undo)
   :custom (winner-boring-buffers
            '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
   :ensure nil)
