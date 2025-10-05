@@ -7,7 +7,7 @@
 (use-package visual-fill-column
   :init (global-visual-fill-column-mode)
   :custom
-  (visual-fill-column-width 130)
+  (visual-fill-column-width 120)
   (visual-fill-column-center-text t))
 
 (use-package achievements
@@ -21,6 +21,11 @@
 (use-package dictrus
   :load-path "~/.emacs.d/experimental/"
   :bind ("C-c d d" . rh/dictrus-lookup))
+
+(use-package eldoc
+  :ensure nil
+  :commands eldoc-mode
+  :config (setq eldoc-idle-delay 0.2))
 
 (use-package elec-pair
   :init (electric-pair-mode)
@@ -105,7 +110,8 @@
          ("C-S-n" . mc/mark-next-like-this)
          ("C-S-p" . mc/mark-previous-like-this)
          ("C->"   . mc/skip-to-next-like-this)
-         ("C-<"   . mc/skip-to-previous-like-this)))
+         ("C-<"   . mc/skip-to-previous-like-this))
+  :custom (mc/always-run-for-all t))
 
 (use-package outline
   :hook ((prog-mode text-mode) . outline-minor-mode)
