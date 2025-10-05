@@ -3,11 +3,11 @@
 (use-package prog-mode
   :ensure nil
   :hook ((prog-mode . glyphless-display-mode)
-         (prog-mode . outline-minor-mode))
+         (after-save . executable-make-buffer-file-executable-if-script-p))
   :config
   (global-font-lock-mode 1)
-  (setq-default indent-tabs-mode nil ; Always use spaces, never tabs
-		            tab-width 2)
+  (setq-default indent-tabs-mode nil) ; Use spaces, not tabs
+	(setq-default tab-width 2)
   (setq standard-indent 2))
 
 (use-package aggressive-indent
@@ -47,7 +47,9 @@
 
 (use-package lean4-mode
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
-  :bind (:map lean4-mode-map ("C-m" . electric-newline-and-maybe-indent))
+  :bind (:map lean4-mode-map
+              ("C-m" . electric-newline-and-maybe-indent)
+              ("C-c <Ci>" . lean4-toggle-info))
   :hook ((lean4-mode . lsp-mode))
   :config (abbrev-table-put lean4-abbrev-table :case-fixed t))
 
