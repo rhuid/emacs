@@ -9,10 +9,8 @@
 
 ;; A minimalist mode-line
 (setq-default mode-line-format
-              '(" " mode-line-buffer-identification " | "
-                mode-name " | "
-                (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | "
-                (vc-mode vc-mode)))
+              '(" " mode-line-buffer-identification " | " mode-name " | "
+                (:eval (format-time-string "%b %-d %a %-I:%M %p")) " | " (vc-mode vc-mode)))
 
 (use-package hide-mode-line
   :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
@@ -24,54 +22,45 @@
 ;; Adjust font size globally
 (global-set-key [remap text-scale-adjust] 'global-text-scale-adjust)
 
-;;;; General things about themes
-(use-package emacs
-  :bind ("C-c t t" . rh/toggle-light-dark-theme-mode)
-  :config
-  (defun rh/toggle-light-dark-theme-mode ()
-    "Toggle between light and dark variants of the current theme."
-    (interactive)
-    (if-let ((theme (car custom-enabled-themes)))
-        (let* ((name (symbol-name theme)))
-          (cond
-           ((string-suffix-p "-dark" name)
-            (disable-theme theme)
-            (load-theme (intern (concat (string-remove-suffix "-dark" name) "-light")) t))
-           ((string-suffix-p "-light" name)
-            (disable-theme theme)
-            (load-theme (intern (concat (string-remove-suffix "-light" name) "-dark")) t))
-           (t (message "The current theme (%s) does not have a dark/light mode." theme))))
-      (message "No theme is currently enabled."))))
+(defun rh/toggle-light-dark-theme-mode ()
+  "Toggle between light and dark variants of the current theme."
+  (interactive)
+  (if-let ((theme (car custom-enabled-themes)))
+      (let* ((name (symbol-name theme)))
+        (cond
+         ((string-suffix-p "-dark" name)
+          (disable-theme theme)
+          (load-theme (intern (concat (string-remove-suffix "-dark" name) "-light")) t))
+         ((string-suffix-p "-light" name)
+          (disable-theme theme)
+          (load-theme (intern (concat (string-remove-suffix "-light" name) "-dark")) t))
+         (t (message "The current theme (%s) does not have a dark/light mode." theme))))
+    (message "No theme is currently set.")))
 
-(use-package ef-themes
-  :disabled t
-  :config
-  (mapc #'disable-theme custom-enabled-themes)
-  (ef-themes-select 'ef-dream)
-  ;; Set face for (selected) regions
-  (set-face-attribute 'region nil
-                      :background "#353237"))
+(global-set-key (kbd "C-c t t") 'rh/toggle-light-dark-theme-mode)
 
-(use-package nano-theme
+;; Don't prompt me for loading themes, warning it could run Lisp code.
+(setq custom-safe-themes t)
+
+;; Clean up all debris (before loading a new theme).
+(mapc #'disable-theme custom-enabled-themes)
+
+(use-package modus-themes
   :demand t
-  :vc (:url "https://github.com/rougier/nano-theme")
   :config
-  (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'nano-dark t))
+  (setq modus-themes-italic-constructs nil
+        modus-themes-bold-constructs t)
+  (load-theme 'modus-vivendi))
 
-;;;; Prettify symbols
-(use-package emacs
-  :hook ((prog-mode . rh/provide-pretty-symbols))
-  :config
-  (global-prettify-symbols-mode)
-  (defun rh/provide-pretty-symbols ()
-    "Provide some pretty symbols."
-    (setq prettify-symbols-alist
-          '(("->" . ?→)
-            ("=>" . ?⇒)
-            (">=" . ?≥)
-            ("<=" . ?≤)
-            ("!=" . ?≠)))))
+;; Although we preach minimalism, we shall allow some pretty math symbols.
+(global-prettify-symbols-mode)
+
+(defun rh/provide-pretty-symbols ()
+  "Provide some pretty symbols."
+  (setq prettify-symbols-alist
+        '(("->" . ?→) ("=>" . ?⇒) (">=" . ?≥) ("<=" . ?≤) ("!=" . ?≠))))
+
+(add-hook 'prog-mode-hook 'rh/provide-pretty-symbols)
 
 (use-package spacious-padding
   :init (spacious-padding-mode))
