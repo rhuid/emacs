@@ -1,21 +1,13 @@
 ;;; knot-packages.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
 
-;;;; Concerning windows
-(setq window-combination-resize t) ; keep windows balanced
-(global-set-key (kbd "C-S-f") 'follow-mode)
-
 (use-package visual-fill-column
-  :init (global-visual-fill-column-mode)
+  :hook ((org-mode emacs-lisp-mode) . visual-fill-column-mode)
   :custom
   (visual-fill-column-width 120)
   (visual-fill-column-center-text t))
 
 (use-package achievements
   :init (achievements-mode))
-
-(use-package dictionary
-  :bind (("C-c d l" . dictionary-lookup-definition)
-         ("C-c d s" . dictionary-search)))
 
 ;;; `dictrus' --- https://github.com/rhuid/dictrus
 (use-package dictrus
@@ -24,7 +16,7 @@
 
 (use-package eldoc
   :ensure nil
-  :commands eldoc-mode
+  :init (global-eldoc-mode)
   :config (setq eldoc-idle-delay 0.2))
 
 (use-package elec-pair
@@ -35,22 +27,6 @@
   (defun rh/org-electric-pairs ()
     "Org pairs for electric-pair-mode."
     (setq-local electric-pair-pairs (append '((?/.?/) (?_.?_) (?~.?~))))))
-
-(use-package emms
-  :bind (("C-c e p" . emms-pause)
-         ("C-c e s" . emms-stop)
-         ("C-c e n" . emms-next)
-         ("C-c e b" . emms-previous))
-  :vc (:url "https://git.savannah.gnu.org/git/emms.git")
-  :config
-  (setq emms-player-list '(emms-player-mpv)
-        emms-source-file-default-directory "~/Downloads/DB Scores/")
-  (require 'emms-setup)
-  (emms-all) ;; or (emms-standard) for a lighter setup
-  (require 'emms-player-mpv)
-  (setq emms-mode-line-format " %s"
-        emms-mode-line-titlebar-format "EMMS: %s")
-  (emms-mode-line-mode 1))
 
 (use-package expand-region
   :bind (("<Ci>" . er/expand-region)
@@ -143,7 +119,7 @@
 (use-package vundo
   :bind (("C-x u" . vundo)
          ("M-U"   . undo-redo))
-  :custom (undo-limit (* 6 1024 1024)))
+  :custom (undo-limit (* 16 1024 1024)))
 
 (use-package whole-line-or-region
   :init (whole-line-or-region-global-mode))
