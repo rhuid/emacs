@@ -11,17 +11,15 @@
   (setq standard-indent 2))
 
 (use-package aggressive-indent
-  :hook ((emacs-lisp-mode . aggressive-indent-mode)
-         (lisp-interaction-mode . aggressive-indent-mode)
-         (lisp-mode . aggressive-indent-mode))
-  :config
-  (setq aggressive-indent-comments-too t))
+  :hook ((emacs-lisp-mode lisp-interaction-mode) . aggressive-indent-mode)
+  :config (setq aggressive-indent-comments-too t))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :custom
   (read-process-output-max (* 2 1024 1024))
   (lsp-completion-provider :none) ; to avoid interference from company-mode
+  (lsp-enable-file-watchers nil)
   (lsp-enable-folding nil)
   (lsp-enable-on-type-formatting nil)
   (lsp-enable-symbol-highlighting nil)
@@ -47,26 +45,18 @@
 
 (use-package lean4-mode
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
-  :bind (:map lean4-mode-map
-              ("C-m" . electric-newline-and-maybe-indent)
-              ("C-c <Ci>" . lean4-toggle-info))
-  :hook ((lean4-mode . lsp-mode))
+  :bind (:map lean4-mode-map ("C-m" . electric-newline-and-maybe-indent))
+  :hook (lean4-mode . lsp-mode)
   :config (abbrev-table-put lean4-abbrev-table :case-fixed t))
-
-(use-package lisp-mode
-  :ensure nil
-  :hook (emacs-lisp-mode . eldoc-mode))
 
 (use-package flycheck-rust
   :after rust-mode
   :hook (rust-mode . flycheck-rust-setup))
 
-(use-package nix-mode
-  :config (setq nix-indent-function 'nix-indent-line))
-
 (use-package haskell-mode)
-(use-package rust-mode)
 (use-package julia-mode)
+(use-package nix-mode)
+(use-package rust-mode)
 (use-package systemd)
 
 (use-package kbd-mode
