@@ -25,7 +25,7 @@
        (if (zerop (user-uid)) "# " "→ ")))))
 
 (use-package eshell-toggle
-  :bind ("C-'" . eshell-toggle)
+  :bind ("M-S" . eshell-toggle)
   :custom
   (eshell-toggle-size-fraction 3)
   (eshell-toggle-use-project-root t))
