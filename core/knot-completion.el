@@ -14,9 +14,7 @@
 (use-package vertico-directory
   :after vertico
   :load-path "~/.emacs.d/elpa/vertico/extensions/"
-  :bind (:map vertico-map
-	            ("C-h" . vertico-directory-delete-char)
-	            ("C-w" . vertico-directory-delete-word)))
+  :bind (:map vertico-map ("C-w" . vertico-directory-delete-word)))
 
 (use-package orderless
   :init (setq completion-styles '(orderless partial-completion)))
