@@ -50,14 +50,12 @@
   :custom
   (history-length 2000)
   (history-delete-duplicates t)
-  (savehist-additional-variables
-   '(kill-ring search-ring regexp-search-ring)))
+  (savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
 
-(use-package winner-mode
-  :init (winner-mode)
-  :bind ("C-<backspace>" . winner-undo)
-  :custom (winner-boring-buffers
-           '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
-  :ensure nil)
+;; (use-package winner-mode
+;;   :init (winner-mode)
+;;   :bind ("C-<backspace>" . winner-undo)
+;;   :custom
+;;   :ensure nil)
 
 (provide 'knot-teleport)

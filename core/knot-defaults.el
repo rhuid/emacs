@@ -45,6 +45,8 @@
   ;; Make text editing faster
   ("M-z" . zap-up-to-char)
   ("M-D" . duplicate-dwim)
+  ("M-l" . copy-from-above-command)
+  ("C-x C-a" . align-regexp)
 
   ("C-\\"    . repeat)
   ("C-S-r"   . replace-string)
@@ -58,7 +60,7 @@
 
   ;; `transpose-lines' has been taken care of by `move-text'
   ("C-x C-t" . transpose-sentences)
-  ("C-M-S-t" . transpose-paragraphs))
+  ("C-S-t"   . transpose-paragraphs))
 
 ;; Concerning kills
 (delete-selection-mode) ; Typing on a region replaces it
@@ -81,6 +83,13 @@
 (setq make-pointer-invisible t)
 (setq mouse-yank-at-point t)
 (setq-default cursor-in-non-selected-windows nil)
+
+;; Concerning windows
+(setq window-combination-resize t) ; keep windows balanced
+(winner-mode) ; undo window configurations
+(global-set-key (kbd "C-<backspace>") 'winner-undo)
+(setq winner-boring-buffers
+      '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
 
 ;; Make it more convenient
 (setq disabled-command-function nil) ; Enable all disabled commands. I (kinda) know what I am doing.
