@@ -46,7 +46,8 @@
 (use-package lean4-mode
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
   :bind (:map lean4-mode-map ("C-m" . electric-newline-and-maybe-indent))
-  :hook (lean4-mode . lsp-mode)
+  :hook ((lean4-mode . lsp-mode)
+         (lean4-mode . rh/easy-typing-mode))
   :config (abbrev-table-put lean4-abbrev-table :case-fixed t))
 
 (use-package flycheck-rust

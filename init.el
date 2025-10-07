@@ -13,7 +13,6 @@
 
 (setq custom-file (make-temp-file "temp_custom")) ; Don't mess up my init. Use a temporary custom file
 (setq vc-follow-symlinks t) ; Always follow symlikes without asking
-
 (setq-default default-directory "~/")
 
 ;;;; Set up packages
@@ -49,7 +48,7 @@
   (gcmh-high-cons-threshold (* 256 1024 1024)) ;; while typing, don't run GC until (threshold 256 MB)
   :config (gcmh-mode 1))
 
-;;;; Local modules
+;; Local modules
 (use-package knot-startup-page      :ensure nil :defer nil)
 (use-package knot-visuals           :ensure nil :defer nil)
 (use-package knot-defaults          :ensure nil :defer nil)
@@ -61,6 +60,8 @@
 (use-package knot-eshell            :ensure nil :defer nil)
 (use-package knot-email             :ensure nil :defer nil)
 (use-package knot-completion        :ensure nil :defer nil)
-(use-package knot-teleport          :ensure nil :defer nil)
 (use-package knot-editor            :ensure nil :defer nil)
 (use-package knot-special-buffers   :ensure nil :defer nil)
+
+;; Some experimental modules
+(require 'rh-easy-typing)
