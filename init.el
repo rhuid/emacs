@@ -60,8 +60,8 @@
 (require 'knot-eshell)
 (require 'knot-email)
 (require 'knot-completion)
-(require 'knot-editor)
 (require 'knot-special-buffers)
 
 ;; Some personal experimental packages
 (require 'rh-easy-typing)
+(require 'rh-command-launcher)

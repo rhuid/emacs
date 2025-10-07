@@ -98,9 +98,6 @@
         (goto-char beg)
         (delete-char 1)))))
 
-;; Some bunch of advice
-(advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
-
 ;;; My modal design built on `meow'
 ;; Requires `avy' and `consult'
 (defun rh/modal-setup ()
@@ -169,46 +166,5 @@
   (setq meow-keypad-message nil
         meow-keypad-self-insert-undefined nil
         meow-use-clipboard t))
-
-(defvar rh/quick-commands
-  '(
-    jinx-correct-word
-    delete-duplicate-lines
-    recover-this-file
-    rename-visited-file
-    avy-copy-line
-    avy-copy-region
-    avy-move-line
-    avy-move-region
-    copy-from-above-command
-    rh/return-home
-    sort-lines
-    just-one-space
-    whitespace-cleanup
-    delete-matching-lines
-    delete-non-matching-lines
-    dictionary-search
-    dictionary-lookup-definition
-    follow-mode
-    )
-  "List of commands for `rh/command-launcher`.")
-
-(defun rh/command-launcher ()
-  "A slimmed-down `M-x` that only shows `rh/quick-commands`."
-  (interactive)
-  (let* ((completion-ignore-case t)
-         (execute-extended-command--last-command nil)
-         (minibuffer-completion-table rh/quick-commands)
-         (cmd (completing-read
-               "C-x C-m "
-               (lambda (string pred action)
-                 (if (eq action 'metadata)
-                     '(metadata (category . command))
-                   (complete-with-action action rh/quick-commands string pred)))
-               nil t nil 'extended-command-history)))
-    (setq cmd (intern cmd))
-    (call-interactively cmd)))
-
-(global-set-key (kbd "C-x C-m") 'rh/command-launcher)
 
 (provide 'knot-editor)
