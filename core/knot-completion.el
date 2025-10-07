@@ -4,10 +4,10 @@
   :init (vertico-mode)
   :bind (("C-x f" . find-file)
          :map vertico-map
-         ("C-j"   . vertico-exit-input)
-	       ("C-M-p" . vertico-prev-group)
-	       ("C-M-n" . vertico-next-group))
+         ("C-g" . top-level)
+         ("C-j" . vertico-exit-input))
   :custom
+  (enable-recursive-minibuffers t)
   (vertico-resize t)
   (vertico-cycle t))
 
@@ -39,8 +39,7 @@
 
 (use-package embark
   :bind (("C-."    . embark-act)
-         ("C-;"    . embark-dwim)
-         ("<f1>-B" . embark-bindings))
+         ("C-;"    . embark-dwim))
   :init (setq prefix-help-command #'embark-prefix-help-command))
 
 (use-package embark-consult
