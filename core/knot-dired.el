@@ -9,23 +9,20 @@
               ("u"    . dired-unmark)
               ("U"    . dired-unmark-all-marks)
               ("<f5>" . revert-buffer-quick))
-
   :hook ((dired-mode . rh/dired-setup)
 	       (dired-mode . dired-hide-details-mode))
-
   :config
   (defun rh/dired-setup ()
     (display-line-numbers-mode -1)
     (set-window-buffer (selected-window) (current-buffer))
     (setq-local cursor-type nil))
-
   (setq dired-listing-switches "-alh --group-directories-first"
 	      dired-dwim-target t
 	      dired-mouse-drag-files t
 	      dired-recursive-copies 'always))
 
-  (use-package all-the-icons-dired
-    :hook (dired-mode . all-the-icons-dired-mode))
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package diredfl
   :hook (dired-mode . diredfl-mode)
@@ -33,10 +30,8 @@
 
 (use-package dired-git-info
   :after dired
-  :bind (:map dired-mode-map
-              (")" . dired-git-info-mode))
-  :config
-  (setq dgi-auto-hide-details-p nil))
+  :bind (:map dired-mode-map (")" . dired-git-info-mode))
+  :config (setq dgi-auto-hide-details-p nil))
 
 (use-package dired-preview :disabled t :after dired
   :hook (dired-mode . dired-preview-mode)
@@ -47,9 +42,7 @@
 
 (use-package dired-du :disabled t
   :after dired
-  ;; This package really slows down dired
-  :config
-  (add-hook 'dired-mode-hook #'dired-du-mode))
+  :config (add-hook 'dired-mode-hook #'dired-du-mode))
 
 (defun open-in-file-manager ()
   "Open the current directory in the system's GUI file manager."
