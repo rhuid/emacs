@@ -70,11 +70,12 @@
 
 (define-abbrev-table 'lean4-abbrev-table
   '(
-    ("and" "∧" nil :count 0)
+    ("and" "∧" nil :count 1)
     ("ax" "axiom" nil :count 0)
     ("cdot" "·" nil :count 0)
     ("ch" "#check" nil :count 0)
     ("df" ":=" nil :count 0)
+    ("eqv" "≈" nil :count 7)
     ("ev" "#eval" nil :count 0)
     ("ex" "example" nil :count 0)
     ("fa" "∀" nil :count 0)
@@ -88,4 +89,5 @@
     ("str" "String" nil :count 0)
     ("th" "theorem" nil :count 0)
     ("to" "→" nil :count 0)
-    ))
+   ))
+
