@@ -1,10 +1,12 @@
-;;; knot-packages.el --- Some great tools including magit and more -*- lexical-binding: t; -*-
+;;; knot-packages.el --- Tools, tools, tools! -*- lexical-binding: t; -*-
 
-(use-package visual-fill-column
-  :hook ((org-mode emacs-lisp-mode) . visual-fill-column-mode)
+(use-package avy
+  :bind (("C-," . avy-goto-char-timer)
+         :map isearch-mode-map
+         ("C-," . avy-isearch))
   :custom
-  (visual-fill-column-width 120)
-  (visual-fill-column-center-text t))
+  (avy-timeout-seconds 0.2)
+  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
 
 (use-package achievements
   :init (achievements-mode))
@@ -26,11 +28,10 @@
   :config
   (defun rh/org-electric-pairs ()
     "Org pairs for electric-pair-mode."
-    (setq-local electric-pair-pairs (append '((?/.?/) (?_.?_) (?~.?~))))))
+    (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
 (use-package expand-region
-  :bind (("<Ci>" . er/expand-region)
-         ("C-="  . er/expand-region)))
+  :bind ("<Ci>" . er/expand-region))
 
 (use-package keyfreq
   :init (keyfreq-mode)
@@ -52,15 +53,22 @@
      try-complete-lisp-symbol-partially
      try-expand-all-abbrevs)))
 
-;; Requires enchant and dictionary backend
-;; I am using `hunspell-en_us'
+(use-package isearch
+  :ensure nil
+  :custom
+  (isearch-allow-scroll 'unlimited)
+  (isearch-lazy-count t)
+  (isearch-repeat-on-direction-change t)
+  (search-default-mode 'char-fold-to-regexp) ; matches accented letters too
+  (search-whitespace-regexp ".*?")) ; search for "t n" matches "teleportation"
+
+;; Requires enchant and dictionary backend. I am using `hunspell-en_us'
 (use-package jinx
   :init (global-jinx-mode)
   :bind ("C-S-c" . jinx-correct)
   :custom (jinx-languages "en_US-large"))
 
 (use-package magit
-  :commands (magit-status magit-log)
   :bind ("C-x g" .  magit-status)
   (:map magit-mode-map
         ("." . rh/magit-quick-commit)
@@ -104,6 +112,13 @@
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :config (pdf-tools-install))
 
+(use-package project
+  :custom (project-switch-commands
+           '((magit-project-status "Magit"     ?m)
+             (project-find-file    "Find file" ?f)
+             (project-dired        "Dired"     ?d)
+             (project-eshell       "Eshell"    ?e))))
+
 (use-package puni
   :init (puni-global-mode)
   :bind (:map puni-mode-map
@@ -112,6 +127,23 @@
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package recentf
+  :ensure nil
+  :init (recentf-mode)
+  :custom
+  (recentf-max-saved-items 200)
+  (recentf-max-menu-items 25)
+  (recentf-auto-cleanup 'never)
+  :config (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
+
+(use-package savehist
+  :ensure nil
+  :init (savehist-mode)
+  :custom
+  (history-length 2000)
+  (history-delete-duplicates t)
+  (savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
 
 (use-package sudo-edit
   :commands (sudo-edit))
@@ -126,6 +158,6 @@
 
 (use-package yasnippet
   :init (yas-global-mode)
-  :custom (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
+  :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
 (provide 'knot-packages)
