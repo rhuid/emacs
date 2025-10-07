@@ -3,17 +3,19 @@
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
 
-;; Arrows keys are wrapped with Meta! Be careful!
+;; Arrows keys are wrapped with Meta! Beware!
 ;; Useful for `move-text' and promoting/demoting headings in `org-mode'
 (define-key key-translation-map [left] (kbd "M-<left>"))
 (define-key key-translation-map [right] (kbd "M-<right>"))
 (define-key key-translation-map [up] (kbd "M-<up>"))
 (define-key key-translation-map [down] (kbd "M-<down>"))
 
+;; Detach `C-i' from `TAB' (won't work in client frames, need separate solution given below)
+(define-key input-decode-map "\C-i" [Ci])
+
 (defun rh/detach-Ci-from-TAB (frame)
   "Detach `C-i' from `TAB' in the current frame."
-  (with-selected-frame frame
-    (define-key input-decode-map "\C-i" [Ci])))
+  (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci])))
 
 ;; Need to run `rh/detach-Ci-from-TAB' whenever a new frame is created.
 (add-hook 'after-make-frame-functions 'rh/detach-Ci-from-TAB)
@@ -109,9 +111,16 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
+(use-package register
+  :ensure nil
+  :custom (register-use-preview nil)) ; preview without delay
+
 ;; Repeat commands without retyping the prefix key
 (repeat-mode)
 (setq repeat-exit-timeout 5)
+
+;; Some bunch of advice
+(advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
 ;; Date formats for use in `yasnippet'
 (defun rh/date-format-candidates ()
