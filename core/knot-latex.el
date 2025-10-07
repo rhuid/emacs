@@ -8,16 +8,12 @@
   (LaTeX-mode . turn-on-reftex)
   (LaTeX-mode . rh/provide-keywords-math-face)
   (post-command . rh/toggle-latex-abbrev)
-  :bind (:map LaTeX-mode-map
-              ("C-c C-u" . rh/tex-fold-buffer))
+  :bind (:map LaTeX-mode-map ("C-c C-u" . rh/tex-fold-buffer))
   :config
   (setq TeX-auto-save t
         TeX-parse-self t)
-  (setq TeX-view-program-selection
-        '((output-pdf "Evince")
-          (output-html "firefox")))
-  (setq TeX-view-program-list
-        '(("Evince" "flatpak run org.gnome.Evince --page-index=%(outpage) %o")))
+  (setq TeX-view-program-selection '((output-pdf "Evince") (output-html "firefox")))
+  (setq TeX-view-program-list '(("Evince" "flatpak run org.gnome.Evince --page-index=%(outpage) %o")))
 
   (defun rh/toggle-latex-abbrev ()
     "Disable abbrevs inside math mode in Latex."
@@ -53,8 +49,7 @@
   :hook
   (LaTeX-mode . turn-on-cdlatex)
   (org-mode . turn-on-org-cdlatex)
-  :bind (:map cdlatex-mode-map
-              ("TAB" . rh/latex-tab-action))
+  :bind (:map cdlatex-mode-map ("TAB" . rh/latex-tab-action))
   :custom (cdlatex-paired-parens "$([{")
   :config
   (defun rh/latex-tab-action ()
