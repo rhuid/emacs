@@ -49,19 +49,19 @@
   :config (gcmh-mode 1))
 
 ;; Local modules
-(use-package knot-startup-page      :ensure nil :defer nil)
-(use-package knot-visuals           :ensure nil :defer nil)
-(use-package knot-defaults          :ensure nil :defer nil)
-(use-package knot-org               :ensure nil :defer nil)
-(use-package knot-programming       :ensure nil :defer nil)
-(use-package knot-latex	            :ensure nil :defer nil)
-(use-package knot-dired	            :ensure nil :defer nil)
-(use-package knot-packages          :ensure nil :defer nil)
-(use-package knot-eshell            :ensure nil :defer nil)
-(use-package knot-email             :ensure nil :defer nil)
-(use-package knot-completion        :ensure nil :defer nil)
-(use-package knot-editor            :ensure nil :defer nil)
-(use-package knot-special-buffers   :ensure nil :defer nil)
+(require 'knot-startup-page)
+(require 'knot-visuals)
+(require 'knot-defaults)
+(require 'knot-org)
+(require 'knot-programming)
+(require 'knot-latex)
+(require 'knot-dired)
+(require 'knot-packages)
+(require 'knot-eshell)
+(require 'knot-email)
+(require 'knot-completion)
+(require 'knot-editor)
+(require 'knot-special-buffers)
 
-;; Some experimental modules
+;; Some personal experimental packages
 (require 'rh-easy-typing)
