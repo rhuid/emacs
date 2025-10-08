@@ -64,4 +64,3 @@
 
 ;; Some personal experimental packages
 (require 'rh-easy-typing)
-(require 'rh-command-launcher)

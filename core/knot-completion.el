@@ -1,13 +1,15 @@
 ;;; knot-completion.el --- Minibuffer completions and at-point completions -*- lexical-binding: t; -*-
 
+(require 'quick-mx)
+
 (use-package vertico
   :init (vertico-mode)
   :bind (("C-x f" . find-file)
          :map vertico-map
          ("C-g" . top-level)
-         ("C-j" . vertico-exit-input))
+         ("C-j" . vertico-exit-input)
+         ("M-x" . rh/quick-mx))
   :custom
-  (enable-recursive-minibuffers t)
   (vertico-resize t)
   (vertico-cycle t))
 

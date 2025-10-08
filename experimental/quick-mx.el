@@ -1,4 +1,4 @@
-;;; rh-command-launcher.el --- Toggle seamlessly between command launchers with M-x -*- lexical-binding: t; -*-
+;;; quick-mx.el --- Toggle seamlessly between command launchers with M-x -*- lexical-binding: t; -*-
 
 (defvar rh/quick-commands
   '(jinx-correct-word
@@ -9,7 +9,6 @@
     avy-copy-region
     avy-move-line
     avy-move-region
-    copy-from-above-command
     rh/return-home
     sort-lines
     just-one-space
@@ -18,9 +17,8 @@
     delete-non-matching-lines
     dictionary-search
     dictionary-lookup-definition
-    follow-mode
-    visual-fill-column-mode)
-  "List of commands for `rh/quick-launcher`.")
+    follow-mode)
+  "List of commands for `quick-mx`.")
 
 (defun rh/quick-launcher ()
   "Run a hand-picked quick command using completion."
@@ -34,12 +32,8 @@
   (when (minibufferp)
     (buffer-substring-no-properties (point-min) (minibuffer-prompt-end))))
 
-(defun rh/toggle-launcher ()
-  "Toggle between full `M-x` and `rh/quick-launcher`, preserving input.
-When called in a minibuffer:
- - If the current minibuffer prompt contains \"Quick command\" we open full M-x.
- - Otherwise we open the quick launcher.
-The text already typed is reinserted into the new minibuffer so you don't retype."
+(defun rh/quick-mx ()
+  "Toggle between full `M-x` and `rh/quick-launcher`, preserving input. "
   (interactive)
   (unless (minibufferp)
     (user-error "Not in a minibuffer"))
@@ -53,22 +47,7 @@ The text already typed is reinserted into the new minibuffer so you don't retype
           (call-interactively #'execute-extended-command) ;; open full M-x
         (call-interactively #'rh/quick-launcher)))))
 
-(define-key vertico-map (kbd "M-x") #'rh/toggle-launcher)
+;; Important for `quick-mx' to work
+(setq enable-recursive-minibuffers t)
 
-;; (defun rh/command-launcher ()
-;;   "A slimmed-down `M-x` that only shows `rh/quick-commands`."
-;;   (interactive)
-;;   (let* ((completion-ignore-case t)
-;;          (execute-extended-command--last-command nil)
-;;          (minibuffer-completion-table rh/quick-commands)
-;;          (cmd (completing-read
-;;                "C-x C-m "
-;;                (lambda (string pred action)
-;;                  (if (eq action 'metadata)
-;;                      '(metadata (category . command))
-;;                    (complete-with-action action rh/quick-commands string pred)))
-;;                nil t nil 'extended-command-history)))
-;;     (setq cmd (intern cmd))
-;;     (call-interactively cmd)))
-
-(provide 'rh-command-launcher)
+(provide 'quick-mx)
