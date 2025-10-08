@@ -61,6 +61,3 @@
 (require 'knot-email)
 (require 'knot-completion)
 (require 'knot-special-buffers)
-
-;; Some personal experimental packages
-(require 'rh-easy-typing)
