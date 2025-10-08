@@ -1,5 +1,19 @@
 ;;; knot-packages.el --- Tools, tools, tools! -*- lexical-binding: t; -*-
 
+(use-package abbrev
+  :ensure nil
+  :init
+  (defun rh/context-sensitive-abbrev-expand (fun &rest args)
+    "Advice to prevent abbrev expansion inside comments and strings."
+    (unless (nth 8 (syntax-ppss))
+      (apply fun args)))
+  (advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
+  :config
+  (setq-default abbrev-mode t)
+  (setq abbrev-file-name (expand-file-name "library/abbrevs.el" user-emacs-directory))
+  (read-abbrev-file abbrev-file-name)
+  (setq save-abbrevs 'silently))
+
 (use-package avy
   :bind (("C-," . avy-goto-char-timer)
          :map isearch-mode-map
@@ -136,6 +150,10 @@
   (recentf-max-menu-items 25)
   (recentf-auto-cleanup 'never)
   :config (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
+
+(use-package register
+  :ensure nil
+  :custom (register-use-preview nil)) ; preview without delay
 
 (use-package savehist
   :ensure nil

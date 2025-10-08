@@ -13,23 +13,29 @@
 ;; Detach `C-i' from `TAB' (won't work in client frames, need separate solution given below)
 (define-key input-decode-map "\C-i" [Ci])
 
-(defun rh/detach-Ci-from-TAB (frame)
-  "Detach `C-i' from `TAB' in the current frame."
-  (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci])))
-
-;; Need to run `rh/detach-Ci-from-TAB' whenever a new frame is created.
-(add-hook 'after-make-frame-functions 'rh/detach-Ci-from-TAB)
+;; Detach `C-i' from `TAB' in the current frame.
+(add-hook 'after-make-frame-functions
+          '(lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
 
 ;; Disable return (enter) key and backspace. Use `C-m' and `C-h' instead.
 (global-set-key (kbd "<return>") 'ignore)
 (global-set-key (kbd "<backspace>") 'ignore)
 
-;; Concerning files
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
-(global-auto-revert-mode) ; Refresh the buffer when files change on disk
-(save-place-mode) ; Save place in each file
-(setq make-backup-files nil)
-(setq-default require-final-newline t)
+(setq shift-select-mode nil) ; Shift is better used as a modifier
+
+;; Readjusting some built-in keybindings
+(global-set-key (kbd "M-z")     'zap-up-to-char)
+(global-set-key (kbd "M-D")     'duplicate-dwim)
+(global-set-key (kbd "M-l")     'copy-from-above-command)
+(global-set-key (kbd "C-S-r")   'replace-string)
+(global-set-key (kbd "C-x C-a") 'align-regexp)
+(global-set-key (kbd "C-x C-u") 'upcase-dwim)
+(global-set-key (kbd "C-x C-l") 'downcase-dwim)
+(global-set-key (kbd "C-x C-c") 'capitalize-dwim)
+(global-set-key (kbd "C-x C-t") 'transpose-sentences) ; `transpose-lines' has been taken care of by `move-text'
+(global-set-key (kbd "C-S-t")   'transpose-paragraphs)
+(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
+(global-set-key (kbd "S-<backspace>") 'mode-line-other-buffer)
 
 ;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)
@@ -39,30 +45,15 @@
 
 (global-set-key (kbd "C-j") 'rh/join-line)
 
-;; Readjusting some built-in keybindings
-(use-package keymap
-  :ensure nil
-  :config (setq shift-select-mode nil) ; Shift is better used as a modifier
-  :bind
-  ;; Make text editing faster
-  ("M-z" . zap-up-to-char)
-  ("M-D" . duplicate-dwim)
-  ("M-l" . copy-from-above-command)
-  ("C-x C-a" . align-regexp)
+;; Some bunch of advice
+(advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
-  ("C-\\"    . repeat)
-  ("C-S-r"   . replace-string)
-  ("C-x r q" . save-buffers-kill-terminal)
-  ("S-<backspace>" . mode-line-other-buffer)
-
-  ;; Changing case made easier. Also free up `M-u', `M-l' and `M-c'
-  ("C-x C-u" . upcase-dwim)
-  ("C-x C-l" . downcase-dwim)
-  ("C-x C-c" . capitalize-dwim)
-
-  ;; `transpose-lines' has been taken care of by `move-text'
-  ("C-x C-t" . transpose-sentences)
-  ("C-S-t"   . transpose-paragraphs))
+;; Concerning files
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(global-auto-revert-mode) ; Refresh the buffer when files change on disk
+(save-place-mode) ; Save place in each file
+(setq make-backup-files nil)
+(setq-default require-final-newline t)
 
 ;; Concerning kills
 (delete-selection-mode) ; Typing on a region replaces it
@@ -93,34 +84,11 @@
 (setq winner-boring-buffers
       '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
 
-;; Make it more convenient
+;; Make it more convenient (concerning convenience?)
 (setq disabled-command-function nil) ; Enable all disabled commands. I (kinda) know what I am doing.
 (setq use-short-answers t) ; All confirmations prompts be y or n
-
-(use-package abbrev
-  :ensure nil
-  :init
-  (defun rh/context-sensitive-abbrev-expand (fun &rest args)
-    "Advice to prevent abbrev expansion inside comments and strings."
-    (unless (nth 8 (syntax-ppss))
-      (apply fun args)))
-  (advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
-  :config
-  (setq-default abbrev-mode t)
-  (setq abbrev-file-name (expand-file-name "library/abbrevs.el" user-emacs-directory))
-  (read-abbrev-file abbrev-file-name)
-  (setq save-abbrevs 'silently))
-
-(use-package register
-  :ensure nil
-  :custom (register-use-preview nil)) ; preview without delay
-
-;; Repeat commands without retyping the prefix key
-(repeat-mode)
+(repeat-mode) ; Repeat commands without retyping the prefix key
 (setq repeat-exit-timeout 5)
-
-;; Some bunch of advice
-(advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
 ;; Date formats for use in `yasnippet'
 (defun rh/date-format-candidates ()
