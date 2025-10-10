@@ -3,17 +3,14 @@
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
 
-;; Arrows keys are wrapped with Meta! Beware!
-;; Useful for `move-text' and promoting/demoting headings in `org-mode'
+;; Arrows keys are wrapped with Meta! Useful for `move-text' and promoting/demoting headings in `org-mode'
 (define-key key-translation-map [left] (kbd "M-<left>"))
 (define-key key-translation-map [right] (kbd "M-<right>"))
 (define-key key-translation-map [up] (kbd "M-<up>"))
 (define-key key-translation-map [down] (kbd "M-<down>"))
 
-;; Detach `C-i' from `TAB' (won't work in client frames, need separate solution given below)
-(define-key input-decode-map "\C-i" [Ci])
-
-;; Detach `C-i' from `TAB' in the current frame.
+;; Detach `C-i' from `TAB'
+(define-key input-decode-map "\C-i" [Ci]) ; this alone won't apply to client frames, so we need the line below
 (add-hook 'after-make-frame-functions
           '(lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
 
@@ -36,6 +33,8 @@
 (global-set-key (kbd "C-S-t")   'transpose-paragraphs)
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
 (global-set-key (kbd "M-s l")   'sort-lines) ; `M-s' is overloaded by default
+(global-set-key (kbd "M-n")     'forward-paragraph)  ; Think of `n'ext paragraph
+(global-set-key (kbd "M-p")     'backward-paragraph) ; Think of `p'revious paragraph
 
 ;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)
