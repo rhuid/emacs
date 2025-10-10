@@ -35,7 +35,7 @@
 (global-set-key (kbd "C-x C-t") 'transpose-sentences) ; `transpose-lines' has been taken care of by `move-text'
 (global-set-key (kbd "C-S-t")   'transpose-paragraphs)
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
-(global-set-key (kbd "S-<backspace>") 'mode-line-other-buffer)
+(global-set-key (kbd "M-s l")   'sort-lines) ; `M-s' is overloaded by default
 
 ;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)

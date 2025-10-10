@@ -45,14 +45,14 @@
     (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
 (use-package expand-region
-  :bind ("<Ci>" . er/expand-region))
+  :bind ("C-S-e" . er/expand-region))
 
 (use-package keyfreq
   :init (keyfreq-mode)
   :config (keyfreq-autosave-mode))
 
 (use-package hippie-exp
-  :bind ("C-S-e" . hippie-expand)
+  :bind ("<Ci>" . hippie-expand)
   :custom
   (hippie-expand-try-functions-list
    '(try-complete-file-name

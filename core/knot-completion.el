@@ -29,7 +29,6 @@
          ("C-x b"   . consult-buffer)
          ("C-M-s"   . consult-line)
          ("C-M-g"   . consult-ripgrep)
-         ("C-x C-y" . consult-yank-pop)
          ("M-m"     . consult-imenu)
          ("M-O"     . consult-outline))
   :config (setq consult-preview-key nil))
