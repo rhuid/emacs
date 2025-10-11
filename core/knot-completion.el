@@ -26,13 +26,11 @@
   :config (setq consult-preview-key "C-,"))
 
 (use-package consult-dir
-  :bind (("C-x C-d" . consult-dir)
-         :map vertico-map
-	       ("C-x C-j" . consut-dir-jump-file)))
+  :bind (("C-x C-d" . consult-dir))
+  (:map vertico-map ("C-x C-j" . consult-dir-jump-file)))
 
 (use-package embark
-  :bind (("C-." . embark-act)
-         ("C-;" . embark-dwim))
+  :bind (("C-." . embark-act) ("C-;" . embark-dwim))
   :init (setq prefix-help-command #'embark-prefix-help-command))
 
 (use-package embark-consult
@@ -47,27 +45,18 @@
   :hook ((corfu-mode . corfu-history-mode)
          (corfu-mode . corfu-indexed-mode)
          (corfu-mode . corfu-popupinfo-mode))
-  :custom (corfu-auto t) ; Enable auto popup
-  :config
-  (define-key corfu-map (kbd "TAB") nil)
-  (define-key corfu-map (kbd "RET") nil)
-  (define-key corfu-map (kbd "C-t") 'corfu-insert))
+  :bind (:map corfu-map ("TAB" . nil) ("RET" . nil) ("C-t" . 'corfu-insert))
+  :custom (corfu-auto t)) ; Enable auto popup
 
 (use-package cape
   :after corfu
   :demand t
-  :hook ((LaTeX-mode org-mode) . rh/cape-dict-completion)
   :config
   (setq cape-dict-file '())
-  (setq rh/dict-file (concat user-emacs-directory "library/personal-dictionary"))
-  (add-to-list 'cape-dict-file rh/dict-file)
+  (add-to-list 'cape-dict-file (concat user-emacs-directory "library/personal-dictionary"))
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  (defun rh/cape-dict-completion ()
-    "Setup completion using my personal dictionary file."
-    (setq-local completion-at-point-functions
-                (cons (cape-capf-super #'cape-dict)
-                      completion-at-point-functions))))
+  (add-to-list 'completion-at-point-functions #'cape-dict))
 
 (provide 'knot-completion)
