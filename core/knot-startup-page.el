@@ -40,4 +40,6 @@
   (delete-other-windows)
   (switch-to-buffer "*scratch*"))
 
+(global-set-key (kbd "C-x r h") 'rh/return-home)
+
 (provide 'knot-startup-page)
