@@ -35,6 +35,7 @@
 (global-set-key (kbd "M-s l")   'sort-lines) ; `M-s' is overloaded by default
 (global-set-key (kbd "M-n")     'forward-paragraph)  ; Think of `n'ext paragraph
 (global-set-key (kbd "M-p")     'backward-paragraph) ; Think of `p'revious paragraph
+(global-set-key (kbd "M-K")     'backward-kill-sentence)
 
 ;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)
@@ -58,10 +59,10 @@
 (delete-selection-mode) ; Typing on a region replaces it
 (kill-ring-deindent-mode)
 (setq kill-buffer-query-functions nil) ; Don't ask for confirmation while killing buffers
-(setq kill-do-not-save-duplicates t)
+(global-display-line-numbers-mode)
 
 ;; Concerning lines, sentences, words and characters
-(global-display-line-numbers-mode)
+(setq kill-do-not-save-duplicates t)
 (global-hl-line-mode)
 (global-subword-mode)
 (global-visual-line-mode)
