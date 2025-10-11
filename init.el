@@ -52,6 +52,7 @@
 (require 'knot-startup-page)
 (require 'knot-visuals)
 (require 'knot-defaults)
+(require 'knot-keys)
 (require 'knot-org)
 (require 'knot-programming)
 (require 'knot-latex)
