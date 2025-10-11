@@ -1,53 +1,5 @@
 ;;; knot-defaults.el --- Some sane and not-so-sane defaults? -*- lexical-binding: t; -*-
 
-;; Use `C-h' for `DEL' (backspace).
-(define-key key-translation-map [?\C-h] [?\C-?])
-
-;; Arrows keys are wrapped with Meta! Useful for `move-text' and promoting/demoting headings in `org-mode'
-(define-key key-translation-map [left] (kbd "M-<left>"))
-(define-key key-translation-map [right] (kbd "M-<right>"))
-(define-key key-translation-map [up] (kbd "M-<up>"))
-(define-key key-translation-map [down] (kbd "M-<down>"))
-
-;; Detach `C-i' from `TAB'
-(define-key input-decode-map "\C-i" [Ci]) ; this alone won't apply to client frames, so we need the line below
-(add-hook 'after-make-frame-functions
-          '(lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
-
-;; Disable return (enter) key and backspace. Use `C-m' and `C-h' instead.
-(global-set-key (kbd "<return>") 'ignore)
-(global-set-key (kbd "<backspace>") 'ignore)
-
-(setq shift-select-mode nil) ; Shift is better used as a modifier
-
-;; Readjusting some built-in keybindings
-(global-set-key (kbd "M-z")     'zap-up-to-char)
-(global-set-key (kbd "M-D")     'duplicate-dwim)
-(global-set-key (kbd "M-l")     'copy-from-above-command)
-(global-set-key (kbd "C-S-r")   'replace-string)
-(global-set-key (kbd "C-x C-a") 'align-regexp)
-(global-set-key (kbd "C-x C-u") 'upcase-dwim)
-(global-set-key (kbd "C-x C-l") 'downcase-dwim)
-(global-set-key (kbd "C-x C-c") 'capitalize-dwim)
-(global-set-key (kbd "C-x C-t") 'transpose-sentences) ; `transpose-lines' has been taken care of by `move-text'
-(global-set-key (kbd "C-S-t")   'transpose-paragraphs)
-(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
-(global-set-key (kbd "M-s l")   'sort-lines) ; `M-s' is overloaded by default
-(global-set-key (kbd "M-n")     'forward-paragraph)  ; Think of `n'ext paragraph
-(global-set-key (kbd "M-p")     'backward-paragraph) ; Think of `p'revious paragraph
-(global-set-key (kbd "M-K")     'backward-kill-sentence)
-
-;; A more sensible `join-line' (also accepts universal argument)
-(defun rh/join-line (&optional arg)
-  "Like join-line but inverts its behavior."
-  (interactive "P")
-  (if arg (join-line nil) (join-line -1)))
-
-(global-set-key (kbd "C-j") 'rh/join-line)
-
-;; Some bunch of advice
-(advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
-
 ;; Concerning files
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (global-auto-revert-mode) ; Refresh the buffer when files change on disk
@@ -89,8 +41,9 @@
 (setq use-short-answers t) ; All confirmations prompts be y or n
 (repeat-mode) ; Repeat commands without retyping the prefix key
 (setq repeat-exit-timeout 5)
+(setq echo-keystrokes 0.1)
 
-;; Date formats for use in `yasnippet'
+;; Date Formats for use in `yasnippet'
 (defun rh/date-format-candidates ()
   "Return an alist of (display . format-string) for yasnippet date choices."
   (mapcar (lambda (fmt)
