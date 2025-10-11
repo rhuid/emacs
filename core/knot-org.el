@@ -35,6 +35,7 @@
   :bind (:map org-mode-map
               ("C-," . nil)
               ("C-'" . nil)
+              ("C-j" . rh/join-line)
               ("C-S-o" . org-shifttab)))
 
 (use-package org-modern
