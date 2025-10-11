@@ -54,6 +54,14 @@
 (global-set-key (kbd "M-s r") 'replace-string)
 (global-set-key (kbd "M-s d") 'delete-duplicate-lines)
 
+;; The following should have been loaded by default without needing to load `org-mode'
+(global-set-key (kbd "C-+") 'org-increase-number-at-point)
+(global-set-key (kbd "C-_") 'org-decrease-number-at-point)
+
+;; Best used in conjunction with er/expand-region
+(global-set-key (kbd "M-s p") 'delete-pair)
+(setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
+
 ;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)
   "Like join-line but inverts its behavior."
