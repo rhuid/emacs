@@ -58,9 +58,6 @@
 (use-package rust-mode)
 (use-package systemd)
 
-(use-package kbd-mode
-  :vc (:url "https://github.com/kmonad/kbd-mode" :rev :newest))
-
 (use-package csv-mode
   :hook (csv-mode . csv-align-mode))
 
