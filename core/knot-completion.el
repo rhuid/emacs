@@ -1,14 +1,7 @@
 ;;; knot-completion.el --- Minibuffer completions and at-point completions -*- lexical-binding: t; -*-
 
-(require 'quick-mx)
-
 (use-package vertico
   :init (vertico-mode)
-  :bind (("C-x f" . find-file)
-         :map vertico-map
-         ("C-g" . top-level)
-         ("C-j" . vertico-exit-input)
-         ("M-x" . rh/quick-mx))
   :custom
   (vertico-resize t)
   (vertico-cycle t))
@@ -25,22 +18,21 @@
   :init (marginalia-mode))
 
 (use-package consult
-  :bind (("C-x C-f" . consult-recent-file)
-         ("C-x b"   . consult-buffer)
-         ("C-M-s"   . consult-line)
-         ("C-M-g"   . consult-ripgrep)
-         ("M-m"     . consult-imenu)
-         ("M-O"     . consult-outline))
-  :config (setq consult-preview-key nil))
+  :bind (("C-x f" . consult-recent-file)
+         ("C-x b" . consult-buffer)
+         ("C-M-s" . consult-line)
+         ("C-M-g" . consult-ripgrep)
+         ("M-O"   . consult-outline))
+  :config (setq consult-preview-key "C-,"))
 
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
          :map vertico-map
-	       ("C-x C-j" . consult-dir-jump-file)))
+	       ("C-x C-j" . consut-dir-jump-file)))
 
 (use-package embark
-  :bind (("C-."    . embark-act)
-         ("C-;"    . embark-dwim))
+  :bind (("C-." . embark-act)
+         ("C-;" . embark-dwim))
   :init (setq prefix-help-command #'embark-prefix-help-command))
 
 (use-package embark-consult
