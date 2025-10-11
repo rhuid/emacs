@@ -41,16 +41,18 @@
 (global-set-key (kbd "M-n") (lamb (forward-line 5) (recenter)))
 (global-set-key (kbd "M-p") (lamb (previous-line 5) (recenter)))
 
-;; Paragraph navigation
-(global-set-key (kbd "M-N") 'forward-paragraph)  ; Think of `N'ext paragraph
-(global-set-key (kbd "M-P") 'backward-paragraph) ; Think of `P'revious paragraph
+;; Paragraph navigation: `N'ext paragraph and `P'revious paragraph
+(global-set-key (kbd "M-N") 'forward-paragraph)
+(global-set-key (kbd "M-P") 'backward-paragraph)
 
 ;; These amazing commands come built-in but unbound. So why not bind them?
-(global-set-key (kbd "C-x C-a") 'align-regexp)
-(global-set-key (kbd "C-S-r")   'replace-string)
-(global-set-key (kbd "M-D")     'duplicate-dwim)
-(global-set-key (kbd "M-l")     'copy-from-above-command)
-(global-set-key (kbd "M-s l")   'sort-lines) ; `M-s' is overloaded by default
+(global-set-key (kbd "M-A")   'copy-from-above-command)
+(global-set-key (kbd "M-D")   'duplicate-dwim)
+(global-set-key (kbd "M-|")   'delete-all-space) ; Big brother to the built-in `M-\' : delete-horizontal-space
+(global-set-key (kbd "M-s a") 'align-regexp)
+(global-set-key (kbd "M-s l") 'sort-lines)
+(global-set-key (kbd "M-s r") 'replace-string)
+(global-set-key (kbd "M-s d") 'delete-duplicate-lines)
 
 ;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)
