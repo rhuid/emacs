@@ -54,7 +54,7 @@
 (global-set-key (kbd "M-s r") 'replace-string)
 (global-set-key (kbd "M-s d") 'delete-duplicate-lines)
 
-;; The following should have been loaded by default without needing to load `org-mode'
+;; The following should have been universal without needing to load `org-mode'
 (global-set-key (kbd "C-+") 'org-increase-number-at-point)
 (global-set-key (kbd "C-_") 'org-decrease-number-at-point)
 
