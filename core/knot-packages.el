@@ -45,7 +45,7 @@
     (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
 (use-package expand-region
-  :bind ("C-S-e" . er/expand-region))
+  :bind ("M-r" . er/expand-region))
 
 (use-package keyfreq
   :init (keyfreq-mode)
@@ -79,7 +79,7 @@
 ;; Requires enchant and dictionary backend. I am using `hunspell-en_us'
 (use-package jinx
   :init (global-jinx-mode)
-  :bind ("C-S-c" . jinx-correct)
+  :bind ("M-c" . jinx-correct)
   :custom (jinx-languages "en_US-large"))
 
 (use-package magit
@@ -168,7 +168,7 @@
 
 (use-package vundo
   :bind (("C-x u" . vundo)
-         ("M-U"   . undo-redo))
+         ("M-?"   . undo-redo))
   :custom (undo-limit (* 16 1024 1024)))
 
 (use-package whole-line-or-region
