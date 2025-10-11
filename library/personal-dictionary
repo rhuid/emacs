@@ -24,6 +24,7 @@ homotopy
 integrable
 integral
 integration
+intuitionistic
 isomorphic
 isomorphism
 manifold
@@ -35,3 +36,6 @@ topological invariant
 topological manifold
 topological space
 topology
+backend
+frontend
+minibuffer
