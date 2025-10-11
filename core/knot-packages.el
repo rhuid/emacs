@@ -88,8 +88,7 @@
         ("." . rh/magit-quick-commit)
         ("," . rh/magit-quick-amend))
   :config
-  (setq magit-display-buffer-function
-	      #'magit-display-buffer-same-window-except-diff-v1)
+  (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   (setq magit-restore-window-configuration-after-quit nil)
   (defun rh/magit-quick-commit ()
     "Prompt for a commit message in minibuffer and commit immediately."
@@ -103,8 +102,7 @@
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
 (use-package multiple-cursors
-  :bind (("C-S-l" . mc/edit-lines)
-         ("C-S-a" . mc/mark-all-like-this)
+  :bind (("C-S-a" . mc/mark-all-like-this-dwim)
          ("C-S-n" . mc/mark-next-like-this)
          ("C-S-p" . mc/mark-previous-like-this)
          ("C->"   . mc/skip-to-next-like-this)
