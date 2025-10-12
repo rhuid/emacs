@@ -62,6 +62,14 @@
 (global-set-key (kbd "M-s p") 'delete-pair)
 (setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
 
+;; Keyboard macros made easier
+(global-set-key (kbd "C-(") 'kmacro-start-macro-or-insert-counter)
+(global-set-key (kbd "C-)") 'kmacro-end-or-call-macro)
+
+;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again
+(global-set-key (kbd "C-<f5>") 'recover-this-file)
+(global-set-key (kbd "C-<f6>") 'rename-visited-file)
+
 ;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)
   "Like join-line but inverts its behavior."
