@@ -26,29 +26,41 @@
      (ignore-errors
        ,@body)))
 
-(setq shift-select-mode nil) ; Shift is better used as a modifier
+;; A lot of amazing commands come built-in but unbound. So why not bind them?
+;; Some of the default keybindings are also be adjusted.
 
-;; Readjusting some built-in keybindings
-(global-set-key (kbd "M-z")     'zap-up-to-char)
+;; Shift is better used as a modifier.
+(setq shift-select-mode nil)
+
+;; The built-in repeat `C-x z' is cumbersome even with repeat (no pun intended).
+(global-set-key (kbd "C-:") 'repeat)
+
+;; The default command bound to `M-z' is `zap-to-char'. However, the below makes more sense.
+(global-set-key (kbd "M-z") 'zap-up-to-char)
+
+;; Changing case made easy. Do what I mean!
 (global-set-key (kbd "C-x C-u") 'upcase-dwim)
 (global-set-key (kbd "C-x C-l") 'downcase-dwim)
 (global-set-key (kbd "C-x C-c") 'capitalize-dwim)
-(global-set-key (kbd "C-x C-t") 'transpose-sentences) ; `transpose-lines' has been taken care of by `move-text'
-(global-set-key (kbd "C-S-t")   'transpose-paragraphs)
-(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
 
-;; A faster `C-n' and `C-p'
+;; Transposing things around: `transpose-lines' has been taken care of by `move-text'.
+(global-set-key (kbd "C-x C-t") 'transpose-sentences)
+(global-set-key (kbd "C-S-t")   'transpose-paragraphs)
+
+;; A faster `C-n' and `C-p' (inspired by Magnar Sveen's config)
 (global-set-key (kbd "M-n") (lamb (forward-line 5) (recenter)))
 (global-set-key (kbd "M-p") (lamb (previous-line 5) (recenter)))
+
+;; Now we reap the fruits of having planted Shift as a modifier.
+(global-set-key (kbd "M-A") 'copy-from-above-command)
+(global-set-key (kbd "M-D") 'duplicate-dwim)
+(global-set-key (kbd "M-|") 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
 
 ;; Paragraph navigation: `N'ext paragraph and `P'revious paragraph
 (global-set-key (kbd "M-N") 'forward-paragraph)
 (global-set-key (kbd "M-P") 'backward-paragraph)
 
-;; These amazing commands come built-in but unbound. So why not bind them?
-(global-set-key (kbd "M-A")   'copy-from-above-command)
-(global-set-key (kbd "M-D")   'duplicate-dwim)
-(global-set-key (kbd "M-|")   'delete-all-space) ; Big brother to the built-in `M-\' : delete-horizontal-space
+;; `M-s' is so nicely placed on the home row but with barely any suffixes. Why not exploit it?
 (global-set-key (kbd "M-s a") 'align-regexp)
 (global-set-key (kbd "M-s l") 'sort-lines)
 (global-set-key (kbd "M-s r") 'replace-string)
@@ -69,6 +81,9 @@
 ;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again
 (global-set-key (kbd "C-<f5>") 'recover-this-file)
 (global-set-key (kbd "C-<f6>") 'rename-visited-file)
+
+;; Because the default `C-x C-c' is too easy to reach.
+(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
 
 ;; A more sensible `join-line' (also accepts universal argument)
 (defun rh/join-line (&optional arg)
