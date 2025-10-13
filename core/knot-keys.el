@@ -56,13 +56,13 @@
 (global-set-key (kbd "C-x C-t") 'transpose-sentences)
 (global-set-key (kbd "C-S-t")   'transpose-paragraphs)
 
-;; A faster `C-n', `C-p', `C-f' and `C-b'
+;; Need for Speed: Shift... Make `C-n', `C-p', `C-f' and `C-b' faster
 (global-set-key (kbd "C-S-n") (lamb (forward-line 5) (recenter)))
 (global-set-key (kbd "C-S-p") (lamb (previous-line 5) (recenter)))
 (global-set-key (kbd "C-S-f") (lamb (forward-char 5) (recenter)))
 (global-set-key (kbd "C-S-b") (lamb (backward-char 5) (recenter)))
 
-;; Need for Speed: Shift
+;; Need for Speed: Shift (more shift for more speed)
 (global-set-key (kbd "M-A") 'copy-from-above-command)
 (global-set-key (kbd "M-D") 'duplicate-dwim)
 (global-set-key (kbd "M-F") (lamb (forward-word 4))) ; `M-f' on steroids
