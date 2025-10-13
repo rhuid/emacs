@@ -1,5 +1,9 @@
 ;;; knot-keys.el --- Some extra global keys for the thermonuclear editor -*- lexical-binding: t; -*-
 
+;; A lot of great commands come built-in but unbound. So why not bind them?
+;; Some of the default keybindings are also be adjusted.
+;; But before that, we do some low-level key remapping first.
+
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
 
@@ -22,14 +26,19 @@
 (defmacro lamb (&rest body)
   "Shorthand for interactive lambdas that ignore errors."
   `(lambda ()
+     "This is an anonymous command defined using `lamb'. Check config for more info."
      (interactive)
      (ignore-errors
        ,@body)))
 
-;; A lot of amazing commands come built-in but unbound. So why not bind them?
-;; Some of the default keybindings are also be adjusted.
+;; A prefix key for toggling `m'inor modes
+(define-prefix-command 'toggle-minor-mode-map)
+(global-set-key (kbd "C-x m") 'toggle-minor-mode-map)
 
-;; Shift is better used as a modifier.
+;; Some built-in modes
+(define-key toggle-minor-mode-map (kbd "f") 'follow-mode)
+
+;; We have a better use of `Shift'
 (setq shift-select-mode nil)
 
 ;; The built-in repeat `C-x z' is cumbersome even with repeat (no pun intended).
@@ -51,7 +60,7 @@
 (global-set-key (kbd "M-n") (lamb (forward-line 5) (recenter)))
 (global-set-key (kbd "M-p") (lamb (previous-line 5) (recenter)))
 
-;; Now we reap the fruits of having planted Shift as a modifier.
+;; Need for Speed: Shift
 (global-set-key (kbd "M-A") 'copy-from-above-command)
 (global-set-key (kbd "M-D") 'duplicate-dwim)
 (global-set-key (kbd "M-F") (lamb (forward-word 4))) ; `M-f' on steroids
