@@ -47,40 +47,44 @@
 (global-set-key (kbd "C-x C-t") 'transpose-sentences)
 (global-set-key (kbd "C-S-t")   'transpose-paragraphs)
 
-;; A faster `C-n' and `C-p' (inspired by Magnar Sveen's config)
+;; A faster `C-n' and `C-p'
 (global-set-key (kbd "M-n") (lamb (forward-line 5) (recenter)))
 (global-set-key (kbd "M-p") (lamb (previous-line 5) (recenter)))
 
 ;; Now we reap the fruits of having planted Shift as a modifier.
 (global-set-key (kbd "M-A") 'copy-from-above-command)
 (global-set-key (kbd "M-D") 'duplicate-dwim)
+(global-set-key (kbd "M-F") (lamb (forward-word 4))) ; `M-f' on steroids
+(global-set-key (kbd "M-B") (lamb (backward-word 4))) ; `M-b' on steroids
 (global-set-key (kbd "M-|") 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
 
 ;; Paragraph navigation: `N'ext paragraph and `P'revious paragraph
 (global-set-key (kbd "M-N") 'forward-paragraph)
 (global-set-key (kbd "M-P") 'backward-paragraph)
 
-;; `M-s' is so nicely placed on the home row but with barely any suffixes. Why not exploit it?
+;; The prefix `M-s' is well placed on the home row and is criminally underused. Why not redeem it?
+;; And make it mnemonic: `M-s' for `M'anipulate-`s'tring
 (global-set-key (kbd "M-s a") 'align-regexp)
+(global-set-key (kbd "M-s d") 'delete-duplicate-lines)
+(global-set-key (kbd "M-s k") 'keep-lines)
 (global-set-key (kbd "M-s l") 'sort-lines)
 (global-set-key (kbd "M-s r") 'replace-string)
-(global-set-key (kbd "M-s d") 'delete-duplicate-lines)
-
-;; The following should have been universal without needing to load `org-mode'
-(global-set-key (kbd "C-+") 'org-increase-number-at-point)
-(global-set-key (kbd "C-_") 'org-decrease-number-at-point)
 
 ;; Best used in conjunction with er/expand-region
 (global-set-key (kbd "M-s p") 'delete-pair)
 (setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
+
+;; The following should have been universal without needing to load `org-mode'
+(global-set-key (kbd "C-+") 'org-increase-number-at-point)
+(global-set-key (kbd "C-_") 'org-decrease-number-at-point)
 
 ;; Keyboard macros made easier
 (global-set-key (kbd "C-(") 'kmacro-start-macro-or-insert-counter)
 (global-set-key (kbd "C-)") 'kmacro-end-or-call-macro)
 
 ;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again
-(global-set-key (kbd "C-<f5>") 'recover-this-file)
-(global-set-key (kbd "C-<f6>") 'rename-visited-file)
+(global-set-key (kbd "S-<f2>") 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
+(global-set-key (kbd "S-<f5>") 'recover-this-file)
 
 ;; Because the default `C-x C-c' is too easy to reach.
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
