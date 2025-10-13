@@ -56,13 +56,16 @@
 ;; Need for Speed: Shift (more shift for more speed)
 (global-set-key (kbd "M-A") 'copy-from-above-command)
 (global-set-key (kbd "M-D") 'duplicate-dwim)
-(global-set-key (kbd "M-F") (lamb (forward-word 4))) ; `M-f' on steroids
-(global-set-key (kbd "M-B") (lamb (backward-word 4))) ; `M-b' on steroids
+(global-set-key (kbd "M-F") (lamb (forward-word 4) (recenter)))
+(global-set-key (kbd "M-B") (lamb (backward-word 4) (recenter)))
+(global-set-key (kbd "M-K") 'backward-kill-sentence)
 (global-set-key (kbd "M-|") 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
 
 ;; Paragraph navigation: `n'ext paragraph and `p'revious paragraph
 (global-set-key (kbd "M-n") 'forward-paragraph)
 (global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-N") (lamb (forward-paragraph 4) (recenter)))
+(global-set-key (kbd "M-P") (lamb (backward-paragraph 4) (recenter)))
 
 ;; The prefix `M-s' is well placed on the home row and is criminally underused. Why not redeem it?
 ;; And make it mnemonic: `M-s' for `M'anipulate-`s'tring
@@ -81,8 +84,8 @@
 ;; The following should have been universal without needing to load `org-mode'
 (global-set-key (kbd "C-+") 'org-increase-number-at-point)
 (global-set-key (kbd "C-_") 'org-decrease-number-at-point)
-(global-set-key (kbd "M-+") (times 5 org-increase-number-at-point))
-(global-set-key (kbd "M-_") (times 5 org-decrease-number-at-point))
+(global-set-key (kbd "M-+") (lamb (org-increase-number-at-point 10)))
+(global-set-key (kbd "M-_") (lamb (org-decrease-number-at-point 10)))
 
 ;; Keyboard macros made easier
 (global-set-key (kbd "C-(") 'kmacro-start-macro-or-insert-counter)
