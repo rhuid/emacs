@@ -22,21 +22,12 @@
 (global-set-key (kbd "<return>") 'ignore)
 (global-set-key (kbd "<backspace>") 'ignore)
 
-;; https://github.com/magnars/emacsd-reboot/blob/main/settings/tooling.el
-(defmacro lamb (&rest body)
-  "Shorthand for interactive lambdas that ignore errors."
-  `(lambda ()
-     "This is an anonymous command defined using `lamb'. Check config for more info."
-     (interactive)
-     (ignore-errors
-       ,@body)))
-
 ;; A prefix key for toggling `m'inor modes
 (define-prefix-command 'toggle-minor-mode-map)
 (global-set-key (kbd "C-x m") 'toggle-minor-mode-map)
 
 ;; Some built-in modes
-(define-key toggle-minor-mode-map (kbd "f") 'follow-mode)
+(keymap-set toggle-minor-mode-map (kbd "f") 'follow-mode)
 
 ;; We have a better use of `Shift'
 (setq shift-select-mode nil)
@@ -53,8 +44,8 @@
 (global-set-key (kbd "C-x C-c") 'capitalize-dwim)
 
 ;; Transposing things around: `transpose-lines' has been taken care of by `move-text'.
-(global-set-key (kbd "C-x C-t") 'transpose-sentences)
-(global-set-key (kbd "C-S-t")   'transpose-paragraphs)
+(global-set-key (kbd "M-T")     'transpose-sentences)
+(global-set-key (kbd "C-x C-t") 'transpose-paragraphs)
 
 ;; Need for Speed: Shift... Make `C-n', `C-p', `C-f' and `C-b' faster
 (global-set-key (kbd "C-S-n") (lamb (forward-line 5) (recenter)))
@@ -76,7 +67,9 @@
 ;; The prefix `M-s' is well placed on the home row and is criminally underused. Why not redeem it?
 ;; And make it mnemonic: `M-s' for `M'anipulate-`s'tring
 (global-set-key (kbd "M-s a") 'align-regexp)
+(global-set-key (kbd "M-s c") 'count-matches)
 (global-set-key (kbd "M-s d") 'delete-duplicate-lines)
+(global-set-key (kbd "M-s f") 'flush-lines)
 (global-set-key (kbd "M-s k") 'keep-lines)
 (global-set-key (kbd "M-s l") 'sort-lines)
 (global-set-key (kbd "M-s r") 'replace-string)
@@ -88,6 +81,8 @@
 ;; The following should have been universal without needing to load `org-mode'
 (global-set-key (kbd "C-+") 'org-increase-number-at-point)
 (global-set-key (kbd "C-_") 'org-decrease-number-at-point)
+(global-set-key (kbd "M-+") (times 5 org-increase-number-at-point))
+(global-set-key (kbd "M-_") (times 5 org-decrease-number-at-point))
 
 ;; Keyboard macros made easier
 (global-set-key (kbd "C-(") 'kmacro-start-macro-or-insert-counter)
@@ -100,13 +95,9 @@
 ;; Because the default `C-x C-c' is too easy to reach.
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
 
-;; A more sensible `join-line' (also accepts universal argument)
-(defun rh/join-line (&optional arg)
-  "Like join-line but inverts its behavior."
-  (interactive "P")
-  (if arg (join-line nil) (join-line -1)))
-
-(global-set-key (kbd "C-j") 'rh/join-line)
+;; Join lines in a more sensible way
+(global-set-key (kbd "C-j") (lamb (join-line -1))) ; join this line to the next
+(global-set-key (kbd "C-S-j") 'join-line) ; join this line to the previous
 
 ;; Some bunch of advice
 (advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))

@@ -49,9 +49,10 @@
   :config (gcmh-mode 1))
 
 ;; Local modules
-(require 'knot-startup-page)
-(require 'knot-keys)
+(require 'knot-macros)
 (require 'knot-defaults)
+(require 'knot-keys)
+(require 'knot-startup-page)
 (require 'knot-visuals)
 (require 'knot-org)
 (require 'knot-programming)
