@@ -56,9 +56,11 @@
 (global-set-key (kbd "C-x C-t") 'transpose-sentences)
 (global-set-key (kbd "C-S-t")   'transpose-paragraphs)
 
-;; A faster `C-n' and `C-p'
-(global-set-key (kbd "M-n") (lamb (forward-line 5) (recenter)))
-(global-set-key (kbd "M-p") (lamb (previous-line 5) (recenter)))
+;; A faster `C-n', `C-p', `C-f' and `C-b'
+(global-set-key (kbd "C-S-n") (lamb (forward-line 5) (recenter)))
+(global-set-key (kbd "C-S-p") (lamb (previous-line 5) (recenter)))
+(global-set-key (kbd "C-S-f") (lamb (forward-char 5) (recenter)))
+(global-set-key (kbd "C-S-b") (lamb (backward-char 5) (recenter)))
 
 ;; Need for Speed: Shift
 (global-set-key (kbd "M-A") 'copy-from-above-command)
@@ -67,9 +69,9 @@
 (global-set-key (kbd "M-B") (lamb (backward-word 4))) ; `M-b' on steroids
 (global-set-key (kbd "M-|") 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
 
-;; Paragraph navigation: `N'ext paragraph and `P'revious paragraph
-(global-set-key (kbd "M-N") 'forward-paragraph)
-(global-set-key (kbd "M-P") 'backward-paragraph)
+;; Paragraph navigation: `n'ext paragraph and `p'revious paragraph
+(global-set-key (kbd "M-n") 'forward-paragraph)
+(global-set-key (kbd "M-p") 'backward-paragraph)
 
 ;; The prefix `M-s' is well placed on the home row and is criminally underused. Why not redeem it?
 ;; And make it mnemonic: `M-s' for `M'anipulate-`s'tring

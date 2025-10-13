@@ -45,7 +45,7 @@
     (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
 (use-package expand-region
-  :bind ("M-r" . er/expand-region))
+  :bind ("C-M-S-e" . er/expand-region))
 
 (use-package keyfreq
   :init (keyfreq-mode)
@@ -79,7 +79,7 @@
 ;; Requires enchant and dictionary backend. I am using `hunspell-en_us'
 (use-package jinx
   :init (global-jinx-mode)
-  :bind ("M-c" . jinx-correct)
+  :bind (("M-c" . jinx-correct) ("M-C" . jinx-correct-word))
   :custom (jinx-languages "en_US-large"))
 
 (use-package magit
@@ -102,11 +102,11 @@
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
 (use-package multiple-cursors
-  :bind (("C-S-a" . mc/mark-all-like-this-dwim)
-         ("C-S-n" . mc/mark-next-like-this)
-         ("C-S-p" . mc/mark-previous-like-this)
-         ("C->"   . mc/skip-to-next-like-this)
-         ("C-<"   . mc/skip-to-previous-like-this))
+  :bind (("C-M-S-a" . mc/mark-all-like-this-dwim)
+         ("C-M-S-n" . mc/mark-next-like-this)
+         ("C-M-S-p" . mc/mark-previous-like-this)
+         ("C-M->" . mc/skip-to-next-like-this)
+         ("C-M-<" . mc/skip-to-previous-like-this))
   :custom (mc/always-run-for-all t))
 
 (use-package outline
@@ -149,10 +149,6 @@
   (recentf-auto-cleanup 'never)
   :config (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
 
-(use-package register
-  :ensure nil
-  :custom (register-use-preview nil)) ; preview without delay
-
 (use-package savehist
   :ensure nil
   :init (savehist-mode)
@@ -166,7 +162,7 @@
 
 (use-package vundo
   :bind (("C-x u" . vundo)
-         ("M-?"   . undo-redo))
+         ("C-?"   . undo-redo))
   :custom (undo-limit (* 16 1024 1024)))
 
 (use-package whole-line-or-region
