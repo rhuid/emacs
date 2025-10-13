@@ -23,7 +23,8 @@
          ("C-M-s" . consult-line)
          ("C-M-g" . consult-ripgrep)
          ("M-O"   . consult-outline))
-  :config (setq consult-preview-key "C-,"))
+  :config (setq consult-preview-key "C-,")
+  :custom (register-use-preview nil))
 
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir))
@@ -50,13 +51,14 @@
 
 (use-package cape
   :after corfu
+  :hook ((org-mode LaTeX-mode) . rh/cape-dict)
   :demand t
   :config
-  (setq cape-dict-file '())
-  (add-to-list 'cape-dict-file (concat user-emacs-directory "library/personal-dictionary"))
+  (setq cape-dict-file (list (concat user-emacs-directory "library/personal-dictionary")))
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  (add-to-list 'completion-at-point-functions #'cape-dict))
+  (defun rh/cape-dict ()
+    (add-to-list (make-local-variable 'completion-at-point-functions) #'cape-dict)))
 
 (provide 'knot-completion)
