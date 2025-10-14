@@ -22,17 +22,19 @@
 	      (insert "\n")
 	      (buffer-string)))
 
-;; Visual customizations
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (with-current-buffer "*scratch*"
-              (setq-local buffer-read-only   t
-                          left-margin-width  2
-                          right-margin-width 2
-                          display-line-numbers nil
-                          meow-cursor-type-normal '(bar . 0)
-                          meow-cursor-type-keypad '(bar . 0))
-              (set-window-buffer (selected-window) (current-buffer)))))
+(defun rh/startup-setup ()
+  "Some visual customizations for the startup page."
+  (with-current-buffer "*scratch*"
+    (visual-fill-column-mode)
+    (hide-mode-line-mode)
+    (setq-local buffer-read-only   t
+                left-margin-width  2
+                right-margin-width 2
+                cursor-type nil
+                display-line-numbers nil)
+    (set-window-buffer (selected-window) (current-buffer))))
+
+(add-hook 'emacs-startup-hook 'rh/startup-setup)
 
 (defun rh/return-home ()
   "Delete other windows and return to the startup screen."
