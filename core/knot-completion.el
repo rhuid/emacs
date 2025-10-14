@@ -31,7 +31,7 @@
   (:map vertico-map ("C-x C-j" . consult-dir-jump-file)))
 
 (use-package embark
-  :bind (("C-." . embark-act) ("C-;" . embark-dwim))
+  :bind (("C-." . embark-act) ("M-." . embark-dwim))
   :init (setq prefix-help-command #'embark-prefix-help-command))
 
 (use-package embark-consult
