@@ -45,7 +45,7 @@
     (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
 (use-package expand-region
-  :bind ("C-M-S-e" . er/expand-region))
+  :bind ("C-;" . er/expand-region))
 
 (use-package keyfreq
   :init (keyfreq-mode)
@@ -105,8 +105,8 @@
   :bind (("C-M-S-a" . mc/mark-all-like-this-dwim)
          ("C-M-S-n" . mc/mark-next-like-this)
          ("C-M-S-p" . mc/mark-previous-like-this)
-         ("C-M->" . mc/skip-to-next-like-this)
-         ("C-M-<" . mc/skip-to-previous-like-this))
+         ("C-M->"   . mc/skip-to-next-like-this)
+         ("C-M-<"   . mc/skip-to-previous-like-this))
   :custom (mc/always-run-for-all t))
 
 (use-package outline
@@ -167,6 +167,8 @@
 
 (use-package whole-line-or-region
   :init (whole-line-or-region-global-mode))
+
+(use-package wordel)
 
 (use-package yasnippet
   :init (yas-global-mode)
