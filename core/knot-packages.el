@@ -122,11 +122,6 @@
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
 
-;; To open PDF file side by side while typeset documents.
-(use-package pdf-tools
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :config (pdf-tools-install))
-
 ;; Manage projects. Comes built-in, a good alternative to projectile.
 (use-package project
   :custom (project-switch-commands
