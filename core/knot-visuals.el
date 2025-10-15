@@ -59,13 +59,16 @@
 
 (add-hook 'prog-mode-hook 'rh/provide-pretty-symbols)
 
+;; Makes you feel spacious.
 (use-package spacious-padding
   :init (spacious-padding-mode)
   :custom (spacious-padding-widths '( :internal-border-width 12 :mode-line-width 4 )))
 
+;; Like a presentation mode, much more readable and pleasant to the eyes
 (use-package visual-fill-column
   :bind (:map toggle-minor-mode-map ("v" . visual-fill-column-mode))
-  :hook ((org-mode emacs-lisp-mode) . visual-fill-column-mode)
+  :hook ((org-mode text-mode magit-status-mode emacs-lisp-mode minibuffer-mode)
+         . visual-fill-column-mode)
   :custom
   (visual-fill-column-width 120)
   (visual-fill-column-center-text t))
