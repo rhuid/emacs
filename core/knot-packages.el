@@ -14,6 +14,7 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
+;; Teleport to visible text at the speed of thought.
 (use-package avy
   :bind (("C-," . avy-goto-char-timer)
          :map isearch-mode-map
@@ -79,7 +80,7 @@
 ;; Requires enchant and dictionary backend. I am using `hunspell-en_us'
 (use-package jinx
   :init (global-jinx-mode)
-  :bind (("M-c" . jinx-correct) ("M-C" . jinx-correct-word))
+  :bind (("C-*" . jinx-correct) ("C-M-*" . jinx-correct-word))
   :custom (jinx-languages "en_US-large"))
 
 (use-package magit
@@ -101,6 +102,7 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
+;; My keybindings are a little weird but they work well for me.
 (use-package multiple-cursors
   :bind (("C-M-S-a" . mc/mark-all-like-this-dwim)
          ("C-M-S-n" . mc/mark-next-like-this)
@@ -120,10 +122,12 @@
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
 
+;; To open PDF file side by side while typeset documents.
 (use-package pdf-tools
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :config (pdf-tools-install))
 
+;; Manage projects. Comes built-in, a good alternative to projectile.
 (use-package project
   :custom (project-switch-commands
            '((magit-project-status "Magit"     ?m)
@@ -131,15 +135,18 @@
              (project-dired        "Dired"     ?d)
              (project-eshell       "Eshell"    ?e))))
 
+;; Structural editing: kill/delete keeping delimiters balanced.
 (use-package puni
   :init (puni-global-mode)
   :bind (:map puni-mode-map
               ("C-S-h" . puni-backward-kill-word)
               ("C-w"   . nil))) ; for whole-line-or-region-kill-region
 
+;; Highlight nested parentheses, brackets, and braces according to their depth.
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+;; Quite handy to jump to recent files. Made better by `consult-recent-file'.
 (use-package recentf
   :ensure nil
   :init (recentf-mode)
@@ -149,6 +156,7 @@
   (recentf-auto-cleanup 'never)
   :config (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
 
+;; Save history across sessions including kill-ring!
 (use-package savehist
   :ensure nil
   :init (savehist-mode)
@@ -160,16 +168,22 @@
 (use-package sudo-edit
   :commands (sudo-edit))
 
+(use-package tree-sitter)
+(use-package tree-sitter-langs)
+
+;; Undo tree.
 (use-package vundo
   :bind (("C-x u" . vundo)
          ("C-?"   . undo-redo))
   :custom (undo-limit (* 16 1024 1024)))
 
+;; If there is no active region, kill/delete/copy the current line.
 (use-package whole-line-or-region
   :init (whole-line-or-region-global-mode))
 
 (use-package wordel)
 
+;; Snippets for quick text insertion.
 (use-package yasnippet
   :init (yas-global-mode)
   :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
