@@ -1,11 +1,14 @@
+Colemak
 De Morgan's laws
 Hoare
 Hoare logic
+LaTeX
 Zorn's lemma
 abelian
 analytic
 associative
 axiom of choice
+backend
 category
 cofinite
 cohomology
@@ -15,6 +18,7 @@ diffeomorphism
 differentiable
 differential
 differentiation
+frontend
 functor
 holomorphic
 homology
@@ -30,12 +34,10 @@ isomorphism
 manifold
 metaprogramming
 metric space
+minibuffer
 monad
 monoid
 topological invariant
 topological manifold
 topological space
 topology
-backend
-frontend
-minibuffer
