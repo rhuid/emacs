@@ -28,6 +28,7 @@
 
 ;; Some built-in modes
 (keymap-set toggle-minor-mode-map (kbd "f") 'follow-mode)
+(keymap-set toggle-minor-mode-map (kbd "l") 'display-line-numbers-mode)
 
 ;; We have a better use of `Shift'
 (setq shift-select-mode nil)
