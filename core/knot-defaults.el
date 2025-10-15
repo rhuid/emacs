@@ -1,4 +1,4 @@
-;;; knot-defaults.el --- Some sane and not-so-sane defaults? -*- lexical-binding: t; -*-
+;;; knot-defaults.el --- Some defaults which are supposed to be sane -*- lexical-binding: t; -*-
 
 ;; Concerning files
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -22,11 +22,12 @@
 (setq display-line-numbers-type 'relative)
 (setq-default fill-column 80)
 
-;; Concerning mouse and cursors
+;; Concerning mouse, cursors and scrolling
 (blink-cursor-mode 0)
 (pixel-scroll-precision-mode)
 (setq make-pointer-invisible t)
 (setq mouse-yank-at-point t)
+(setq scroll-preserve-screen-position t)
 (setq-default cursor-in-non-selected-windows nil)
 
 ;; Concerning windows
