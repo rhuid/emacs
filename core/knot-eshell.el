@@ -2,7 +2,7 @@
 
 (use-package eshell
   :ensure nil
-  :hook (eshell-first-time-mode . rh/eshell-initialization)
+  :hook (eshell-mode . rh/eshell-initialization)
   :custom
   (eshell-prompt-regexp "[$#] ")
   (eshell-prompt-function #'rh/prompt-function)
