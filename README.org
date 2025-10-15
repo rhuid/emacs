@@ -8,6 +8,7 @@ This is my Emacs customization, prioritized for speed, efficiency and functional
 + Uses use-package and use-package-vc. I have tried straight.el in the past and I believe use-package-vc (built-in) is cleaner, leaner and makes Emacs boot up faster.
 + Native compilation is enabled by default. Native compilation cuts down boot up time and Emacs starts faster overall.
 + Using server-client model, Emacs starts up almost instantly.
++ I use my version of Colemak-DH keyboard layout but my config would work fine in QWERTY or other layouts as well. This is due to Emacs's mnemonic-keybindings design.
 
 *** Design philosophy
 
