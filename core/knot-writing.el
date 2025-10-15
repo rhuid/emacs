@@ -136,6 +136,7 @@
 (use-package latex-preview-pane
   :bind ("C-c C-p C-l" . latex-preview-pane-mode))
 
-(use-package typst-ts-mode)
+(use-package typst-ts-mode
+  :hook (typst-ts-mode . typst-ts-watch-mode))
 
 (provide 'knot-writing)
