@@ -62,3 +62,4 @@
 (require 'knot-email)
 (require 'knot-completion)
 (require 'knot-special-buffers)
+(require 'knot-misc)

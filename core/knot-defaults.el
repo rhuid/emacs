@@ -15,7 +15,6 @@
 
 ;; Concerning lines, sentences, words and characters
 (setq kill-do-not-save-duplicates t)
-;; (global-hl-line-mode)
 (global-subword-mode)
 (global-visual-line-mode)
 (setq sentence-end-double-space nil) ; A sentence should not need to end in double spaces.
@@ -46,16 +45,5 @@
 
 ;; Make it less irritating (concerning irritation?)
 (setq suggest-key-bindings nil)
-
-;; Date Formats for use in `yasnippet'
-(defun rh/date-format-candidates ()
-  "Return an alist of (display . format-string) for yasnippet date choices."
-  (mapcar (lambda (fmt)
-            (cons (format "%-20s → %s" fmt (format-time-string fmt)) fmt))
-          '("%Y-%m-%d"          ;; 2025-09-19
-            "%d/%m/%Y"          ;; 19/09/2025
-            "%A, %B %d, %Y"     ;; Friday, September 19, 2025
-            "%b %d, %Y"         ;; Sep 19, 2025
-            "%Y-%m-%d %H:%M"))) ;; 2025-09-19 20:31
 
 (provide 'knot-defaults)
