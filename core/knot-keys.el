@@ -82,6 +82,13 @@
 (global-set-key (kbd "M-s p") 'delete-pair)
 (setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
 
+;; Join lines in a more sensible way
+(global-set-key (kbd "C-j") (lamb (join-line -1))) ; join this line to the next
+(global-set-key (kbd "C-S-j") 'join-line) ; join this line to the previous
+
+;; Mark things more easily
+(global-set-key (kbd "C-@") 'mark-word) ; this is easier than the default `M-@'
+
 ;; The following should have been universal without needing to load `org-mode'
 (global-set-key (kbd "C-+") 'org-increase-number-at-point)
 (global-set-key (kbd "C-_") 'org-decrease-number-at-point)
@@ -98,10 +105,6 @@
 
 ;; Because the default `C-x C-c' is too easy to reach.
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
-
-;; Join lines in a more sensible way
-(global-set-key (kbd "C-j") (lamb (join-line -1))) ; join this line to the next
-(global-set-key (kbd "C-S-j") 'join-line) ; join this line to the previous
 
 ;; Some bunch of advice
 (advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
