@@ -15,7 +15,7 @@
   (defun rh/dired-setup ()
     (display-line-numbers-mode -1)
     (set-window-buffer (selected-window) (current-buffer))
-    (setq-local cursor-type nil))
+    (hl-line-mode 1))
   (setq dired-listing-switches "-alh --group-directories-first"
 	      dired-dwim-target t
 	      dired-mouse-drag-files t
