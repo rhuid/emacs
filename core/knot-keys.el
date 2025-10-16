@@ -59,7 +59,6 @@
 (global-set-key (kbd "M-D") 'duplicate-dwim)
 (global-set-key (kbd "M-F") (lamb (forward-word 4) (recenter)))
 (global-set-key (kbd "M-B") (lamb (backward-word 4) (recenter)))
-(global-set-key (kbd "M-K") 'backward-kill-sentence)
 (global-set-key (kbd "M-|") 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
 
 ;; Paragraph navigation: `n'ext paragraph and `p'revious paragraph
@@ -82,31 +81,34 @@
 (global-set-key (kbd "M-s p") 'delete-pair)
 (setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
 
-;; Join lines in a more sensible way
+;; Backward killing sexps (the default is `C-M-<backspace>' but I don't like using <backspace> much)
+(global-set-key (kbd "C-M-S-h") 'backward-kill-sexp)
+
+;; The default `M-@' is less ergonomic.
+(global-set-key (kbd "C-@") 'mark-word)
+
+;; Join lines in a more sensible way.
 (global-set-key (kbd "C-j") (lamb (join-line -1))) ; join this line to the next
 (global-set-key (kbd "C-S-j") 'join-line) ; join this line to the previous
 
-;; Mark things more easily
-(global-set-key (kbd "C-@") 'mark-word) ; this is easier than the default `M-@'
-
-;; The following should have been universal without needing to load `org-mode'
+;; The following should have been universal without needing to load `org-mode'.
 (global-set-key (kbd "C-+") 'org-increase-number-at-point)
 (global-set-key (kbd "C-_") 'org-decrease-number-at-point)
 (global-set-key (kbd "M-+") (lamb (org-increase-number-at-point 10)))
 (global-set-key (kbd "M-_") (lamb (org-decrease-number-at-point 10)))
 
-;; Keyboard macros made easier
+;; Keyboard macros made easier.
 (global-set-key (kbd "C-(") 'kmacro-start-macro-or-insert-counter)
 (global-set-key (kbd "C-)") 'kmacro-end-or-call-macro)
 
-;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again
+;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again.
 (global-set-key (kbd "S-<f2>") 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
 (global-set-key (kbd "S-<f5>") 'recover-this-file)
 
 ;; Because the default `C-x C-c' is too easy to reach.
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
 
-;; Some bunch of advice
+;; Some bunch of advice.
 (advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
 (provide 'knot-keys)
