@@ -1,5 +1,23 @@
 ;;; knot-misc.el --- Miscellaneous stuffs, that do not fit in other modules -*- lexical-binding: t; -*-
 
+;; An alternative to invoking `C-M-w' and then `C-w'.
+(defun rh/append-kill-region ()
+  "Kill but append to the previous kill."
+  (interactive)
+  (append-next-kill)
+  (call-interactively 'whole-line-or-region-kill-region))
+
+(global-set-key (kbd "C-S-w") 'rh/append-kill-region)
+
+;; An alternative to invoking `C-M-w' and then `M-w'.
+(defun rh/append-kill-ring-save ()
+  "Kill-ring-save but append to the previous kill."
+  (interactive)
+  (append-next-kill)
+  (call-interactively 'whole-line-or-region-kill-ring-save))
+
+(global-set-key (kbd "M-W") 'rh/append-kill-ring-save)
+
 ;; Date Formats for use in `yasnippet'
 (defun rh/date-format-candidates ()
   "Return an alist of (display . format-string) for yasnippet date choices."
