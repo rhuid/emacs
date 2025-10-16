@@ -15,7 +15,7 @@
 
 ;; Concerning lines, sentences, words and characters
 (setq kill-do-not-save-duplicates t)
-(global-hl-line-mode)
+;; (global-hl-line-mode)
 (global-subword-mode)
 (global-visual-line-mode)
 (setq sentence-end-double-space nil) ; A sentence should not need to end in double spaces.
@@ -38,11 +38,14 @@
       '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
 
 ;; Make it more convenient (concerning convenience?)
-(setq disabled-command-function nil) ; Enable all disabled commands. I (kinda) know what I am doing.
-(setq use-short-answers t) ; All confirmations prompts be y or n
-(repeat-mode) ; Repeat commands without retyping the prefix key
+(setq disabled-command-function nil) ; enable all disabled commands, I (kinda) know what I am doing.
+(setq use-short-answers t) ; all confirmations prompts be y or n
+(repeat-mode) ; repeat commands without retyping the prefix key
 (setq repeat-exit-timeout 5)
 (setq echo-keystrokes 0.1)
+
+;; Make it less irritating (concerning irritation?)
+(setq suggest-key-bindings nil)
 
 ;; Date Formats for use in `yasnippet'
 (defun rh/date-format-candidates ()
