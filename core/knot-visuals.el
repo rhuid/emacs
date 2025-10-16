@@ -8,7 +8,7 @@
 
 ;; A great collection of cool looking themes. Also try: modus themes
 (use-package ef-themes
-  :init (ef-themes-select 'ef-maris-dark))
+  :init (ef-themes-select 'ef-tritanopia-dark))
 
 ;; A minimalist mode-line
 (use-package mood-line
