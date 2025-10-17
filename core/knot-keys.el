@@ -27,9 +27,9 @@
 (global-set-key (kbd "M-z") 'zap-up-to-char)
 
 ;; Changing case made easy. Do what I mean!
-(global-set-key (kbd "C-x C-u") 'upcase-dwim)
-(global-set-key (kbd "C-x C-l") 'downcase-dwim)
-(global-set-key (kbd "C-x C-c") 'capitalize-dwim)
+(global-set-key [remap capitalize-word] 'capitalize-dwim)
+(global-set-key [remap upcase-word] 'upcase-dwim)
+(global-set-key [remap downcase-word] 'downcase-dwim)
 
 ;; Transposing things around: `transpose-lines' has been taken care of by `move-text'.
 (global-set-key (kbd "M-T")     'transpose-sentences)
