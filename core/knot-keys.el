@@ -7,20 +7,10 @@
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
 
-;; Arrows keys are wrapped with Meta! Useful for `move-text' and promoting/demoting headings in `org-mode'
-(define-key key-translation-map [left] (kbd "M-<left>"))
-(define-key key-translation-map [right] (kbd "M-<right>"))
-(define-key key-translation-map [up] (kbd "M-<up>"))
-(define-key key-translation-map [down] (kbd "M-<down>"))
-
 ;; Detach `C-i' from `TAB'
 (define-key input-decode-map "\C-i" [Ci]) ; this alone won't apply to client frames, so we need the line below
 (add-hook 'after-make-frame-functions
-          '(lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
-
-;; Disable return (enter) key and backspace. Use `C-m' and `C-h' instead.
-(global-set-key (kbd "<return>") 'ignore)
-(global-set-key (kbd "<backspace>") 'ignore)
+          (lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
 
 ;; A prefix key for toggling `m'inor modes
 (define-prefix-command 'toggle-minor-mode-map)
@@ -77,12 +67,10 @@
 (global-set-key (kbd "M-s l") 'sort-lines)
 (global-set-key (kbd "M-s r") 'replace-string)
 
-;; Best used in conjunction with er/expand-region
-(global-set-key (kbd "M-s p") 'delete-pair)
-(setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
+;; Think of "zap pair"
 
-;; Backward killing sexps (the default is `C-M-<backspace>' but I don't like using <backspace> much)
-(global-set-key (kbd "C-M-S-h") 'backward-kill-sexp)
+(global-set-key (kbd "C-M-z") 'delete-pair)
+(setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
 
 ;; The default `M-@' is less ergonomic.
 (global-set-key (kbd "C-@") 'mark-word)
