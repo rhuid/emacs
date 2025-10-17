@@ -23,9 +23,6 @@
 ;; We have a better use of `Shift'
 (setq shift-select-mode nil)
 
-;; The built-in repeat `C-x z' is cumbersome even with repeat (no pun intended).
-(global-set-key (kbd "C-:") 'repeat)
-
 ;; The default command bound to `M-z' is `zap-to-char'. However, the below makes more sense.
 (global-set-key (kbd "M-z") 'zap-up-to-char)
 
