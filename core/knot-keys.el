@@ -15,8 +15,6 @@
 ;; A prefix key for toggling `m'inor modes
 (define-prefix-command 'toggle-minor-mode-map)
 (global-set-key (kbd "C-x m") 'toggle-minor-mode-map)
-
-;; Some built-in modes
 (keymap-set toggle-minor-mode-map (kbd "f") 'follow-mode)
 (keymap-set toggle-minor-mode-map (kbd "l") 'display-line-numbers-mode)
 
@@ -41,18 +39,18 @@
 (global-set-key (kbd "C-S-f") (lamb (forward-char 5) (recenter)))
 (global-set-key (kbd "C-S-b") (lamb (backward-char 5) (recenter)))
 
+;; Paragraph navigation: `n'ext paragraph and `p'revious paragraph
+(global-set-key (kbd "M-n") 'forward-paragraph)
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-N") (lamb (forward-paragraph 4) (recenter)))
+(global-set-key (kbd "M-P") (lamb (backward-paragraph 4) (recenter)))
+
 ;; Need for Speed: Shift (more shift for more speed)
 (global-set-key (kbd "M-A") 'copy-from-above-command)
 (global-set-key (kbd "M-D") 'duplicate-dwim)
 (global-set-key (kbd "M-F") (lamb (forward-word 4) (recenter)))
 (global-set-key (kbd "M-B") (lamb (backward-word 4) (recenter)))
 (global-set-key (kbd "M-|") 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
-
-;; Paragraph navigation: `n'ext paragraph and `p'revious paragraph
-(global-set-key (kbd "M-n") 'forward-paragraph)
-(global-set-key (kbd "M-p") 'backward-paragraph)
-(global-set-key (kbd "M-N") (lamb (forward-paragraph 4) (recenter)))
-(global-set-key (kbd "M-P") (lamb (backward-paragraph 4) (recenter)))
 
 ;; The prefix `M-s' is well placed on the home row and is criminally underused. Why not redeem it?
 ;; And make it mnemonic: `M-s' for `M'anipulate-`s'tring
@@ -65,7 +63,6 @@
 (global-set-key (kbd "M-s r") 'replace-string)
 
 ;; Think of "zap pair"
-
 (global-set-key (kbd "C-M-z") 'delete-pair)
 (setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
 
