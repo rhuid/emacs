@@ -62,7 +62,7 @@
 ;; Makes you feel spacious.
 (use-package spacious-padding
   :init (spacious-padding-mode)
-  :custom (spacious-padding-widths '( :internal-border-width 12 :mode-line-width 4 )))
+  :custom (spacious-padding-widths '( :internal-border-width 12 :mode-line-width 3 )))
 
 ;; Like a presentation mode, much more readable and pleasant to the eyes
 (use-package visual-fill-column
