@@ -37,7 +37,8 @@
       '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
 
 ;; Make it more convenient (concerning convenience?)
-(setq disabled-command-function nil) ; enable all disabled commands, I (kinda) know what I am doing.
+(setq next-line-add-newlines t) ; `C-n' inserts newline at the end of buffer instead of throwing error
+(setq disabled-command-function nil) ; enable all disabled commands, I (kinda) know what I am doing
 (setq use-short-answers t) ; all confirmations prompts be y or n
 (repeat-mode) ; repeat commands without retyping the prefix key
 (setq repeat-exit-timeout 5)
