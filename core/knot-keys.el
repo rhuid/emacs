@@ -12,8 +12,8 @@
 (add-hook 'after-make-frame-functions
           (lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
 
-;; Hyper key is well placed on my keyboard, so let's make good use of that first.
-;; Also, Hyper uses my right thumb while Ctrl uses my left pinky.
+;; `Hyper' key is well placed on my keyboard, so let's make good use of that first.
+;; Also, `Hyper' uses my right thumb while `Ctrl' uses my left pinky.
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
 (define-key key-translation-map (kbd "H-x g") (kbd "C-x g")) ; `magit'
 (define-key key-translation-map (kbd "H-x z") (kbd "C-x z")) ; `repeat'
@@ -25,16 +25,20 @@
 (keymap-set toggle-minor-mode-map (kbd "f") 'follow-mode)
 (keymap-set toggle-minor-mode-map (kbd "l") 'display-line-numbers-mode)
 
-;; We have a better use of `Shift'
-(setq shift-select-mode nil)
-
 ;; The default command bound to `M-z' is `zap-to-char'. However, the below makes more sense.
 (global-set-key (kbd "M-z") 'zap-up-to-char)
+
+;; Think of "zap pair"
+(global-set-key (kbd "C-M-z") 'delete-pair)
+(setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
 
 ;; Changing case made easy. Do what I mean!
 (global-set-key [remap capitalize-word] 'capitalize-dwim)
 (global-set-key [remap upcase-word] 'upcase-dwim)
 (global-set-key [remap downcase-word] 'downcase-dwim)
+
+;; We have a better use of `Shift' as modifier key
+(setq shift-select-mode nil)
 
 ;; Transposing things around: `transpose-lines' has been taken care of by `move-text'.
 (global-set-key (kbd "M-T")     'transpose-sentences)
@@ -68,10 +72,6 @@
 (global-set-key (kbd "M-s k") 'keep-lines)
 (global-set-key (kbd "M-s l") 'sort-lines)
 (global-set-key (kbd "M-s r") 'replace-string)
-
-;; Think of "zap pair"
-(global-set-key (kbd "C-M-z") 'delete-pair)
-(setq delete-pair-blink-delay 0) ; Heck, why would I want any delay?
 
 ;; The default `M-@' is less ergonomic.
 (global-set-key (kbd "C-@") 'mark-word)
