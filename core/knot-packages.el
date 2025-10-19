@@ -14,11 +14,10 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
-;; Teleport to visible text at the speed of thought.
 (use-package avy
-  :bind (("C-," . avy-goto-char-timer)
+  :bind (("H-a" . avy-goto-char-timer)
          :map isearch-mode-map
-         ("C-," . avy-isearch))
+         ("H-a" . avy-isearch))
   :custom
   (avy-timeout-seconds 0.2)
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
@@ -46,7 +45,7 @@
     (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
 (use-package expand-region
-  :bind ("C-;" . er/expand-region))
+  :bind ("C-&" . er/expand-region) ("H-<tab>" . er/expand-region))
 
 (use-package keyfreq
   :init (keyfreq-mode)
