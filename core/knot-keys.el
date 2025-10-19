@@ -12,6 +12,13 @@
 (add-hook 'after-make-frame-functions
           (lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
 
+;; Hyper key is well placed on my keyboard, so let's make good use of that first.
+;; Also, Hyper uses my right thumb while Ctrl uses my left pinky.
+;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
+(define-key key-translation-map (kbd "H-x g") (kbd "C-x g")) ; `magit'
+(define-key key-translation-map (kbd "H-x z") (kbd "C-x z")) ; `repeat'
+(define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))
+
 ;; A prefix key for toggling `m'inor modes
 (define-prefix-command 'toggle-minor-mode-map)
 (global-set-key (kbd "C-x m") 'toggle-minor-mode-map)
