@@ -116,6 +116,7 @@
   :init (setq outline-minor-mode-prefix (kbd "C-c o")))
 
 (use-package move-text
+  :bind (("H-p" . move-text-up) ("H-n" . move-text-down))
   :init (move-text-default-bindings))
 
 (use-package mwim
