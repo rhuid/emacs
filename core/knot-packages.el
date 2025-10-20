@@ -79,7 +79,7 @@
 ;; Requires enchant and dictionary backend. I am using `hunspell-en_us'
 (use-package jinx
   :init (global-jinx-mode)
-  :bind (("C-*" . jinx-correct) ("C-M-*" . jinx-correct-word))
+  :bind ("C-*" . jinx-correct) ("C-M-*" . jinx-correct-word)
   :custom (jinx-languages "en_US-large"))
 
 (use-package magit
@@ -115,7 +115,7 @@
   :init (setq outline-minor-mode-prefix (kbd "C-c o")))
 
 (use-package move-text
-  :bind (("H-p" . move-text-up) ("H-n" . move-text-down))
+  :bind ("H-p" . move-text-up) ("H-n" . move-text-down)
   :init (move-text-default-bindings))
 
 (use-package mwim
@@ -141,7 +141,9 @@
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
               ("M-H-i" . puni-barf-backward))
-  :custom (puni-squeeze-flash nil))
+  :custom
+  (puni-squeeze-flash nil) ; don't blink or flash, I find it distracting
+  (puni-confirm-when-delete-unbalanced-active-region nil)) ; don't warn me, I know what I am doing
 
 ;; Highlight nested parentheses, brackets, and braces according to their depth.
 (use-package rainbow-delimiters
@@ -172,10 +174,9 @@
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
 
-;; Undo tree.
+;; Undo tree
 (use-package vundo
-  :bind (("C-x u" . vundo)
-         ("C-?"   . undo-redo))
+  :bind ("C-x u" . vundo) ("C-?" . undo-redo)
   :custom (undo-limit (* 16 1024 1024)))
 
 ;; If there is no active region, kill/delete/copy the current line.
