@@ -19,9 +19,18 @@
 ;; Also, `Hyper' uses my right thumb while `Ctrl' uses my left pinky.
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
 (define-key key-translation-map (kbd "H-x g") (kbd "C-x g")) ; `magit'
-(define-key key-translation-map (kbd "H-x z") (kbd "C-x z")) ; `repeat'
 (define-key key-translation-map (kbd "H-x b") (kbd "C-x b")) ; `consult-buffer'
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))
+
+;; Repeating shouldn't be a chore.
+(global-set-key (kbd "C-z") 'repeat)
+
+;; Sorcerers never quit sorcery.
+(global-set-key (kbd "C-x C-c") (lamb (message "I never quit Emacs!")))
+
+;; No arrows. BACK TO THE CHORDS!
+(dolist (key '("<up>" "<down>" "<right>" "<left>"))
+  (global-set-key (kbd key) (lamb (message "Arrows? Where we are editing, we don't need arrows."))))
 
 ;; A prefix key for toggling `m'inor modes
 (define-prefix-command 'toggle-minor-mode-map)
@@ -40,15 +49,15 @@
 (global-set-key [remap downcase-word] 'downcase-dwim)
 
 ;; Duplicating lines/regions
-(global-set-key (kbd "C-;") 'copy-from-above-command)
-(global-set-key (kbd "C-,") 'duplicate-dwim)
+(global-set-key (kbd "C-:") 'copy-from-above-command)
+(global-set-key (kbd "C-<") 'duplicate-dwim)
 (advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
 ;; Transposing things around: `transpose-lines' has been taken care of by `move-text'.
 (global-set-key (kbd "M-T")     'transpose-sentences)
 (global-set-key (kbd "C-x C-t") 'transpose-paragraphs)
 
-;; Need for Speed: Shift... Make `C-n', `C-p', `C-f' and `C-b' faster
+;; Need for Speed: Shift... Hold `S'hift for `S'peed
 (global-set-key (kbd "C-S-n") (lamb (forward-line 5) (recenter)))
 (global-set-key (kbd "C-S-p") (lamb (previous-line 5) (recenter)))
 (global-set-key (kbd "C-S-f") (lamb (forward-char 5) (recenter)))
@@ -60,7 +69,7 @@
 (global-set-key (kbd "M-N") (lamb (forward-paragraph 4) (recenter)))
 (global-set-key (kbd "M-P") (lamb (backward-paragraph 4) (recenter)))
 
-;; Need for Speed: Shift (more shift for more speed)
+;; More `s'hift for more `s'peed.
 (global-set-key (kbd "M-F") (lamb (forward-word 4) (recenter)))
 (global-set-key (kbd "M-B") (lamb (backward-word 4) (recenter)))
 (global-set-key (kbd "M-|") 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
@@ -88,15 +97,12 @@
 (global-set-key (kbd "M-+") (lamb (org-increase-number-at-point 10)))
 (global-set-key (kbd "M-_") (lamb (org-decrease-number-at-point 10)))
 
-;; Keyboard macros made easier.
+;; Summon keyboard macros easily.
 (global-set-key (kbd "C-(") 'kmacro-start-macro-or-insert-counter)
 (global-set-key (kbd "C-)") 'kmacro-end-or-call-macro)
 
 ;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again.
 (global-set-key (kbd "S-<f2>") 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
 (global-set-key (kbd "S-<f5>") 'recover-this-file)
-
-;; Because the default `C-x C-c' is too easy to reach.
-(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
 
 (provide 'knot-keys)
