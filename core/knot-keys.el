@@ -23,88 +23,88 @@
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))
 
 ;; Repeating shouldn't be a chore.
-(global-set-key (kbd "C-z") 'repeat)
+(bind-key "C-z" 'repeat)
 
 ;; Sorcerers never quit sorcery.
-(global-set-key (kbd "C-x C-c") (lamb (message "I never quit Emacs!")))
+(bind-key "C-x C-c" (lamb (message "I never quit Emacs!")))
 
 ;; No arrows. BACK TO THE CHORDS!
 (dolist (key '("<up>" "<down>" "<right>" "<left>"))
-  (global-set-key (kbd key) (lamb (message "Arrows? Where we are editing, we don't need arrows."))))
+  (bind-key key (lamb (message "Arrows? Where we are editing, we don't need arrows."))))
 
 ;; A prefix key for toggling `m'inor modes
 (define-prefix-command 'toggle-minor-mode-map)
-(global-set-key (kbd "C-x m") 'toggle-minor-mode-map)
+(bind-key "C-x m" 'toggle-minor-mode-map)
 (keymap-set toggle-minor-mode-map (kbd "f") 'follow-mode)
 (keymap-set toggle-minor-mode-map (kbd "l") 'display-line-numbers-mode)
 
 ;; Zapping
-(global-set-key (kbd "M-z") 'zap-up-to-char) ; by default, `M-z' is bound to `zap-to-char'
-(global-set-key (kbd "C-M-z") 'delete-pair) ; think of "zap pair"
+(bind-key "M-z" 'zap-up-to-char) ; by default, `M-z' is bound to `zap-to-char'
+(bind-key "C-M-z" 'delete-pair) ; think of "zap pair"
 (setq delete-pair-blink-delay 0) ; heck, why would I want any delay?
 
 ;; Changing case
-(global-set-key [remap capitalize-word] 'capitalize-dwim)
-(global-set-key [remap upcase-word] 'upcase-dwim)
-(global-set-key [remap downcase-word] 'downcase-dwim)
+(bind-key [remap capitalize-word] 'capitalize-dwim)
+(bind-key [remap upcase-word] 'upcase-dwim)
+(bind-key [remap downcase-word] 'downcase-dwim)
 
 ;; Duplicating lines/regions
-(global-set-key (kbd "C-:") 'copy-from-above-command)
-(global-set-key (kbd "C-<") 'duplicate-dwim)
+(bind-key "C-:" 'copy-from-above-command)
+(bind-key "C-<" 'duplicate-dwim)
 (advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
 ;; Transposing things around: `transpose-lines' has been taken care of by `move-text'.
-(global-set-key (kbd "M-T") 'transpose-sentences)
-(global-set-key (kbd "H-t") 'transpose-paragraphs)
+(bind-key "M-T" 'transpose-sentences)
+(bind-key "H-t" 'transpose-paragraphs)
 
 ;; Need for Speed: Shift... Hold `S'hift for `S'peed
-(global-set-key (kbd "C-S-n") (lamb (forward-line 5) (recenter)))
-(global-set-key (kbd "C-S-p") (lamb (previous-line 5) (recenter)))
-(global-set-key (kbd "C-S-f") (lamb (forward-char 5) (recenter)))
-(global-set-key (kbd "C-S-b") (lamb (backward-char 5) (recenter)))
+(bind-key "C-S-n" (lamb (forward-line 5) (recenter)))
+(bind-key "C-S-p" (lamb (previous-line 5) (recenter)))
+(bind-key "C-S-f" (lamb (forward-char 5) (recenter)))
+(bind-key "C-S-b" (lamb (backward-char 5) (recenter)))
 
 ;; Paragraph navigation: `n'ext paragraph and `p'revious paragraph
-(global-set-key (kbd "M-n") 'forward-paragraph)
-(global-set-key (kbd "M-p") 'backward-paragraph)
-(global-set-key (kbd "M-N") (lamb (forward-paragraph 4) (recenter)))
-(global-set-key (kbd "M-P") (lamb (backward-paragraph 4) (recenter)))
+(bind-key "M-n" 'forward-paragraph)
+(bind-key "M-p" 'backward-paragraph)
+(bind-key "M-N" (lamb (forward-paragraph 4) (recenter)))
+(bind-key "M-P" (lamb (backward-paragraph 4) (recenter)))
 
 ;; More `s'hift for more `s'peed.
-(global-set-key (kbd "M-F") (lamb (forward-word 4) (recenter)))
-(global-set-key (kbd "M-B") (lamb (backward-word 4) (recenter)))
-(global-set-key (kbd "M-|") 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
+(bind-key "M-F" (lamb (forward-word 4) (recenter)))
+(bind-key "M-B" (lamb (backward-word 4) (recenter)))
+(bind-key "M-|" 'delete-all-space) ; big brother to the built-in `M-\\' : `delete-horizontal-space'
 
 ;; The prefix `M-s' is well placed on the home row and is criminally underused. Why not redeem it?
 ;; And make it mnemonic: `M-s' for `M'anipulate-`s'tring
-(global-set-key (kbd "M-s a") 'align-regexp)
-(global-set-key (kbd "M-s c") 'count-matches)
-(global-set-key (kbd "M-s d") 'delete-duplicate-lines)
-(global-set-key (kbd "M-s f") 'flush-lines)
-(global-set-key (kbd "M-s k") 'keep-lines)
-(global-set-key (kbd "M-s l") 'sort-lines)
-(global-set-key (kbd "M-s r") 'replace-string)
+(bind-key "M-s a" 'align-regexp)
+(bind-key "M-s c" 'count-matches)
+(bind-key "M-s d" 'delete-duplicate-lines)
+(bind-key "M-s f" 'flush-lines)
+(bind-key "M-s k" 'keep-lines)
+(bind-key "M-s l" 'sort-lines)
+(bind-key "M-s r" 'replace-string)
 
 ;; The default `M-@' is less ergonomic.
-(global-set-key (kbd "C-@") 'mark-word)
+(bind-key "C-@" 'mark-word)
 
 ;; Join lines in a more sensible way.
-(global-set-key (kbd "C-j") (lamb (join-line -1))) ; join this line to the next
-(global-set-key (kbd "C-S-j") 'join-line) ; join this line to the previous
+(bind-key "C-j" (lamb (join-line -1))) ; join this line to the next
+(bind-key "C-S-j" 'join-line) ; join this line to the previous
 
 ;; The following should have been universal without needing to load `org-mode'.
 (autoload 'org-increase-number-at-point "org" nil t)
 (autoload 'org-decrease-number-at-point "org" nil t)
-(global-set-key (kbd "C-+") 'org-increase-number-at-point)
-(global-set-key (kbd "C-_") 'org-decrease-number-at-point)
-(global-set-key (kbd "M-+") (lamb (org-increase-number-at-point 10)))
-(global-set-key (kbd "M-_") (lamb (org-decrease-number-at-point 10)))
+(bind-key "C-+" 'org-increase-number-at-point)
+(bind-key "C-_" 'org-decrease-number-at-point)
+(bind-key "M-+" (lamb (org-increase-number-at-point 10)))
+(bind-key "M-_" (lamb (org-decrease-number-at-point 10)))
 
 ;; Summon keyboard macros easily.
-(global-set-key (kbd "C-(") 'kmacro-start-macro-or-insert-counter)
-(global-set-key (kbd "C-)") 'kmacro-end-or-call-macro)
+(bind-key "C-(" 'kmacro-start-macro-or-insert-counter)
+(bind-key "C-)" 'kmacro-end-or-call-macro)
 
 ;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again.
-(global-set-key (kbd "S-<f2>") 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
-(global-set-key (kbd "S-<f5>") 'recover-this-file)
+(bind-key "S-<f2>" 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
+(bind-key "S-<f5>" 'recover-this-file)
 
 (provide 'knot-keys)

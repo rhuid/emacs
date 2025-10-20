@@ -14,8 +14,8 @@
 (setq initial-major-mode 'fundamental-mode
       initial-scratch-message
       (with-temp-buffer
-	      (insert "\nWelcome home, Ronald.\n")
-	      (insert-file-contents (concat user-emacs-directory "library/logo/Emacs-ANSI-Shadow.txt"))
+	      (insert "\nWelcome home, Ronald.\n\n")
+	      (insert-file-contents (concat user-emacs-directory "library/logo/Emacs-Bloody.txt"))
 	      (goto-char (point-max))
 	      (insert "\n")
 	      (insert (rh/random-excerpt (concat user-emacs-directory "library/excerpts.txt")))
@@ -42,6 +42,6 @@
   (delete-other-windows)
   (switch-to-buffer "*scratch*"))
 
-(global-set-key (kbd "C-x r h") 'rh/return-home)
+(bind-key "C-x r h" 'rh/return-home)
 
 (provide 'knot-startup-page)

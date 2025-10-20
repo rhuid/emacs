@@ -6,9 +6,9 @@
 ;; Clean up all debris (before loading a new theme).
 (mapc #'disable-theme custom-enabled-themes)
 
-;; A great collection of cool looking themes. Also try: modus themes
+;; A great collection of cool looking themes. Also try: modus themes.
 (use-package ef-themes
-  :init (ef-themes-select 'ef-symbiosis))
+  :init (ef-themes-select 'ef-dream))
 
 ;; A minimalist mode-line
 (use-package mood-line
@@ -30,7 +30,9 @@
   :hook (prog-mode . rainbow-mode))
 
 ;; Adjust font size globally
-(global-set-key [remap text-scale-adjust] 'global-text-scale-adjust)
+(bind-key [remap text-scale-adjust] 'global-text-scale-adjust)
+(dolist (key '("H-=" "H--" "H-0"))
+  (bind-key key 'global-text-scale-adjust))
 
 (defun rh/toggle-light-dark-theme-mode ()
   "Toggle between -light and -dark variants of the current theme."
@@ -47,7 +49,7 @@
         (_ (message "Theme %s has no -light/-dark pair." theme)))
     (message "No theme enabled.")))
 
-(global-set-key (kbd "C-c t t") 'rh/toggle-light-dark-theme-mode)
+(bind-key "C-c t t" 'rh/toggle-light-dark-theme-mode)
 
 ;; Although we preach minimalism, we shall allow some pretty math symbols.
 (global-prettify-symbols-mode)
