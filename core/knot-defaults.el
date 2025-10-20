@@ -16,6 +16,7 @@
 
 ;; Concerning lines, sentences, words and characters
 (global-display-line-numbers-mode)
+(global-hl-line-mode)
 (global-subword-mode)
 (global-visual-line-mode)
 (setq display-line-numbers-type 'relative)
@@ -33,8 +34,7 @@
 ;; Concerning windows
 (setq window-combination-resize t) ; keep windows balanced
 (winner-mode) ; undo window configurations
-(global-set-key (kbd "C-<backspace>") 'winner-undo)
-(global-set-key (kbd "H-w") 'winner-undo)
+(global-set-key (kbd "H-s-w") 'winner-undo)
 (setq winner-boring-buffers
       '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
 
