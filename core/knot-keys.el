@@ -54,8 +54,8 @@
 (advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
 ;; Transposing things around: `transpose-lines' has been taken care of by `move-text'.
-(global-set-key (kbd "M-T")     'transpose-sentences)
-(global-set-key (kbd "C-x C-t") 'transpose-paragraphs)
+(global-set-key (kbd "M-T") 'transpose-sentences)
+(global-set-key (kbd "H-t") 'transpose-paragraphs)
 
 ;; Need for Speed: Shift... Hold `S'hift for `S'peed
 (global-set-key (kbd "C-S-n") (lamb (forward-line 5) (recenter)))
@@ -92,6 +92,8 @@
 (global-set-key (kbd "C-S-j") 'join-line) ; join this line to the previous
 
 ;; The following should have been universal without needing to load `org-mode'.
+(autoload 'org-increase-number-at-point "org" nil t)
+(autoload 'org-decrease-number-at-point "org" nil t)
 (global-set-key (kbd "C-+") 'org-increase-number-at-point)
 (global-set-key (kbd "C-_") 'org-decrease-number-at-point)
 (global-set-key (kbd "M-+") (lamb (org-increase-number-at-point 10)))

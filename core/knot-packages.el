@@ -140,7 +140,8 @@
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
-              ("M-H-i" . puni-barf-backward)))
+              ("M-H-i" . puni-barf-backward))
+  :custom (puni-squeeze-flash nil))
 
 ;; Highlight nested parentheses, brackets, and braces according to their depth.
 (use-package rainbow-delimiters
