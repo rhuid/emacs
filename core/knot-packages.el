@@ -15,9 +15,9 @@
   (setq save-abbrevs 'silently))
 
 (use-package avy
-  :bind (("H-a" . avy-goto-char-timer)
+  :bind (("C-," . avy-goto-char-timer)
          :map isearch-mode-map
-         ("H-a" . avy-isearch))
+         ("C-," . avy-isearch))
   :custom
   (avy-timeout-seconds 0.2)
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
@@ -130,12 +130,17 @@
              (project-dired        "Dired"     ?d)
              (project-eshell       "Eshell"    ?e))))
 
-;; Structural editing: kill/delete keeping delimiters balanced.
+;; Structural editing: lightweight, minimal and language-agnostic
 (use-package puni
   :init (puni-global-mode)
   :bind (:map puni-mode-map
+              ("C-w" . nil) ; for whole-line-or-region-kill-region
               ("C-S-h" . puni-backward-kill-word)
-              ("C-w"   . nil))) ; for whole-line-or-region-kill-region
+              ("C-H-s" . puni-squeeze)
+              ("C-H-i" . puni-slurp-forward)
+              ("C-H-n" . puni-barf-forward)
+              ("M-H-n" . puni-slurp-backward)
+              ("M-H-i" . puni-barf-backward)))
 
 ;; Highlight nested parentheses, brackets, and braces according to their depth.
 (use-package rainbow-delimiters
