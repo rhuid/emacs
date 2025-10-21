@@ -34,7 +34,7 @@
 ;; Concerning windows
 (setq window-combination-resize t) ; keep windows balanced
 (winner-mode) ; undo window configurations
-(bind-key "H-`" 'winner-undo)
+(bind-key "H-<tab>" 'winner-undo)
 (setq winner-boring-buffers
       '("*Messages*" "*Completions*" "*Buffer List*" "*Async-native-compile-log*" "*scratch*"))
 
