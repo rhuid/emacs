@@ -141,7 +141,8 @@
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
-              ("M-H-i" . puni-barf-backward))
+              ("M-H-i" . puni-barf-backward)
+              ("C-M-S-h" . backward-kill-sexp))
   :custom
   (puni-squeeze-flash nil) ; don't blink or flash, I find it distracting
   (puni-splash-flash nil) ; don't blink or flash, I find it distracting
