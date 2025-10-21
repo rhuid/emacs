@@ -171,12 +171,6 @@
   (history-delete-duplicates t)
   (savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
 
-(use-package sudo-edit
-  :commands (sudo-edit))
-
-(use-package tree-sitter)
-(use-package tree-sitter-langs)
-
 ;; Undo tree
 (use-package vundo
   :bind ("C-x u" . vundo) ("C-?" . undo-redo)
@@ -186,11 +180,15 @@
 (use-package whole-line-or-region
   :init (whole-line-or-region-global-mode))
 
-(use-package wordel)
-
 ;; Snippets for quick text insertion.
 (use-package yasnippet
   :init (yas-global-mode)
   :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
+
+;; Some more packages
+(use-package sudo-edit)
+(use-package tree-sitter)
+(use-package tree-sitter-langs)
+(use-package wordel)
 
 (provide 'knot-packages)
