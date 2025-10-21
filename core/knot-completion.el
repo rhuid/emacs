@@ -18,11 +18,16 @@
   :init (marginalia-mode))
 
 (use-package consult
-  :bind (("C-x f" . consult-recent-file)
-         ("C-x b" . consult-buffer)
+  :bind (("C-x b" . consult-buffer)
+         ("C-x f" . consult-recent-file)
          ("C-M-s" . consult-line)
          ("C-M-g" . consult-ripgrep)
-         ("M-O"   . consult-outline))
+         ("H-l"   . consult-focus-lines)
+         ("M-y"   . consult-yank-pop)
+         ("H-x m" . consult-mark)
+         ("H-x f" . consult-find)
+         ("M-O"   . consult-outline)
+         ("C-c m" . consult-minor-mode-menu))
   :config (setq consult-preview-key "C-,")
   :custom (register-use-preview nil))
 
