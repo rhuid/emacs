@@ -45,7 +45,7 @@
     (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
 (use-package expand-region
-  :bind ("C-&" . er/expand-region) ("H-<tab>" . er/expand-region))
+  :bind ("C-&" . er/expand-region))
 
 (use-package keyfreq
   :init (keyfreq-mode)
@@ -137,6 +137,7 @@
               ("C-w" . nil) ; for whole-line-or-region-kill-region
               ("H-r" . puni-raise)
               ("H-s" . puni-squeeze)
+              ("M-r" . puni-backward-kill-word)
               ("C-S-h" . puni-backward-kill-word)
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
