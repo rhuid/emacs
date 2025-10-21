@@ -135,14 +135,16 @@
   :init (puni-global-mode)
   :bind (:map puni-mode-map
               ("C-w" . nil) ; for whole-line-or-region-kill-region
+              ("H-r" . puni-raise)
+              ("H-s" . puni-squeeze)
               ("C-S-h" . puni-backward-kill-word)
-              ("C-H-s" . puni-squeeze)
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
               ("M-H-i" . puni-barf-backward))
   :custom
   (puni-squeeze-flash nil) ; don't blink or flash, I find it distracting
+  (puni-splash-flash nil) ; don't blink or flash, I find it distracting
   (puni-confirm-when-delete-unbalanced-active-region nil)) ; don't warn me, I know what I am doing
 
 ;; Highlight nested parentheses, brackets, and braces according to their depth.
