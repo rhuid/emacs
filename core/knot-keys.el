@@ -25,6 +25,9 @@
 ;; Repeating shouldn't be a chore.
 (bind-key "C-z" 'repeat)
 
+;; List buffers
+(bind-key "C-x C-b" 'ibuffer)
+
 ;; Sorcerers never quit sorcery.
 (bind-key "C-x C-c" (lamb (message "I never quit Emacs!")))
 
