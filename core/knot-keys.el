@@ -109,5 +109,6 @@
 ;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again.
 (bind-key "S-<f2>" 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
 (bind-key "S-<f5>" 'recover-this-file)
+(bind-key "S-<delete>" 'delete-file)
 
 (provide 'knot-keys)
