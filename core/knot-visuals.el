@@ -31,7 +31,7 @@
 
 ;; Adjust font size globally
 (bind-key [remap text-scale-adjust] 'global-text-scale-adjust)
-(dolist (key '("H-=" "H--" "H-0"))
+(dolist (key '("C-H-=" "C-H--" "C-H-0"))
   (bind-key key 'global-text-scale-adjust))
 
 (defun rh/toggle-light-dark-theme-mode ()
