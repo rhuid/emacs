@@ -55,5 +55,4 @@
 (require 'knot-packages)
 (require 'knot-eshell)
 (require 'knot-completion)
-(require 'knot-special-buffers)
 (require 'knot-misc)
