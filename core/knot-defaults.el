@@ -45,6 +45,7 @@
 (repeat-mode) ; repeat commands without retyping the prefix key
 (setq repeat-exit-timeout 5)
 (setq echo-keystrokes 0.1) ; display keystrokes in the echo area faster
+(setq confirm-kill-processes nil)
 
 ;; Make it less irritating (concerning irritation?)
 (setq suggest-key-bindings nil)
