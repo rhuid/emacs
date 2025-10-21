@@ -19,7 +19,7 @@
 ;; Also, `Hyper' uses my right thumb while `Ctrl' uses my left pinky.
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
 (define-key key-translation-map (kbd "H-x g") (kbd "C-x g")) ; `magit'
-(define-key key-translation-map (kbd "H-x b") (kbd "C-x b")) ; `consult-buffer'
+(define-key key-translation-map (kbd "C-H-b") (kbd "C-x b")) ; `consult-buffer'
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))
 
 ;; Repeating shouldn't be a chore.
@@ -105,6 +105,15 @@
 ;; Summon keyboard macros easily.
 (bind-key "C-(" 'kmacro-start-macro-or-insert-counter)
 (bind-key "C-)" 'kmacro-end-or-call-macro)
+
+;; Window navigation and management
+(bind-key "M-o" 'other-window)
+(bind-key "H-1" 'delete-other-windows)
+(bind-key "H-2" 'split-window-below)
+(bind-key "H-3" 'split-window-right)
+(bind-key "H-4" 'display-buffer)
+(bind-key "H-0" 'delete-window)
+(bind-key "M-H-0" 'kill-buffer-and-window)
 
 ;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again.
 (bind-key "S-<f2>" 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
