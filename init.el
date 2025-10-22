@@ -55,4 +55,5 @@
 (require 'knot-packages)
 (require 'knot-eshell)
 (require 'knot-completion)
+(require 'knot-editing)
 (require 'knot-misc)
