@@ -1,4 +1,4 @@
-;;; knot-visuals.el --- UI, themes, mode-line, pretty symbols, icons and all that -*- lexical-binding: t; -*-
+;;; knot-visuals.el --- UI, themes, mode-line, pretty symbols, and all that -*- lexical-binding: t; -*-
 
 ;; Don't prompt me for loading themes, warning it could run Lisp code.
 (setq custom-safe-themes t)
@@ -33,23 +33,6 @@
 (bind-key [remap text-scale-adjust] 'global-text-scale-adjust)
 (dolist (key '("C-H-=" "C-H--" "C-H-0"))
   (bind-key key 'global-text-scale-adjust))
-
-(defun rh/toggle-light-dark-theme-mode ()
-  "Toggle between -light and -dark variants of the current theme."
-  (interactive)
-  (if-let* ((theme (car custom-enabled-themes))
-            (name (symbol-name theme)))
-      (pcase name
-        ((pred (string-suffix-p "-dark"))
-         (disable-theme theme)
-         (load-theme (intern (concat (substring name 0 -5) "-light")) t))
-        ((pred (string-suffix-p "-light"))
-         (disable-theme theme)
-         (load-theme (intern (concat (substring name 0 -6) "-dark")) t))
-        (_ (message "Theme %s has no -light/-dark pair." theme)))
-    (message "No theme enabled.")))
-
-(bind-key "C-c t t" 'rh/toggle-light-dark-theme-mode)
 
 ;; Although we preach minimalism, we shall allow some pretty math symbols.
 (global-prettify-symbols-mode)
