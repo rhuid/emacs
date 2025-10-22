@@ -2,7 +2,9 @@ Colemak
 De Morgan's laws
 Hoare
 Hoare logic
+Inhabitation
 LaTeX
+Typability
 Zorn's lemma
 abelian
 analytic
@@ -13,6 +15,7 @@ category
 cofinite
 cohomology
 commutative
+destructors
 diffeomorphic
 diffeomorphism
 differentiable
@@ -41,3 +44,5 @@ topological invariant
 topological manifold
 topological space
 topology
+typable
+redex
