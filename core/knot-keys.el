@@ -106,6 +106,10 @@
 (bind-key "C-(" 'kmacro-start-macro-or-insert-counter)
 (bind-key "C-)" 'kmacro-end-or-call-macro)
 
+;; Narrowing and widening
+(bind-key "H-x H-n" 'narrow-to-region)
+(bind-key "H-x H-w" 'widen)
+
 ;; Window navigation and management
 (bind-key "M-o" 'other-window)
 (bind-key "H-1" 'delete-other-windows)
