@@ -22,9 +22,6 @@
   (avy-timeout-seconds 0.2)
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
 
-(use-package achievements
-  :init (achievements-mode))
-
 ;;; `dictrus' --- https://github.com/rhuid/dictrus
 (use-package dictrus
   :load-path "~/.emacs.d/experimental/"
@@ -137,6 +134,8 @@
               ("C-w" . nil) ; for whole-line-or-region-kill-region
               ("H-r" . puni-raise)
               ("H-s" . puni-squeeze)
+              ("H-k" . kill-paragraph)
+              ("H-h" . backward-kill-paragraph)
               ("M-r" . puni-backward-kill-word)
               ("C-S-h" . puni-backward-kill-word)
               ("C-H-i" . puni-slurp-forward)
@@ -187,6 +186,7 @@
   :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
 ;; Some more packages
+(use-package achievements :init (achievements-mode))
 (use-package sudo-edit)
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
