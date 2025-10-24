@@ -14,6 +14,9 @@ backend
 category
 cofinite
 cohomology
+combinator
+combinators
+combinatory
 commutative
 destructors
 diffeomorphic
@@ -40,10 +43,9 @@ metric space
 minibuffer
 monad
 monoid
+redex
 topological invariant
 topological manifold
 topological space
 topology
 typable
-redex
-combinatory
