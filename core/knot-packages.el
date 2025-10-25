@@ -42,11 +42,7 @@
     (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
 (use-package expand-region
-  :bind ("C-&" . er/expand-region))
-
-(use-package keyfreq
-  :init (keyfreq-mode)
-  :config (keyfreq-autosave-mode))
+  :bind ("C->" . er/expand-region))
 
 (use-package hippie-exp
   :bind ("<Ci>" . hippie-expand)
