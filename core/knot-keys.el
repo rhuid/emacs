@@ -1,9 +1,5 @@
 ;;; knot-keys.el --- Some extra global keys for the thermonuclear editor -*- lexical-binding: t; -*-
 
-;; A lot of great commands come built-in but unbound. So why not bind them?
-;; Some of the default keybindings are also be adjusted.
-;; But before that, we do some low-level key remapping first.
-
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
 
@@ -16,20 +12,15 @@
 (setq shift-select-mode nil)
 
 ;; `Hyper' key is well placed on my keyboard, so let's make good use of that first.
-;; Also, `Hyper' uses my right thumb while `Ctrl' uses my left pinky.
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
 (define-key key-translation-map (kbd "H-x g") (kbd "C-x g")) ; `magit'
 (define-key key-translation-map (kbd "C-H-b") (kbd "C-x b")) ; `consult-buffer'
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))
 
-;; Repeating shouldn't be a chore.
+;; Readjustments to some default keybindings
 (bind-key "C-z" 'repeat)
-
-;; List buffers
-(bind-key "C-x C-b" 'ibuffer)
-
-;; Sorcerers never quit sorcery.
-(bind-key "C-x C-c" (lamb (message "I never quit Emacs!")))
+(bind-key "C-@" 'mark-word)
+(bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
 
 ;; No arrows. BACK TO THE CHORDS!
 (dolist (key '("<up>" "<down>" "<right>" "<left>"))
@@ -87,9 +78,6 @@
 (bind-key "M-s l" 'sort-lines)
 (bind-key "M-s r" 'replace-string)
 
-;; The default `M-@' is less ergonomic.
-(bind-key "C-@" 'mark-word)
-
 ;; Join lines in a more sensible way.
 (bind-key "C-j" (lamb (join-line -1))) ; join this line to the next
 (bind-key "C-S-j" 'join-line) ; join this line to the previous
@@ -106,22 +94,15 @@
 (bind-key "C-(" 'kmacro-start-macro-or-insert-counter)
 (bind-key "C-)" 'kmacro-end-or-call-macro)
 
-;; Narrowing and widening
-(bind-key "H-x H-n" 'narrow-to-region)
-(bind-key "H-x H-w" 'widen)
-
-;; Window navigation and management
+;; Window/buffer navigation and management
 (bind-key "M-o" 'other-window)
-(bind-key "H-1" 'delete-other-windows)
-(bind-key "H-2" 'split-window-below)
-(bind-key "H-3" 'split-window-right)
+(bind-key "C-x C-b" 'ibuffer)
 (bind-key "H-4" 'display-buffer)
-(bind-key "H-0" 'delete-window)
 (bind-key "M-H-0" 'kill-buffer-and-window)
 
 ;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again.
 (bind-key "S-<f2>" 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
 (bind-key "S-<f5>" 'recover-this-file)
-(bind-key "S-<delete>" 'delete-file)
+(bind-key "S-<delete>" 'delete-file) ; another homage!
 
 (provide 'knot-keys)
