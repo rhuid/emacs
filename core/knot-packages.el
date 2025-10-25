@@ -14,13 +14,14 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
+;; Sail through the visible screen at the speed of thought
 (use-package avy
   :bind (("C-," . avy-goto-char-timer)
          :map isearch-mode-map
          ("C-," . avy-isearch))
   :custom
-  (avy-timeout-seconds 0.2)
-  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)))
+  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)) ; Optimized for my keyboard layout
+  (avy-timeout-seconds 0.2))
 
 ;;; `dictrus' --- https://github.com/rhuid/dictrus
 (use-package dictrus
@@ -32,6 +33,7 @@
   :init (global-eldoc-mode)
   :config (setq eldoc-idle-delay 0.2))
 
+;; Electric pairs: Auto-insert the closing delimiter.
 (use-package elec-pair
   :init (electric-pair-mode)
   :hook (org-mode . rh/org-electric-pairs)
@@ -41,9 +43,11 @@
     "Org pairs for electric-pair-mode."
     (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
 
+;; Select and expand regions by semantic units.
 (use-package expand-region
   :bind ("C->" . er/expand-region))
 
+;; A handy expansion/completion tool.
 (use-package hippie-exp
   :bind ("<Ci>" . hippie-expand)
   :custom
@@ -60,6 +64,7 @@
      try-complete-lisp-symbol-partially
      try-expand-all-abbrevs)))
 
+;; Incremental search: Scroll through the buffer with breeze.
 (use-package isearch
   :ensure nil
   :custom
@@ -75,6 +80,7 @@
   :bind ("C-*" . jinx-correct) ("C-M-*" . jinx-correct-word)
   :custom (jinx-languages "en_US-large"))
 
+;; Version control with the best interface for Git.
 (use-package magit
   :bind ("C-x g" .  magit-status)
   (:map magit-mode-map
@@ -94,7 +100,7 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
-;; My keybindings are a little weird but they work well for me.
+;; My keybindings may look a little weird but they work well for me.
 (use-package multiple-cursors
   :bind (("C-M-S-a" . mc/mark-all-like-this-dwim)
          ("C-M-S-n" . mc/mark-next-like-this)
@@ -107,10 +113,12 @@
   :hook ((prog-mode text-mode) . outline-minor-mode)
   :init (setq outline-minor-mode-prefix (kbd "C-c o")))
 
+;; Move line or region up and down easily.
 (use-package move-text
   :bind ("H-p" . move-text-up) ("H-n" . move-text-down)
   :init (move-text-default-bindings))
 
+;; Move where I mean: `C-a' to the first non-whitespace character, `C-e' to the last character (excluding comment).
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
@@ -141,7 +149,6 @@
               ("C-M-S-h" . backward-kill-sexp))
   :custom
   (puni-squeeze-flash nil) ; don't blink or flash, I find it distracting
-  (puni-splash-flash nil) ; don't blink or flash, I find it distracting
   (puni-confirm-when-delete-unbalanced-active-region nil)) ; don't warn me, I know what I am doing
 
 ;; Highlight nested parentheses, brackets, and braces according to their depth.
