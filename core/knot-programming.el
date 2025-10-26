@@ -1,5 +1,6 @@
 ;;; knot-programming.el --- Things related to writing source code -*- lexical-binding: t; -*-
 
+;; Geneal things about programming mode.
 (use-package prog-mode
   :ensure nil
   :hook ((prog-mode . glyphless-display-mode)
@@ -10,6 +11,7 @@
 	(setq-default tab-width 2)
   (setq standard-indent 2))
 
+;; Indent aggressively as you type.
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode lisp-interaction-mode) . aggressive-indent-mode)
   :config (setq aggressive-indent-comments-too t))
@@ -26,6 +28,7 @@
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-signature-auto-activate nil))
 
+;; Extra UI and documentation.
 (use-package lsp-ui
   :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
@@ -42,6 +45,7 @@
         flycheck-highlighting-mode 'nil ; don't underline
         flycheck-indication-mode 'left-fringe))
 
+;; Lean 4: Prove theorems in Emacs!
 (use-package lean4-mode
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git" :rev :last-release)
   :bind (:map lean4-mode-map ("C-m" . electric-newline-and-maybe-indent))

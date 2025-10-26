@@ -1,22 +1,27 @@
 ;;; knot-completion.el --- Minibuffer completions and at-point completions -*- lexical-binding: t; -*-
 
+;; Vertical completion UI for the minibuffer.
 (use-package vertico
   :init (vertico-mode)
   :custom
   (vertico-resize t)
   (vertico-cycle t))
 
+;; Directory traversal made swift.
 (use-package vertico-directory
   :after vertico
   :load-path "~/.emacs.d/elpa/vertico/extensions/"
   :bind (:map vertico-map ("C-w" . vertico-directory-delete-word)))
 
+;; Find what you seek, no matter the order.
 (use-package orderless
   :init (setq completion-styles '(orderless partial-completion)))
 
+;; See the story behind every completion candidate.
 (use-package marginalia
   :init (marginalia-mode))
 
+;; Consult is your compass for Emacs; a command center for the thermonuclear editor.
 (use-package consult
   :bind (("C-x b" . consult-buffer)
          ("C-x f" . consult-recent-file)
@@ -33,21 +38,26 @@
   :config (setq consult-preview-key "C-,")
   :custom (register-use-preview nil))
 
+;; Teleport to any directory with a keystroke.
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir))
   (:map vertico-map ("C-x C-j" . consult-dir-jump-file)))
 
+;; Actions appear where your cursor lingers.
 (use-package embark
   :bind (("C-." . embark-act) ("M-." . embark-dwim))
   :init (setq prefix-help-command #'embark-prefix-help-command))
 
+;; Preview actions before they take flight.
 (use-package embark-consult
   :after consult
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
+;; Get hints for your next move. Display available keybindings in context after a prefix.
 (use-package which-key
   :init (which-key-mode))
 
+;; Completion floats directly under your cursor.
 (use-package corfu
   :init (global-corfu-mode)
   :hook ((corfu-mode . corfu-history-mode)
@@ -56,6 +66,7 @@
   :bind (:map corfu-map ("TAB" . nil) ("RET" . nil) ("C-t" . 'corfu-insert))
   :custom (corfu-auto t)) ; Enable auto popup
 
+;; Add sources for completion.
 (use-package cape
   :after corfu
   :hook ((org-mode LaTeX-mode) . rh/cape-dict)

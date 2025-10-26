@@ -1,5 +1,6 @@
 ;;; knot-packages.el --- Tools, tools, tools! -*- lexical-binding: t; -*-
 
+;; Let Emacs finish your phrases. Because typing is hard work.
 (use-package abbrev
   :ensure nil
   :init
@@ -14,20 +15,21 @@
   (read-abbrev-file abbrev-file-name)
   (setq save-abbrevs 'silently))
 
-;; Sail through the visible screen at the speed of thought
+;; Sail through the visible screen at the speed of thought.
 (use-package avy
   :bind (("C-," . avy-goto-char-timer)
          :map isearch-mode-map
          ("C-," . avy-isearch))
   :custom
-  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)) ; Optimized for my keyboard layout
+  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)) ; optimized for my keyboard layout
   (avy-timeout-seconds 0.2))
 
-;;; `dictrus' --- https://github.com/rhuid/dictrus
+;; `dictrus' --- https://github.com/rhuid/dictrus
 (use-package dictrus
   :load-path "~/.emacs.d/experimental/"
   :bind ("C-c d d" . rh/dictrus-lookup))
 
+;; Type comfortably --- `eldoc' watches over you; a whisper of documentation as you type.
 (use-package eldoc
   :ensure nil
   :init (global-eldoc-mode)
@@ -47,7 +49,7 @@
 (use-package expand-region
   :bind ("C->" . er/expand-region))
 
-;; A handy expansion/completion tool.
+;; Let Emacs whisper the rest of your words; completion for those who prefer serendipity over precision.
 (use-package hippie-exp
   :bind ("<Ci>" . hippie-expand)
   :custom
@@ -64,23 +66,24 @@
      try-complete-lisp-symbol-partially
      try-expand-all-abbrevs)))
 
-;; Incremental search: Scroll through the buffer with breeze.
+;; Search as you type, and watch your buffer follow.
 (use-package isearch
   :ensure nil
   :custom
   (isearch-allow-scroll 'unlimited)
   (isearch-lazy-count t)
   (isearch-repeat-on-direction-change t)
-  (search-default-mode 'char-fold-to-regexp) ; matches accented letters too
-  (search-whitespace-regexp ".*?")) ; search for "t n" matches "teleportation"
+  (search-default-mode 'char-fold-to-regexp) ; match accented letters too
+  (search-whitespace-regexp ".*?")) ; type "t n" to match "teleportation"
 
-;; Requires enchant and dictionary backend. I am using `hunspell-en_us'
+;; Type freely; Jinx has your back. A silent guardian of your spelling.
+;; Requires enchant and dictionary backend. I am using `hunspell-en_us'.
 (use-package jinx
   :init (global-jinx-mode)
   :bind ("C-*" . jinx-correct) ("C-M-*" . jinx-correct-word)
   :custom (jinx-languages "en_US-large"))
 
-;; Version control with the best interface for Git.
+;; Git, without ever leaving home and without touching the terminal.
 (use-package magit
   :bind ("C-x g" .  magit-status)
   (:map magit-mode-map
@@ -100,7 +103,7 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
-;; My keybindings may look a little weird but they work well for me.
+;; Edit everywhere at once; parallel editing.
 (use-package multiple-cursors
   :bind (("C-M-S-a" . mc/mark-all-like-this-dwim)
          ("C-M-S-n" . mc/mark-next-like-this)
@@ -109,11 +112,12 @@
          ("C-M-<"   . mc/skip-to-previous-like-this))
   :custom (mc/always-run-for-all t))
 
+;; Fold and bloom your buffer's hierarchy.
 (use-package outline
   :hook ((prog-mode text-mode) . outline-minor-mode)
   :init (setq outline-minor-mode-prefix (kbd "C-c o")))
 
-;; Move line or region up and down easily.
+;; Move line or region up and down with ease.
 (use-package move-text
   :bind ("H-p" . move-text-up) ("H-n" . move-text-down)
   :init (move-text-default-bindings))
@@ -123,7 +127,7 @@
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
 
-;; Manage projects. Comes built-in, a good alternative to projectile.
+;; Navigate your project with ease. Lightweight and comes built-in.
 (use-package project
   :custom (project-switch-commands
            '((magit-project-status "Magit"     ?m)
@@ -165,7 +169,7 @@
   (recentf-auto-cleanup 'never)
   :config (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
 
-;; Save history across sessions including kill-ring!
+;; Save history across sessions including the kill-ring!
 (use-package savehist
   :ensure nil
   :init (savehist-mode)
@@ -174,7 +178,7 @@
   (history-delete-duplicates t)
   (savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
 
-;; Undo tree
+;; Undo tree: trace your edits as a living tree.
 (use-package vundo
   :bind ("C-x u" . vundo) ("C-?" . undo-redo)
   :custom (undo-limit (* 16 1024 1024)))
@@ -183,7 +187,7 @@
 (use-package whole-line-or-region
   :init (whole-line-or-region-global-mode))
 
-;; Snippets for quick text insertion.
+;; Turn a few keystrokes into full templates.
 (use-package yasnippet
   :init (yas-global-mode)
   :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
