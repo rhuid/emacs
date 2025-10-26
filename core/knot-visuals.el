@@ -52,7 +52,7 @@
 ;; Like a presentation mode, much more readable and pleasant to the eyes
 (use-package visual-fill-column
   :bind (:map toggle-minor-mode-map ("v" . visual-fill-column-mode))
-  :hook ((org-mode text-mode magit-status-mode emacs-lisp-mode minibuffer-mode eshell-mode)
+  :hook ((org-mode text-mode magit-status-mode emacs-lisp-mode eshell-mode)
          . visual-fill-column-mode)
   :custom
   (visual-fill-column-width 120)
