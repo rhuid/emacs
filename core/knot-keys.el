@@ -20,6 +20,7 @@
 ;; Readjustments to some default keybindings
 (bind-key "C-z" 'repeat)
 (bind-key "C-@" 'mark-word)
+(bind-key "M-m" 'mark-word) ; by default, `M-m' is `back-to-indentation'
 (bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
 
 ;; No arrows. BACK TO THE CHORDS!
