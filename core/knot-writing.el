@@ -4,7 +4,6 @@
 
 (use-package org
   :ensure nil
-  :defer 2
   :hook (org-mode . (lambda () (display-line-numbers-mode -1)))
   :custom
   (org-hide-leading-stars t)
