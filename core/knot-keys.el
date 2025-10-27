@@ -16,6 +16,7 @@
 (define-key key-translation-map (kbd "H-x g") (kbd "C-x g")) ; `magit'
 (define-key key-translation-map (kbd "C-H-b") (kbd "C-x b")) ; `consult-buffer'
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))
+(bind-key "H-r" ctl-x-r-map) ; because `C-x r' is too useful and `H-r' is much faster to type
 
 ;; Readjustments to some default keybindings
 (bind-key "C-z" 'repeat)
