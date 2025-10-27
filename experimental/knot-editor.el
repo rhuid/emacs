@@ -1,33 +1,5 @@
 ;;; knot-editor.el --- Edit at the speed of thought (well, not literally) -*- lexical-binding: t; -*-
 
-;;; Some commands for faster editing
-;; Most of them are written using built-in functions. Some use functions from `avy'.
-;; Helper functions are tagged `helper'.
-
-;; This command is context-sensitive. In most cases, it inserts a space character while joining
-;; but when the starting character of the next non-empty line is a closing parenthesis, it leaves no space.
-;; (defun rh/join-line ()
-;;   "Join the current line with the next non-empty line."
-;;   (interactive)
-;;   (save-excursion
-;;     (end-of-line)
-;;     (delete-all-space)
-;;     (unless (rh/at-parenthesis-end-p)
-;;       (insert " "))))
-
-;; helper
-;; (defun rh/at-parenthesis-end-p ()
-;;   "Return non-nil if the character at point is )."
-;;   (looking-at-p "[)]"))
-
-;; A dual of C-k, maybe bind C-S-k to it?
-;; (defun rh/backward-kill-line ()
-;;   "Kill from beginning of line to point."
-;;   (interactive)
-;;   (set-mark (point))
-;;   (mwim-beginning-of-code-or-line)
-;;   (call-interactively 'kill-region))
-
 ;; A multipurpose trash cleaner without cluttering the kill ring!
 (defun rh/delete-in-context ()
   "Delete region (if active), else delete current line (if non-empty), else delete-blank-lines."
@@ -63,40 +35,6 @@
          (let ((inhibit-read-only t))
            (kill-ring-save (line-beginning-position) (line-beginning-position 2))))
         (t nil)))
-
-;; helper (lol)
-(defun rh/insert-space ()
-  "Insert a space character."
-  (interactive)
-  (insert " "))
-
-;;; Concerning enclosing and removing delimiters
-(use-package emacs
-  :bind (("C-c s e" . rh/enclose-region)
-         ("C-c s u" . rh/delete-surrounding-chars))
-  :config
-  (defun rh/enclose-region (beg end char)
-    "Enclose region with CHAR and its matching pair."
-    (interactive "r\ncEnter opener: ")
-    (let* ((open (string char))
-           (close (pcase open
-                    ("(" ")") ("[" "]") ("{" "}") ("<" ">")
-                    ("'" "'") ("`" "'") ("\"" "\"")
-                    (_ open)))) ;; fallback: repeat same char
-      (save-excursion
-        (goto-char end)
-        (insert close)
-        (goto-char beg)
-        (insert open))))
-  (defun rh/delete-surrounding-chars (beg end)
-    "Remove the first and last character in the active region."
-    (interactive "r")
-    (when (> (- end beg) 1) ;; only if region has at least 2 chars
-      (save-excursion
-        (goto-char end)
-        (backward-delete-char 1)
-        (goto-char beg)
-        (delete-char 1)))))
 
 ;;; My modal design built on `meow'
 ;; Requires `avy' and `consult'
