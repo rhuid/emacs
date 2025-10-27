@@ -47,10 +47,12 @@
 (setq echo-keystrokes 0.1) ; display keystrokes in the echo area faster
 (setq confirm-kill-processes nil)
 
+;; Make it less irritating (concerning irritation?)
+(setq suggest-key-bindings nil)
+
 ;; Some nice minor modes
 (display-time-mode) ; I want to know the time from the mode-line
 
-;; Make it less irritating (concerning irritation?)
-(setq suggest-key-bindings nil)
+(display-startup-echo-area-message)
 
 (provide 'knot-defaults)
