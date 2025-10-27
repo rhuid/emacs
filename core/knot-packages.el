@@ -139,13 +139,13 @@
 (use-package puni
   :init (puni-global-mode)
   :bind (:map puni-mode-map
-              ("C-w" . nil) ; for whole-line-or-region-kill-region
-              ("H-r" . puni-raise)
+              ("C-w" . nil) ; taken by whole-line-or-region-kill-region
               ("H-s" . puni-squeeze)
               ("H-k" . kill-paragraph)
               ("H-h" . backward-kill-paragraph)
               ("M-r" . puni-backward-kill-word)
               ("C-S-h" . puni-backward-kill-word)
+              ("C-M-r" . puni-raise)
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
