@@ -55,7 +55,7 @@
   :hook ((org-mode text-mode magit-status-mode emacs-lisp-mode eshell-mode)
          . visual-fill-column-mode)
   :custom
-  (visual-fill-column-width 120)
+  (visual-fill-column-width 130)
   (visual-fill-column-center-text t))
 
 (provide 'knot-visuals)
