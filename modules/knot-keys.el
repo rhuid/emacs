@@ -13,15 +13,15 @@
 
 ;; `Hyper' key is well placed on my keyboard, so let's make good use of that first.
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
-(define-key key-translation-map (kbd "H-x g") (kbd "C-x g")) ; `magit'
-(define-key key-translation-map (kbd "C-H-b") (kbd "C-x b")) ; `consult-buffer'
+(define-key key-translation-map (kbd "H-x g") (kbd "C-x g"))                     ; `magit'
+(define-key key-translation-map (kbd "C-H-b") (kbd "C-x b"))                     ; `consult-buffer'
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))
-(bind-key "H-r" ctl-x-r-map) ; because `C-x r' is too useful and `H-r' is much faster to type
+(bind-key "H-r" ctl-x-r-map)                                                     ; `H-r' is much faster to type than `C-x r'
 
 ;; Readjustments to some default keybindings
 (bind-key "C-z" 'repeat)
 (bind-key "C-@" 'mark-word)
-(bind-key "M-m" 'mark-word) ; by default, `M-m' is `back-to-indentation'
+(bind-key "M-m" 'mark-word)                                                      ; by default, `M-m' is `back-to-indentation'
 (bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
 
 ;; No arrows. BACK TO THE CHORDS!
@@ -35,9 +35,9 @@
 (keymap-set toggle-minor-mode-map (kbd "l") 'display-line-numbers-mode)
 
 ;; Zapping
-(bind-key "M-z" 'zap-up-to-char) ; by default, `M-z' is bound to `zap-to-char'
-(bind-key "C-M-z" 'delete-pair) ; think of "zap pair"
-(setq delete-pair-blink-delay 0) ; heck, why would I want any delay?
+(bind-key "M-z" 'zap-up-to-char)                                         ; by default, `M-z' is bound to `zap-to-char'
+(bind-key "C-M-z" 'delete-pair)                                          ; think of "zap pair"
+(setopt delete-pair-blink-delay 0)                                       ; heck, why would I want any delay?
 
 ;; Changing case
 (bind-key [remap capitalize-word] 'capitalize-dwim)
@@ -81,8 +81,8 @@
 (bind-key "M-s r" 'replace-string)
 
 ;; Join lines in a more sensible way.
-(bind-key "C-j" (lamb (join-line -1))) ; join this line to the next
-(bind-key "C-S-j" 'join-line) ; join this line to the previous
+(bind-key "C-j" (lamb (join-line -1)))                                     ; join this line to the next
+(bind-key "C-S-j" 'join-line)                                              ; join this line to the previous
 
 ;; The following should have been universal without needing to load `org-mode'.
 (autoload 'org-increase-number-at-point "org" nil t)
@@ -103,8 +103,8 @@
 (bind-key "M-H-0" 'kill-buffer-and-window)
 
 ;; Used rarely, but it's nice to keep them bound, because I don't wanna do M-x and type the name again.
-(bind-key "S-<f2>" 'rename-visited-file) ; a homage to GUI file managers' <f2> renaming
+(bind-key "S-<f2>" 'rename-visited-file)                             ; a homage to GUI file managers' <f2> renaming
 (bind-key "S-<f5>" 'recover-this-file)
-(bind-key "S-<delete>" 'delete-file) ; another homage!
+(bind-key "S-<delete>" 'delete-file)                                 ; another homage!
 
 (provide 'knot-keys)
