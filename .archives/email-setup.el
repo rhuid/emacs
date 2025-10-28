@@ -1,4 +1,4 @@
-;;; knot-email.el --- For all things mail (using notmuch) -*- lexical-binding: t; -*-
+;;; email-setup.el --- For all things mail (using notmuch) -*- lexical-binding: t; -*-
 
 ;;;; First you need to have mbsync (isync), notmuch, msmtp installed and configured
 ;;;; Additionally, you may also want gpg installed (for encrypting passwords)
@@ -49,4 +49,4 @@
   (notmuch-show-logo nil)
   )
 
-(provide 'knot-email)
+(provide 'email-setup)

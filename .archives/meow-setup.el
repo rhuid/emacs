@@ -1,4 +1,4 @@
-;;; knot-editor.el --- Edit at the speed of thought (well, not literally) -*- lexical-binding: t; -*-
+;;; meow-setup.el --- Edit at the speed of thought (well, not literally) -*- lexical-binding: t; -*-
 
 ;; A multipurpose trash cleaner without cluttering the kill ring!
 (defun rh/delete-in-context ()
@@ -105,4 +105,4 @@
         meow-keypad-self-insert-undefined nil
         meow-use-clipboard t))
 
-(provide 'knot-editor)
+(provide 'meow-setup)
