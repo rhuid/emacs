@@ -4,10 +4,10 @@
 (use-package prog-mode
   :ensure nil
   :hook ((prog-mode . glyphless-display-mode)
-         (after-save . executable-make-buffer-file-executable-if-script-p))
+         (after-save . executable-make-buffer-file-executable-if-script-p))  ; make a shell script executable upon saving
   :config
   (global-font-lock-mode 1)
-  (setq-default indent-tabs-mode nil) ; Use spaces, not tabs
+  (setq-default indent-tabs-mode nil)                                        ; use spaces, not tabs
 	(setq-default tab-width 2)
   (setq standard-indent 2))
 
@@ -19,7 +19,7 @@
 (use-package lsp-mode
   :custom
   (read-process-output-max (* 2 1024 1024))
-  (lsp-completion-provider :none) ; to avoid interference from company-mode
+  (lsp-completion-provider :none)                                            ; to avoid interference from company-mode
   (lsp-enable-file-watchers nil)
   (lsp-enable-folding nil)
   (lsp-enable-on-type-formatting nil)
@@ -34,15 +34,15 @@
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-sideline-enable t)
-  (lsp-ui-sideline-show-diagnostics t) ; inline diagnostics and evaluations
-  (lsp-ui-sideline-show-hover nil) ; disable doc/info of symbols on the sideline
+  (lsp-ui-sideline-show-diagnostics t)                                       ; inline diagnostics and evaluations
+  (lsp-ui-sideline-show-hover nil)                                           ; disable doc/info of symbols on the sideline
   (lsp-ui-doc-enable t))
 
 (use-package flycheck
   :commands (flycheck-mode)
   :config
   (setq flycheck-display-errors-delay 0.2
-        flycheck-highlighting-mode 'nil ; don't underline
+        flycheck-highlighting-mode 'nil                                      ; don't underline
         flycheck-indication-mode 'left-fringe))
 
 ;; Lean 4: Prove theorems in Emacs!

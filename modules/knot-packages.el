@@ -21,7 +21,7 @@
          :map isearch-mode-map
          ("C-," . avy-isearch))
   :custom
-  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o)) ; optimized for my keyboard layout
+  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))                          ; optimized for my keyboard layout
   (avy-timeout-seconds 0.2))
 
 ;; `dictrus' --- https://github.com/rhuid/dictrus
@@ -70,11 +70,11 @@
 (use-package isearch
   :ensure nil
   :custom
-  (isearch-allow-scroll 'unlimited)
-  (isearch-lazy-count t)
-  (isearch-repeat-on-direction-change t)
-  (search-default-mode 'char-fold-to-regexp) ; match accented letters too
-  (search-whitespace-regexp ".*?")) ; type "t n" to match "teleportation"
+  (isearch-allow-scroll 'unlimited)                                          ; scroll as much as you please
+  (isearch-lazy-count t)                                                     ; show number of matches in the mode-line
+  (isearch-repeat-on-direction-change t)                                     ; allow switching direction
+  (search-default-mode 'char-fold-to-regexp)                                 ; match accented letters too
+  (search-whitespace-regexp ".*?"))                                          ; type "t n" to match "teleportation"
 
 ;; Type freely; Jinx has your back. A silent guardian of your spelling.
 ;; Requires enchant and dictionary backend. I am using `hunspell-en_us'.
@@ -122,10 +122,10 @@
   :bind ("H-p" . move-text-up) ("H-n" . move-text-down)
   :init (move-text-default-bindings))
 
-;; Move where I mean: `C-a' to the first non-whitespace character, `C-e' to the last character (excluding comment).
+;; Move where I mean.
 (use-package mwim
-  :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line)))
+  :bind (("C-a" . mwim-beginning-of-code-or-line)                            ; to the first non-whitespace character
+         ("C-e" . mwim-end-of-code-or-line)))                                ; to the last character (excluding comment)
 
 ;; Navigate your project with ease. Lightweight and comes built-in.
 (use-package project
@@ -139,7 +139,7 @@
 (use-package puni
   :init (puni-global-mode)
   :bind (:map puni-mode-map
-              ("C-w" . nil) ; taken by whole-line-or-region-kill-region
+              ("C-w" . nil)                                                  ; taken by whole-line-or-region-kill-region
               ("H-s" . puni-squeeze)
               ("H-k" . kill-paragraph)
               ("H-h" . backward-kill-paragraph)
@@ -152,14 +152,14 @@
               ("M-H-i" . puni-barf-backward)
               ("C-M-S-h" . backward-kill-sexp))
   :custom
-  (puni-squeeze-flash nil) ; don't blink or flash, I find it distracting
-  (puni-confirm-when-delete-unbalanced-active-region nil)) ; don't warn me, I know what I am doing
+  (puni-squeeze-flash nil)                                                   ; don't blink or flash, I find it distracting
+  (puni-confirm-when-delete-unbalanced-active-region nil))                   ; don't warn me, I know what I am doing
 
-;; Highlight nested parentheses, brackets, and braces according to their depth.
+;; Highlight nested parentheses according to their depth.
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; Quite handy to jump to recent files. Made better by `consult-recent-file'.
+;; Jump to recent files. Made better by `consult-recent-file'.
 (use-package recentf
   :ensure nil
   :init (recentf-mode)
@@ -167,7 +167,7 @@
   (recentf-max-saved-items 200)
   (recentf-max-menu-items 25)
   (recentf-auto-cleanup 'never)
-  :config (run-at-time nil (* 5 60) #'recentf-save-list)) ; Save recentf list every 5 minutes
+  :config (run-at-time nil (* 5 60) #'recentf-save-list))                     ; Save recentf list every 5 minutes
 
 ;; Save history across sessions including the kill-ring!
 (use-package savehist

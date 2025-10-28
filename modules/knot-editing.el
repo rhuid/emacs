@@ -12,7 +12,7 @@
   (mwim-beginning-of-code-or-line)
   (call-interactively 'open-line))
 
-(bind-key "C-S-o" 'rh/open-line-above) ; a counterpart to `C-o'
-(bind-key "C-<return>" 'rh/open-line-below) ; like in org-mode, so you don't have to learn a new keybinding
+(bind-key "C-S-o" 'rh/open-line-above)                     ; a counterpart to `C-o'
+(bind-key "C-<return>" 'rh/open-line-below)                ; like in org-mode, so you don't have to learn a new keybinding
 
 (provide 'knot-editing)
