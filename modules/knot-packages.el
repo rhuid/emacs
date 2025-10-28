@@ -47,7 +47,7 @@
 
 ;; Select and expand regions by semantic units.
 (use-package expand-region
-  :bind ("C->" . er/expand-region))
+  :bind ("C->" . er/expand-region) ("M-r" . er/expand-region))
 
 ;; Let Emacs whisper the rest of your words; completion for those who prefer serendipity over precision.
 (use-package hippie-exp
@@ -143,7 +143,6 @@
               ("H-s" . puni-squeeze)
               ("H-k" . kill-paragraph)
               ("H-h" . backward-kill-paragraph)
-              ("M-r" . puni-backward-kill-word)
               ("C-S-h" . puni-backward-kill-word)
               ("C-M-r" . puni-raise)
               ("C-H-i" . puni-slurp-forward)
