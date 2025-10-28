@@ -1,6 +1,6 @@
 ;;; init.el --- The main init.el file -*- lexical-binding: t; -*-
 
-(add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "experimental" user-emacs-directory))
 
 ;; Inherit shell variables (could be important for daemon)
