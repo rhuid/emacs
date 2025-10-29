@@ -4,12 +4,9 @@
 (define-key key-translation-map [?\C-h] [?\C-?])
 
 ;; Detach `C-i' from `TAB'
-(define-key input-decode-map "\C-i" [Ci]) ; this alone won't apply to client frames, so we need the line below
+(define-key input-decode-map "\C-i" [Ci])               ; this alone won't apply to client frames, so we need the line below
 (add-hook 'after-make-frame-functions
           (lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
-
-;; We have a better use of `Shift' as modifier key
-(setq shift-select-mode nil)
 
 ;; `Hyper' key is well placed on my keyboard, so let's make good use of that first.
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
@@ -43,6 +40,11 @@
 (bind-key [remap capitalize-word] 'capitalize-dwim)
 (bind-key [remap upcase-word] 'upcase-dwim)
 (bind-key [remap downcase-word] 'downcase-dwim)
+
+;; Adjust font size globally
+(bind-key [remap text-scale-adjust] 'global-text-scale-adjust)
+(dolist (key '("C-H-=" "C-H--" "C-H-0"))
+  (bind-key key 'global-text-scale-adjust))
 
 ;; Duplicating lines/regions
 (bind-key "C-:" 'copy-from-above-command)

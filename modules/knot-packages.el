@@ -49,6 +49,11 @@
 (use-package expand-region
   :bind ("C->" . er/expand-region) ("M-r" . er/expand-region))
 
+;; Some modes don't need the mode-line and looks cleaner without it.
+(use-package hide-mode-line
+  :bind (:map toggle-minor-mode-map ("h" . hide-mode-line-mode))
+  :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
+
 ;; Let Emacs whisper the rest of your words; completion for those who prefer serendipity over precision.
 (use-package hippie-exp
   :bind ("<Ci>" . hippie-expand)
@@ -77,7 +82,7 @@
   (search-whitespace-regexp ".*?"))                                          ; type "t n" to match "teleportation"
 
 ;; Type freely; Jinx has your back. A silent guardian of your spelling.
-;; Requires enchant and dictionary backend. I am using `hunspell-en_us'.
+;; Requires enchant and dictionary backend (I use `hunspell-en_us').
 (use-package jinx
   :init (global-jinx-mode)
   :bind ("C-*" . jinx-correct) ("C-M-*" . jinx-correct-word)
@@ -124,8 +129,13 @@
 
 ;; Move where I mean.
 (use-package mwim
-  :bind (("C-a" . mwim-beginning-of-code-or-line)                            ; to the first non-whitespace character
-         ("C-e" . mwim-end-of-code-or-line)))                                ; to the last character (excluding comment)
+  :bind (("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)))
+
+;; Highlight matching parentheses, braces and brackets.
+(use-package paren
+  :init (show-paren-mode)
+  :custom (show-paren-delay 0))
 
 ;; Navigate your project with ease. Lightweight and comes built-in.
 (use-package project
@@ -135,7 +145,7 @@
              (project-dired        "Dired"     ?d)
              (project-eshell       "Eshell"    ?e))))
 
-;; Structural editing: lightweight, minimal and language-agnostic
+;; Structural editing: lightweight, and language-agnostic
 (use-package puni
   :init (puni-global-mode)
   :bind (:map puni-mode-map
@@ -158,6 +168,11 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+;; Colorize stings that represent colors.
+(use-package rainbow-mode
+  :bind (:map toggle-minor-mode-map ("r" . rainbow-mode))
+  :hook (prog-mode . rainbow-mode))
+
 ;; Jump to recent files. Made better by `consult-recent-file'.
 (use-package recentf
   :ensure nil
@@ -166,7 +181,7 @@
   (recentf-max-saved-items 200)
   (recentf-max-menu-items 25)
   (recentf-auto-cleanup 'never)
-  :config (run-at-time nil (* 5 60) #'recentf-save-list))                     ; Save recentf list every 5 minutes
+  :config (run-at-time nil (* 5 60) #'recentf-save-list))                     ; save recentf list every 5 minutes
 
 ;; Save history across sessions including the kill-ring!
 (use-package savehist
@@ -177,12 +192,26 @@
   (history-delete-duplicates t)
   (savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
 
+;; Let's feel a bit more spacious.
+(use-package spacious-padding
+  :init (spacious-padding-mode)
+  :custom (spacious-padding-widths '( :internal-border-width 12 :mode-line-width 3 )))
+
+;; Like a presentation mode, much more readable and pleasant to the eyes.
+(use-package visual-fill-column
+  :bind (:map toggle-minor-mode-map ("v" . visual-fill-column-mode))
+  :hook ((org-mode text-mode magit-status-mode emacs-lisp-mode eshell-mode)
+         . visual-fill-column-mode)
+  :custom
+  (visual-fill-column-width 130)
+  (visual-fill-column-center-text t))
+
 ;; Undo tree: trace your edits as a living tree.
 (use-package vundo
   :bind ("C-x u" . vundo) ("C-?" . undo-redo)
   :custom (undo-limit (* 16 1024 1024)))
 
-;; If there is no active region, kill/delete/copy the current line.
+;; If there is no active region, kill/copy the current line.
 (use-package whole-line-or-region
   :init (whole-line-or-region-global-mode))
 

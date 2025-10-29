@@ -32,8 +32,8 @@
 
 ;; Concerning the mode-line
 (display-time-mode)                                                    ; I want to know the time from the mode-line
-(setq display-time-day-and-date t)                                     ; Display date as well
-(display-battery-mode)                                                 ; Display battery level in the mode-line
+(setq display-time-day-and-date t)                                     ; display date as well
+(display-battery-mode)                                                 ; display battery level in the mode-line
 
 ;; Concerning windows
 (setq window-combination-resize t)                                     ; keep windows balanced
@@ -47,6 +47,7 @@
  use-short-answers t                                                   ; all confirmations prompts be y or n
  echo-keystrokes 0.1                                                   ; display keystrokes in the echo area faster
  confirm-kill-processes nil                                            ; don't confirm killing processes on exit
+ shift-select-mode nil                                                 ; we have a better use of `Shift' as modifier key
  suggest-key-bindings nil)                                             ; don't show equivalent keybindings when `M-x' has one
 
 ;; Some nice minor modes
@@ -54,5 +55,13 @@
 (goto-address-mode)                                                    ; make URLs and email addresses clickable
 (repeat-mode)                                                          ; repeat commands without retyping the prefix key
 (setq repeat-exit-timeout 5)                                           ; no repeat after 5 seconds
+
+;; Although we preach minimalism, we shall allow some pretty math symbols.
+(global-prettify-symbols-mode)
+(defun rh/provide-pretty-symbols ()
+  "Provide some pretty symbols."
+  (setq prettify-symbols-alist
+        '(("->" . ?→) ("=>" . ?⇒) (">=" . ?≥) ("<=" . ?≤) ("!=" . ?≠))))
+(add-hook 'prog-mode-hook 'rh/provide-pretty-symbols)
 
 (provide 'knot-defaults)

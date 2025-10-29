@@ -27,16 +27,14 @@
       native-comp-speed 3
       native-comp-defer t)
 
-;; Prefer .el over .eln or .elc if it's more recent
-(setq load-prefer-newer t)
-
+(setq load-prefer-newer t)                                              ; prefer .el over .eln or .elc if it's more recent
 (setq use-package-enable-imenu-support t)
 (require 'use-package)
-(setq use-package-always-ensure    t
-      use-package-always-defer     t
-      use-package-vc-prefer-newest t) ; :rev :newest by default
+(setq use-package-always-ensure    t                                    ; always install packages if not found
+      use-package-always-defer     t                                    ; always defer packages by default
+      use-package-vc-prefer-newest t)                                   ; :rev :newest by default
 
-;; Tweaks for the garbage collector to make Emacs more responsive
+;; Garbage collector tweaks to make Emacs more responsive
 (use-package gcmh
   :init (gcmh-mode 1)
   :custom
@@ -47,11 +45,16 @@
 (use-package dash :config (dash-fontify-mode))
 (use-package s)
 
+;; Set up appearance
+(setq custom-safe-themes t)                                             ; don't ask for confirmation for loading themes
+(mapc #'disable-theme custom-enabled-themes)                            ; clean up all debris (before loading a new theme)
+(use-package ef-themes :init (ef-themes-select 'ef-dream))              ; `modus-themes' is another good one
+(use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
+
 ;; Local modules
 (require 'knot-macros)
 (require 'knot-keys)
 (require 'knot-defaults)
-(require 'knot-visuals)
 (require 'knot-packages)
 (require 'knot-editing)
 (require 'knot-completion)
