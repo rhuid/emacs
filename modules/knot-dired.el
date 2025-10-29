@@ -10,7 +10,8 @@
               ("U"    . dired-unmark-all-marks)
               ("<f5>" . revert-buffer-quick))
   :hook ((dired-mode . rh/dired-setup)
-	       (dired-mode . dired-hide-details-mode))
+	       (dired-mode . dired-hide-details-mode)
+	       (dired-mode . dired-click-to-select-mode))
   :config
   (defun rh/dired-setup ()
     (display-line-numbers-mode -1)
