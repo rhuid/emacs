@@ -30,6 +30,11 @@
 (setq scroll-preserve-screen-position t)                               ; while scrolling, try to keep the point unchanged
 (setq-default cursor-in-non-selected-windows nil)                      ; hide cursor/point on non-active windows
 
+;; Concerning the mode-line
+(display-time-mode)                                                    ; I want to know the time from the mode-line
+(setq display-time-day-and-date t)                                     ; Display date as well
+(display-battery-mode)                                                 ; Display battery level in the mode-line
+
 ;; Concerning windows
 (setq window-combination-resize t)                                     ; keep windows balanced
 (winner-mode)                                                          ; undo window configurations
@@ -46,10 +51,8 @@
 
 ;; Some nice minor modes
 (delete-selection-mode)                                                ; typing on a region replaces it
-(display-time-mode)                                                    ; I want to know the time from the mode-line
+(goto-address-mode)                                                    ; make URLs and email addresses clickable
 (repeat-mode)                                                          ; repeat commands without retyping the prefix key
 (setq repeat-exit-timeout 5)                                           ; no repeat after 5 seconds
-
-(display-startup-echo-area-message)
 
 (provide 'knot-defaults)
