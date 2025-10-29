@@ -10,8 +10,8 @@
   (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
   (exec-path-from-shell-initialize))
 
-(setq custom-file (make-temp-file "temp_custom")) ; Don't mess up my init. Use a temporary custom file
-(setq vc-follow-symlinks t) ; Always follow symlikes without asking
+(setq custom-file (make-temp-file "temp_custom"))                       ; Don't mess up my init. Use a temporary custom file
+(setq vc-follow-symlinks t)                                             ; Always follow symlikes without asking
 (setq-default default-directory "~/")
 
 ;; Set up packages
@@ -40,8 +40,12 @@
 (use-package gcmh
   :init (gcmh-mode 1)
   :custom
-  (gcmh-idle-delay 20) ; run GC after 20 secs idle
-  (gcmh-high-cons-threshold (* 256 1024 1024))) ; while typing, don't run GC until (threshold 256 MB)
+  (gcmh-idle-delay 20)                                                  ; run GC after 20 secs idle
+  (gcmh-high-cons-threshold (* 256 1024 1024)))                         ; while typing, don't run GC until (threshold 256 MB)
+
+;; Might be a good idea to load these early
+(use-package dash :config (dash-fontify-mode))
+(use-package s)
 
 ;; Local modules
 (require 'knot-macros)
