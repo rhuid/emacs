@@ -137,7 +137,7 @@
   :init (show-paren-mode)
   :custom (show-paren-delay 0))
 
-;; Navigate your project with ease. Lightweight and comes built-in.
+;; Navigate your project with ease; lightweight and comes built-in.
 (use-package project
   :custom (project-switch-commands
            '((magit-project-status "Magit"     ?m)
