@@ -4,12 +4,17 @@
 (use-package prog-mode
   :ensure nil
   :hook ((prog-mode . glyphless-display-mode)                                ; display all glyphless characters as boxes
+         (prog-mode . rh/provide-pretty-symbols)                             ; pretty symbols in `prog-mode'
          (after-save . executable-make-buffer-file-executable-if-script-p))  ; make a shell script executable upon saving
   :config
   (global-font-lock-mode)
   (setq-default indent-tabs-mode nil)                                        ; always use spaces, never tabs
   (setq-default tab-width 2)                                                 ; set default tab width to 2 spaces
-  (setq standard-indent 2))                                                  ; set default indent to 2 spaces
+  (setq standard-indent 2)                                                   ; set default indent to 2 spaces
+  (defun rh/provide-pretty-symbols ()
+    "Provide some pretty symbols."
+    (setq prettify-symbols-alist
+          '(("->" . ?→) ("=>" . ?⇒) (">=" . ?≥) ("<=" . ?≤) ("!=" . ?≠)))))
 
 ;; Indent aggressively as you type.
 (use-package aggressive-indent
