@@ -47,15 +47,11 @@
         flycheck-indication-mode 'left-fringe))
 
 ;; Lean 4: Prove theorems in Emacs!
-;; (setq lean4-lsp-server-executable-name "lean")
 (use-package lean4-mode
   :vc (:url "https://github.com/leanprover-community/lean4-mode.git")
   :bind (:map lean4-mode-map ("C-m" . electric-newline-and-maybe-indent))
   :hook (lean4-mode . lsp)
   :config (abbrev-table-put lean4-abbrev-table :case-fixed t))               ; case-sensitive abbrev expansion
-
-;; (add-to-list 'load-path "~/.emacs.d/lean4-mode/")
-;; (require 'lean4-mode)
 
 (use-package flycheck-rust
   :after rust-mode
