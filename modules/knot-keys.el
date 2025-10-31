@@ -8,11 +8,9 @@
 (add-hook 'after-make-frame-functions
           (lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
 
-;; `Hyper' key is well placed on my keyboard, so let's make good use of that first.
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
-(define-key key-translation-map (kbd "H-x g") (kbd "C-x g"))                     ; `magit'
 (define-key key-translation-map (kbd "C-H-b") (kbd "C-x b"))                     ; `consult-buffer'
-(define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))
+(define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))                 ; more ergonomic saving
 (bind-key "H-r" ctl-x-r-map)                                                     ; `H-r' is much faster to type than `C-x r'
 
 ;; Readjustments to some default keybindings
@@ -97,8 +95,6 @@
 ;; Window/buffer navigation and management
 (bind-key "M-o" 'other-window)
 (bind-key "C-x C-b" 'ibuffer)
-(bind-key "H-4" 'display-buffer)
-(bind-key "M-H-0" 'kill-buffer-and-window)
 
 ;; I don't wanna do M-x and type the name again.
 (bind-key "S-<f2>" 'rename-visited-file)                                   ; a homage to GUI file managers' <f2> renaming
