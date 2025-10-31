@@ -20,6 +20,7 @@
 (bind-key "M-m" 'mark-word)                                                      ; by default, `M-m' is `back-to-indentation'
 (bind-key "M-M" (lamb (mark-word 4 t)))                                          ; mark 4 words at a time
 (bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
+(bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                   ; always adjust text scale globally
 
 ;; No arrows. BACK TO THE CHORDS!
 (dolist (key '("<up>" "<down>" "<right>" "<left>"))
@@ -40,11 +41,6 @@
 (bind-key [remap capitalize-word] 'capitalize-dwim)
 (bind-key [remap upcase-word] 'upcase-dwim)
 (bind-key [remap downcase-word] 'downcase-dwim)
-
-;; Adjust font size globally
-(bind-key [remap text-scale-adjust] 'global-text-scale-adjust)
-(dolist (key '("C-H-=" "C-H--" "C-H-0"))
-  (bind-key key 'global-text-scale-adjust))
 
 ;; Duplicating lines/regions
 (bind-key "C-:" 'copy-from-above-command)
