@@ -10,7 +10,8 @@
   (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
   (exec-path-from-shell-initialize))
 
-(setq custom-file (make-temp-file "temp_custom"))                       ; Don't mess up my init. Use a temporary custom file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))  ; Don't mess up my init. Use a custom file
+(load custom-file)
 (setq vc-follow-symlinks t)                                             ; Always follow symlikes without asking
 (setq-default default-directory "~/")
 
