@@ -52,7 +52,7 @@
 
 ;; Some nice minor modes
 (delete-selection-mode)                                                ; typing on a region replaces it
-(goto-address-mode)                                                    ; make URLs and email addresses clickable
+(global-goto-address-mode)                                             ; make URLs and email addresses clickable
 (global-prettify-symbols-mode)                                         ; pretty math symbols
 (repeat-mode)                                                          ; repeat commands without retyping the prefix key
 (setq repeat-exit-timeout 5)                                           ; no repeat after 5 seconds
