@@ -1,43 +1,28 @@
 ;;; init.el --- The main init.el file -*- lexical-binding: t; -*-
 
 (add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name ".archives" user-emacs-directory))
-
-;; Inherit shell variables (could be important for daemon)
-(use-package exec-path-from-shell
-  :demand t
-  :config
-  (setq exec-path-from-shell-variables '("PATH" "MANPATH"))
-  (exec-path-from-shell-initialize))
-
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))  ; Don't mess up my init. Use a custom file
-(load custom-file)
-(setq vc-follow-symlinks t)                                             ; Always follow symlikes without asking
 (setq-default default-directory "~/")
+(setq vc-follow-symlinks t)                                             ; always follow symlinks without asking
 
 ;; Set up packages
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") 'append)
-
-;; Native compilation tweaks
-(setq package-native-compile t
-      package-install-upgrade-built-in t
-      native-comp-deferred-compilation t
-      native-comp-warning-on-missing-source nil
-      native-comp-async-report-warnings-errors nil
-      native-comp-speed 3
-      native-comp-defer t)
-
-(setq load-prefer-newer t)                                              ; prefer .el over .eln or .elc if it's more recent
-(setq use-package-enable-imenu-support t)
 (require 'use-package)
 (setq use-package-always-ensure    t                                    ; always install packages if not found
       use-package-always-defer     t                                    ; always defer packages by default
-      use-package-vc-prefer-newest t)                                   ; :rev :newest by default
+      use-package-vc-prefer-newest t                                    ; :rev :newest by default
+      load-prefer-newer t                                               ; prefer .el over .eln or .elc if it's more recent
+      use-package-enable-imenu-support t)
+
+;; Inherit shell variables (could be important for daemon)
+(use-package exec-path-from-shell
+  :init
+  (exec-path-from-shell-initialize)
+  (setq exec-path-from-shell-variables '("PATH" "MANPATH")))
 
 ;; Garbage collector tweaks to make Emacs more responsive
 (use-package gcmh
-  :init (gcmh-mode 1)
+  :init (gcmh-mode)
   :custom
   (gcmh-idle-delay 20)                                                  ; run GC after 20 secs idle
   (gcmh-high-cons-threshold (* 256 1024 1024)))                         ; while typing, don't run GC until (threshold 256 MB)
@@ -65,3 +50,6 @@
 (require 'knot-eshell)
 (require 'knot-startup-page)
 (require 'knot-misc)
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))  ; don't mess up my init, use a custom file
+(load custom-file)
