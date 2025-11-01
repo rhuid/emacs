@@ -24,11 +24,6 @@
   (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))                          ; optimized for my keyboard layout
   (avy-timeout-seconds 0.2))
 
-;; `dictrus' --- https://github.com/rhuid/dictrus
-(use-package dictrus
-  :load-path "~/.emacs.d/experimental/"
-  :bind ("C-c d d" . rh/dictrus-lookup))
-
 ;; Type comfortably --- `eldoc' watches over you; a whisper of documentation as you type.
 (use-package eldoc
   :ensure nil
@@ -221,10 +216,8 @@
   :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
 ;; Some more packages
-(use-package achievements :init (achievements-mode))
 (use-package sudo-edit)
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
-(use-package wordel)
 
 (provide 'knot-packages)
