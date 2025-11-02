@@ -7,11 +7,14 @@
 (load-library "~/.emacs.d/.archives/dictrus.el")                     ; `dictrus' --- https://github.com/rhuid/dictrus
 (bind-key "C-c d d" 'rh/dictrus-lookup)
 
-;; Silently (without output) invoke `nemo' file manager in the current directory.
-(bind-key "C-s-n" (lamb (start-process-shell-command "Nemo" nil "nemo .")))
+;; Silently (without output) invoke external programs from within Emacs
+(bind-key "C-s-n" (lamb (start-process-shell-command "Nemo" nil "nemo .")))  ; GUI file manager in the current directory
+(bind-key "C-s-g" (lamb (start-process-shell-command "GIMP" nil "gimp")))    ; GIMP
 
 (use-package achievements :init (achievements-mode))
 (use-package wordel)
+
+;; Here comes the mess!
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
