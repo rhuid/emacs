@@ -1,5 +1,11 @@
 ;;; knot-keys.el --- Some extra global keys for the thermonuclear editor -*- lexical-binding: t; -*-
 
+;; Create a version of these commands that apply to the whole buffer if there is no active region.
+(rh/define-region-or-buffer-command query-replace)
+(rh/define-region-or-buffer-command query-replace-regexp)
+(rh/define-region-or-buffer-command replace-string)
+(rh/define-region-or-buffer-command sort-lines)
+
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
 
@@ -13,13 +19,15 @@
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))                ; more ergonomic saving
 
 ;; Readjustments and (re)bindings of some inbuilt commands
-(bind-key "C-z" 'repeat)
-(bind-key "C-%" 'replace-string)                                                ; reminiscent of `M-%' and `C-M-%'?
-(bind-key "M-m" 'mark-word)                                                     ; by default, `M-m' is `back-to-indentation'
-(bind-key "M-M" (lamb (mark-word 4 t)))                                         ; mark 4 words at a time
-(bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
-(bind-key "M-r" ctl-x-r-map)                                                    ; `M-r' is much faster to type than `C-x r'
+(bind-key "C-z"   'repeat)
+(bind-key "M-%"   'rh/region-or-buffer--query-replace)
+(bind-key "C-M-%" 'rh/region-or-buffer--query-replace-regexp)
+(bind-key "C-%"   'rh/region-or-buffer--replace-string)                         ; reminiscent of `M-%' and `C-M-%'?
+(bind-key "M-m"   'mark-word)                                                   ; by default, `M-m' is `back-to-indentation'
+(bind-key "M-M"   (lamb (mark-word 4 t)))                                       ; mark 4 words at a time
+(bind-key "M-r"   ctl-x-r-map)                                                  ; `M-r' is much faster to type than `C-x r'
 (bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                  ; always adjust text scale globally
+(bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
 
 ;; No arrows. BACK TO THE CHORDS!
 (dolist (key '("<up>" "<down>" "<right>" "<left>"))
@@ -72,7 +80,7 @@
 (bind-key "M-s d" 'delete-duplicate-lines)
 (bind-key "M-s f" 'flush-lines)
 (bind-key "M-s k" 'keep-lines)
-(bind-key "M-s l" 'sort-lines)
+(bind-key "M-s l" 'rh/region-or-buffer--sort-lines)
 
 ;; Join lines in a more sensible way.
 (bind-key "C-j" (lamb (join-line -1)))                                     ; join this line to the next
