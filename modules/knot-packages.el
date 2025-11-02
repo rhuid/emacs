@@ -42,7 +42,7 @@
 
 ;; Select and expand regions by semantic units.
 (use-package expand-region
-  :bind ("C->" . er/expand-region) ("M-r" . er/expand-region))
+  :bind ("C->" . er/expand-region))
 
 ;; Some modes don't need the mode-line and looks cleaner without it.
 (use-package hide-mode-line
@@ -51,7 +51,7 @@
 
 ;; Let Emacs whisper the rest of your words; completion for those who prefer serendipity over precision.
 (use-package hippie-exp
-  :bind ("<Ci>" . hippie-expand)
+  :bind ("M-/" . hippie-expand)
   :custom
   (hippie-expand-try-functions-list
    '(try-complete-file-name
