@@ -9,31 +9,30 @@
           (lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
 
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
-(define-key key-translation-map (kbd "C-H-b") (kbd "C-x b"))                     ; `consult-buffer'
-(define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))                 ; more ergonomic saving
-(bind-key "H-r" ctl-x-r-map)                                                     ; `H-r' is much faster to type than `C-x r'
+(define-key key-translation-map (kbd "C-H-b") (kbd "C-x b"))                    ; `consult-buffer'
+(define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))                ; more ergonomic saving
 
-;; Readjustments to some default keybindings
+;; Readjustments and (re)bindings of some inbuilt commands
 (bind-key "C-z" 'repeat)
-(bind-key "M-m" 'mark-word)                                                      ; by default, `M-m' is `back-to-indentation'
-(bind-key "M-M" (lamb (mark-word 4 t)))                                          ; mark 4 words at a time
+(bind-key "C-%" 'replace-string)                                                ; reminiscent of `M-%' and `C-M-%'?
+(bind-key "M-m" 'mark-word)                                                     ; by default, `M-m' is `back-to-indentation'
+(bind-key "M-M" (lamb (mark-word 4 t)))                                         ; mark 4 words at a time
 (bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
-(bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                   ; always adjust text scale globally
+(bind-key "M-r" ctl-x-r-map)                                                    ; `M-r' is much faster to type than `C-x r'
+(bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                  ; always adjust text scale globally
 
 ;; No arrows. BACK TO THE CHORDS!
 (dolist (key '("<up>" "<down>" "<right>" "<left>"))
   (bind-key key (lamb (message "Arrows? Where we are editing, we don't need arrows."))))
 
-;; A prefix key for toggling `m'inor modes
-(define-prefix-command 'toggle-minor-mode-map)
-(bind-key "C-x m" 'toggle-minor-mode-map)
-(keymap-set toggle-minor-mode-map (kbd "f") 'follow-mode)
-(keymap-set toggle-minor-mode-map (kbd "l") 'display-line-numbers-mode)
+;; I teleport a lot!
+(bind-key "<Ci>" (lamb (point-to-register ?6)))
+(bind-key "C-S-i" (lamb (jump-to-register ?6)))
 
 ;; Zapping
-(bind-key "M-z" 'zap-up-to-char)                                           ; by default, `M-z' is bound to `zap-to-char'
-(bind-key "C-M-z" 'delete-pair)                                            ; think of "zap pair"
-(setopt delete-pair-blink-delay 0)                                         ; heck, why would I want any delay?
+(bind-key "M-z" 'zap-up-to-char)                                                ; by default, `M-z' is bound to `zap-to-char'
+(bind-key "C-M-z" 'delete-pair)                                                 ; think of "zap pair"
+(setopt delete-pair-blink-delay 0)                                              ; heck, why would I want any delay?
 
 ;; Changing case
 (bind-key [remap capitalize-word] 'capitalize-dwim)
@@ -52,8 +51,8 @@
 ;; Need for Speed: Shift... Hold `S'hift for `S'peed
 (bind-key "C-S-n" (lamb (forward-line 5) (recenter)))
 (bind-key "C-S-p" (lamb (previous-line 5) (recenter)))
-(bind-key "C-S-f" (lamb (forward-char 5) (recenter)))
-(bind-key "C-S-b" (lamb (backward-char 5) (recenter)))
+(bind-key "C-S-f" (lamb (forward-char 4) (recenter)))
+(bind-key "C-S-b" (lamb (backward-char 4) (recenter)))
 
 ;; Paragraph navigation: `n'ext paragraph and `p'revious paragraph
 (bind-key "M-n" 'forward-paragraph)
@@ -74,11 +73,16 @@
 (bind-key "M-s f" 'flush-lines)
 (bind-key "M-s k" 'keep-lines)
 (bind-key "M-s l" 'sort-lines)
-(bind-key "M-s r" 'replace-string)
 
 ;; Join lines in a more sensible way.
 (bind-key "C-j" (lamb (join-line -1)))                                     ; join this line to the next
 (bind-key "C-S-j" 'join-line)                                              ; join this line to the previous
+
+;; A prefix key for toggling `m'inor modes
+(define-prefix-command 'toggle-minor-mode-map)
+(bind-key "C-x m" 'toggle-minor-mode-map)
+(keymap-set toggle-minor-mode-map (kbd "f") 'follow-mode)
+(keymap-set toggle-minor-mode-map (kbd "l") 'display-line-numbers-mode)
 
 ;; We need to load `org-mode' for the following.
 (autoload 'org-increase-number-at-point "org" nil t)
