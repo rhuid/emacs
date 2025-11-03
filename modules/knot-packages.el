@@ -106,6 +106,7 @@
 ;; Edit everywhere at once; parallel editing.
 (use-package multiple-cursors
   :bind (("C-M-S-a" . mc/mark-all-like-this-dwim)
+         ("M-S-RET" . mc/edit-lines)                                                          ; `C-M-S-m'
          ("C-M-S-n" . mc/mark-next-like-this)
          ("C-M-S-p" . mc/mark-previous-like-this)
          ("C-M->"   . mc/skip-to-next-like-this)

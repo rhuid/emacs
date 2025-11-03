@@ -35,9 +35,9 @@
    '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#ff79c6"))))
    '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c")))))
   :bind (:map org-mode-map
+              ("C-j" . nil)
               ("C-," . nil)
               ("C-'" . nil)
-              ("C-j" . rh/join-line)
               ("C-S-o" . org-shifttab)))
 
 (use-package org-modern
