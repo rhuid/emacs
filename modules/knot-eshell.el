@@ -1,4 +1,4 @@
-;;; knot-eshell.el --- Eshell things -*- lexical-binding: t; -*-
+;;; knot-eshell.el --- `eshell' supremacy -*- lexical-binding: t; -*-
 
 (use-package eshell
   :ensure nil
@@ -22,25 +22,16 @@
           (pwd (abbreviate-file-name (eshell/pwd))))
       (concat
        (propertize pwd 'face promptface) "\n"
-       (if (zerop (user-uid)) "# " "→ ")))))
+       (if (zerop (user-uid)) "# " "→ "))))
+
+  (use-package eat :init (eat-eshell-mode)) ; emulate a terminal
+  (use-package esh-autosuggest :init (esh-autosuggest-mode))
+  (use-package eshell-syntax-highlighting :init (eshell-syntax-highlighting-global-mode)))
 
 (use-package eshell-toggle
   :bind ("M-S" . eshell-toggle)
   :custom
   (eshell-toggle-size-fraction 3)
   (eshell-toggle-use-project-root t))
-
-(use-package eshell-syntax-highlighting
-  :demand t
-  :after eshell
-  :config (eshell-syntax-highlighting-global-mode +1))
-
-(use-package esh-autosuggest
-  :hook (eshell-mode . esh-autosuggest-mode))
-
-;; Emulate a terminal
-(use-package eat
-  :after eshell
-  :hook (eshell-mode . eat-eshell-mode))
 
 (provide 'knot-eshell)
