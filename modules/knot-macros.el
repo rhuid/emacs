@@ -1,6 +1,6 @@
 ;;; knot-macros.el --- Some useful macros -*- lexical-binding: t; -*-
 
-;; Extend commands such that they work as usual if there is an active region, otherwise apply to the whole buffer.
+;; Extend commands such that they work as usual if there is an active region, otherwise they apply to the whole buffer.
 (defmacro rh/define-region-or-buffer-command (func)
   "Define a new command named `rh/region-or-buffer--<func>' that calls FUNC on region or whole buffer if no region active."
   (let ((new-func (intern (concat "rh/region-or-buffer--" (symbol-name func)))))
