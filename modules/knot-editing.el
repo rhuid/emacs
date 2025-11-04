@@ -15,30 +15,31 @@
 (bind-key "C-<return>" 'rh/open-line-below)
 (bind-key "C-S-<return>" 'rh/open-line-above)
 
-(defun rh/chop-off-buffer (&optional arg)
+(defun rh/chop-off-buffer (&optional ARG)
   "Kill the rest of the buffer after point (or before point with prefix ARG)."
   (interactive "P")
-  (if arg
+  (if ARG
       (kill-region (point-min) (point))
     (kill-region (point) (point-max))))
 
-(defun rh/backward-chop-off-buffer (&optional arg)
+(defun rh/backward-chop-off-buffer (&optional ARG)
   "Kill the rest of the buffer before point (or after point with prefix ARG)."
   (interactive "P")
-  (if arg
+  (if ARG
       (kill-region (point) (point-max))
     (kill-region (point-min) (point))))
 
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
 
-(defun rh/copy-sentence ()
-  "Copy the current sentence. This command is equivalent to invoking `M-a C-SPC M-e M-w' or `M-a M-k C-/'."
-  (interactive)
+(defun rh/copy-sentence (&optional ARG)
+  "Copy ARG sentences. ARG defaults to 1 (copy the current sentence). With negative ARG, copy the previous sentence(s)."
+  (interactive "p")
   (save-excursion
     (backward-sentence 1)
-    (mark-end-of-sentence 1)
-    (call-interactively 'kill-ring-save)))
+    (set-mark (point))
+    (forward-sentence ARG)
+    (kill-ring-save (region-beginning) (region-end))))
 
 (bind-key "C-@" 'rh/copy-sentence)
 
