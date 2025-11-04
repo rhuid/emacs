@@ -147,15 +147,14 @@
   :bind (:map puni-mode-map
               ("C-w" . nil)                                                  ; taken by whole-line-or-region-kill-region
               ("H-s" . puni-squeeze)
-              ("H-k" . kill-paragraph)
-              ("H-h" . backward-kill-paragraph)
+              ("M-K" . kill-paragraph)
+              ("C-c DEL" . backward-kill-paragraph)                          ; `C-c C-h' in my setup
               ("C-S-h" . puni-backward-kill-word)
               ("C-M-r" . puni-raise)
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
-              ("M-H-i" . puni-barf-backward)
-              ("C-M-S-h" . backward-kill-sexp))
+              ("M-H-i" . puni-barf-backward))
   :custom
   (puni-squeeze-flash nil)                                                   ; don't blink or flash, I find it distracting
   (puni-confirm-when-delete-unbalanced-active-region nil))                   ; don't warn me, I know what I am doing
