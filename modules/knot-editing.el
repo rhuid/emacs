@@ -4,30 +4,30 @@
   "Create a new line below and move the cursor there."
   (interactive)
   (move-end-of-line 1)
-  (call-interactively 'newline))
+  (newline t t))
 
 (defun rh/open-line-above ()
   "Create a new line above and move the cursor there."
   (interactive)
   (mwim-beginning-of-code-or-line)
-  (call-interactively 'open-line))
+  (open-line 1))
 
 (bind-key "C-<return>" 'rh/open-line-below)
 (bind-key "C-S-<return>" 'rh/open-line-above)
 
-(defun rh/backward-chop-off-buffer ()
-  "Delete the rest of the buffer before the point."
-  (interactive)
-  (call-interactively 'set-mark-command)
-  (call-interactively 'beginning-of-buffer)
-  (call-interactively 'delete-region))
+(defun rh/chop-off-buffer (&optional arg)
+  "Kill the rest of the buffer after point (or before point with prefix ARG)."
+  (interactive "P")
+  (if arg
+      (kill-region (point-min) (point))
+    (kill-region (point) (point-max))))
 
-(defun rh/chop-off-buffer ()
-  "Delete the rest of the buffer after the point."
-  (interactive)
-  (call-interactively 'set-mark-command)
-  (call-interactively 'end-of-buffer)
-  (call-interactively 'delete-region))
+(defun rh/backward-chop-off-buffer (&optional arg)
+  "Kill the rest of the buffer before point (or after point with prefix ARG)."
+  (interactive "P")
+  (if arg
+      (kill-region (point) (point-max))
+    (kill-region (point-min) (point))))
 
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
