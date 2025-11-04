@@ -24,6 +24,7 @@
 (bind-key "C-M-%" 'rh/region-or-buffer--query-replace-regexp)
 (bind-key "C-%"   'rh/region-or-buffer--replace-string)                         ; reminiscent of `M-%' and `C-M-%'?
 (bind-key "M-m"   'mark-word)                                                   ; by default, `M-m' is `back-to-indentation'
+(bind-key "C-S-j" 'join-line)                                                   ; join this line to the previous
 (bind-key "M-M"   (lamb (mark-word 4 t)))                                       ; mark 4 words at a time
 (bind-key "M-r"   ctl-x-r-map)                                                  ; `M-r' is much faster to type than `C-x r'
 (bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                  ; always adjust text scale globally
@@ -57,7 +58,7 @@
 (bind-key "H-t" 'transpose-paragraphs)
 
 ;; Need for Speed: Shift... Hold `S'hift for `S'peed
-(bind-key "C-S-n" (lamb (forward-line 5) (recenter)))
+(bind-key "C-S-n" (lamb (next-line 5) (recenter)))
 (bind-key "C-S-p" (lamb (previous-line 5) (recenter)))
 (bind-key "C-S-f" (lamb (forward-char 4) (recenter)))
 (bind-key "C-S-b" (lamb (backward-char 4) (recenter)))
@@ -81,10 +82,6 @@
 (bind-key "M-s f" 'flush-lines)
 (bind-key "M-s k" 'keep-lines)
 (bind-key "M-s l" 'rh/region-or-buffer--sort-lines)
-
-;; Join lines in a more sensible way.
-(bind-key "C-j" (lamb (join-line -1)))                                     ; join this line to the next
-(bind-key "C-S-j" 'join-line)                                              ; join this line to the previous
 
 ;; A prefix key for toggling `m'inor modes
 (define-prefix-command 'toggle-minor-mode-map)
