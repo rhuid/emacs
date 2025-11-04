@@ -1,4 +1,4 @@
-;;; knot-editing.el --- Some commands for better editing -*- lexical-binding: t; -*-
+;;; knot-editing.el --- Some commands for more efficient editing -*- lexical-binding: t; -*-
 
 (defun rh/open-line-below ()
   "Create a new line below and move the cursor there."
@@ -12,7 +12,24 @@
   (mwim-beginning-of-code-or-line)
   (call-interactively 'open-line))
 
-(bind-key "C-S-o" 'rh/open-line-above)                     ; a counterpart to `C-o'
-(bind-key "C-<return>" 'rh/open-line-below)                ; like in org-mode, so you don't have to learn a new keybinding
+(bind-key "C-<return>" 'rh/open-line-below)
+(bind-key "C-S-<return>" 'rh/open-line-above)
+
+(defun rh/backward-chop-off-buffer ()
+  "Delete the rest of the buffer before the point."
+  (interactive)
+  (call-interactively 'set-mark-command)
+  (call-interactively 'beginning-of-buffer)
+  (call-interactively 'delete-region))
+
+(defun rh/chop-off-buffer ()
+  "Delete the rest of the buffer after the point."
+  (interactive)
+  (call-interactively 'set-mark-command)
+  (call-interactively 'end-of-buffer)
+  (call-interactively 'delete-region))
+
+(bind-key "C-M-S-k" 'rh/chop-off-buffer)
+(bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
 
 (provide 'knot-editing)
