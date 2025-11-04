@@ -13,6 +13,13 @@
            (call-interactively 'mark-whole-buffer)
            (call-interactively ',func))))))
 
+(defmacro lamb (&rest body)
+  "Return an interactive lambda that ignore errors."
+  `(lambda ()
+     "This is an anonymous command defined using `lamb'. Check config for more info."
+     (interactive)
+     (ignore-errors ,@body)))
+
 (defmacro times (reps command)
   "Return an interactive lambda that runs COMMAND REPS times interactively."
   `(lambda ()
@@ -21,12 +28,5 @@
      (ignore-errors
        (dotimes (_ ,reps)
          (call-interactively #',command)))))
-
-(defmacro lamb (&rest body)
-  "Return an interactive lambda that ignore errors."
-  `(lambda ()
-     "This is an anonymous command defined using `lamb'. Check config for more info."
-     (interactive)
-     (ignore-errors ,@body)))
 
 (provide 'knot-macros)

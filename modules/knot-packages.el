@@ -125,7 +125,7 @@
 
 ;; Move where I mean.
 (use-package mwim
-  :bind (("C-a" . mwim-beginning-of-code-or-line)
+  :bind (("C-a" . mwim-beginning-of-code-or-line-or-comment)
          ("C-e" . mwim-end-of-code-or-line)))
 
 ;; Highlight matching parentheses, braces and brackets.
@@ -148,7 +148,7 @@
               ("C-w" . nil)                                                  ; taken by whole-line-or-region-kill-region
               ("H-s" . puni-squeeze)
               ("M-K" . kill-paragraph)
-              ("C-c DEL" . backward-kill-paragraph)                          ; `C-c C-h' in my setup
+              ("M-H" . backward-kill-paragraph)
               ("C-S-h" . puni-backward-kill-word)
               ("C-M-r" . puni-raise)
               ("C-H-i" . puni-slurp-forward)
