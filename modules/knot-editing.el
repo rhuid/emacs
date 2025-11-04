@@ -32,4 +32,14 @@
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
 
+(defun rh/copy-sentence ()
+  "Copy the current sentence. This command is equivalent to invoking `M-a C-SPC M-e M-w' or `M-a M-k C-/'."
+  (interactive)
+  (save-excursion
+    (backward-sentence 1)
+    (mark-end-of-sentence 1)
+    (call-interactively 'kill-ring-save)))
+
+(bind-key "C-@" 'rh/copy-sentence)
+
 (provide 'knot-editing)
