@@ -13,15 +13,15 @@
   "Kill the rest of the buffer after point. With ARG, it deletes instead (does not save to the kill-ring)."
   (interactive "P")
   (if ARG
-      (kill-region (point) (point-max))
-    (delete-region (point) (point-max))))
+      (delete-region (point) (point-max))
+    (kill-region (point) (point-max))))
 
 (defun rh/backward-chop-off-buffer (&optional ARG)
   "Kill the rest of the buffer before point. With ARG, it deletes instead (does not save to the kill-ring)."
   (interactive "P")
   (if ARG
-      (kill-region (point-min) (point))
-    (delete-region (point-min) (point))))
+      (delete-region (point-min) (point))
+    (kill-region (point-min) (point))))
 
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
