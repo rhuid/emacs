@@ -39,9 +39,11 @@
 (setq window-combination-resize t)                                     ; keep windows balanced
 (winner-mode)                                                          ; undo window configurations
 (bind-key "H-<tab>" 'winner-undo)
+(setopt recenter-positions '(top middle bottom))                       ; recenter in this order
 
 ;; Make it more convenient (concerning convenience?)
 (setq
+ use-dialog-box                                                        ; no dialog box, please
  next-line-add-newlines t                                              ; `C-n', at buffer end, inserts newline
  disabled-command-function nil                                         ; enable all disabled commands, I know what I am doing
  use-short-answers t                                                   ; all confirmations prompts be y or n
