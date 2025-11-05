@@ -52,8 +52,8 @@
  suggest-key-bindings nil)                                             ; don't show equivalent keybindings when `M-x' has one
 
 ;; Concerning editing
-(setopt
- duplicate-line-position-final   -1                                    ; move point to the last new line
+(setq
+ duplicate-line-final-position   -1                                    ; move point to the last new line
  duplicate-region-final-position -1                                    ; put the region around the last copy
  delete-pair-blink-delay 0)                                            ; heck, why would I want any delay?
 
