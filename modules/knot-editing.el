@@ -66,7 +66,7 @@ With ARG, perform this action that many times."
   "Create a new line above and move the cursor there.
 With ARG, perform this action that many times."
   (interactive "p")
-  (mwim-beginning-of-code-or-line)
+  (back-to-indentation)
   (open-line ARG))
 
 (bind-key "C-<return>" 'rh/open-line-below)
