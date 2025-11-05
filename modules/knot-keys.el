@@ -4,7 +4,6 @@
 (rh/define-region-or-buffer-command query-replace)
 (rh/define-region-or-buffer-command query-replace-regexp)
 (rh/define-region-or-buffer-command replace-string)
-(rh/define-region-or-buffer-command sort-lines)
 
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
@@ -81,7 +80,13 @@
 (bind-key "M-s d" 'delete-duplicate-lines)
 (bind-key "M-s f" 'flush-lines)
 (bind-key "M-s k" 'keep-lines)
-(bind-key "M-s l" 'rh/region-or-buffer--sort-lines)
+
+;; Sorting (who says we can't overload `M-s'?)
+(bind-key "M-s M-l" 'sort-lines)
+(bind-key "M-s M-c" 'sort-columns)
+(bind-key "M-s M-f" 'sort-fields)
+(bind-key "M-s M-p" 'sort-paragraphs)
+(bind-key "M-s M-r" 'reverse-region)
 
 ;; A prefix key for toggling `m'inor modes
 (define-prefix-command 'toggle-minor-mode-map)
