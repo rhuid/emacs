@@ -146,11 +146,11 @@
   :init (puni-global-mode)
   :bind (:map puni-mode-map
               ("C-w" . nil)                                                  ; taken by whole-line-or-region-kill-region
-              ("H-s" . puni-squeeze)
               ("M-K" . kill-paragraph)
               ("M-H" . backward-kill-paragraph)
               ("C-S-h" . puni-backward-kill-word)
               ("C-M-r" . puni-raise)
+              ("C-M-s" . puni-squeeze)
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)

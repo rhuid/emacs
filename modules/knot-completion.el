@@ -25,7 +25,7 @@
 (use-package consult
   :bind (("C-x b" . consult-buffer)
          ("C-x f" . consult-recent-file)
-         ("C-M-s" . consult-line)
+         ("C-S-l" . consult-line)
          ("C-M-g" . consult-ripgrep)
          ("M-g g" . consult-grep)
          ("H-g"   . consult-git-grep)

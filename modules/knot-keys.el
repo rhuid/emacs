@@ -41,8 +41,8 @@
 
 ;; Zapping
 (bind-key "M-z" 'zap-up-to-char)                                                ; by default, `M-z' is bound to `zap-to-char'
+(bind-key "M-Z" 'zap-to-char)
 (bind-key "C-M-z" 'delete-pair)                                                 ; think of "zap pair"
-(setopt delete-pair-blink-delay 0)                                              ; heck, why would I want any delay?
 
 ;; Changing case
 (bind-key [remap capitalize-word] 'capitalize-dwim)
@@ -52,7 +52,6 @@
 ;; Duplicating lines/regions
 (bind-key "C-:" 'copy-from-above-command)
 (bind-key "C-<" 'duplicate-dwim)
-(advice-add 'duplicate-dwim :after (lambda (&rest _args) (next-line)))
 
 ;; Transposing things around: `transpose-lines' has been taken care of by `move-text'.
 (bind-key "M-T" 'transpose-sentences)
