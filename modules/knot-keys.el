@@ -20,6 +20,7 @@
 
 ;; Readjustments and (re)bindings of some inbuilt commands
 (bind-key "C-z"   'repeat)
+(bind-key "C-&"   'replace-regexp)
 (bind-key "M-%"   'rh/region-or-buffer--query-replace)
 (bind-key "C-M-%" 'rh/region-or-buffer--query-replace-regexp)
 (bind-key "C-%"   'rh/region-or-buffer--replace-string)                         ; reminiscent of `M-%' and `C-M-%'?
@@ -103,6 +104,12 @@
 
 ;; Window/buffer navigation and management
 (bind-key "M-o" 'other-window)
+(bind-key "H-1" 'delete-other-windows)
+(bind-key "H-2" 'split-window-below)
+(bind-key "H-3" 'split-window-right)
+(bind-key "H-4" 'display-buffer)
+(bind-key "H-0" 'delete-window)
+(bind-key "H-<delete>" 'kill-buffer-and-window)
 (bind-key "C-x C-b" 'ibuffer)
 
 ;; I don't wanna do M-x and type the name again.

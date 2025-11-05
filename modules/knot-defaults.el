@@ -39,18 +39,23 @@
 (setq window-combination-resize t)                                     ; keep windows balanced
 (winner-mode)                                                          ; undo window configurations
 (bind-key "H-<tab>" 'winner-undo)
-(setopt recenter-positions '(top middle bottom))                       ; recenter in this order
 
 ;; Make it more convenient (concerning convenience?)
 (setq
- use-dialog-box                                                        ; no dialog box, please
- next-line-add-newlines t                                              ; `C-n', at buffer end, inserts newline
+ use-dialog-box nil                                                    ; no dialog box, please
+ next-line-add-newlines t                                              ; `C-n' adds newline, avoid `end-of-buffer' error
  disabled-command-function nil                                         ; enable all disabled commands, I know what I am doing
  use-short-answers t                                                   ; all confirmations prompts be y or n
  echo-keystrokes 0.1                                                   ; display keystrokes in the echo area faster
  confirm-kill-processes nil                                            ; don't confirm killing processes on exit
  shift-select-mode nil                                                 ; we have a better use of `Shift' as modifier key
  suggest-key-bindings nil)                                             ; don't show equivalent keybindings when `M-x' has one
+
+;; Concerning editing
+(setopt
+ duplicate-line-position-final   -1                                    ; move point to the last new line
+ duplicate-region-final-position -1                                    ; put the region around the last copy
+ delete-pair-blink-delay 0)                                            ; heck, why would I want any delay?
 
 ;; Some nice minor modes
 (delete-selection-mode)                                                ; typing on a region replaces it
