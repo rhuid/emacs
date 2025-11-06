@@ -55,27 +55,47 @@ However, in most cases, the built-in `kill-word' might be better suited."
 
 (bind-key "H-d" 'rh/kill-word)
 
-(defun rh/copy-word (&optional arg)
+(defun rh/copy-word (&optional ARG)
   "Copy the current word(s) without moving point.
 With ARG, copy that many words; negative ARG copies backward."
   (interactive "p")
-  (let ((arg (or arg 1)))
+  (let ((ARG (or ARG 1)))
     (save-excursion
       (let* ((start (point))
              (bounds (bounds-of-thing-at-point 'word)))
-        (if (< arg 0)
+        (if (< ARG 0)
             (progn
               (when (and bounds (< (point) (cdr bounds)))
                 (goto-char (cdr bounds)))
               (kill-ring-save (point)
-                              (progn (backward-word (- arg)) (point))))
+                              (progn (backward-word (- ARG)) (point))))
           (progn
             (when (and bounds (> (point) (car bounds)))
               (goto-char (car bounds)))
             (kill-ring-save (point)
-                            (progn (forward-word arg) (point)))))))))
+                            (progn (forward-word ARG) (point)))))))))
 
 (bind-key "H-w" 'rh/copy-word)
+
+(defun rh/remote-copy (&optional ARG)
+  "Copy word from anywhere in the buffer.
+With ARG, copy that many words.
+Negative ARG copies previous words.
+
+Requires to be invoked in `isearch' mode.
+This command uses `rh/copy-word' under the hood."
+  (interactive "p")
+  (let ((count (or ARG 1)))
+    (if (bound-and-true-p isearch-mode)
+        (let ((orig-point isearch-other-end))
+          (goto-char isearch-other-end)
+          (rh/copy-word count)
+          (isearch-abort)
+          (goto-char orig-point))
+      (call-interactively 'isearch-forward))))
+
+(bind-key "C-x C-y" 'rh/remote-copy)
+(define-key isearch-mode-map (kbd "C-x C-y") 'rh/remote-copy)
 
 (defun rh/kill-sentence (&optional ARG)
   "Kill the current sentence.
