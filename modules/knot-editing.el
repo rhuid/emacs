@@ -55,6 +55,28 @@ However, in most cases, the built-in `kill-word' might be better suited."
 
 (bind-key "H-d" 'rh/kill-word)
 
+(defun rh/copy-word (&optional arg)
+  "Copy the current word(s) without moving point.
+With ARG, copy that many words; negative ARG copies backward."
+  (interactive "p")
+  (let ((arg (or arg 1)))
+    (save-excursion
+      (let* ((start (point))
+             (bounds (bounds-of-thing-at-point 'word)))
+        (if (< arg 0)
+            (progn
+              (when (and bounds (< (point) (cdr bounds)))
+                (goto-char (cdr bounds)))
+              (kill-ring-save (point)
+                              (progn (backward-word (- arg)) (point))))
+          (progn
+            (when (and bounds (> (point) (car bounds)))
+              (goto-char (car bounds)))
+            (kill-ring-save (point)
+                            (progn (forward-word arg) (point)))))))))
+
+(bind-key "H-w" 'rh/copy-word)
+
 (defun rh/kill-sentence (&optional ARG)
   "Kill the current sentence.
 With ARG, perform this action that many times.
