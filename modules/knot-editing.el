@@ -5,7 +5,7 @@
 With ARG, perform this action that many times."
   (interactive "p")
   (save-excursion
-    (dotimes (i ARG)
+    (dotimes (_ ARG)
       (join-line -1))))
 
 (bind-key "C-j" 'rh/join-line)
@@ -28,6 +28,32 @@ With ARG, it deletes instead (does not save to the kill-ring)."
 
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
+
+(defun rh/kill-word (&optional ARG)
+  "Kill the whole word and tries to fix up whitespace after killing.
+With ARG, perform this action that many times.
+Negative ARG kills that many previous words.
+
+This command is best used with `isearch'.
+However, in most cases, the built-in `kill-word' might be better suited."
+  (interactive "p")
+  (let ((ARG (or ARG 1)))
+    (if (< ARG 0)
+        (progn
+          (let ((b (bounds-of-thing-at-point 'word)))
+            (unless (and b (= (point) (cdr b)))
+              (forward-word 1)))
+          (kill-word ARG))
+      (let ((b (bounds-of-thing-at-point 'word)))
+        (unless (and b (<= (point) (car b)))
+          (if b
+              (goto-char (car b))
+            (backward-word 1))))
+      (kill-word ARG)))
+  (when (looking-at " " nil)
+    (cycle-spacing t)))
+
+(bind-key "H-d" 'rh/kill-word)
 
 (defun rh/kill-sentence (&optional ARG)
   "Kill the current sentence.
