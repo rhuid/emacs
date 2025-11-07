@@ -1,34 +1,5 @@
 ;;; knot-editing.el --- Some commands for more efficient editing -*- lexical-binding: t; -*-
 
-(defun rh/join-line (&optional ARG)
-  "Join the current line to the following line.
-With ARG, perform this action that many times."
-  (interactive "p")
-  (save-excursion
-    (dotimes (_ ARG)
-      (join-line -1))))
-
-(bind-key "C-j" 'rh/join-line)
-
-(defun rh/chop-off-buffer (&optional ARG)
-  "Kill the rest of the buffer after point.
-With ARG, it deletes instead (does not save to the kill-ring)."
-  (interactive "P")
-  (if ARG
-      (delete-region (point) (point-max))
-    (kill-region (point) (point-max))))
-
-(defun rh/backward-chop-off-buffer (&optional ARG)
-  "Kill the rest of the buffer before point.
-With ARG, it deletes instead (does not save to the kill-ring)."
-  (interactive "P")
-  (if ARG
-      (delete-region (point-min) (point))
-    (kill-region (point-min) (point))))
-
-(bind-key "C-M-S-k" 'rh/chop-off-buffer)
-(bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
-
 (defun rh/kill-word (&optional ARG)
   "Kill the whole word and tries to fix up whitespace after killing.
 With ARG, perform this action that many times.
@@ -56,7 +27,7 @@ However, in most cases, the built-in `kill-word' might be better suited."
 (bind-key "H-d" 'rh/kill-word)
 
 (defun rh/copy-word (&optional ARG)
-  "Copy the current word(s) without moving point.
+  "Copy the current word without moving point.
 With ARG, copy that many words; negative ARG copies backward."
   (interactive "p")
   (let ((ARG (or ARG 1)))
@@ -75,27 +46,36 @@ With ARG, copy that many words; negative ARG copies backward."
             (kill-ring-save (point)
                             (progn (forward-word ARG) (point)))))))))
 
-(bind-key "H-w" 'rh/copy-word)
+(defun rh/copy-word-dwim (&optional ARG)
+  "Copy the current word without moving point.
+With ARG, copy that many words; negative ARG copies backward.
 
-(defun rh/remote-copy (&optional ARG)
-  "Copy word from anywhere in the buffer.
-With ARG, copy that many words.
-Negative ARG copies previous words.
+If invoked during `isearch', this copies from the current
+match, exits `isearch', and returns to the original point.
 
-Requires to be invoked in `isearch' mode.
-This command uses `rh/copy-word' under the hood."
+Uses `rh/copy-word' under the hood."
   (interactive "p")
-  (let ((count (or ARG 1)))
-    (if (bound-and-true-p isearch-mode)
-        (let ((orig-point isearch-other-end))
-          (goto-char isearch-other-end)
-          (rh/copy-word count)
-          (isearch-abort)
+  (let* ((count (or ARG 1))
+         (in-isearch (bound-and-true-p isearch-mode)))
+    (if in-isearch
+        (let* ((isearch-pos (point))
+               (other-pos (or (and (boundp 'isearch-other-end) isearch-other-end)
+                              isearch-pos))
+               (match-start (min isearch-pos other-pos))
+               (match-end   (max isearch-pos other-pos))
+               (copy-pos (if (< count 0) match-end match-start))
+               (orig-point (or (and (boundp 'isearch-opoint) isearch-opoint)
+                               (and (boundp 'isearch--opoint) isearch--opoint)
+                               (point))))
+          (save-excursion
+            (goto-char copy-pos)
+            (rh/copy-word count))
+          (isearch-exit)
           (goto-char orig-point))
-      (call-interactively 'isearch-forward))))
+      (rh/copy-word count))))
 
-(bind-key "C-x C-y" 'rh/remote-copy)
-(define-key isearch-mode-map (kbd "C-x C-y") 'rh/remote-copy)
+(bind-key "C-;" 'rh/copy-word-dwim)
+(define-key isearch-mode-map (kbd "C-;") 'rh/copy-word-dwim)
 
 (defun rh/kill-sentence (&optional ARG)
   "Kill the current sentence.
@@ -123,6 +103,25 @@ Negative ARG copies that many previous sentences."
 
 (bind-key "C-@" 'rh/copy-sentence)
 
+(defun rh/chop-off-buffer (&optional ARG)
+  "Kill the rest of the buffer after point.
+With ARG, it deletes instead (does not save to the kill-ring)."
+  (interactive "P")
+  (if ARG
+      (delete-region (point) (point-max))
+    (kill-region (point) (point-max))))
+
+(defun rh/backward-chop-off-buffer (&optional ARG)
+  "Kill the rest of the buffer before point.
+With ARG, it deletes instead (does not save to the kill-ring)."
+  (interactive "P")
+  (if ARG
+      (delete-region (point-min) (point))
+    (kill-region (point-min) (point))))
+
+(bind-key "C-M-S-k" 'rh/chop-off-buffer)
+(bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
+
 (defun rh/open-line-below (&optional ARG)
   "Create a new line below and move the cursor there.
 With ARG, perform this action that many times."
@@ -139,5 +138,15 @@ With ARG, perform this action that many times."
 
 (bind-key "C-<return>" 'rh/open-line-below)
 (bind-key "C-S-<return>" 'rh/open-line-above)
+
+(defun rh/join-line (&optional ARG)
+  "Join the current line to the following line.
+With ARG, perform this action that many times."
+  (interactive "p")
+  (save-excursion
+    (dotimes (_ ARG)
+      (join-line -1))))
+
+(bind-key "C-j" 'rh/join-line)
 
 (provide 'knot-editing)
