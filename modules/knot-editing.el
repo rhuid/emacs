@@ -1,5 +1,17 @@
 ;;; knot-editing.el --- Some commands for more efficient editing -*- lexical-binding: t; -*-
 
+(defun rh/select-line (&optional ARG)
+  "Select the current line.
+With ARG, select that many lines; negative ARG selects previous lines."
+  (interactive "p")
+  (beginning-of-line)
+  (set-mark (point))
+  (forward-line (1- ARG))
+  (end-of-line)
+  (exchange-point-and-mark nil))
+
+(bind-key "C-'" 'rh/select-line)
+
 (defun rh/kill-word (&optional ARG)
   "Kill the whole word and tries to fix up whitespace after killing.
 With ARG, perform this action that many times.
