@@ -6,6 +6,9 @@
   :hook ((prog-mode . glyphless-display-mode)                                ; display all glyphless characters as boxes
          (prog-mode . rh/provide-pretty-symbols)                             ; pretty symbols in `prog-mode'
          (after-save . executable-make-buffer-file-executable-if-script-p))  ; make a shell script executable upon saving
+  :bind (:map lisp-interaction-mode-map
+              ("C-j" . rh/join-line)
+              ("C-M-j" . eval-print-last-sexp))
   :config
   (global-font-lock-mode)
   (setq-default indent-tabs-mode nil)                                        ; always use spaces, never tabs

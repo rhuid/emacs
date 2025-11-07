@@ -19,6 +19,7 @@
 (global-subword-mode)
 (global-visual-line-mode)
 (setq display-line-numbers-type 'relative)                             ; relative line numbering, yes!
+(setq display-line-numbers-width-start t )                             ; count number of lines to use for line number width
 (setq sentence-end-double-space nil)                                   ; a sentence should not need to end in double spaces
 (setq-default fill-column 80)
 
@@ -53,8 +54,8 @@
 
 ;; Concerning editing
 (setq
- duplicate-line-final-position   -1                                    ; move point to the last new line
- duplicate-region-final-position -1                                    ; put the region around the last copy
+ duplicate-line-final-position   1                                     ; move point to the first new line
+ duplicate-region-final-position 1                                     ; put the region around the first copy
  delete-pair-blink-delay 0)                                            ; heck, why would I want any delay?
 
 ;; Some nice minor modes

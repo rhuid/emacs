@@ -1,5 +1,7 @@
 ;;; knot-keys.el --- Some extra global keys for the thermonuclear editor -*- lexical-binding: t; -*-
 
+(require 'knot-macros)
+
 ;; Create a version of these commands that apply to the whole buffer if there is no active region.
 (rh/define-region-or-buffer-command query-replace)
 (rh/define-region-or-buffer-command query-replace-regexp)
@@ -33,10 +35,6 @@
 ;; No arrows. BACK TO THE CHORDS!
 (dolist (key '("<up>" "<down>" "<right>" "<left>"))
   (bind-key key (lamb (message "Arrows? Where we are editing, we don't need arrows."))))
-
-;; I teleport a lot!
-(bind-key "<Ci>" (lamb (point-to-register ?6)))
-(bind-key "C-S-i" (lamb (jump-to-register ?6)))
 
 ;; Zapping
 (bind-key "M-z" 'zap-up-to-char)                                                ; by default, `M-z' is bound to `zap-to-char'
