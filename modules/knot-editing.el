@@ -25,8 +25,8 @@ Also, it may not work inside comments."
 With ARG, it moves forward ARG times.
 With negative ARG, it moves backward that many times."
   (interactive "p")
-  (backward-up-list 1 t t)
-  (forward-sexp (+ 1 ARG) nil)
+  (backward-up-list -1 t t)
+  (forward-sexp ARG nil)
   (backward-sexp 1 nil)
   (forward-char 1))
 
@@ -53,6 +53,14 @@ With \\[universal-argument], it chops backward."
     (backward-char 1))
   (when (use-region-p)
     (kill-region (region-beginning) (region-end))))
+
+(defun rh/backward-chop-off-sexp (&optional ARG)
+  "Chop off backward the rest of the higher level sexp."
+  (interactive "P")
+  (rh/chop-off-sexp (not ARG)))
+
+(bind-key "C-M-)" 'rh/chop-off-sexp)
+(bind-key "C-M-(" 'rh/backward-chop-off-sexp)
 
 (defun rh/kill-word (&optional ARG)
   "Kill the whole word and tries to fix up whitespace after killing.
