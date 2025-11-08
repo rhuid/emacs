@@ -16,10 +16,9 @@ With ARG, select that many lines; negative ARG selects previous lines."
   "Kill the whole word and tries to fix up whitespace after killing.
 With ARG, perform this action that many times.
 Negative ARG kills that many previous words.
+Also kills word backward if the point is at the end of the word.
 
-This command is quirky and is best used only once or with `universal argument'.
-Also integrates well with `isearch'.
-Otherwise, the built-in `kill-word' should be preferred."
+This command is quirky and is best used with `universal argument' and `isearch'."
   (interactive "p")
   (let ((ARG (or ARG 1)))
     (if (< ARG 0)
@@ -34,9 +33,8 @@ Otherwise, the built-in `kill-word' should be preferred."
               (goto-char (car b))
             (backward-word 1))))
       (kill-word ARG)))
-  (when (looking-at " " nil)
-    (cycle-spacing t))
-  (deactivate-mark))
+  (when (looking-at " +")
+    (just-one-space)))
 
 (bind-key "<Ci>" 'rh/kill-word)
 
@@ -60,14 +58,10 @@ With ARG, copy that many words; negative ARG copies backward."
             (kill-ring-save (point)
                             (progn (forward-word ARG) (point)))))))))
 
-(defun rh/copy-word-dwim (&optional ARG)
-  "Copy the current word without moving point.
-With ARG, copy that many words; negative ARG copies backward.
+(defun rh/isearch-remote-copy (&optional ARG)
+  "In `isearch', copy ARG words and return to the original point
+ARG defaults to 1. Negative ARG copies backward.
 
-If invoked during `isearch', this copies from the current
-match, exits `isearch', and returns to the original point.
-
-Requires to be mapped in `isearch-mode' too to work well.
 Uses `rh/copy-word' under the hood."
   (interactive "p")
   (let* ((count (or ARG 1))
@@ -87,7 +81,7 @@ Uses `rh/copy-word' under the hood."
             (rh/copy-word count))
           (isearch-exit)
           (goto-char orig-point))
-      (rh/copy-word count))))
+      (message "This command should be invoked in isearch mode."))))
 
 (defun rh/isearch-remote-yank (&optional ARG)
   "While in `isearch-mode', yanks the word in search match at the original point.
@@ -99,8 +93,8 @@ With ARG, yank that many words; negative ARG yanks that many previous words."
         (yank 1))
     (message "This command should be invoked in isearch-mode.")))
 
-(bind-key "C-;" 'rh/copy-word-dwim)
-(define-key isearch-mode-map (kbd "C-;") 'rh/copy-word-dwim)
+(bind-key "C-;" 'rh/copy-word)
+(define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
 (define-key isearch-mode-map (kbd "C-x C-y") 'rh/isearch-remote-yank)
 
 (defun rh/kill-sentence (&optional ARG)
@@ -112,8 +106,6 @@ Negative ARG kills that many previous sentences."
     (backward-sentence 1))
   (kill-sentence ARG)
   (cycle-spacing t))
-
-(bind-key "C-#" 'rh/kill-sentence)
 
 (defun rh/copy-sentence (&optional ARG)
   "Copy the current sentence.
@@ -127,6 +119,7 @@ Negative ARG copies that many previous sentences."
     (forward-sentence ARG)
     (kill-ring-save (region-beginning) (region-end))))
 
+(bind-key "C-#" 'rh/kill-sentence)
 (bind-key "C-@" 'rh/copy-sentence)
 
 (defun rh/chop-off-buffer (&optional ARG)
