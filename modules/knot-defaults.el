@@ -48,6 +48,7 @@
  disabled-command-function nil                                         ; enable all disabled commands, I know what I am doing
  use-short-answers t                                                   ; all confirmations prompts be y or n
  echo-keystrokes 0.1                                                   ; display keystrokes in the echo area faster
+ idle-update-delay 0.1                                                 ; update things on screen faster after typing
  confirm-kill-processes nil                                            ; don't confirm killing processes on exit
  shift-select-mode nil                                                 ; we have a better use of `Shift' as modifier key
  suggest-key-bindings nil)                                             ; don't show equivalent keybindings when `M-x' has one
@@ -63,6 +64,14 @@
 (global-goto-address-mode)                                             ; make URLs and email addresses clickable
 (global-prettify-symbols-mode)                                         ; pretty math symbols
 (repeat-mode)                                                          ; repeat commands without retyping the prefix key
-(setq repeat-exit-timeout 5)                                           ; no repeat after 5 seconds
+(recentf-mode)                                                         ; save recent files
+(savehist-mode)                                                        ; save minibuffer history
+(setq
+ repeat-exit-timeout 5                                                 ; no repeat after 5 seconds
+ recentf-max-saved-items 200
+ recentf-max-menu-items 25
+ history-length 2000
+ history-delete-duplicates t
+ savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 
 (provide 'knot-defaults)
