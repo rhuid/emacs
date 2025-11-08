@@ -2,13 +2,14 @@
 
 (require 'knot-macros)
 
-;; Create a version of these commands that apply to the whole buffer if there is no active region.
-(rh/define-region-or-buffer-command query-replace)
-(rh/define-region-or-buffer-command query-replace-regexp)
-(rh/define-region-or-buffer-command replace-string)
-
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
+
+;; Use hyper keys instead of Meta-arrows
+(define-key key-translation-map [?\H-u] [M-up])
+(define-key key-translation-map [?\H-e] [M-down])
+(define-key key-translation-map [?\H-n] [M-left])
+(define-key key-translation-map [?\H-i] [M-right])
 
 ;; Detach `C-i' from `TAB'
 (define-key input-decode-map "\C-i" [Ci])               ; this alone won't apply to client frames, so we need the line below
@@ -18,6 +19,11 @@
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
 (define-key key-translation-map (kbd "C-H-b") (kbd "C-x b"))                    ; `consult-buffer'
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))                ; more ergonomic saving
+
+;; Create a version of these commands that apply to the whole buffer if there is no active region.
+(rh/define-region-or-buffer-command query-replace)
+(rh/define-region-or-buffer-command query-replace-regexp)
+(rh/define-region-or-buffer-command replace-string)
 
 ;; Readjustments and (re)bindings of some inbuilt commands
 (bind-key "C-z"   'repeat)
