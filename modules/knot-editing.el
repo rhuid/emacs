@@ -16,9 +16,7 @@ With ARG, select that many lines; negative ARG selects previous lines."
   "Kill the whole word and tries to fix up whitespace after killing.
 With ARG, perform this action that many times.
 Negative ARG kills that many previous words.
-Also kills word backward if the point is at the end of the word.
-
-This command is quirky and is best used with `universal argument' and `isearch'."
+Also kills word backward if the point is at the end of the word."
   (interactive "p")
   (let ((ARG (or ARG 1)))
     (if (< ARG 0)
@@ -59,7 +57,7 @@ With ARG, copy that many words; negative ARG copies backward."
                             (progn (forward-word ARG) (point)))))))))
 
 (defun rh/isearch-remote-copy (&optional ARG)
-  "In `isearch', copy ARG words and return to the original point
+  "In `isearch', copy ARG words and return to the original point.
 ARG defaults to 1. Negative ARG copies backward.
 
 Uses `rh/copy-word' under the hood."
@@ -89,7 +87,7 @@ With ARG, yank that many words; negative ARG yanks that many previous words."
   (interactive "p")
   (if isearch-mode
       (progn
-        (rh/copy-word-dwim ARG)
+        (rh/isearch-remote-copy ARG)
         (yank 1))
     (message "This command should be invoked in isearch-mode.")))
 
