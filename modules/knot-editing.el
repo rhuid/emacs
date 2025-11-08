@@ -1,5 +1,25 @@
 ;;; knot-editing.el --- Some quality of life editing commands that attempt to elevate vanilla Emacs editing experience -*- lexical-binding: t; -*-
 
+(defun rh/act-inside (&optional ARG)
+  "Kill or copy the content inside the current balanced expression.
+With \\[universal-argument] prefix, it copies. Otherwise, it kills.
+
+Its behavior is major mode specific as it uses sexp under the hood.
+Also, it may not work inside comments."
+  (interactive "P")
+  (save-excursion
+    (backward-up-list 1 t t)
+    (mark-sexp 1 nil)
+    (when (use-region-p)
+      (forward-char 1)
+      (exchange-point-and-mark nil)
+      (backward-char 1)
+      (if ARG
+          (kill-ring-save (region-beginning) (region-end))
+        (kill-region (region-beginning) (region-end))))))
+
+(bind-key "M-i" 'rh/act-inside)
+
 (defun rh/visit-next-sexp (&optional ARG)
   "Move the point to the inside of the next sexp of the same level.
 With ARG, it moves forward ARG times.
@@ -19,35 +39,6 @@ With negative ARG, it moves forward that many times."
 
 (bind-key "H-f" 'rh/visit-next-sexp)
 (bind-key "H-b" 'rh/visit-previous-sexp)
-
-(defun rh/change-inside ()
-  "Kill the content inside the current balanced expression.
-
-Its behavior is major mode specific as it uses sexp under the hood.
-Also, it may not work inside comments."
-  (interactive)
-  (save-excursion
-    (backward-up-list 1 t t)
-    (mark-sexp 1 nil)
-    (when (use-region-p)
-      (forward-char 1)
-      (exchange-point-and-mark nil)
-      (backward-char 1)
-      (kill-region (region-beginning) (region-end)))))
-
-(bind-key "M-i" 'rh/change-inside)
-
-(defun rh/select-line (&optional ARG)
-  "Select the current line.
-With ARG, select that many lines; negative ARG selects previous lines."
-  (interactive "p")
-  (beginning-of-line)
-  (set-mark (point))
-  (forward-line (1- ARG))
-  (end-of-line)
-  (exchange-point-and-mark nil))
-
-(bind-key "C-'" 'rh/select-line)
 
 (defun rh/kill-word (&optional ARG)
   "Kill the whole word and tries to fix up whitespace after killing.
@@ -175,6 +166,18 @@ With ARG, it deletes instead (does not save to the kill-ring)."
 
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
+
+(defun rh/select-line (&optional ARG)
+  "Select the current line.
+With ARG, select that many lines; negative ARG selects previous lines."
+  (interactive "p")
+  (beginning-of-line)
+  (set-mark (point))
+  (forward-line (1- ARG))
+  (end-of-line)
+  (exchange-point-and-mark nil))
+
+(bind-key "C-'" 'rh/select-line)
 
 (defun rh/open-line-below (&optional ARG)
   "Create a new line below and move the cursor there.
