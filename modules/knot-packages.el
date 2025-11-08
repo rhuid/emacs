@@ -141,6 +141,7 @@
   :init (puni-global-mode)
   :bind (:map puni-mode-map
               ("C-w" . nil)                                                  ; taken by whole-line-or-region-kill-region
+              ("M-o" . rh/puni-rewrap-sexp)
               ("M-K" . kill-paragraph)
               ("M-H" . backward-kill-paragraph)
               ("C-S-h" . puni-backward-kill-word)
@@ -153,7 +154,28 @@
               ("M-H-i" . puni-barf-backward))
   :custom
   (puni-squeeze-flash nil)                                                   ; don't blink or flash, I find it distracting
-  (puni-confirm-when-delete-unbalanced-active-region nil))                   ; don't warn me, I know what I am doing
+  (puni-confirm-when-delete-unbalanced-active-region nil)                    ; don't warn me, I know what I am doing
+  :config
+  (defun rh/puni-rewrap-sexp ()
+    "Rewrap the current sexp."
+    (interactive)
+    (let ((delimiter (read-char "Opening delimiter: ")))
+      (save-excursion
+        (backward-up-list 1 t t)
+        (mark-sexp 1 nil)
+        (when (use-region-p)
+          (let ((beg (region-beginning))
+                (end (region-end)))
+            (cond
+             ((= delimiter ?\() (puni-wrap-round 1))
+             ((= delimiter ?\[) (puni-wrap-square 1))
+             ((= delimiter ?\{) (puni-wrap-curly 1))
+             ((= delimiter ?\<) (puni-wrap-angle 1))
+             ((= delimiter ?\") (puni--wrap-region beg end "\"" "\""))
+             ((= delimiter ?\') (puni--wrap-region beg end "\'" "\'"))
+             (t (deactivate-mark)
+                (error "Invalid delimiter entered."))))
+          (delete-pair 1))))))
 
 ;; Let's feel a bit more spacious.
 (use-package spacious-padding
