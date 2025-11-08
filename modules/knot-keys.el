@@ -5,7 +5,7 @@
 ;; Use `C-h' for `DEL' (backspace).
 (define-key key-translation-map [?\C-h] [?\C-?])
 
-;; Use hyper keys instead of Meta-arrows
+;; Use hyper keys instead of meta-arrows
 (define-key key-translation-map [?\H-u] [M-up])
 (define-key key-translation-map [?\H-e] [M-down])
 (define-key key-translation-map [?\H-n] [M-left])
@@ -15,6 +15,10 @@
 (define-key input-decode-map "\C-i" [Ci])               ; this alone won't apply to client frames, so we need the line below
 (add-hook 'after-make-frame-functions
           (lambda (frame) (with-selected-frame frame (define-key input-decode-map "\C-i" [Ci]))))
+
+;; Because my meta is on the right side of my keyboard
+(bind-key "M-`"   'negative-argument)
+(bind-key "C-M-`" 'negative-argument)
 
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
 (define-key key-translation-map (kbd "C-H-b") (kbd "C-x b"))                    ; `consult-buffer'
