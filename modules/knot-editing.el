@@ -40,6 +40,20 @@ With negative ARG, it moves forward that many times."
 (bind-key "H-f" 'rh/visit-next-sexp)
 (bind-key "H-b" 'rh/visit-previous-sexp)
 
+(defun rh/chop-off-sexp (&optional ARG)
+  "Chop off the rest of the higher level sexp.
+With \\[universal-argument], it chops backward."
+  (interactive "P")
+  (set-mark (point))
+  (if ARG
+      (progn
+        (backward-up-list 1 t t)
+        (forward-char 1))
+    (backward-up-list -1 t t)
+    (backward-char 1))
+  (when (use-region-p)
+    (kill-region (region-beginning) (region-end))))
+
 (defun rh/kill-word (&optional ARG)
   "Kill the whole word and tries to fix up whitespace after killing.
 With ARG, perform this action that many times.
