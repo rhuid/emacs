@@ -1,7 +1,27 @@
 ;;; knot-editing.el --- Some quality of life editing commands that attempt to elevate vanilla Emacs editing experience -*- lexical-binding: t; -*-
 
+(defun rh/visit-next-sexp (&optional ARG)
+  "Move the point to the inside of the next sexp of the same level.
+With ARG, it moves forward ARG times.
+With negative ARG, it moves backward that many times."
+  (interactive "p")
+  (backward-up-list 1 t t)
+  (forward-sexp (+ 1 ARG) nil)
+  (backward-sexp 1 nil)
+  (forward-char 1))
+
+(defun rh/visit-previous-sexp (&optional ARG)
+  "Move the point to the inside of the previous sexp of the same level.
+With ARG, it moves backward ARG times.
+With negative ARG, it moves forward that many times."
+  (interactive "p")
+  (rh/visit-next-sexp (- ARG)))
+
+(bind-key "H-f" 'rh/visit-next-sexp)
+(bind-key "H-b" 'rh/visit-previous-sexp)
+
 (defun rh/change-inside ()
-  "Kill the context inside the current balanced expression.
+  "Kill the content inside the current balanced expression.
 
 Its behavior is major mode specific as it uses sexp under the hood.
 Also, it may not work inside comments."
