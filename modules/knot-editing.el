@@ -1,4 +1,21 @@
-;;; knot-editing.el --- Some commands for more efficient editing -*- lexical-binding: t; -*-
+;;; knot-editing.el --- Some quality of life editing commands that attempt to elevate vanilla Emacs editing experience -*- lexical-binding: t; -*-
+
+(defun rh/change-inside ()
+  "Kill the context inside the current balanced expression.
+
+Its behavior is major mode specific as it uses sexp under the hood.
+Also, it may not work inside comments."
+  (interactive)
+  (save-excursion
+    (backward-up-list 1 t t)
+    (mark-sexp 1 nil)
+    (when (use-region-p)
+      (forward-char 1)
+      (exchange-point-and-mark nil)
+      (backward-char 1)
+      (kill-region (region-beginning) (region-end)))))
+
+(bind-key "M-i" 'rh/change-inside)
 
 (defun rh/select-line (&optional ARG)
   "Select the current line.
@@ -93,7 +110,7 @@ With ARG, yank that many words; negative ARG yanks that many previous words."
 
 (bind-key "C-;" 'rh/copy-word)
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
-(define-key isearch-mode-map (kbd "C-x C-y") 'rh/isearch-remote-yank)
+(define-key isearch-mode-map (kbd "C-Y") 'rh/isearch-remote-yank)
 
 (defun rh/kill-sentence (&optional ARG)
   "Kill the current sentence.
