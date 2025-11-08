@@ -118,11 +118,6 @@
   :hook ((prog-mode text-mode) . outline-minor-mode)
   :init (setq outline-minor-mode-prefix (kbd "C-c o")))
 
-;; Move line or region up and down with ease.
-(use-package move-text
-  :bind ("H-p" . move-text-up) ("H-n" . move-text-down)
-  :init (move-text-default-bindings))
-
 ;; Move where I mean.
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line-or-comment)
@@ -149,6 +144,7 @@
               ("M-K" . kill-paragraph)
               ("M-H" . backward-kill-paragraph)
               ("C-S-h" . puni-backward-kill-word)
+              ("C-S-i" . puni-backward-kill-word)
               ("C-M-r" . puni-raise)
               ("C-M-s" . puni-squeeze)
               ("C-H-i" . puni-slurp-forward)
@@ -158,34 +154,6 @@
   :custom
   (puni-squeeze-flash nil)                                                   ; don't blink or flash, I find it distracting
   (puni-confirm-when-delete-unbalanced-active-region nil))                   ; don't warn me, I know what I am doing
-
-;; Highlight nested parentheses according to their depth.
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-;; Colorize stings that represent colors.
-(use-package rainbow-mode
-  :bind (:map toggle-minor-mode-map ("r" . rainbow-mode))
-  :hook (prog-mode . rainbow-mode))
-
-;; Jump to recent files. Made better by `consult-recent-file'.
-(use-package recentf
-  :ensure nil
-  :init (recentf-mode)
-  :custom
-  (recentf-max-saved-items 200)
-  (recentf-max-menu-items 25)
-  (recentf-auto-cleanup 'never)
-  :config (run-at-time nil (* 5 60) #'recentf-save-list))                     ; save recentf list every 5 minutes
-
-;; Save history across sessions including the kill-ring!
-(use-package savehist
-  :ensure nil
-  :init (savehist-mode)
-  :custom
-  (history-length 2000)
-  (history-delete-duplicates t)
-  (savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
 
 ;; Let's feel a bit more spacious.
 (use-package spacious-padding
@@ -206,7 +174,7 @@
   :bind ("C-x u" . vundo) ("C-?" . undo-redo)
   :custom (undo-limit (* 16 1024 1024)))
 
-;; If there is no active region, kill/copy the current line.
+;; If there is no active region, kill/copy the current line
 (use-package whole-line-or-region
   :init (whole-line-or-region-global-mode))
 
@@ -216,6 +184,9 @@
   :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
 ;; Some more packages
+(use-package move-text :init (move-text-default-bindings))                     ; move line or region up and down with ease
+(use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))   ; highlight nested parentheses cleanly
+(use-package rainbow-mode :hook (prog-mode . rainbow-mode))                    ; colorize stings that represent colors
 (use-package sudo-edit)
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
