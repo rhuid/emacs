@@ -79,7 +79,7 @@
       (abbrev-mode 1)))
 
   (defun rh/tex-fold-buffer (&optional prefix)
-    "Fold the buffer but clears the fold with the universal argument."
+    "Fold the buffer but clears the fold with the prefix argument \\[universal-argument]."
     (interactive "P")
     (if prefix
         (TeX-fold-clearout-buffer)
