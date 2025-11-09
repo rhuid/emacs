@@ -7,8 +7,7 @@
               ("r" . dired-toggle-read-only)              ;  enter `WDired' mode!
               ("f" . dired-display-file))                 ; `f' for display-`f'ile
   :hook ((dired-mode . rh/dired-setup)
-	       (dired-mode . dired-hide-details-mode)
-	       (dired-mode . dired-click-to-select-mode))
+	       (dired-mode . dired-hide-details-mode))
   :config
   (defun rh/dired-setup ()
     (display-line-numbers-mode -1)
