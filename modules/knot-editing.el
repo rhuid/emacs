@@ -1,6 +1,6 @@
 ;;; knot-editing.el --- Some quality of life editing commands that attempt to elevate vanilla Emacs editing experience -*- lexical-binding: t; -*-
 
-(defun rh/act-inside (&optional ARG)
+(defun rh/act-inside (&optional arg)
   "Kill or copy the content inside the current balanced expression.
 With \\[universal-argument] prefix, it copies. Otherwise, it kills.
 
@@ -14,28 +14,28 @@ Also, it may not work inside comments."
       (forward-char 1)
       (exchange-point-and-mark nil)
       (backward-char 1)
-      (if ARG
-          (kill-ring-save (region-beginning) (region-end))
+      (if arg
+          (kilarging-save (region-beginning) (region-end))
         (kill-region (region-beginning) (region-end))))))
 
 (bind-key "M-i" 'rh/act-inside)
 
-(defun rh/visit-next-sexp (&optional ARG)
+(defun rh/visit-next-sexp (&optional arg)
   "Move the point to the inside of the next sexp of the same level.
 With ARG, it moves forward ARG times.
 With negative ARG, it moves backward that many times."
   (interactive "p")
   (backward-up-list -1 t t)
-  (forward-sexp ARG nil)
+  (forward-sexp arg nil)
   (backward-sexp 1 nil)
   (forward-char 1))
 
-(defun rh/visit-previous-sexp (&optional ARG)
+(defun rh/visit-previous-sexp (&optional arg)
   "Move the point to the inside of the previous sexp of the same level.
 With ARG, it moves backward ARG times.
 With negative ARG, it moves forward that many times."
   (interactive "p")
-  (rh/visit-next-sexp (- ARG)))
+  (rh/visit-next-sexp (- arg)))
 
 (defun rh/forward-opening-delimiter (&optional arg)
   "Jump forward to the next opening delimiter.
@@ -63,92 +63,92 @@ Same as calling `rh/forward-opening-delimiter` with negative ARG."
 (bind-key "C-H-f" 'rh/forward-opening-delimiter)
 (bind-key "C-H-b" 'rh/backward-opening-delimiter)
 
-(defun rh/forward-up-list (&optional ARG)
+(defun rh/forward-up-list (&optional arg)
   "Move forward out of one level of parentheses.
 This command will also work on other parentheses-like expressions
 defined by the current language mode.  With ARG, do this that
 many times.  A negative argument means move backward."
   (interactive "p")
-  (backward-up-list (- ARG) t t))
+  (backward-up-list (- arg) t t))
 
 (bind-key "C-M-y" 'rh/forward-up-list)
 
-(defun rh/chop-off-sexp (&optional ARG)
+(defun rh/chop-off-sexp (&optional arg)
   "Chop off the rest of the higher level sexp.
 With \\[universal-argument], it chops backward."
   (interactive "P")
   (set-mark (point))
-  (if ARG
+  (if arg
       (progn
-        (backward-up-list 1 t t)
-        (forward-char 1))
+  (backward-up-list 1 t t)
+  (forward-char 1))
     (backward-up-list -1 t t)
     (backward-char 1))
   (when (use-region-p)
     (kill-region (region-beginning) (region-end))))
 
-(defun rh/backward-chop-off-sexp (&optional ARG)
+(defun rh/backward-chop-off-sexp (&optional arg)
   "Chop off backward the rest of the higher level sexp."
   (interactive "P")
-  (rh/chop-off-sexp (not ARG)))
+  (rh/chop-off-sexp (not arg)))
 
 (bind-key "C-M-)" 'rh/chop-off-sexp)
 (bind-key "C-M-(" 'rh/backward-chop-off-sexp)
 
-(defun rh/kill-word (&optional ARG)
+(defun rh/kill-word (&optional arg)
   "Kill the whole word and tries to fix up whitespace after killing.
 With ARG, perform this action that many times.
 Negative ARG kills that many previous words.
 Also kills word backward if the point is at the end of the word."
   (interactive "p")
-  (let ((ARG (or ARG 1)))
-    (if (< ARG 0)
+  (let ((arg (or arg 1)))
+    (if (< arg 0)
         (progn
-          (let ((b (bounds-of-thing-at-point 'word)))
+  (let ((b (bounds-of-thing-at-point 'word)))
             (unless (and b (= (point) (cdr b)))
               (forward-word 1)))
-          (kill-word ARG))
+  (kill-word arg))
       (let ((b (bounds-of-thing-at-point 'word)))
         (unless (and b (<= (point) (car b)))
           (if b
-              (goto-char (car b))
-            (backward-word 1))))
-      (kill-word ARG)))
+    (goto-char (car b))
+  (backward-word 1))))
+(kill-word arg)))
   (when (looking-at " +")
     (just-one-space)))
 
 (bind-key "<Ci>" 'rh/kill-word)
 
-(defun rh/copy-word (&optional ARG)
+(defun rh/copy-word (&optional arg)
   "Copy the current word without moving point.
 With ARG, copy that many words; negative ARG copies backward."
   (interactive "p")
-  (let ((ARG (or ARG 1)))
+  (let ((arg (or arg 1)))
     (save-excursion
-      (let* ((start (point))
+  (let* ((start (point))
              (bounds (bounds-of-thing-at-point 'word)))
-        (if (< ARG 0)
-            (progn
-              (when (and bounds (< (point) (cdr bounds)))
+(if (< arg 0)
+    (progn
+  (when (and bounds (< (point) (cdr bounds)))
                 (goto-char (cdr bounds)))
-              (kill-ring-save (point)
-                              (progn (backward-word (- ARG)) (point))))
+  (kill-ring-save (point)
+(progn (backward-word (- arg)) (point))))
           (progn
-            (when (and bounds (> (point) (car bounds)))
+  (when (and bounds (> (point) (car bounds)))
               (goto-char (car bounds)))
-            (kill-ring-save (point)
-                            (progn (forward-word ARG) (point)))))))))
+  (kill-ring-save (point)
+(progn (forward-word arg) (point)))))))))
 
-(defun rh/isearch-remote-copy (&optional ARG)
+(defun rh/isearch-remote-copy (&optional arg)
   "In `isearch', copy ARG words and return to the original point.
 ARG defaults to 1. Negative ARG copies backward.
 
 Uses `rh/copy-word' under the hood."
   (interactive "p")
-  (let* ((count (or ARG 1))
+  (let* ((count (or arg 1))
          (in-isearch (bound-and-true-p isearch-mode)))
     (if in-isearch
-        (let* ((isearch-pos (point))
+    (let* ((isearch-pos (point))
                (other-pos (or (and (boundp 'isearch-other-end) isearch-other-end)
                               isearch-pos))
                (match-start (min isearch-pos other-pos))
@@ -158,37 +158,37 @@ Uses `rh/copy-word' under the hood."
                                (and (boundp 'isearch--opoint) isearch--opoint)
                                (point))))
           (save-excursion
-            (goto-char copy-pos)
-            (rh/copy-word count))
+  (goto-char copy-pos)
+  (rh/copy-word count))
           (isearch-exit)
           (goto-char orig-point))
       (message "This command should be invoked in isearch mode."))))
 
-(defun rh/isearch-remote-yank (&optional ARG)
+(defun rh/isearch-remote-yank (&optional arg)
   "While in `isearch-mode', yanks the word in search match at the original point.
 With ARG, yank that many words; negative ARG yanks that many previous words."
   (interactive "p")
   (if isearch-mode
       (progn
-        (rh/isearch-remote-copy ARG)
-        (yank 1))
+        (rh/isearch-remote-copy arg)
+        (arg 1))
     (message "This command should be invoked in isearch-mode.")))
 
 (bind-key "C-;" 'rh/copy-word)
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
 (define-key isearch-mode-map (kbd "C-Y") 'rh/isearch-remote-yank)
 
-(defun rh/kill-sentence (&optional ARG)
+(defun rh/kill-sentence (&optional arg)
   "Kill the current sentence.
 With ARG, perform this action that many times.
 Negative ARG kills that many previous sentences."
   (interactive "p")
   (unless (looking-back (sentence-end) (line-beginning-position))
     (backward-sentence 1))
-  (kill-sentence ARG)
+  (kill-sentence arg)
   (cycle-spacing t))
 
-(defun rh/copy-sentence (&optional ARG)
+(defun rh/copy-sentence (&optional arg)
   "Copy the current sentence.
 With ARG, perform this action that many times.
 Negative ARG copies that many previous sentences."
@@ -197,66 +197,66 @@ Negative ARG copies that many previous sentences."
     (unless (looking-back (sentence-end) (line-beginning-position))
       (backward-sentence 1))
     (set-mark (point))
-    (forward-sentence ARG)
+    (forward-sentence arg)
     (kill-ring-save (region-beginning) (region-end))))
 
 (bind-key "C-#" 'rh/kill-sentence)
 (bind-key "C-@" 'rh/copy-sentence)
 
-(defun rh/chop-off-buffer (&optional ARG)
+(defun rh/chop-off-buffer (&optional arg)
   "Kill the rest of the buffer after point.
 With ARG, it deletes instead (does not save to the kill-ring)."
   (interactive "P")
-  (if ARG
+  (if arg
       (delete-region (point) (point-max))
     (kill-region (point) (point-max))))
 
-(defun rh/backward-chop-off-buffer (&optional ARG)
+(defun rh/backward-chop-off-buffer (&optional arg)
   "Kill the rest of the buffer before point.
-With ARG, it deletes instead (does not save to the kill-ring)."
+  With ARG, it deletes instead (does not save to the kill-ring)."
   (interactive "P")
-  (if ARG
+  (if arg
       (delete-region (point-min) (point))
     (kill-region (point-min) (point))))
 
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
 
-(defun rh/select-line (&optional ARG)
+(defun rh/select-line (&optional arg)
   "Select the current line.
-With ARG, select that many lines; negative ARG selects previous lines."
+  With ARG, select that many lines; negative ARG selects previous lines."
   (interactive "p")
   (beginning-of-line)
   (set-mark (point))
-  (forward-line (1- ARG))
+  (forward-line (1- arg))
   (end-of-line)
   (exchange-point-and-mark nil))
 
 (bind-key "C-'" 'rh/select-line)
 
-(defun rh/open-line-below (&optional ARG)
+(defun rh/open-line-below (&optional arg)
   "Create a new line below and move the cursor there.
 With ARG, perform this action that many times."
   (interactive "p")
   (move-end-of-line 1)
-  (newline-and-indent ARG))
+  (newline-and-indent arg))
 
-(defun rh/open-line-above (&optional ARG)
+(defun rh/open-line-above (&optional arg)
   "Create a new line above and move the cursor there.
 With ARG, perform this action that many times."
   (interactive "p")
   (back-to-indentation)
-  (open-line ARG))
+  (open-line arg))
 
 (bind-key "C-<return>" 'rh/open-line-below)
 (bind-key "C-S-<return>" 'rh/open-line-above)
 
-(defun rh/join-line (&optional ARG)
+(defun rh/join-line (&optional arg)
   "Join the current line to the following line.
 With ARG, perform this action that many times."
   (interactive "p")
   (save-excursion
-    (dotimes (_ ARG)
+    (dotimes (_ arg)
       (join-line -1))))
 
 (bind-key "C-j" 'rh/join-line)
