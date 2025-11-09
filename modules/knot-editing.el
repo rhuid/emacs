@@ -37,8 +37,41 @@ With negative ARG, it moves forward that many times."
   (interactive "p")
   (rh/visit-next-sexp (- ARG)))
 
+(defun rh/forward-opening-delimiter (&optional arg)
+  "Jump forward to the next opening delimiter.
+Opening delimiters are one of: ( [ { < ` \" '.
+With optional ARG, jump |ARG| times; negative ARG means jump backward."
+  (interactive "p")
+  (let* ((arg (or arg 1))
+         (delimiters "(\\|\\[\\|{\\|<\\|[`\"']"))
+    (if (< arg 0)
+        (dotimes (_ (- arg))
+          (unless (re-search-backward delimiters nil t)
+            (cl-return)))
+      (dotimes (_ arg)
+        (unless (re-search-forward delimiters nil t)
+          (cl-return))))))
+
+(defun rh/backward-opening-delimiter (&optional arg)
+  "Jump backward to the previous opening delimiter.
+Same as calling `rh/forward-opening-delimiter` with negative ARG."
+  (interactive "p")
+  (rh/forward-opening-delimiter (- (or arg 1))))
+
 (bind-key "H-f" 'rh/visit-next-sexp)
 (bind-key "H-b" 'rh/visit-previous-sexp)
+(bind-key "C-H-f" 'rh/forward-opening-delimiter)
+(bind-key "C-H-b" 'rh/backward-opening-delimiter)
+
+(defun rh/forward-up-list (&optional ARG)
+  "Move forward out of one level of parentheses.
+This command will also work on other parentheses-like expressions
+defined by the current language mode.  With ARG, do this that
+many times.  A negative argument means move backward."
+  (interactive "p")
+  (backward-up-list (- ARG) t t))
+
+(bind-key "C-M-y" 'rh/forward-up-list)
 
 (defun rh/chop-off-sexp (&optional ARG)
   "Chop off the rest of the higher level sexp.
