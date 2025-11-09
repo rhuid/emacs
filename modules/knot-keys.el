@@ -2,8 +2,9 @@
 
 (require 'knot-macros)
 
-;; Use `C-h' for `DEL' (backspace).
+;; Use `C-h' for `DEL' (backspace) and rebind `help-command' to `C-M-?'
 (define-key key-translation-map [?\C-h] [?\C-?])
+(bind-key "C-M-?" 'help-command)
 
 ;; Use hyper keys instead of meta-arrows
 (define-key key-translation-map [?\H-u] [M-up])
@@ -21,7 +22,7 @@
 (bind-key "C-M-`" 'negative-argument)
 
 ;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
-(define-key key-translation-map (kbd "C-H-b") (kbd "C-x b"))                    ; `consult-buffer'
+(define-key key-translation-map (kbd "H-M-b") (kbd "C-x b"))                    ; `consult-buffer'
 (define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))                ; more ergonomic saving
 
 ;; Create a version of these commands that apply to the whole buffer if there is no active region.
@@ -115,7 +116,6 @@
 (bind-key "C-)" 'kmacro-end-or-call-macro)
 
 ;; Window/buffer navigation and management
-(bind-key "M-o" 'other-window)
 (bind-key "H-1" 'delete-other-windows)
 (bind-key "H-2" 'split-window-below)
 (bind-key "H-3" 'split-window-right)

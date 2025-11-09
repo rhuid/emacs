@@ -144,6 +144,8 @@
               ("M-o" . rh/puni-rewrap-sexp)
               ("M-K" . kill-paragraph)
               ("M-H" . backward-kill-paragraph)
+              ("C-M-f" . puni-forward-sexp-or-up-list)
+              ("C-M-b" . puni-backward-sexp-or-up-list)
               ("C-S-h" . puni-backward-kill-word)
               ("C-S-i" . puni-backward-kill-word)
               ("C-M-r" . puni-raise)
