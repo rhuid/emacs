@@ -15,7 +15,7 @@ Also, it may not work inside comments."
       (exchange-point-and-mark nil)
       (backward-char 1)
       (if arg
-          (kilarging-save (region-beginning) (region-end))
+          (kill-ring-save (region-beginning) (region-end))
         (kill-region (region-beginning) (region-end))))))
 
 (defun rh/visit-next-sexp (&optional arg)
