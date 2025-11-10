@@ -61,7 +61,9 @@ Same as calling `rh/forward-opening-delimiter` with negative ARG."
 Prefix argument \\[universal-argument] does the same but on the previous delimiter."
   (interactive "P")
   (if arg
-      (rh/backward-opening-delimiter 1)
+      (progn
+        (rh/backward-opening-delimiter 2)
+        (forward-char 1))
     (rh/forward-opening-delimiter 1))
   (rh/act-inside))
 
