@@ -172,7 +172,7 @@ With ARG, yank that many words; negative ARG yanks that many previous words."
   (if isearch-mode
       (progn
         (rh/isearch-remote-copy arg)
-        (arg 1))
+        (yank 1))
     (message "This command should be invoked in isearch-mode.")))
 
 (defun rh/kill-sentence (&optional arg)
