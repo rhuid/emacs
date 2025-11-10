@@ -17,11 +17,11 @@
 
 ;; Sail through the visible screen at the speed of thought.
 (use-package avy
-  :bind (("C-," . avy-goto-char-timer)
+  :bind (("C-," . avy-goto-char-2)
          :map isearch-mode-map
          ("C-," . avy-isearch))
   :custom
-  (avy-keys '(?s ?t ?n ?e ?g ?m ?r ?i ?f ?u ?a ?o))                          ; optimized for my keyboard layout
+  (avy-keys '(?t ?n ?s ?e ?r ?i ?a ?o))
   (avy-timeout-seconds 0.2))
 
 ;; Type comfortably --- `eldoc' watches over you; a whisper of documentation as you type.
@@ -153,7 +153,8 @@
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
-              ("M-H-i" . puni-barf-backward))
+              ("M-H-i" . puni-barf-backward)
+              ("C-M-c p" . puni-split))
   :custom
   (puni-squeeze-flash nil)                                                   ; don't blink or flash, I find it distracting
   (puni-confirm-when-delete-unbalanced-active-region nil)                    ; don't warn me, I know what I am doing
