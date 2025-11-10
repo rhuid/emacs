@@ -18,8 +18,6 @@ Also, it may not work inside comments."
           (kilarging-save (region-beginning) (region-end))
         (kill-region (region-beginning) (region-end))))))
 
-(bind-key "M-i" 'rh/act-inside)
-
 (defun rh/visit-next-sexp (&optional arg)
   "Move the point to the inside of the next sexp of the same level.
 With ARG, it moves forward ARG times.
@@ -58,10 +56,14 @@ Same as calling `rh/forward-opening-delimiter` with negative ARG."
   (interactive "p")
   (rh/forward-opening-delimiter (- (or arg 1))))
 
-(bind-key "H-f" 'rh/visit-next-sexp)
-(bind-key "H-b" 'rh/visit-previous-sexp)
-(bind-key "C-H-f" 'rh/forward-opening-delimiter)
-(bind-key "C-H-b" 'rh/backward-opening-delimiter)
+(defun rh/change-inside-forward (&optional arg)
+  "Jump to the next delimiter and kill contents of the parent balanced expression.
+Prefix argument \\[universal-argument] does the same but on the previous delimiter."
+  (interactive "P")
+  (if arg
+      (rh/backward-opening-delimiter 1)
+    (rh/forward-opening-delimiter 1))
+  (rh/act-inside))
 
 (defun rh/forward-up-list (&optional arg)
   "Move forward out of one level of parentheses.
@@ -71,7 +73,11 @@ many times.  A negative argument means move backward."
   (interactive "p")
   (backward-up-list (- arg) t t))
 
-(bind-key "C-M-y" 'rh/forward-up-list)
+(defun rh/unwrap-parent-sexp ()
+  "Remove delimiters of the parent sexp."
+  (interactive)
+  (backward-up-list 1 t t)
+  (delete-pair 1))
 
 (defun rh/chop-off-sexp (&optional arg)
   "Chop off the rest of the higher level sexp.
@@ -80,8 +86,8 @@ With \\[universal-argument], it chops backward."
   (set-mark (point))
   (if arg
       (progn
-  (backward-up-list 1 t t)
-  (forward-char 1))
+        (backward-up-list 1 t t)
+        (forward-char 1))
     (backward-up-list -1 t t)
     (backward-char 1))
   (when (use-region-p)
@@ -92,9 +98,6 @@ With \\[universal-argument], it chops backward."
   (interactive "P")
   (rh/chop-off-sexp (not arg)))
 
-(bind-key "C-M-)" 'rh/chop-off-sexp)
-(bind-key "C-M-(" 'rh/backward-chop-off-sexp)
-
 (defun rh/kill-word (&optional arg)
   "Kill the whole word and tries to fix up whitespace after killing.
 With ARG, perform this action that many times.
@@ -104,20 +107,18 @@ Also kills word backward if the point is at the end of the word."
   (let ((arg (or arg 1)))
     (if (< arg 0)
         (progn
-  (let ((b (bounds-of-thing-at-point 'word)))
+          (let ((b (bounds-of-thing-at-point 'word)))
             (unless (and b (= (point) (cdr b)))
               (forward-word 1)))
-  (kill-word arg))
+          (kill-word arg))
       (let ((b (bounds-of-thing-at-point 'word)))
         (unless (and b (<= (point) (car b)))
           (if b
-    (goto-char (car b))
-  (backward-word 1))))
-(kill-word arg)))
+              (goto-char (car b))
+            (backward-word 1))))
+      (kill-word arg)))
   (when (looking-at " +")
     (just-one-space)))
-
-(bind-key "<Ci>" 'rh/kill-word)
 
 (defun rh/copy-word (&optional arg)
   "Copy the current word without moving point.
@@ -125,19 +126,19 @@ With ARG, copy that many words; negative ARG copies backward."
   (interactive "p")
   (let ((arg (or arg 1)))
     (save-excursion
-  (let* ((start (point))
+      (let* ((start (point))
              (bounds (bounds-of-thing-at-point 'word)))
-(if (< arg 0)
-    (progn
-  (when (and bounds (< (point) (cdr bounds)))
+        (if (< arg 0)
+            (progn
+              (when (and bounds (< (point) (cdr bounds)))
                 (goto-char (cdr bounds)))
-  (kill-ring-save (point)
-(progn (backward-word (- arg)) (point))))
+              (kill-ring-save (point)
+                              (progn (backward-word (- arg)) (point))))
           (progn
-  (when (and bounds (> (point) (car bounds)))
+            (when (and bounds (> (point) (car bounds)))
               (goto-char (car bounds)))
-  (kill-ring-save (point)
-(progn (forward-word arg) (point)))))))))
+            (kill-ring-save (point)
+                            (progn (forward-word arg) (point)))))))))
 
 (defun rh/isearch-remote-copy (&optional arg)
   "In `isearch', copy ARG words and return to the original point.
@@ -148,7 +149,7 @@ Uses `rh/copy-word' under the hood."
   (let* ((count (or arg 1))
          (in-isearch (bound-and-true-p isearch-mode)))
     (if in-isearch
-    (let* ((isearch-pos (point))
+        (let* ((isearch-pos (point))
                (other-pos (or (and (boundp 'isearch-other-end) isearch-other-end)
                               isearch-pos))
                (match-start (min isearch-pos other-pos))
@@ -158,8 +159,8 @@ Uses `rh/copy-word' under the hood."
                                (and (boundp 'isearch--opoint) isearch--opoint)
                                (point))))
           (save-excursion
-  (goto-char copy-pos)
-  (rh/copy-word count))
+            (goto-char copy-pos)
+            (rh/copy-word count))
           (isearch-exit)
           (goto-char orig-point))
       (message "This command should be invoked in isearch mode."))))
@@ -173,10 +174,6 @@ With ARG, yank that many words; negative ARG yanks that many previous words."
         (rh/isearch-remote-copy arg)
         (arg 1))
     (message "This command should be invoked in isearch-mode.")))
-
-(bind-key "C-;" 'rh/copy-word)
-(define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
-(define-key isearch-mode-map (kbd "C-Y") 'rh/isearch-remote-yank)
 
 (defun rh/kill-sentence (&optional arg)
   "Kill the current sentence.
@@ -200,9 +197,6 @@ Negative ARG copies that many previous sentences."
     (forward-sentence arg)
     (kill-ring-save (region-beginning) (region-end))))
 
-(bind-key "C-#" 'rh/kill-sentence)
-(bind-key "C-@" 'rh/copy-sentence)
-
 (defun rh/chop-off-buffer (&optional arg)
   "Kill the rest of the buffer after point.
 With ARG, it deletes instead (does not save to the kill-ring)."
@@ -219,9 +213,6 @@ With ARG, it deletes instead (does not save to the kill-ring)."
       (delete-region (point-min) (point))
     (kill-region (point-min) (point))))
 
-(bind-key "C-M-S-k" 'rh/chop-off-buffer)
-(bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
-
 (defun rh/select-line (&optional arg)
   "Select the current line.
   With ARG, select that many lines; negative ARG selects previous lines."
@@ -231,8 +222,6 @@ With ARG, it deletes instead (does not save to the kill-ring)."
   (forward-line (1- arg))
   (end-of-line)
   (exchange-point-and-mark nil))
-
-(bind-key "C-'" 'rh/select-line)
 
 (defun rh/open-line-below (&optional arg)
   "Create a new line below and move the cursor there.
@@ -248,9 +237,6 @@ With ARG, perform this action that many times."
   (back-to-indentation)
   (open-line arg))
 
-(bind-key "C-<return>" 'rh/open-line-below)
-(bind-key "C-S-<return>" 'rh/open-line-above)
-
 (defun rh/join-line (&optional arg)
   "Join the current line to the following line.
 With ARG, perform this action that many times."
@@ -259,6 +245,34 @@ With ARG, perform this action that many times."
     (dotimes (_ arg)
       (join-line -1))))
 
+;; Global keybindings for the commands defined in this module
+(bind-key "M-i" 'rh/act-inside)
+(bind-key "M-I" 'rh/change-inside-forward)
+(bind-key "H-f" 'rh/visit-next-sexp)
+(bind-key "H-b" 'rh/visit-previous-sexp)
+(bind-key "C-H-f" 'rh/forward-opening-delimiter)
+(bind-key "C-H-b" 'rh/backward-opening-delimiter)
+(bind-key "C-M-y" 'rh/forward-up-list)
+(bind-key "C-M-)" 'rh/chop-off-sexp)
+(bind-key "C-M-(" 'rh/backward-chop-off-sexp)
+(bind-key "<Ci>" 'rh/kill-word)
+(bind-key "C-;" 'rh/copy-word)
+(bind-key "C-#" 'rh/kill-sentence)
+(bind-key "C-@" 'rh/copy-sentence)
+(bind-key "C-M-S-k" 'rh/chop-off-buffer)
+(bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
+(bind-key "C-'" 'rh/select-line)
+(bind-key "C-<return>" 'rh/open-line-below)
+(bind-key "C-S-<return>" 'rh/open-line-above)
 (bind-key "C-j" 'rh/join-line)
+
+;; `isearch-mode' keybindings
+(define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
+(define-key isearch-mode-map (kbd "C-Y") 'rh/isearch-remote-yank)
+
+;; A prefix key for more sexp operations
+(define-prefix-command 'rh/sexp-map)
+(bind-key "C-M-c" 'rh/sexp-map)
+(keymap-set rh/sexp-map (kbd "u") 'rh/unwrap-parent-sexp)
 
 (provide 'knot-editing)
