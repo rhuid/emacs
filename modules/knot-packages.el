@@ -140,7 +140,7 @@
 (use-package puni
   :init (puni-global-mode)
   :bind (:map puni-mode-map
-              ("C-w" . nil)                                                  ; taken by whole-line-or-region-kill-region
+              ("C-w" . nil)                                ; taken by whole-line-or-region-kill-region
               ("M-o" . rh/puni-rewrap-sexp)
               ("M-K" . kill-paragraph)
               ("M-H" . backward-kill-paragraph)
@@ -154,10 +154,16 @@
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
               ("M-H-i" . puni-barf-backward)
-              ("C-M-c p" . puni-split))
+              ("C-M-c c" . puni-convolute)
+              ("C-M-c p" . puni-split)
+              ("C-M-c s" . puni-splice)
+              ("C-M-c f" . puni-splice-killing-forward)
+              ("C-M-c b" . puni-splice-killing-backward)
+              ("C-M-c m" . puni-mark-list-around-point))
   :custom
-  (puni-squeeze-flash nil)                                                   ; don't blink or flash, I find it distracting
-  (puni-confirm-when-delete-unbalanced-active-region nil)                    ; don't warn me, I know what I am doing
+  (puni-squeeze-flash nil)
+  (puni-blink-for-sexp-manipulating nil)
+  (puni-confirm-when-delete-unbalanced-active-region nil)
   :config
   (defun rh/puni-rewrap-sexp ()
     "Rewrap the current sexp."
