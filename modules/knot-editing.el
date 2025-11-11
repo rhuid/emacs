@@ -78,8 +78,9 @@ many times.  A negative argument means move backward."
 (defun rh/unwrap-parent-sexp ()
   "Remove delimiters of the parent sexp."
   (interactive)
-  (backward-up-list 1 t t)
-  (delete-pair 1))
+  (save-excursion
+    (backward-up-list 1 t t)
+    (delete-pair 1)))
 
 (defun rh/chop-off-sexp (&optional arg)
   "Chop off the rest of the higher level sexp.
@@ -259,8 +260,8 @@ With ARG, perform this action that many times."
 (bind-key "C-M-(" 'rh/backward-chop-off-sexp)
 (bind-key "<Ci>" 'rh/kill-word)
 (bind-key "C-;" 'rh/copy-word)
-(bind-key "C-#" 'rh/kill-sentence)
-(bind-key "C-@" 'rh/copy-sentence)
+(bind-key "C-H-d" 'rh/kill-sentence)
+(bind-key "C-H-w" 'rh/copy-sentence)
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
 (bind-key "C-'" 'rh/select-line)
