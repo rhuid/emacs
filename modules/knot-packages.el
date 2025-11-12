@@ -17,7 +17,7 @@
 
 ;; Sail through the visible screen at the speed of thought.
 (use-package avy
-  :bind (("C-," . avy-goto-char-2)
+  :bind (("C-," . avy-goto-char-timer)
          :map isearch-mode-map
          ("C-," . avy-isearch))
   :custom
