@@ -21,10 +21,6 @@
 (bind-key "M-`"   'negative-argument)
 (bind-key "C-M-`" 'negative-argument)
 
-;; `H-x' is much more comfortable than `C-x' for some certain key sequences.
-(define-key key-translation-map (kbd "H-M-b") (kbd "C-x b"))                    ; `consult-buffer'
-(define-key key-translation-map (kbd "H-x H-s") (kbd "C-x C-s"))                ; more ergonomic saving
-
 ;; Create a version of these commands that apply to the whole buffer if there is no active region.
 (rh/define-region-or-buffer-command query-replace)
 (rh/define-region-or-buffer-command query-replace-regexp)
