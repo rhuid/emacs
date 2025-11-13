@@ -34,6 +34,7 @@
 (bind-key "C-%"   'rh/region-or-buffer--replace-string)                         ; reminiscent of `M-%' and `C-M-%'?
 (bind-key "M-m"   'mark-word)                                                   ; by default, `M-m' is `back-to-indentation'
 (bind-key "C-S-j" 'join-line)                                                   ; join this line to the previous
+(bind-key "C-S-s" 'isearch-forward-thing-at-point)
 (bind-key "M-M"   (lamb (mark-word 4 t)))                                       ; mark 4 words at a time
 (bind-key "M-r"   ctl-x-r-map)                                                  ; `M-r' is much faster to type than `C-x r'
 (bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                  ; always adjust text scale globally
