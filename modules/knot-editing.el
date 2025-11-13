@@ -7,16 +7,15 @@ With \\[universal-argument] prefix, it copies. Otherwise, it kills.
 Its behavior is major mode specific as it uses sexp under the hood.
 Also, it may not work inside comments."
   (interactive "P")
-  (save-excursion
+  (save-mark-and-excursion
     (backward-up-list 1 t t)
-    (mark-sexp 1 nil)
-    (when (use-region-p)
-      (forward-char 1)
-      (exchange-point-and-mark nil)
+    (forward-char 1)
+    (let ((beg (point)))
+      (backward-up-list -1 t t)
       (backward-char 1)
       (if arg
-          (kill-ring-save (region-beginning) (region-end))
-        (kill-region (region-beginning) (region-end))))))
+          (kill-ring-save beg (point))
+        (kill-region beg (point))))))
 
 (defun rh/visit-next-sexp (&optional arg)
   "Move the point to the inside of the next sexp of the same level.
