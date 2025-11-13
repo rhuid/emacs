@@ -183,9 +183,11 @@ With ARG, yank that many words; negative ARG yanks that many previous words."
 With ARG, perform this action that many times.
 Negative ARG kills that many previous sentences."
   (interactive "p")
-  (backward-char 1)
+  (unless (bobp)
+    (backward-char 1))
   (forward-sentence)
-  (backward-kill-sentence (- arg))
+  (backward-sentence)
+  (kill-sentence arg)
   (just-one-space))
 
 (defun rh/copy-sentence (&optional arg)
@@ -194,11 +196,11 @@ With ARG, perform this action that many times.
 Negative ARG copies that many previous sentences."
   (interactive "p")
   (save-excursion
-    (unless (looking-back (sentence-end) (line-beginning-position))
-      (unless (bolp)
-        (backward-sentence 1)))
-    (set-mark (point))
-    (forward-sentence arg)
+    (unless (bobp)
+      (backward-char 1))
+    (forward-sentence)
+    (backward-sentence)
+    (mark-end-of-sentence arg)
     (kill-ring-save (region-beginning) (region-end))))
 
 (defun rh/chop-off-buffer (&optional arg)
