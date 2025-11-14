@@ -11,7 +11,6 @@
 (kill-ring-deindent-mode)                                              ; remove indentation while saving to the kill ring
 (setq kill-buffer-query-functions nil)                                 ; don't ask for confirmation while killing buffers
 (setq kill-do-not-save-duplicates t)                                   ; don't add duplicates to the kill king
-(setq kill-whole-line t)                                               ; `C-k' at the start of a line kills the whole line
 
 ;; Concerning lines, sentences, words and characters
 (global-display-line-numbers-mode)                                     ; line numbers everywhere please
