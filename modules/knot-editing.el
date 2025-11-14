@@ -184,8 +184,8 @@ Negative ARG kills that many previous sentences."
   (interactive "p")
   (unless (bobp)
     (backward-char 1))
-  (forward-sentence)
-  (backward-sentence)
+  (forward-sentence 1)
+  (backward-sentence 1)
   (kill-sentence arg)
   (just-one-space))
 
@@ -197,10 +197,19 @@ Negative ARG copies that many previous sentences."
   (save-excursion
     (unless (bobp)
       (backward-char 1))
-    (forward-sentence)
-    (backward-sentence)
+    (forward-sentence 1)
+    (backward-sentence 1)
     (mark-end-of-sentence arg)
     (kill-ring-save (region-beginning) (region-end))))
+
+(defun rh/break-sentence (&optional arg)
+  "Start the next sentence in a new line and move the cursor there.
+With ARG, perform this action that many times."
+  (interactive "p")
+  (dotimes (_ arg)
+    (forward-sentence 1)
+    (newline 1)
+    (delete-horizontal-space nil)))
 
 (defun rh/chop-off-buffer (&optional arg)
   "Kill the rest of the buffer after point.
@@ -260,7 +269,7 @@ With ARG, perform this action that many times."
 (bind-key "C-M-y" 'rh/forward-up-list)
 (bind-key "C-M-)" 'rh/chop-off-sexp)
 (bind-key "C-M-(" 'rh/backward-chop-off-sexp)
-(bind-key "<Ci>" 'rh/kill-word)
+(bind-key "M-D" 'rh/kill-word)
 (bind-key "C-;" 'rh/copy-word)
 (bind-key "C-H-d" 'rh/kill-sentence)
 (bind-key "C-H-w" 'rh/copy-sentence)
@@ -270,6 +279,8 @@ With ARG, perform this action that many times."
 (bind-key "C-<return>" 'rh/open-line-below)
 (bind-key "C-S-<return>" 'rh/open-line-above)
 (bind-key "C-j" 'rh/join-line)
+(bind-key "M-r M-s" 'rh/unwrap-parent-sexp)
+(bind-key "M-j" 'rh/break-sentence)
 
 ;; `isearch-mode' keybindings
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
