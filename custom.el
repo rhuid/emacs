@@ -7,6 +7,10 @@
 (load-library "~/.emacs.d/.archives/dictrus.el")                     ; `dictrus' --- https://github.com/rhuid/dictrus
 (bind-key "C-c d d" 'rh/dictrus-lookup)
 
+;; Because `M-r' is on home row in my keyboard
+(define-key key-translation-map (kbd "M-r M-b") (kbd "C-x b"))
+(define-key key-translation-map (kbd "M-r M-p") (kbd "C-x p f"))
+
 ;; Silently (without output) invoke external programs from within Emacs
 (bind-key "C-s-n" (lamb (start-process-shell-command "Nemo" nil "nemo .")))  ; GUI file manager in the current directory
 (bind-key "C-s-g" (lamb (start-process-shell-command "GIMP" nil "gimp")))    ; GIMP
@@ -20,6 +24,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-fold-catch-invisible-edits 'show-and-error nil nil "Customized with use-package org")
  '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
