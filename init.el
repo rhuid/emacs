@@ -1,6 +1,7 @@
 ;;; init.el --- The main init.el file -*- lexical-binding: t; -*-
 
 (add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "local" user-emacs-directory))
 (setq-default default-directory "~/")
 (setq vc-follow-symlinks t)                                             ; always follow symlinks without asking
 

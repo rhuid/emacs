@@ -70,6 +70,7 @@
 (use-package nix-mode)
 (use-package rust-mode)
 (use-package systemd)
+(use-package ucl-mode :ensure nil)
 (use-package csv-mode :hook (csv-mode . csv-align-mode))
 
 (provide 'knot-programming)
