@@ -71,7 +71,7 @@ It's important to set ~default-frame-alist~ early as this affects the how the Em
 
 *** Disable UI elements
 
-By default, Emacs starts with lots of UI baggage. They could be helpful to a complete beginner or someone coming from GUI apps that uses menu bars, tool bars and things like that. We won't have those baggage here. Period.
+By default, Emacs starts with several GUI elements (menu bar, tool bar, scroll bar). These are unnecessary and look polluting in a minimalist setup.
 
 #+BEGIN_SRC emacs-lisp :tangle "early-init.el"
 ;; Disable UI elements
@@ -134,3 +134,12 @@ Then we end the ~early-init.el~ file with the following file.
 #+END_SRC
 
 ** The ~init~ file
+
+** Final gc restoration?
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 1024 1024 32)
+                  gc-cons-percentage 0.1)))
+#+END_SRC
