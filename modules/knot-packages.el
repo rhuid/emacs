@@ -90,7 +90,6 @@
         ("," . rh/magit-quick-amend))
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-  ;; (setq magit-restore-window-configuration-after-quit nil)
   (defun rh/magit-quick-commit ()
     "Prompt for a commit message in minibuffer and commit immediately."
     (interactive)
