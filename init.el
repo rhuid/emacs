@@ -27,14 +27,8 @@
   (gcmh-idle-delay 20)                                                  ; run GC after 20 secs idle
   (gcmh-high-cons-threshold (* 256 1024 1024)))                         ; while typing, don't run GC until (threshold 256 MB)
 
-;; Might be a good idea to load these early
-(use-package dash :config (dash-fontify-mode))
-(use-package s)
-
 ;; Set up appearance
-(setq custom-safe-themes t)                                             ; don't ask for confirmation for loading themes
-(mapc #'disable-theme custom-enabled-themes)                            ; clean up all debris (before loading a new theme)
-(use-package ef-themes :init (ef-themes-select 'ef-night))              ; `modus-themes' is another good one
+(load-theme 'modus-operandi)                                            ; now built-in with Emacs
 (use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
 
 ;; Local modules
@@ -48,7 +42,6 @@
 (require 'knot-programming)
 (require 'knot-dired)
 (require 'knot-eshell)
-(require 'knot-startup-page)
 (require 'knot-misc)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))  ; don't mess up my init, use a custom file
