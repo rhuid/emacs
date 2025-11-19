@@ -85,17 +85,15 @@
 ;; Git, without ever leaving home and without touching the terminal.
 (use-package magit
   :bind ("C-x g" .  magit-status)
-  (:map magit-mode-map
-        ("." . rh/magit-quick-commit)
-        ("," . rh/magit-quick-amend))
+  (:map magit-mode-map ("." . rh/quick-commit) ("," . rh/quick-amend))
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-  (defun rh/magit-quick-commit ()
+  (defun rh/quick-commit ()
     "Prompt for a commit message in minibuffer and commit immediately."
     (interactive)
     (let ((msg (read-string "Commit message: ")))
       (magit-commit-create `("-m" ,msg))))
-  (defun rh/magit-quick-amend ()
+  (defun rh/quick-amend ()
     "Quickly amend last commit with a new message via minibuffer."
     (interactive)
     (let ((msg (read-string "Amend message: ")))
