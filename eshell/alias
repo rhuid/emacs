@@ -8,3 +8,4 @@ alias la ls -a
 alias l eza
 alias upscale /sbin/realesrgan-ncnn-vuikan -n realesrgan-x4plus-anime -t 200
 alias igi cd ~/Downloads/Project-IGI/Project_IGI_RIP/PC/ & prime-run wine IGI.exe
+alias igi2 cd ~/.wine/drive_c/"Program Files (x86)"/"IGI 2 - Covert Strike"/ & prime-run wine igi2.exe
