@@ -1,7 +1,6 @@
 ;;; init.el --- The main init.el file -*- lexical-binding: t; -*-
 
 (add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "local" user-emacs-directory))
 (setq-default default-directory "~/")
 (setq vc-follow-symlinks t)                                             ; always follow symlinks without asking
 
@@ -35,7 +34,7 @@
 ;; Set up appearance
 (setq custom-safe-themes t)                                             ; don't ask for confirmation for loading themes
 (mapc #'disable-theme custom-enabled-themes)                            ; clean up all debris (before loading a new theme)
-(use-package ef-themes :init (ef-themes-select 'ef-dream))              ; `modus-themes' is another good one
+(use-package ef-themes :init (ef-themes-select 'ef-night))              ; `modus-themes' is another good one
 (use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
 
 ;; Local modules
