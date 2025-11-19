@@ -1,3 +1,8 @@
+#+title: GNU Emacs configuration
+#+author: Ronald Huidrom
+#+email: ronhuidrom@gmail.com
+#+language: en
+
 ** Knot Emacs
 
 #+BEGIN_QUOTE
@@ -37,3 +42,92 @@ I believe that one of the greatest things about Emacs is its infinite extensibil
 #+BEGIN_SRC bash
 gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
 #+END_SRC
+
+** Early Init
+
+Emacs loads ~early-init.el~ file before ~init.el~. This following marks the start of the ~early-init.el~ file.
+
+#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
+;;; early-init.el --- Load this before init.el -*- lexical-binding: t; -*-
+#+END_SRC
+
+*** Defer garbage collection
+
+Garbage collection is important but may slow down Emacs startup slightly. The following defers garbage collection to speed up startup.
+
+#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
+;; Defer garbage collection
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
+#+END_SRC
+
+*** Set ~default-frame-alist~
+
+It's important to set ~default-frame-alist~ early as this affects the how the Emacs frames start and look like. Here, we set the font to ~Iosevka~, sized 15. We start Emacs in fullscreen, maximized.
+
+#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
+(setq default-frame-alist '((font . "Iosevka Term-15") (fullscreen . maximized)))
+#+END_SRC
+
+*** Disable UI elements
+
+By default, Emacs starts with lots of UI baggage. They could be helpful to a complete beginner or someone coming from GUI apps that uses menu bars, tool bars and things like that. We won't have those baggage here. Period.
+
+#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
+;; Disable UI elements
+(menu-bar-mode   -1)
+(tool-bar-mode   -1)
+(scroll-bar-mode -1)
+(tooltip-mode    -1)
+(set-fringe-mode -1)
+#+END_SRC
+
+*** Inhibit startup annoyances
+
+By default, Emacs also pulls in lots of extra baggage like the default `Welcome to GNU Emacs' buffer. To inhibit this, we set the variable ~inhibit-startup-screen~ to ~t~. To not load `default.el' from the Emacs installation directory, we set ~inhibit-default-init~ to ~t~. Setting ~inhibit-x-resources~ to ~t~ inhibits loading X resources.
+
+Setting ~frame-inhibit-implied-resize~ to ~t~ stops Emacs from automatically resizing frame when changing font or UI elements.
+Setting ~server-client-instructions~ to ~nil~ makes client sessions cleaner.
+Setting ~emacs-start-time~ to ~current-time~ records the time Emacs started, for profiling startup time later.
+
+An noteworthy variable is the ~warning-minimum-level~ which we set to ~error~. This inhibits auto pop ups of warning buffer unless it's an error. The line ~(fset 'display-startup-echo-area-message #'ignore)~ also suppresses the echo area message shown at startup.
+
+#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
+;; Inhibit startup annoyances
+(setq
+ inhibit-startup-screen  t                  ; inhibit the default `Welcome to GNU Emacs' buffer
+ inhibit-default-init    t                  ; don't load `default.el' from the Emacs installation directory
+ inhibit-startup-message t
+ inhibit-x-resources     t                  ; inhibit loading X resources (faster on X11)
+ inhibit-compacting-font-caches t
+ inhibit-startup-echo-area-message t
+ frame-inhibit-implied-resize t             ; don't automatically resize frame when changing font or UI elements
+ server-client-instructions nil             ; make client sessions cleaner
+ emacs-start-time (current-time)            ; record the time Emacs started, for profiling startup time later
+ warning-minimum-level :error)              ; don't pop up a warning buffer unless it's an error
+
+(fset 'display-startup-echo-area-message #'ignore)    ; suppress the minibuffer message shown at startup
+#+END_SRC
+
+*** Native compilation tweaks
+
+In newer versions of Emacs, native compilation is on by default. The following code make some adjustments to how Emacs native compiles the source files.
+
+#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
+;; Native compilation tweaks
+(setq package-native-compile t
+      package-install-upgrade-built-in t
+      native-comp-deferred-compilation t
+      native-comp-warning-on-missing-source nil
+      native-comp-async-report-warnings-errors nil
+      native-comp-speed 3
+      native-comp-defer t)
+#+END_SRC
+
+Then we end the ~early-init.el~ file with the following file.
+
+#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
+(provide 'early-init)
+#+END_SRC
+
+** The ~init~ file
