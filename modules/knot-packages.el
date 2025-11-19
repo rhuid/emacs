@@ -44,9 +44,8 @@
 (use-package expand-region
   :bind ("C->" . er/expand-region))
 
-;; Some modes don't need the mode-line and looks cleaner without it.
+;; Some modes look cleaner without it.
 (use-package hide-mode-line
-  :bind (:map toggle-minor-mode-map ("h" . hide-mode-line-mode))
   :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
 
 ;; Let Emacs whisper the rest of your words; completion for those who prefer serendipity over precision.
@@ -91,7 +90,7 @@
         ("," . rh/magit-quick-amend))
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-  (setq magit-restore-window-configuration-after-quit nil)
+  ;; (setq magit-restore-window-configuration-after-quit nil)
   (defun rh/magit-quick-commit ()
     "Prompt for a commit message in minibuffer and commit immediately."
     (interactive)
@@ -193,7 +192,7 @@
 
 ;; Like a presentation mode, much more readable and pleasant to the eyes.
 (use-package visual-fill-column
-  :bind (:map toggle-minor-mode-map ("v" . visual-fill-column-mode))
+  :bind ("C-H-SPC" . visual-fill-column-mode)
   :hook ((org-mode text-mode magit-status-mode emacs-lisp-mode eshell-mode)
          . visual-fill-column-mode)
   :custom

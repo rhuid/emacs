@@ -94,12 +94,6 @@
 (bind-key "M-s M-p" 'sort-paragraphs)
 (bind-key "M-s M-r" 'reverse-region)
 
-;; A prefix key for toggling `m'inor modes
-(define-prefix-command 'toggle-minor-mode-map)
-(bind-key "C-x m" 'toggle-minor-mode-map)
-(keymap-set toggle-minor-mode-map (kbd "f") 'follow-mode)
-(keymap-set toggle-minor-mode-map (kbd "l") 'display-line-numbers-mode)
-
 ;; We need to load `org-mode' for the following.
 (autoload 'org-increase-number-at-point "org" nil t)
 (autoload 'org-decrease-number-at-point "org" nil t)
@@ -113,17 +107,6 @@
 (bind-key "C-)" 'kmacro-end-or-call-macro)
 
 ;; Window/buffer navigation and management
-(bind-key "H-1" 'delete-other-windows)
-(bind-key "H-2" 'split-window-below)
-(bind-key "H-3" 'split-window-right)
-(bind-key "H-4" 'display-buffer)
-(bind-key "H-0" 'delete-window)
-(bind-key "H-<delete>" 'kill-buffer-and-window)
 (bind-key "C-x C-b" 'ibuffer)
-
-;; I don't wanna do M-x and type the name again.
-(bind-key "S-<f2>" 'rename-visited-file)                                   ; a homage to GUI file managers' <f2> renaming
-(bind-key "S-<f5>" 'recover-this-file)
-(bind-key "S-<delete>" 'delete-file)                                       ; another homage!
 
 (provide 'knot-keys)

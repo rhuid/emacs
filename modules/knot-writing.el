@@ -30,10 +30,10 @@
   (add-to-list 'org-export-backends 'md)
   ;; Set faces for the headings
   (custom-set-faces
-   '(org-level-1 ((t (:inherit outline-1 :height 1.7 :weight bold :foreground "#50fa7b"))))
-   '(org-level-2 ((t (:inherit outline-2 :height 1.5 :weight bold :foreground "#8be9fd"))))
-   '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#ff79c6"))))
-   '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c")))))
+   '(org-level-1 ((t (:inherit outline-1 :height 1.7 :weight bold ))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.5 :weight bold ))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold ))))
+   '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold )))))
   :bind (:map org-mode-map
               ("C-j" . nil)
               ("C-," . nil)
