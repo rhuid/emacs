@@ -84,29 +84,32 @@ By default, Emacs starts with lots of UI baggage. They could be helpful to a com
 
 *** Inhibit startup annoyances
 
-By default, Emacs also pulls in lots of extra baggage like the default `Welcome to GNU Emacs' buffer. To inhibit this, we set the variable ~inhibit-startup-screen~ to ~t~. To not load `default.el' from the Emacs installation directory, we set ~inhibit-default-init~ to ~t~. Setting ~inhibit-x-resources~ to ~t~ inhibits loading X resources.
+By default, Emacs also pulls in lots of extra baggage at startup. To get a cleaner startup, we inhibit a lot of theses baggage.
 
-Setting ~frame-inhibit-implied-resize~ to ~t~ stops Emacs from automatically resizing frame when changing font or UI elements.
-Setting ~server-client-instructions~ to ~nil~ makes client sessions cleaner.
-Setting ~emacs-start-time~ to ~current-time~ records the time Emacs started, for profiling startup time later.
-
-An noteworthy variable is the ~warning-minimum-level~ which we set to ~error~. This inhibits auto pop ups of warning buffer unless it's an error. The line ~(fset 'display-startup-echo-area-message #'ignore)~ also suppresses the echo area message shown at startup.
++ Setting ~inhibit-startup-screen~ to ~t~ inhibits the default ~Welcome to GNU Emacs~ startup screen. Now Emacs will start with the ~*scratch*~ buffer.
++ To not load ~default.el~ from the Emacs installation directory, we set ~inhibit-default-init~ to ~t~.
++ Setting ~inhibit-x-resources~ to ~t~ inhibits loading X resources.
++ Setting ~frame-inhibit-implied-resize~ to ~t~ stops Emacs from automatically resizing frame when changing font or UI elements.
++ Setting ~server-client-instructions~ to ~nil~ makes client sessions cleaner.
++ Setting ~emacs-start-time~ to ~current-time~ records the time Emacs started, for profiling startup time later.
++ Setting ~warning-minimum-level~ to ~error~ inhibits auto pop ups of warning buffer unless it's an error. The value could be ~emergency~ (Emacs warns you only when there is an emergency).
++ The line ~(fset 'display-startup-echo-area-message #'ignore)~ suppresses the echo area message shown at startup.
 
 #+BEGIN_SRC emacs-lisp :tangle "early-init.el"
 ;; Inhibit startup annoyances
 (setq
- inhibit-startup-screen  t                  ; inhibit the default `Welcome to GNU Emacs' buffer
- inhibit-default-init    t                  ; don't load `default.el' from the Emacs installation directory
+ inhibit-startup-screen  t
+ inhibit-default-init    t
  inhibit-startup-message t
- inhibit-x-resources     t                  ; inhibit loading X resources (faster on X11)
+ inhibit-x-resources     t
  inhibit-compacting-font-caches t
  inhibit-startup-echo-area-message t
- frame-inhibit-implied-resize t             ; don't automatically resize frame when changing font or UI elements
- server-client-instructions nil             ; make client sessions cleaner
- emacs-start-time (current-time)            ; record the time Emacs started, for profiling startup time later
- warning-minimum-level :error)              ; don't pop up a warning buffer unless it's an error
+ frame-inhibit-implied-resize t
+ server-client-instructions nil
+ emacs-start-time (current-time)
+ warning-minimum-level :error)
 
-(fset 'display-startup-echo-area-message #'ignore)    ; suppress the minibuffer message shown at startup
+(fset 'display-startup-echo-area-message #'ignore)
 #+END_SRC
 
 *** Native compilation tweaks

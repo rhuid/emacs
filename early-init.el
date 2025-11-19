@@ -15,18 +15,18 @@
 
 ;; Inhibit startup annoyances
 (setq
- inhibit-startup-screen  t                  ; inhibit the default `Welcome to GNU Emacs' buffer
- inhibit-default-init    t                  ; don't load `default.el' from the Emacs installation directory
+ inhibit-startup-screen  t
+ inhibit-default-init    t
  inhibit-startup-message t
- inhibit-x-resources     t                  ; inhibit loading X resources (faster on X11)
+ inhibit-x-resources     t
  inhibit-compacting-font-caches t
  inhibit-startup-echo-area-message t
- frame-inhibit-implied-resize t             ; don't automatically resize frame when changing font or UI elements
- server-client-instructions nil             ; make client sessions cleaner
- emacs-start-time (current-time)            ; record the time Emacs started, for profiling startup time later
- warning-minimum-level :error)              ; don't pop up a warning buffer unless it's an error
+ frame-inhibit-implied-resize t
+ server-client-instructions nil
+ emacs-start-time (current-time)
+ warning-minimum-level :error)
 
-(fset 'display-startup-echo-area-message #'ignore)    ; suppress the minibuffer message shown at startup
+(fset 'display-startup-echo-area-message #'ignore)
 
 ;; Native compilation tweaks
 (setq package-native-compile t
