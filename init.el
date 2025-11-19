@@ -1,5 +1,6 @@
 ;;; init.el --- The main init.el file -*- lexical-binding: t; -*-
 
+(add-to-list 'load-path (expand-file-name "conf" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (setq-default default-directory "~/")
 (setq vc-follow-symlinks t)                                             ; always follow symlinks without asking
@@ -27,9 +28,20 @@
   (gcmh-idle-delay 20)                                                  ; run GC after 20 secs idle
   (gcmh-high-cons-threshold (* 256 1024 1024)))                         ; while typing, don't run GC until (threshold 256 MB)
 
-;; Set up appearance
-(load-theme 'modus-operandi)                                            ; now built-in with Emacs
-(use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
+;; Set up appearance (`theme-set' is my personal package)
+(use-package theme-set
+  :ensure nil
+  :demand t
+  :custom
+  (theme-set-day-theme 'modus-operandi)
+  (theme-set-night-theme 'modus-vivendi)
+  (theme-set-day-start-hour 6)
+  (theme-set-night-start-hour 18)
+  (theme-set-check-interval-minutes 30))
+
+;; A minimalist mode-line
+(use-package mood-line
+  :init (mood-line-mode))
 
 ;; Local modules
 (require 'knot-macros)
