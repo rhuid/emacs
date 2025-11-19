@@ -85,15 +85,15 @@
 ;; Git, without ever leaving home and without touching the terminal.
 (use-package magit
   :bind ("C-x g" .  magit-status)
-  (:map magit-mode-map ("." . rh/quick-commit) ("," . rh/quick-amend))
+  (:map magit-mode-map ("." . rh/commit) ("," . rh/amend))
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-  (defun rh/quick-commit ()
+  (defun rh/commit ()
     "Prompt for a commit message in minibuffer and commit immediately."
     (interactive)
     (let ((msg (read-string "Commit message: ")))
       (magit-commit-create `("-m" ,msg))))
-  (defun rh/quick-amend ()
+  (defun rh/amend ()
     "Quickly amend last commit with a new message via minibuffer."
     (interactive)
     (let ((msg (read-string "Amend message: ")))
@@ -150,12 +150,8 @@
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
               ("M-H-i" . puni-barf-backward)
-              ("C-M-c c" . puni-convolute)
               ("C-M-c p" . puni-split)
-              ("C-M-c s" . puni-splice)
-              ("C-M-c f" . puni-splice-killing-forward)
-              ("C-M-c b" . puni-splice-killing-backward)
-              ("C-M-c m" . puni-mark-list-around-point))
+              ("C-M-c s" . puni-splice))
   :custom
   (puni-squeeze-flash nil)
   (puni-blink-for-sexp-manipulating nil)
