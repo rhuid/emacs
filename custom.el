@@ -16,7 +16,6 @@
 (bind-key "C-s-g" (lamb (start-process-shell-command "GIMP" nil "gimp")))    ; GIMP
 
 (use-package achievements :init (achievements-mode))
-(use-package wordel)
 
 ;; Here comes the mess!
 (custom-set-variables
@@ -38,12 +37,3 @@
                   rust-mode spacious-padding sudo-edit systemd tree-sitter-langs
                   typst-ts-mode vertico visual-fill-column vundo
                   whole-line-or-region wordel yasnippet)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit outline-1 :height 1.7 :weight bold :foreground "#50fa7b"))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.5 :weight bold :foreground "#8be9fd"))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold :foreground "#ff79c6"))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.1 :weight bold :foreground "#f1fa8c")))))
