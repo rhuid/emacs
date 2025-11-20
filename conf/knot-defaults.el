@@ -58,6 +58,14 @@
  duplicate-region-final-position 1                                ; put the region around the first copy
  delete-pair-blink-delay 0)                                       ; heck, why would I want any delay?
 
+;; `isearch' --- Search as you type, and watch your buffer follow
+(setq
+ isearch-allow-scroll 'unlimited                                  ; scroll as much as you please
+ isearch-lazy-count t                                             ; show number of matches in the mode-line
+ isearch-repeat-on-direction-change t                             ; allow switching direction
+ search-default-mode 'char-fold-to-regexp                         ; match accented letters too
+ search-whitespace-regexp ".*?")                                  ; type "t n" to match "teleportation"
+
 ;; Some nice minor modes
 (abbrev-mode)                                                     ; let Emacs finish your phrases, because typing is hard work
 (delete-selection-mode)                                           ; typing on a region replaces it
@@ -65,13 +73,14 @@
 (electric-pair-mode)                                              ; auto-insert the closing delimiter
 (global-goto-address-mode)                                        ; make URLs and email addresses clickable
 (global-prettify-symbols-mode)                                    ; pretty math symbols
+(add-hook 'prog-mode-hook 'outline-minor-mode)                    ; fold and bloom your buffer's hierarchy
 (show-paren-mode)                                                 ; highlight matching parenthesis
 (repeat-mode)                                                     ; repeat commands without retyping the prefix key
 (recentf-mode)                                                    ; save recent files
 (savehist-mode)                                                   ; save minibuffer history
 (setq
- read-abbrev-file abbrev-file-name
- save-abbrevs 'silently
+ read-abbrev-file        abbrev-file-name
+ save-abbrevs            'silently
  eldoc-idle-delay        0.2
  repeat-exit-timeout     5
  recentf-max-saved-items 200
@@ -81,7 +90,7 @@
  history-delete-duplicates t
  savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 
-;; Advice to prevent abbrev expansion inside comments and strings
+;; Prevent abbrev expansion inside comments and strings
 (advice-add 'abbrev--default-expand :around (lambda (fun &rest args) (unless (nth 8 (syntax-ppss)) (apply fun args))))
 
 (provide 'knot-defaults)

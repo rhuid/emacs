@@ -1,20 +1,5 @@
 ;;; knot-packages.el --- Tools, tools, tools! -*- lexical-binding: t; -*-
 
-;; ;; Let Emacs finish your phrases. Because typing is hard work.
-;; (use-package abbrev
-;;   :ensure nil
-;;   :config
-;;   (defun rh/context-sensitive-abbrev-expand (fun &rest args)
-;;     "Advice to prevent abbrev expansion inside comments and strings."
-;;     (unless (nth 8 (syntax-ppss))
-;;       (apply fun args)))
-;;   (advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
-;;   :config
-;;   (setq-default abbrev-mode t)
-;;   (setq abbrev-file-name (expand-file-name "library/abbrevs.el" user-emacs-directory))
-;;   (read-abbrev-file abbrev-file-name)
-;;   (setq save-abbrevs 'silently))
-
 ;; Sail through the visible screen at the speed of thought.
 (use-package avy
   :bind (("C-," . avy-goto-char-timer)
@@ -44,16 +29,6 @@
      try-complete-lisp-symbol
      try-complete-lisp-symbol-partially
      try-expand-all-abbrevs)))
-
-;; Search as you type, and watch your buffer follow.
-(use-package isearch
-  :ensure nil
-  :custom
-  (isearch-allow-scroll 'unlimited)                                          ; scroll as much as you please
-  (isearch-lazy-count t)                                                     ; show number of matches in the mode-line
-  (isearch-repeat-on-direction-change t)                                     ; allow switching direction
-  (search-default-mode 'char-fold-to-regexp)                                 ; match accented letters too
-  (search-whitespace-regexp ".*?"))                                          ; type "t n" to match "teleportation"
 
 ;; Type freely; Jinx has your back. A silent guardian of your spelling.
 ;; Requires enchant and dictionary backend (I use `hunspell-en_us').
@@ -163,7 +138,6 @@
 ;; Some more packages
 (use-package expand-region :bind ("C->" . er/expand-region))                 ; select and expand regions by semantic units
 (use-package move-text :init (move-text-default-bindings))                   ; move line or region vertically with ease
-(use-package outline :hook (prog-mode . outline-minor-mode))                 ; fold and bloom your buffer's hierarchy
 (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode)) ; highlight nested parentheses cleanly
 (use-package rainbow-mode :hook (prog-mode . rainbow-mode))                  ; colorize stings that represent colors
 (use-package sudo-edit)
