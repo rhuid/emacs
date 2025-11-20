@@ -41,32 +41,29 @@
 (bind-key "H-<tab>" 'winner-undo)
 
 ;; Make it more convenient (concerning convenience?)
-(setq
- use-dialog-box nil                                               ; no dialog box, please
- next-line-add-newlines t                                         ; `C-n' adds newline, avoid `end-of-buffer' error
- disabled-command-function nil                                    ; enable all disabled commands, I know what I am doing
- use-short-answers t                                              ; all confirmations prompts be y or n
- echo-keystrokes 0.1                                              ; display keystrokes in the echo area faster
- idle-update-delay 0.1                                            ; update things on screen faster after typing
- confirm-kill-processes nil                                       ; don't confirm killing processes on exit
- shift-select-mode nil                                            ; we have a better use of `Shift' as modifier key
- suggest-key-bindings nil)                                        ; don't show equivalent keybindings when `M-x' has one
+(setq use-dialog-box nil)                                         ; no dialog box, please
+(setq next-line-add-newlines t)                                   ; `C-n' adds newline, avoid `end-of-buffer' error
+(setq disabled-command-function nil)                              ; enable all disabled commands, I know what I am doing
+(setq use-short-answers t)                                        ; all confirmations prompts be y or n
+(setq echo-keystrokes 0.1)                                        ; display keystrokes in the echo area faster
+(setq idle-update-delay 0.1)                                      ; update things on screen faster after typing
+(setq confirm-kill-processes nil)                                 ; don't confirm killing processes on exit
+(setq shift-select-mode nil)                                      ; we have a better use of `Shift' as modifier key
+(setq suggest-key-bindings nil)                                   ; don't show equivalent keybindings when `M-x' has one
 
 ;; Concerning editing
-(setq
- duplicate-line-final-position   1                                ; move point to the first new line
- duplicate-region-final-position 1                                ; put the region around the first copy
- delete-pair-blink-delay 0)                                       ; heck, why would I want any delay?
+(setq duplicate-line-final-position   1)                          ; move point to the first new line
+(setq duplicate-region-final-position 1)                          ; put the region around the first copy
+(setq delete-pair-blink-delay 0)                                  ; heck, why would I want any delay?
 
 ;; `isearch' --- Search as you type, and watch your buffer follow
-(setq
- isearch-allow-scroll 'unlimited                                  ; scroll as much as you please
- isearch-lazy-count t                                             ; show number of matches in the mode-line
- isearch-repeat-on-direction-change t                             ; allow switching direction
- search-default-mode 'char-fold-to-regexp                         ; match accented letters too
- search-whitespace-regexp ".*?")                                  ; type "t n" to match "teleportation"
+(setq isearch-allow-scroll 'unlimited)                            ; scroll as much as you please
+(setq isearch-lazy-count t)                                       ; show number of matches in the mode-line
+(setq isearch-repeat-on-direction-change t)                       ; allow switching direction
+(setq search-default-mode 'char-fold-to-regexp)                   ; match accented letters too
+(setq search-whitespace-regexp ".*?")                             ; type "t n" to match "teleportation"
 
-;; Some nice minor modes
+;; Minor modes
 (abbrev-mode)                                                     ; let Emacs finish your phrases, because typing is hard work
 (delete-selection-mode)                                           ; typing on a region replaces it
 (global-eldoc-mode)                                               ; a whisper of documentation watches over you as you type
@@ -78,17 +75,18 @@
 (repeat-mode)                                                     ; repeat commands without retyping the prefix key
 (recentf-mode)                                                    ; save recent files
 (savehist-mode)                                                   ; save minibuffer history
-(setq
- read-abbrev-file        abbrev-file-name
- save-abbrevs            'silently
- eldoc-idle-delay        0.2
- repeat-exit-timeout     5
- recentf-max-saved-items 200
- recentf-max-menu-items  25
- show-paren-delay        0
- history-length          2000
- history-delete-duplicates t
- savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+
+;; Customizations for some minor modes
+(setq read-abbrev-file        abbrev-file-name)
+(setq save-abbrevs            'silently)
+(setq eldoc-idle-delay        0.2)
+(setq repeat-exit-timeout     5)
+(setq recentf-max-saved-items 200)
+(setq recentf-max-menu-items  25)
+(setq show-paren-delay        0)
+(setq history-length          2000)
+(setq history-delete-duplicates t)
+(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 
 ;; Prevent abbrev expansion inside comments and strings
 (advice-add 'abbrev--default-expand :around (lambda (fun &rest args) (unless (nth 8 (syntax-ppss)) (apply fun args))))

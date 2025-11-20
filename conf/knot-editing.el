@@ -2,10 +2,7 @@
 
 (defun rh/act-inside (&optional arg)
   "Kill or copy the content inside the current balanced expression.
-With \\[universal-argument] prefix, it copies. Otherwise, it kills.
-
-Its behavior is major mode specific as it uses sexp under the hood.
-Also, it may not work inside comments."
+With \\[universal-argument] prefix, it copies. Otherwise, it kills."
   (interactive "P")
   (save-mark-and-excursion
     (backward-up-list 1 t t)
