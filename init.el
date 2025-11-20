@@ -28,6 +28,9 @@
   (gcmh-idle-delay 20)                                                  ; run GC after 20 secs idle
   (gcmh-high-cons-threshold (* 256 1024 1024)))                         ; while typing, don't run GC until (threshold 256 MB)
 
+(use-package dash :demand t)
+(use-package s    :demand t)
+
 ;; Set up appearance (`theme-set' is my personal package)
 (use-package theme-set
   :ensure nil
@@ -48,6 +51,7 @@
 (require 'knot-keys)
 (require 'knot-defaults)
 (require 'knot-packages)
+(require 'dwim)
 (require 'knot-editing)
 (require 'knot-completion)
 (require 'knot-writing)
@@ -56,5 +60,6 @@
 (require 'knot-eshell)
 (require 'knot-misc)
 
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))  ; don't mess up my init, use a custom file
+;; Don't mess up my init, use a custom file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
