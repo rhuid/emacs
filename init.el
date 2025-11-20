@@ -31,20 +31,11 @@
 (use-package dash :demand t)
 (use-package s    :demand t)
 
-;; Set up appearance (`theme-set' is my personal package)
-(use-package theme-set
-  :ensure nil
-  :demand t
-  :custom
-  (theme-set-day-theme 'modus-operandi)
-  (theme-set-night-theme 'modus-vivendi)
-  (theme-set-day-start-hour 6)
-  (theme-set-night-start-hour 18)
-  (theme-set-check-interval-minutes 30))
-
-;; A minimalist mode-line
-(use-package mood-line
-  :init (mood-line-mode))
+;; Set up appearance
+(require 'theme-set)                                                    ; `theme-set' is my personal package
+(setq theme-set-day-theme 'modus-operandi)
+(setq theme-set-night-theme 'modus-vivendi)
+(use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
 
 ;; Local modules
 (require 'knot-macros)
