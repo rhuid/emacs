@@ -1,19 +1,19 @@
 ;;; knot-packages.el --- Tools, tools, tools! -*- lexical-binding: t; -*-
 
-;; Let Emacs finish your phrases. Because typing is hard work.
-(use-package abbrev
-  :ensure nil
-  :init
-  (defun rh/context-sensitive-abbrev-expand (fun &rest args)
-    "Advice to prevent abbrev expansion inside comments and strings."
-    (unless (nth 8 (syntax-ppss))
-      (apply fun args)))
-  (advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
-  :config
-  (setq-default abbrev-mode t)
-  (setq abbrev-file-name (expand-file-name "library/abbrevs.el" user-emacs-directory))
-  (read-abbrev-file abbrev-file-name)
-  (setq save-abbrevs 'silently))
+;; ;; Let Emacs finish your phrases. Because typing is hard work.
+;; (use-package abbrev
+;;   :ensure nil
+;;   :config
+;;   (defun rh/context-sensitive-abbrev-expand (fun &rest args)
+;;     "Advice to prevent abbrev expansion inside comments and strings."
+;;     (unless (nth 8 (syntax-ppss))
+;;       (apply fun args)))
+;;   (advice-add 'abbrev--default-expand :around #'rh/context-sensitive-abbrev-expand)
+;;   :config
+;;   (setq-default abbrev-mode t)
+;;   (setq abbrev-file-name (expand-file-name "library/abbrevs.el" user-emacs-directory))
+;;   (read-abbrev-file abbrev-file-name)
+;;   (setq save-abbrevs 'silently))
 
 ;; Sail through the visible screen at the speed of thought.
 (use-package avy
@@ -23,26 +23,6 @@
   :custom
   (avy-keys '(?t ?n ?s ?e ?r ?i ?a ?o))
   (avy-timeout-seconds 0.2))
-
-;; Type comfortably --- `eldoc' watches over you; a whisper of documentation as you type.
-(use-package eldoc
-  :ensure nil
-  :init (global-eldoc-mode)
-  :config (setq eldoc-idle-delay 0.2))
-
-;; Electric pairs: Auto-insert the closing delimiter.
-(use-package elec-pair
-  :init (electric-pair-mode)
-  :hook (org-mode . rh/org-electric-pairs)
-  :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\]) (?\".?\") (?\<.?\>)))
-  :config
-  (defun rh/org-electric-pairs ()
-    "Org pairs for electric-pair-mode."
-    (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
-
-;; Select and expand regions by semantic units.
-(use-package expand-region
-  :bind ("C->" . er/expand-region))
 
 ;; Some modes look cleaner without it.
 (use-package hide-mode-line
@@ -109,34 +89,16 @@
          ("C-M-<"   . mc/skip-to-previous-like-this))
   :custom (mc/always-run-for-all t))
 
-;; Fold and bloom your buffer's hierarchy.
-(use-package outline
-  :hook ((prog-mode text-mode) . outline-minor-mode)
-  :init (setq outline-minor-mode-prefix (kbd "C-c o")))
-
 ;; Move where I mean.
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line-or-comment)
          ("C-e" . mwim-end-of-code-or-line)))
 
-;; Highlight matching parentheses, braces and brackets.
-(use-package paren
-  :init (show-paren-mode)
-  :custom (show-paren-delay 0))
-
-;; Navigate your project with ease; lightweight and comes built-in.
-(use-package project
-  :custom (project-switch-commands
-           '((magit-project-status "Magit"     ?m)
-             (project-find-file    "Find file" ?f)
-             (project-dired        "Dired"     ?d)
-             (project-eshell       "Eshell"    ?e))))
-
 ;; Structural editing: lightweight, and language-agnostic
 (use-package puni
   :init (puni-global-mode)
   :bind (:map puni-mode-map
-              ("C-w" . nil)                                ; taken by whole-line-or-region-kill-region
+              ("C-w" . nil)                               ; for my own `rh/kill-region-dwim'
               ("M-o" . rh/puni-rewrap-sexp)
               ("M-K" . kill-paragraph)
               ("M-H" . backward-kill-paragraph)
@@ -185,6 +147,7 @@
 
 ;; Like a presentation mode, much more readable and pleasant to the eyes.
 (use-package visual-fill-column
+  :disabled t
   :bind ("C-H-SPC" . visual-fill-column-mode)
   :hook ((org-mode text-mode magit-status-mode emacs-lisp-mode eshell-mode)
          . visual-fill-column-mode)
@@ -197,21 +160,15 @@
   :bind ("C-x u" . vundo) ("C-?" . undo-redo)
   :custom (undo-limit (* 16 1024 1024)))
 
-;; If there is no active region, kill/copy the current line
-(use-package whole-line-or-region
-  :init (whole-line-or-region-global-mode))
-
-;; Turn a few keystrokes into full templates.
-(use-package yasnippet
-  :init (yas-global-mode)
-  :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
-
 ;; Some more packages
-(use-package move-text :init (move-text-default-bindings))                     ; move line or region up and down with ease
-(use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))   ; highlight nested parentheses cleanly
-(use-package rainbow-mode :hook (prog-mode . rainbow-mode))                    ; colorize stings that represent colors
+(use-package expand-region :bind ("C->" . er/expand-region))                 ; select and expand regions by semantic units
+(use-package move-text :init (move-text-default-bindings))                   ; move line or region vertically with ease
+(use-package outline :hook (prog-mode . outline-minor-mode))                 ; fold and bloom your buffer's hierarchy
+(use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode)) ; highlight nested parentheses cleanly
+(use-package rainbow-mode :hook (prog-mode . rainbow-mode))                  ; colorize stings that represent colors
 (use-package sudo-edit)
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
+(use-package yasnippet :init (yas-global-mode))                              ; expand templates
 
 (provide 'knot-packages)

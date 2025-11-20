@@ -1,76 +1,87 @@
-;;; knot-defaults.el --- Some defaults which are supposed to be sane -*- lexical-binding: t; -*-
+;;; knot-defaults.el --- Sane defaults and built-in packages -*- lexical-binding: t; -*-
 
 ;; Concerning files
-(add-hook 'before-save-hook 'delete-trailing-whitespace)               ; delete trailing whitespace at saving
-(global-auto-revert-mode)                                              ; refresh the buffer when files change on disk
-(save-place-mode)                                                      ; save place in each file
-(setq make-backup-files nil)                                           ; don't make backup files
-(setq-default require-final-newline t)                                 ; ensure a final newline at saving
+(add-hook 'before-save-hook 'delete-trailing-whitespace)          ; delete trailing whitespace at saving
+(global-auto-revert-mode)                                         ; refresh the buffer when files change on disk
+(save-place-mode)                                                 ; save place in each file
+(setq make-backup-files nil)                                      ; don't make backup files
+(setq-default require-final-newline t)                            ; ensure a final newline at saving
 
 ;; Concerning kills
-(kill-ring-deindent-mode)                                              ; remove indentation while saving to the kill ring
-(setq kill-buffer-query-functions nil)                                 ; don't ask for confirmation while killing buffers
-(setq kill-do-not-save-duplicates t)                                   ; don't add duplicates to the kill king
+(kill-ring-deindent-mode)                                         ; remove indentation while saving to the kill ring
+(setq kill-buffer-query-functions nil)                            ; don't ask for confirmation while killing buffers
+(setq kill-do-not-save-duplicates t)                              ; don't add duplicates to the kill king
 
 ;; Concerning lines, sentences, words and characters
-(global-display-line-numbers-mode)                                     ; line numbers everywhere please
-(global-hl-line-mode)                                                  ; highlight current line
+(global-display-line-numbers-mode)                                ; line numbers everywhere please
+(global-hl-line-mode)                                             ; highlight current line
 (global-subword-mode)
 (global-visual-line-mode)
-(setq display-line-numbers-type 'relative)                             ; relative line numbering, yes!
-(setq display-line-numbers-width-start t )                             ; count number of lines to use for line number width
-(setq sentence-end-double-space nil)                                   ; a sentence should not need to end in double spaces
+(setq display-line-numbers-type 'relative)                        ; relative line numbering, yes!
+(setq display-line-numbers-width-start t )                        ; count number of lines to use for line number width
+(setq sentence-end-double-space nil)                              ; a sentence should not need to end in double spaces
 (setq-default fill-column 80)
 
 ;; Concerning mouse, cursors and scrolling
-(blink-cursor-mode 0)                                                  ; cursor should not blink
-(pixel-scroll-precision-mode)                                          ; make mouse scrolling smoother
-(setq make-pointer-invisible t)                                        ; hide the mouse cursor while typing
-(setq mouse-yank-at-point t)                                           ; mouse yank commands yank at point (not at click)
-(setq scroll-preserve-screen-position t)                               ; while scrolling, try to keep the point unchanged
-(setq-default cursor-in-non-selected-windows nil)                      ; hide cursor/point on non-active windows
+(blink-cursor-mode 0)                                             ; cursor should not blink
+(pixel-scroll-precision-mode)                                     ; make mouse scrolling smoother
+(setq make-pointer-invisible t)                                   ; hide the mouse cursor while typing
+(setq mouse-yank-at-point t)                                      ; mouse yank commands yank at point (not at click)
+(setq scroll-preserve-screen-position t)                          ; while scrolling, try to keep the point unchanged
+(setq-default cursor-in-non-selected-windows nil)                 ; hide cursor/point on non-active windows
 
 ;; Concerning the mode-line
-(display-time-mode)                                                    ; I want to know the time from the mode-line
-(setq display-time-day-and-date t)                                     ; display date as well
-(display-battery-mode)                                                 ; display battery level in the mode-line
+(display-time-mode)                                               ; I want to know the time from the mode-line
+(setq display-time-day-and-date t)                                ; display date as well
+(display-battery-mode)                                            ; display battery level in the mode-line
 
 ;; Concerning windows
-(setq window-combination-resize t)                                     ; keep windows balanced
-(winner-mode)                                                          ; undo window configurations
+(setq window-combination-resize t)                                ; keep windows balanced
+(winner-mode)                                                     ; undo window configurations
 (bind-key "H-<tab>" 'winner-undo)
 
 ;; Make it more convenient (concerning convenience?)
 (setq
- use-dialog-box nil                                                    ; no dialog box, please
- next-line-add-newlines t                                              ; `C-n' adds newline, avoid `end-of-buffer' error
- disabled-command-function nil                                         ; enable all disabled commands, I know what I am doing
- use-short-answers t                                                   ; all confirmations prompts be y or n
- echo-keystrokes 0.1                                                   ; display keystrokes in the echo area faster
- idle-update-delay 0.1                                                 ; update things on screen faster after typing
- confirm-kill-processes nil                                            ; don't confirm killing processes on exit
- shift-select-mode nil                                                 ; we have a better use of `Shift' as modifier key
- suggest-key-bindings nil)                                             ; don't show equivalent keybindings when `M-x' has one
+ use-dialog-box nil                                               ; no dialog box, please
+ next-line-add-newlines t                                         ; `C-n' adds newline, avoid `end-of-buffer' error
+ disabled-command-function nil                                    ; enable all disabled commands, I know what I am doing
+ use-short-answers t                                              ; all confirmations prompts be y or n
+ echo-keystrokes 0.1                                              ; display keystrokes in the echo area faster
+ idle-update-delay 0.1                                            ; update things on screen faster after typing
+ confirm-kill-processes nil                                       ; don't confirm killing processes on exit
+ shift-select-mode nil                                            ; we have a better use of `Shift' as modifier key
+ suggest-key-bindings nil)                                        ; don't show equivalent keybindings when `M-x' has one
 
 ;; Concerning editing
 (setq
- duplicate-line-final-position   1                                     ; move point to the first new line
- duplicate-region-final-position 1                                     ; put the region around the first copy
- delete-pair-blink-delay 0)                                            ; heck, why would I want any delay?
+ duplicate-line-final-position   1                                ; move point to the first new line
+ duplicate-region-final-position 1                                ; put the region around the first copy
+ delete-pair-blink-delay 0)                                       ; heck, why would I want any delay?
 
 ;; Some nice minor modes
-(delete-selection-mode)                                                ; typing on a region replaces it
-(global-goto-address-mode)                                             ; make URLs and email addresses clickable
-(global-prettify-symbols-mode)                                         ; pretty math symbols
-(repeat-mode)                                                          ; repeat commands without retyping the prefix key
-(recentf-mode)                                                         ; save recent files
-(savehist-mode)                                                        ; save minibuffer history
+(abbrev-mode)                                                     ; let Emacs finish your phrases, because typing is hard work
+(delete-selection-mode)                                           ; typing on a region replaces it
+(global-eldoc-mode)                                               ; a whisper of documentation watches over you as you type
+(electric-pair-mode)                                              ; auto-insert the closing delimiter
+(global-goto-address-mode)                                        ; make URLs and email addresses clickable
+(global-prettify-symbols-mode)                                    ; pretty math symbols
+(show-paren-mode)                                                 ; highlight matching parenthesis
+(repeat-mode)                                                     ; repeat commands without retyping the prefix key
+(recentf-mode)                                                    ; save recent files
+(savehist-mode)                                                   ; save minibuffer history
 (setq
- repeat-exit-timeout 5                                                 ; no repeat after 5 seconds
+ read-abbrev-file abbrev-file-name
+ save-abbrevs 'silently
+ eldoc-idle-delay        0.2
+ repeat-exit-timeout     5
  recentf-max-saved-items 200
- recentf-max-menu-items 25
- history-length 2000
+ recentf-max-menu-items  25
+ show-paren-delay        0
+ history-length          2000
  history-delete-duplicates t
  savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+
+;; Advice to prevent abbrev expansion inside comments and strings
+(advice-add 'abbrev--default-expand :around (lambda (fun &rest args) (unless (nth 8 (syntax-ppss)) (apply fun args))))
 
 (provide 'knot-defaults)

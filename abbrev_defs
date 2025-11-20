@@ -90,5 +90,4 @@
     ("str" "String" nil :count 0)
     ("th" "theorem" nil :count 0)
     ("to" "→" nil :count 8)
-   ))
-
+    ))

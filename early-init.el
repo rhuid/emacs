@@ -36,5 +36,3 @@
       native-comp-async-report-warnings-errors nil
       native-comp-speed 3
       native-comp-defer t)
-
-(provide 'early-init)

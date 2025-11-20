@@ -19,16 +19,15 @@
 
 ;; Here comes the mess!
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(org-fold-catch-invisible-edits 'show-and-error nil nil "Customized with use-package org")
- '(package-selected-packages
-   '(achievements aggressive-indent all-the-icons-dired auctex-latexmk avy cape
-                  cdlatex consult-dir corfu csv-mode dired-git-info diredfl eat
-                  ef-themes embark-consult esh-autosuggest
-                  eshell-syntax-highlighting eshell-toggle exec-path-from-shell
-                  expand-region flycheck-rust gcmh haskell-mode hide-mode-line
-                  highlight-numbers-mode jinx julia-mode latex-preview-pane
-                  lean4-mode lsp-ui magit marginalia mood-line move-text
-                  multiple-cursors mwim nix-mode orderless org-modern ox-reveal
-                  puni rainbow-delimiters rainbow-mode rust-mode spacious-padding
-                  sudo-edit systemd tree-sitter-langs typst-ts-mode vertico
-                  visual-fill-column vundo whole-line-or-region wordel yasnippet)))
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

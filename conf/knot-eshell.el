@@ -24,9 +24,9 @@
        (propertize pwd 'face promptface) "\n"
        (if (zerop (user-uid)) "# " "→ "))))
 
-  (use-package eat :init (eat-eshell-mode)) ; emulate a terminal
-  (use-package esh-autosuggest :init (esh-autosuggest-mode))
-  (use-package eshell-syntax-highlighting :init (eshell-syntax-highlighting-global-mode)))
+  (use-package eat :after eshell :init (eat-eshell-mode)) ; emulate a terminal
+  (use-package esh-autosuggest :after eshell :init (esh-autosuggest-mode))
+  (use-package eshell-syntax-highlighting :after eshell :init (eshell-syntax-highlighting-global-mode)))
 
 (use-package eshell-toggle
   :bind ("M-S" . eshell-toggle)

@@ -129,7 +129,7 @@ In newer versions of Emacs, native compilation is on by default. The following c
 
 Then we end the ~early-init.el~ file with the following file.
 
-#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
+#+BEGIN_SRC emacs-lisp
 (provide 'early-init)
 #+END_SRC
 
