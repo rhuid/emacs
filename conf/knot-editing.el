@@ -97,8 +97,8 @@ With \\[universal-argument], it chops backward."
   (interactive "P")
   (rh/chop-off-sexp (not arg)))
 
-(defun rh/kill-word (&optional arg)
-  "Kill the whole word and tries to fix up whitespace after killing.
+(defun rh/kill-whole-word (&optional arg)
+  "Kill current word and tries to fix up whitespace after killing.
 With ARG, perform this action that many times.
 Negative ARG kills that many previous words.
 Also kills word backward if the point is at the end of the word."
@@ -119,7 +119,7 @@ Also kills word backward if the point is at the end of the word."
   (when (looking-at " +")
     (just-one-space)))
 
-(defun rh/copy-word (&optional arg)
+(defun rh/copy-whole-word (&optional arg)
   "Copy the current word without moving point.
 With ARG, copy that many words; negative ARG copies backward."
   (interactive "p")
@@ -141,9 +141,7 @@ With ARG, copy that many words; negative ARG copies backward."
 
 (defun rh/isearch-remote-copy (&optional arg)
   "In `isearch', copy ARG words and return to the original point.
-ARG defaults to 1. Negative ARG copies backward.
-
-Uses `rh/copy-word' under the hood."
+ARG defaults to 1. Negative ARG copies backward."
   (interactive "p")
   (let* ((count (or arg 1))
          (in-isearch (bound-and-true-p isearch-mode)))
@@ -159,7 +157,7 @@ Uses `rh/copy-word' under the hood."
                                (point))))
           (save-excursion
             (goto-char copy-pos)
-            (rh/copy-word count))
+            (rh/copy-whole-word count))
           (isearch-exit)
           (goto-char orig-point))
       (message "This command should be invoked in isearch mode."))))
@@ -230,9 +228,9 @@ With ARG, it deletes instead (does not save to the kill-ring)."
       (delete-region (point-min) (point))
     (kill-region (point-min) (point))))
 
-(defun rh/select-line (&optional arg)
-  "Select current line.
-  With ARG, select that many lines; negative ARG selects previous lines."
+(defun rh/mark-whole-line (&optional arg)
+  "Mark current line.
+With ARG, mark that many lines; negative ARG marks previous lines."
   (interactive "p")
   (beginning-of-line)
   (set-mark (point))
@@ -302,18 +300,17 @@ With ARG, perform this action that many times."
 (bind-key "C-M-y" 'rh/forward-up-list)
 (bind-key "C-M-)" 'rh/chop-off-sexp)
 (bind-key "C-M-(" 'rh/backward-chop-off-sexp)
-(bind-key "M-D" 'rh/kill-word)
-(bind-key "C-;" 'rh/copy-word)
+(bind-key "M-D" 'rh/kill-whole-word)
+(bind-key "C-;" 'rh/copy-whole-word)
 (bind-key "C-H-d" 'rh/kill-whole-sentence)
 (bind-key "C-H-w" 'rh/copy-whole-sentence)
 (bind-key "C-M-S-<backspace>" 'rh/kill-whole-paragraph)
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
-(bind-key "C-'" 'rh/select-line)
+(bind-key "C-'" 'rh/mark-whole-line)
 (bind-key "C-<return>" 'rh/open-line-below)
 (bind-key "C-S-<return>" 'rh/open-line-above)
 (bind-key "C-j" 'rh/join-line)
-(bind-key "M-r M-s" 'rh/unwrap-parent-sexp)
 (bind-key "M-j" 'rh/break-sentence)
 (bind-key "C-M-S-u" 'rh/unwrap-parent-sexp)
 (bind-key "M-M" 'rh/mark-symbol)
