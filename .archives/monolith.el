@@ -60,11 +60,6 @@
 (bind-key "M-`"   'negative-argument)
 (bind-key "C-M-`" 'negative-argument)
 
-;; Create a version of these commands that apply to the whole buffer if there is no active region.
-(rh/define-region-or-buffer-command query-replace)
-(rh/define-region-or-buffer-command query-replace-regexp)
-(rh/define-region-or-buffer-command replace-string)
-
 ;; Readjustments and (re)bindings of some inbuilt commands
 (bind-key "C-z"   'repeat)
 (bind-key "C-&"   'replace-regexp)
@@ -74,14 +69,9 @@
 (bind-key "M-m"   'mark-word)                                                   ; by default, `M-m' is `back-to-indentation'
 (bind-key "C-S-j" 'join-line)                                                   ; join this line to the previous
 (bind-key "C-S-s" 'isearch-forward-thing-at-point)
-(bind-key "M-M"   (lamb (mark-word 4 t)))                                       ; mark 4 words at a time
 (bind-key "M-r"   ctl-x-r-map)                                                  ; `M-r' is much faster to type than `C-x r'
 (bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                  ; always adjust text scale globally
 (bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
-
-;; No arrows. BACK TO THE CHORDS!
-(dolist (key '("<up>" "<down>" "<right>" "<left>"))
-  (bind-key key (lamb (message "Arrows? Where we are editing, we don't need arrows."))))
 
 ;; Zapping
 (bind-key "M-z" 'zap-up-to-char)                                                ; by default, `M-z' is bound to `zap-to-char'
@@ -255,20 +245,6 @@
   :init (global-eldoc-mode)
   :config (setq eldoc-idle-delay 0.2))
 
-;; Electric pairs: Auto-insert the closing delimiter.
-(use-package elec-pair
-  :init (electric-pair-mode)
-  :hook (org-mode . rh/org-electric-pairs)
-  :custom (electric-pair-pairs '((?\(.?\)) (?\{.?\}) (?\[.?\]) (?\".?\") (?\<.?\>)))
-  :config
-  (defun rh/org-electric-pairs ()
-    "Org pairs for electric-pair-mode."
-    (setq-local electric-pair-pairs (append '((?_.?_) (?~.?~))))))
-
-;; Select and expand regions by semantic units.
-(use-package expand-region
-  :bind ("C->" . er/expand-region))
-
 ;; Some modes look cleaner without it.
 (use-package hide-mode-line
   :hook ((dired-mode org-mode eshell-mode) . hide-mode-line-mode))
@@ -334,11 +310,6 @@
          ("C-M-<"   . mc/skip-to-previous-like-this))
   :custom (mc/always-run-for-all t))
 
-;; Fold and bloom your buffer's hierarchy.
-(use-package outline
-  :hook ((prog-mode text-mode) . outline-minor-mode)
-  :init (setq outline-minor-mode-prefix (kbd "C-c o")))
-
 ;; Move where I mean.
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line-or-comment)
@@ -348,14 +319,6 @@
 (use-package paren
   :init (show-paren-mode)
   :custom (show-paren-delay 0))
-
-;; Navigate your project with ease; lightweight and comes built-in.
-(use-package project
-  :custom (project-switch-commands
-           '((magit-project-status "Magit"     ?m)
-             (project-find-file    "Find file" ?f)
-             (project-dired        "Dired"     ?d)
-             (project-eshell       "Eshell"    ?e))))
 
 ;; Structural editing: lightweight, and language-agnostic
 (use-package puni
@@ -375,8 +338,7 @@
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)
               ("M-H-i" . puni-barf-backward)
-              ("C-M-c p" . puni-split)
-              ("C-M-c s" . puni-splice))
+              ("C-M-S-s" . puni-split))
   :custom
   (puni-squeeze-flash nil)
   (puni-blink-for-sexp-manipulating nil)
@@ -426,18 +388,16 @@
 (use-package whole-line-or-region
   :init (whole-line-or-region-global-mode))
 
-;; Turn a few keystrokes into full templates.
-(use-package yasnippet
-  :init (yas-global-mode)
-  :custom (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
-
 ;; Some more packages
+(use-package elec-pair :init (electric-pair-mode))
+(use-package expand-region :bind ("C->" . er/expand-region))
 (use-package move-text :init (move-text-default-bindings))                     ; move line or region up and down with ease
 (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))   ; highlight nested parentheses cleanly
 (use-package rainbow-mode :hook (prog-mode . rainbow-mode))                    ; colorize stings that represent colors
 (use-package sudo-edit)
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
+(use-package yasnippet :init (yas-global-mode))
 
 ;; Vertical completion UI for the minibuffer.
 (use-package vertico
@@ -553,8 +513,7 @@
   :bind (:map org-mode-map
               ("C-j" . nil)
               ("C-," . nil)
-              ("C-'" . nil)
-              ("C-S-o" . org-shifttab)))
+              ("C-'" . nil)))
 
 (use-package org-modern
   :after org
