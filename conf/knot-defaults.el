@@ -86,7 +86,7 @@
 (setq show-paren-delay        0)
 (setq history-length          2000)
 (setq history-delete-duplicates t)
-(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+(setq savehist-additional-variables '(kill-ring))
 
 ;; Prevent abbrev expansion inside comments and strings
 (advice-add 'abbrev--default-expand :around (lambda (fun &rest args) (unless (nth 8 (syntax-ppss)) (apply fun args))))
