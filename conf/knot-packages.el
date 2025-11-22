@@ -54,10 +54,18 @@
     (let ((msg (read-string "Amend message: ")))
       (magit-commit-create `("--amend" "-m" ,msg)))))
 
+;; Move line or region vertically with ease.
+(use-package move-text
+  :init (move-text-default-bindings))
+
+;; Select and expand regions by semantic units.
+(use-package expand-region
+  :bind ("C->" . er/expand-region))
+
 ;; Edit everywhere at once; parallel editing.
 (use-package multiple-cursors
   :bind (("C-M-S-a" . mc/mark-all-like-this-dwim)
-         ("M-S-RET" . mc/edit-lines)                                                          ; `C-M-S-m'
+         ("M-S-RET" . mc/edit-lines)                              ; `C-M-S-m'
          ("C-M-S-n" . mc/mark-next-like-this)
          ("C-M-S-p" . mc/mark-previous-like-this)
          ("C-M->"   . mc/skip-to-next-like-this)
@@ -114,12 +122,20 @@
                 (error "Invalid delimiter entered."))))
           (delete-pair 1))))))
 
+;; Highlight nested parentheses cleanly.
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; Colorize stings that represent colors.
+(use-package rainbow-mode
+  :hook (prog-mode . rainbow-mode))
+
 ;; Let's feel a bit more spacious.
 (use-package spacious-padding
   :init (spacious-padding-mode)
   :custom (spacious-padding-widths '( :internal-border-width 12 :mode-line-width 3 )))
 
-;; Like a presentation mode, much more readable and pleasant to the eyes.
+;; Like a presentation mode, much more readable and pleasant to the eyes
 (use-package visual-fill-column
   :disabled t
   :bind ("C-H-SPC" . visual-fill-column-mode)
@@ -134,14 +150,13 @@
   :bind ("C-x u" . vundo) ("C-?" . undo-redo)
   :custom (undo-limit (* 16 1024 1024)))
 
+;; Expand templates
+(use-package yasnippet
+  :init (yas-global-mode))
+
 ;; Some more packages
-(use-package expand-region :bind ("C->" . er/expand-region))                 ; select and expand regions by semantic units
-(use-package move-text :init (move-text-default-bindings))                   ; move line or region vertically with ease
-(use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode)) ; highlight nested parentheses cleanly
-(use-package rainbow-mode :hook (prog-mode . rainbow-mode))                  ; colorize stings that represent colors
 (use-package sudo-edit)
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
-(use-package yasnippet :init (yas-global-mode))                              ; expand templates
 
 (provide 'knot-packages)
