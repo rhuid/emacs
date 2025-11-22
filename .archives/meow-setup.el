@@ -1,41 +1,5 @@
 ;;; meow-setup.el --- Edit at the speed of thought (well, not literally) -*- lexical-binding: t; -*-
 
-;; A multipurpose trash cleaner without cluttering the kill ring!
-(defun rh/delete-in-context ()
-  "Delete region (if active), else delete current line (if non-empty), else delete-blank-lines."
-  (interactive)
-  (cond ((use-region-p)
-         (let ((inhibit-read-only t))
-           (delete-region (region-beginning) (region-end))))
-        ((not (string-blank-p (string-trim (thing-at-point 'line t))))
-         (let ((inhibit-read-only t))
-           (delete-region (line-beginning-position) (line-beginning-position 2))))
-        (t (delete-blank-lines))))
-
-;; Kill in a context-sensitive way
-(defun rh/kill-in-context ()
-  "Kill region (if active), else kill current line (if non-empty), else delete-blank-lines."
-  (interactive)
-  (cond ((use-region-p)
-         (let ((inhibit-read-only t))
-           (call-interactively 'kill-region)))
-        ((not (string-blank-p (string-trim (thing-at-point 'line t))))
-         (let ((inhibit-read-only t))
-           (call-interactively 'kill-whole-line)))
-        (t nil)))
-
-;; Like kill-ring-save, but context-sensitive
-(defun rh/put-into-kill-ring ()
-  "Put region (if active) into kill-ring. Else copy any line from visible screen."
-  (interactive)
-  (cond ((use-region-p)
-         (let ((inhibit-read-only t))
-           (call-interactively 'kill-ring-save)))
-        ((not (string-blank-p (string-trim (thing-at-point 'line t))))
-         (let ((inhibit-read-only t))
-           (kill-ring-save (line-beginning-position) (line-beginning-position 2))))
-        (t nil)))
-
 ;;; My modal design built on `meow'
 ;; Requires `avy' and `consult'
 (defun rh/modal-setup ()
