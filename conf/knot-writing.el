@@ -1,7 +1,5 @@
 ;;; knot-writing.el --- Writing tools including typesetting -*- lexical-binding: t; -*-
 
-;; Basically Org, LaTeX, Typst, and Markdown
-
 (use-package org
   :ensure nil
   :hook (org-mode . (lambda () (display-line-numbers-mode -1)))
@@ -37,8 +35,7 @@
   :bind (:map org-mode-map
               ("C-j" . nil)
               ("C-," . nil)
-              ("C-'" . nil)
-              ("C-S-o" . org-shifttab)))
+              ("C-'" . nil)))
 
 (use-package org-modern
   :after org
