@@ -229,14 +229,21 @@ With ARG, it deletes instead (does not save to the kill-ring)."
     (kill-region (point-min) (point))))
 
 (defun rh/mark-whole-line (&optional arg)
-  "Mark current line.
-With ARG, mark that many lines; negative ARG marks previous lines."
+  "Mark ARG whole lines. ARG defaults to 1.
+When invoked while there is an active region,
+it extends the region by a whole line."
   (interactive "p")
-  (beginning-of-line)
-  (set-mark (point))
-  (forward-line (1- arg))
-  (end-of-line)
-  (exchange-point-and-mark nil))
+  (if (region-active-p)
+      (progn
+        (exchange-point-and-mark nil)
+        (forward-line arg)
+        (end-of-line 1)
+        (exchange-point-and-mark nil))
+    (beginning-of-line)
+    (set-mark (point))
+    (forward-line (1- arg))
+    (end-of-line)
+    (exchange-point-and-mark nil)))
 
 (defun rh/open-line-below (&optional arg)
   "Create a new line below and move the cursor there.
