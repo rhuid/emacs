@@ -174,8 +174,8 @@ With ARG, yank that many words; negative ARG yanks that many previous words."
         (yank 1))
     (message "This command should be invoked in isearch-mode.")))
 
-(defun rh/kill-sentence (&optional arg)
-  "Kill the current sentence.
+(defun rh/kill-whole-sentence (&optional arg)
+  "Kill current sentence.
 With ARG, perform this action that many times.
 Negative ARG kills that many previous sentences."
   (interactive "p")
@@ -186,8 +186,8 @@ Negative ARG kills that many previous sentences."
   (kill-sentence arg)
   (just-one-space))
 
-(defun rh/copy-sentence (&optional arg)
-  "Copy the current sentence.
+(defun rh/copy-whole-sentence (&optional arg)
+  "Copy current sentence.
 With ARG, perform this action that many times.
 Negative ARG copies that many previous sentences."
   (interactive "p")
@@ -208,6 +208,12 @@ With ARG, perform this action that many times."
     (newline 1)
     (delete-horizontal-space nil)))
 
+(defun rh/kill-whole-paragraph (&optional arg)
+  "Kill ARG whole paragraphs. ARG defaults to 1."
+  (interactive "p")
+  (mark-paragraph arg t)
+  (kill-region (region-beginning) (region-end) nil))
+
 (defun rh/chop-off-buffer (&optional arg)
   "Kill the rest of the buffer after point.
 With ARG, it deletes instead (does not save to the kill-ring)."
@@ -218,14 +224,14 @@ With ARG, it deletes instead (does not save to the kill-ring)."
 
 (defun rh/backward-chop-off-buffer (&optional arg)
   "Kill the rest of the buffer before point.
-  With ARG, it deletes instead (does not save to the kill-ring)."
+With ARG, it deletes instead (does not save to the kill-ring)."
   (interactive "P")
   (if arg
       (delete-region (point-min) (point))
     (kill-region (point-min) (point))))
 
 (defun rh/select-line (&optional arg)
-  "Select the current line.
+  "Select current line.
   With ARG, select that many lines; negative ARG selects previous lines."
   (interactive "p")
   (beginning-of-line)
@@ -256,6 +262,36 @@ With ARG, perform this action that many times."
     (dotimes (_ arg)
       (join-line -1))))
 
+;;; GNU Emacs, out of the box, lacks commands for marking symbol and going back a symbol
+;;; `rh/mark-symbol' is like `mark-word' but for symbols
+;;; `rh/backward-symbol' is backward version of `forward-symbol'
+
+(defun rh/mark-symbol (&optional arg allow-extend)
+  "Mark ARG symbols at point. ARG defaults to 1."
+  (interactive "P\np")
+  (cond ((and allow-extend
+              (or (and (eq last-command this-command) (mark t))
+                  (region-active-p)))
+         (setq arg (if arg (prefix-numeric-value arg)
+                     (if (< (mark) (point)) -1 1)))
+         (set-mark
+          (save-excursion
+            (goto-char (mark))
+            (forward-symbol arg)
+            (point))))
+        (t
+         (push-mark
+          (save-excursion
+            (forward-symbol (prefix-numeric-value arg))
+            (point))
+          nil t))))
+
+(defun rh/backward-symbol (&optional arg)
+  "Move point to the previous position that is the beginning of a symbol.
+With ARG, perform this action that many times."
+  (interactive "p")
+  (forward-symbol (- arg)))
+
 ;; Global keybindings for the commands defined in this module
 (bind-key "M-i" 'rh/act-inside)
 (bind-key "M-I" 'rh/change-inside-forward)
@@ -268,8 +304,9 @@ With ARG, perform this action that many times."
 (bind-key "C-M-(" 'rh/backward-chop-off-sexp)
 (bind-key "M-D" 'rh/kill-word)
 (bind-key "C-;" 'rh/copy-word)
-(bind-key "C-H-d" 'rh/kill-sentence)
-(bind-key "C-H-w" 'rh/copy-sentence)
+(bind-key "C-H-d" 'rh/kill-whole-sentence)
+(bind-key "C-H-w" 'rh/copy-whole-sentence)
+(bind-key "C-M-S-<backspace>" 'rh/kill-whole-paragraph)
 (bind-key "C-M-S-k" 'rh/chop-off-buffer)
 (bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
 (bind-key "C-'" 'rh/select-line)
@@ -278,14 +315,13 @@ With ARG, perform this action that many times."
 (bind-key "C-j" 'rh/join-line)
 (bind-key "M-r M-s" 'rh/unwrap-parent-sexp)
 (bind-key "M-j" 'rh/break-sentence)
+(bind-key "C-M-S-u" 'rh/unwrap-parent-sexp)
+(bind-key "M-M" 'rh/mark-symbol)
+(bind-key "<Ci>" 'forward-symbol)
+(bind-key "C-S-i" 'rh/backward-symbol)
 
 ;; `isearch-mode' keybindings
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
 (define-key isearch-mode-map (kbd "C-Y") 'rh/isearch-remote-yank)
-
-;; A prefix key for more sexp operations
-(define-prefix-command 'rh/sexp-map)
-(bind-key "C-M-c" 'rh/sexp-map)
-(keymap-set rh/sexp-map (kbd "u") 'rh/unwrap-parent-sexp)
 
 (provide 'knot-editing)
