@@ -236,13 +236,13 @@ ARG defaults to 1."
   (interactive "p")
   (if (region-active-p)
       (if (eq (point) (use-region-beginning))
-          ;; when the point is at the lower end of the region
+          ;; if point is at lower end, extend upwards
           (progn
             (exchange-point-and-mark nil)
             (forward-line arg)
             (end-of-line 1)
             (exchange-point-and-mark nil))
-        ;; when the point is at the upper end of the region
+        ;; if point is at upper end, extend downwards
         (exchange-point-and-mark nil)
         (forward-line (- arg))
         (beginning-of-line)
@@ -275,6 +275,19 @@ With ARG, perform this action that many times."
   (save-excursion
     (dotimes (_ arg)
       (join-line -1))))
+
+(defun rh/replace-line-or-region (&optional arg)
+  "Replace current line with the ARGth most recent kill.
+If there is active region, replace the active region instead.
+ARG defaults to 1."
+  (interactive "p")
+  (if (use-region-p)
+      (progn
+        (kill-region (region-beginning) (region-end) nil)
+        (yank (1+ arg)))
+    (kill-whole-line 1)
+    (yank (1+ arg))
+    (insert "\n")))
 
 ;;; GNU Emacs, out of the box, lacks commands for marking symbol and going back a symbol
 ;;; `rh/mark-symbol' is like `mark-word' but for symbols
@@ -332,6 +345,7 @@ With ARG, perform this action that many times."
 (bind-key "M-M" 'rh/mark-symbol)
 (bind-key "<Ci>" 'forward-symbol)
 (bind-key "C-S-i" 'rh/backward-symbol)
+(bind-key "C-x C-y" 'rh/replace-line-or-region)
 
 ;; `isearch-mode' keybindings
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
