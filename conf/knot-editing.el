@@ -98,7 +98,7 @@ With \\[universal-argument], it chops backward."
   (rh/chop-off-sexp (not arg)))
 
 (defun rh/kill-whole-word (&optional arg)
-  "Kill current word and tries to fix up whitespace after killing.
+  "Kill current word and try to fix up whitespace after killing.
 With ARG, perform this action that many times.
 Negative ARG kills that many previous words.
 Also kills word backward if the point is at the end of the word."
@@ -120,7 +120,7 @@ Also kills word backward if the point is at the end of the word."
     (just-one-space)))
 
 (defun rh/copy-whole-word (&optional arg)
-  "Copy the current word without moving point.
+  "Copy current word without moving point.
 With ARG, copy that many words; negative ARG copies backward."
   (interactive "p")
   (let ((arg (or arg 1)))
@@ -229,16 +229,25 @@ With ARG, it deletes instead (does not save to the kill-ring)."
     (kill-region (point-min) (point))))
 
 (defun rh/mark-whole-line (&optional arg)
-  "Mark ARG whole lines. ARG defaults to 1.
-When invoked while there is an active region,
-it extends the region by a whole line."
+  "Mark ARG whole lines.
+If there is an active region, extend the region by
+ARG whole lines at the other side of the point.
+ARG defaults to 1."
   (interactive "p")
   (if (region-active-p)
-      (progn
+      (if (eq (point) (use-region-beginning))
+          ;; when the point is at the lower end of the region
+          (progn
+            (exchange-point-and-mark nil)
+            (forward-line arg)
+            (end-of-line 1)
+            (exchange-point-and-mark nil))
+        ;; when the point is at the upper end of the region
         (exchange-point-and-mark nil)
-        (forward-line arg)
-        (end-of-line 1)
+        (forward-line (- arg))
+        (beginning-of-line)
         (exchange-point-and-mark nil))
+    ;; if no active region
     (beginning-of-line)
     (set-mark (point))
     (forward-line (1- arg))
