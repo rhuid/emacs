@@ -1,7 +1,5 @@
 ;;; knot-keys.el --- Some extra global keys for the thermonuclear editor -*- lexical-binding: t; -*-
 
-(require 'knot-macros)
-
 ;; Use `C-h' for `DEL' (backspace) and rebind `help-command' to `C-M-?'
 (define-key key-translation-map [?\C-h] [?\C-?])
 (bind-key "C-M-?" 'help-command)
@@ -36,6 +34,7 @@
 (bind-key "C-S-j" 'join-line)                                                   ; join this line to the previous
 (bind-key "C-S-s" 'isearch-forward-thing-at-point)
 (bind-key "M-r"   ctl-x-r-map)                                                  ; `M-r' is much faster to type than `C-x r'
+(bind-key "C-M-S-w" 'append-next-kill)                                          ; saving `C-M-w' for a custom command
 (bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                  ; always adjust text scale globally
 (bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
 

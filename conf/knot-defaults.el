@@ -45,9 +45,9 @@
 (setq next-line-add-newlines t)                                   ; `C-n' adds newline, avoid `end-of-buffer' error
 (setq disabled-command-function nil)                              ; enable all disabled commands, I know what I am doing
 (setq use-short-answers t)                                        ; all confirmations prompts be y or n
-(setq echo-keystrokes 0.1)                                        ; display keystrokes in the echo area faster
-(setq idle-update-delay 0.1)                                      ; update things on screen faster after typing
-(setq confirm-kill-processes nil)                                 ; don't confirm killing processes on exit
+(setq echo-keystrokes 0.01)                                        ; display keystrokes in the echo area faster
+(setq idle-update-delay 0.01)                                      ; update things on screen faster after typing
+(setq confirm-kill-procetsses nil)                                 ; don't confirm killing processes on exit
 (setq shift-select-mode nil)                                      ; we have a better use of `Shift' as modifier key
 (setq suggest-key-bindings nil)                                   ; don't show equivalent keybindings when `M-x' has one
 

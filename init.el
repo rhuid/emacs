@@ -32,18 +32,20 @@
 (use-package s    :demand t)
 
 ;; Set up appearance
-(require 'theme-set)                                                    ; `theme-set' is my personal package
-(setq theme-set-day-theme 'modus-operandi)
-(setq theme-set-night-theme 'modus-vivendi)
+(require 'rh-set-theme)                                                 ; `rh-set-theme' is my personal package
+(setq rh/set-theme-day-theme 'modus-operandi)
+(setq rh/set-theme-night-theme 'modus-vivendi)
 (use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
 
-;; Local modules
-(require 'knot-macros)
+;; Personal lisp packages (from `lisp' directory)
+(require 'rh-simple)
+(require 'rh-line-or-region)
+(require 'rh-macros)
+
+;; Local modules (from `conf' directory)
 (require 'knot-keys)
 (require 'knot-defaults)
 (require 'knot-packages)
-(require 'dwim)
-(require 'knot-editing)
 (require 'knot-completion)
 (require 'knot-writing)
 (require 'knot-programming)
