@@ -34,21 +34,38 @@ With negative ARG, it moves forward that many times."
 (defun rh/forward-opening-delimiter (&optional arg)
   "Jump forward to the next opening delimiter.
 Opening delimiters are one of: ( [ { < ` \" '.
-With optional ARG, jump |ARG| times; negative ARG means jump backward."
+With optional ARG, jump |ARG| times; negative ARG means jump backward.
+
+This command may not work well for nested expressions inside strings."
   (interactive "p")
   (let* ((arg (or arg 1))
          (delimiters "(\\|\\[\\|{\\|<\\|[`\"']"))
     (if (< arg 0)
+        ;; when argument is negative, look backward
         (dotimes (_ (- arg))
+          ;; search back for the delimiter once
           (unless (re-search-backward delimiters nil t)
-            (cl-return)))
+            (cl-return))
+          ;; if landed inside a string, do it again
+          ;; because we landed on the closing delimiter, not on the opening one
+          (when (eq (syntax-ppss-context (syntax-ppss)) 'string)
+            (unless (re-search-backward delimiters nil t)
+              (cl-return))))
+      ;; when argument is positive, look forward
       (dotimes (_ arg)
-        (unless (re-search-forward delimiters nil t)
-          (cl-return))))))
+        (if (eq (syntax-ppss-context (syntax-ppss)) 'string)
+            ;; if the point is inside a string, do it twice
+            ;; because strings use the same delimiter for both opening and closing
+            (progn
+              (dotimes (_ 2)
+                (unless (re-search-forward delimiters nil t)
+                  (cl-return))))
+          ;; if the point is not inside a string, do it only once
+          (unless (re-search-forward delimiters nil t)
+            (cl-return)))))))
 
 (defun rh/backward-opening-delimiter (&optional arg)
-  "Jump backward to the previous opening delimiter.
-Same as calling `rh/forward-opening-delimiter` with negative ARG."
+  "Jump backward to the previous opening delimiter."
   (interactive "p")
   (rh/forward-opening-delimiter (- (or arg 1))))
 
@@ -57,6 +74,7 @@ Same as calling `rh/forward-opening-delimiter` with negative ARG."
 Prefix argument \\[universal-argument] does the same but on the previous delimiter."
   (interactive "P")
   (if arg
+      ;; jump one opening delimiter backward once
       (progn
         (rh/backward-opening-delimiter 2)
         (forward-char 1))
@@ -345,7 +363,7 @@ With ARG, perform this action that many times."
 (bind-key "M-M" 'rh/mark-symbol)
 (bind-key "<Ci>" 'forward-symbol)
 (bind-key "C-S-i" 'rh/backward-symbol)
-(bind-key "C-x C-y" 'rh/replace-line-or-region)
+(bind-key "C-S-y" 'rh/replace-line-or-region)
 
 ;; `isearch-mode' keybindings
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
