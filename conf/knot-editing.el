@@ -8,7 +8,7 @@ With \\[universal-argument] prefix, it copies. Otherwise, it kills."
     (backward-up-list 1 t t)
     (forward-char 1)
     (let ((beg (point)))
-      (backward-up-list -1 t t)
+      (up-list 1 t t)
       (backward-char 1)
       (if arg
           (kill-ring-save beg (point))
@@ -19,7 +19,7 @@ With \\[universal-argument] prefix, it copies. Otherwise, it kills."
 With ARG, it moves forward ARG times.
 With negative ARG, it moves backward that many times."
   (interactive "p")
-  (backward-up-list -1 t t)
+  (up-list 1 t t)
   (forward-sexp arg nil)
   (backward-sexp 1 nil)
   (forward-char 1))
@@ -81,14 +81,6 @@ Prefix argument \\[universal-argument] does the same but on the previous delimit
     (rh/forward-opening-delimiter 1))
   (rh/act-inside))
 
-(defun rh/forward-up-list (&optional arg)
-  "Move forward out of one level of parentheses.
-This command will also work on other parentheses-like expressions
-defined by the current language mode.  With ARG, do this that
-many times.  A negative argument means move backward."
-  (interactive "p")
-  (backward-up-list (- arg) t t))
-
 (defun rh/unwrap-parent-sexp ()
   "Remove delimiters of the parent sexp."
   (interactive)
@@ -105,7 +97,7 @@ With \\[universal-argument], it chops backward."
       (progn
         (backward-up-list 1 t t)
         (forward-char 1))
-    (backward-up-list -1 t t)
+    (up-list 1 t t)
     (backward-char 1))
   (when (use-region-p)
     (kill-region (region-beginning) (region-end))))
@@ -338,32 +330,32 @@ With ARG, perform this action that many times."
   (forward-symbol (- arg)))
 
 ;; Global keybindings for the commands defined in this module
-(bind-key "M-i" 'rh/act-inside)
-(bind-key "M-I" 'rh/change-inside-forward)
-(bind-key "H-f" 'rh/visit-next-sexp)
-(bind-key "H-b" 'rh/visit-previous-sexp)
-(bind-key "C-H-f" 'rh/forward-opening-delimiter)
-(bind-key "C-H-b" 'rh/backward-opening-delimiter)
-(bind-key "C-M-y" 'rh/forward-up-list)
-(bind-key "C-M-)" 'rh/chop-off-sexp)
-(bind-key "C-M-(" 'rh/backward-chop-off-sexp)
-(bind-key "M-D" 'rh/kill-whole-word)
-(bind-key "C-;" 'rh/copy-whole-word)
-(bind-key "C-H-d" 'rh/kill-whole-sentence)
-(bind-key "C-H-w" 'rh/copy-whole-sentence)
-(bind-key "C-M-S-<backspace>" 'rh/kill-whole-paragraph)
-(bind-key "C-M-S-k" 'rh/chop-off-buffer)
-(bind-key "C-M-S-h" 'rh/backward-chop-off-buffer)
-(bind-key "C-'" 'rh/mark-whole-line)
-(bind-key "C-<return>" 'rh/open-line-below)
-(bind-key "C-S-<return>" 'rh/open-line-above)
-(bind-key "C-j" 'rh/join-line)
-(bind-key "M-j" 'rh/break-sentence)
-(bind-key "C-M-S-u" 'rh/unwrap-parent-sexp)
-(bind-key "M-M" 'rh/mark-symbol)
-(bind-key "<Ci>" 'forward-symbol)
-(bind-key "C-S-i" 'rh/backward-symbol)
-(bind-key "C-S-y" 'rh/replace-line-or-region)
+(global-set-key (kbd "M-i") 'rh/act-inside)
+(global-set-key (kbd "M-I") 'rh/change-inside-forward)
+(global-set-key (kbd "H-f") 'rh/visit-next-sexp)
+(global-set-key (kbd "H-b") 'rh/visit-previous-sexp)
+(global-set-key (kbd "C-H-f") 'rh/forward-opening-delimiter)
+(global-set-key (kbd "C-H-b") 'rh/backward-opening-delimiter)
+(global-set-key (kbd "C-M-y") 'up-list)
+(global-set-key (kbd "C-M-)") 'rh/chop-off-sexp)
+(global-set-key (kbd "C-M-(") 'rh/backward-chop-off-sexp)
+(global-set-key (kbd "M-D") 'rh/kill-whole-word)
+(global-set-key (kbd "C-;") 'rh/copy-whole-word)
+(global-set-key (kbd "C-H-d") 'rh/kill-whole-sentence)
+(global-set-key (kbd "C-H-w") 'rh/copy-whole-sentence)
+(global-set-key (kbd "C-M-S-<backspace>") 'rh/kill-whole-paragraph)
+(global-set-key (kbd "C-M-S-k") 'rh/chop-off-buffer)
+(global-set-key (kbd "C-M-S-h") 'rh/backward-chop-off-buffer)
+(global-set-key (kbd "C-'") 'rh/mark-whole-line)
+(global-set-key (kbd "C-<return>") 'rh/open-line-below)
+(global-set-key (kbd "C-S-<return>") 'rh/open-line-above)
+(global-set-key (kbd "C-j") 'rh/join-line)
+(global-set-key (kbd "M-j") 'rh/break-sentence)
+(global-set-key (kbd "C-M-S-u") 'rh/unwrap-parent-sexp)
+(global-set-key (kbd "M-M") 'rh/mark-symbol)
+(global-set-key (kbd "<Ci>") 'forward-symbol)
+(global-set-key (kbd "C-S-i") 'rh/backward-symbol)
+(global-set-key (kbd "C-S-y") 'rh/replace-line-or-region)
 
 ;; `isearch-mode' keybindings
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
