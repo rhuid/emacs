@@ -1,8 +1,4 @@
-;;; dwim.el --- 'Do What I Mean' commands for killing, copying and commenting -*- lexical-binding: t; -*-
-;; This is like `whole-line-or-region' but minimal (just about 30 lines)
-;; and doesn't do anything unnecessary (like remapping built-in commands)
-
-;;; Code:
+;;; rh-line-or-region.el --- context-sensitive killing, copying, commenting, replacing -*- lexical-binding: t; -*-
 
 (defun rh/kill-region-dwim (&optional arg)
   "Kill ARG whole lines or region.
@@ -36,8 +32,22 @@ ARG can be either positive or negative."
       (end-of-line arg)
       (comment-dwim nil))))
 
-(bind-key "C-w"   'rh/kill-region-dwim)
-(bind-key "M-w"   'rh/kill-ring-save-dwim)
-(bind-key "C-M-;" 'rh/comment-whole-line-or-region)
+(defun rh/replace-line-or-region (&optional arg)
+  "Replace current line with the ARGth most recent kill.
+If there is active region, replace the active region instead.
+ARG defaults to 1."
+  (interactive "p")
+  (if (use-region-p)
+      (progn
+        (kill-region (region-beginning) (region-end) nil)
+        (yank (1+ arg)))
+    (kill-whole-line 1)
+    (yank (1+ arg))
+    (insert "\n")))
 
-(provide 'dwim)
+(global-set-key (kbd "C-w") 'rh/kill-region-dwim)
+(global-set-key (kbd "M-w") 'rh/kill-ring-save-dwim)
+(global-set-key (kbd "C-M-;") 'rh/comment-whole-line-or-region)
+(global-set-key (kbd "C-S-y") 'rh/replace-line-or-region)
+
+(provide 'rh-line-or-region)

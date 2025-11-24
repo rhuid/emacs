@@ -1,4 +1,4 @@
-;;; knot-macros.el --- Mostly macros and other related things -*- lexical-binding: t; -*-
+;;; rh-macros.el --- Mostly macros and other related things -*- lexical-binding: t; -*-
 
 (defun rh--read-inline-count-and-sequence ()
   "Read optional leading digits as a COUNT, then a key sequence.
@@ -69,4 +69,4 @@ Examples:
        (dotimes (_ ,reps)
          (call-interactively #',command)))))
 
-(provide 'knot-macros)
+(provide 'rh-macros)

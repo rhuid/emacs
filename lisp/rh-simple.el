@@ -1,4 +1,4 @@
-;;; knot-editing.el --- Some quality of life editing commands that attempt to elevate vanilla Emacs editing experience -*- lexical-binding: t; -*-
+;;; rh-simple.el --- My personal editing commands and other extensions to simple.el -*- lexical-binding: t; -*-
 
 (defun rh/act-inside (&optional arg)
   "Kill or copy the content inside the current balanced expression.
@@ -87,6 +87,15 @@ Prefix argument \\[universal-argument] does the same but on the previous delimit
   (save-excursion
     (backward-up-list 1 t t)
     (delete-pair 1)))
+
+(defun rh/copy-parent-sexp (&optional arg)
+  "Copy the balanced expression that contains the point.
+With \\[universal-argument] ARG, copy that many balanced expressions."
+  (interactive "p")
+  (save-mark-and-excursion
+    (backward-up-list 1 t t)
+    (mark-sexp arg nil)
+    (kill-ring-save (region-beginning) (region-end) nil)))
 
 (defun rh/chop-off-sexp (&optional arg)
   "Chop off the rest of the higher level sexp.
@@ -286,19 +295,6 @@ With ARG, perform this action that many times."
     (dotimes (_ arg)
       (join-line -1))))
 
-(defun rh/replace-line-or-region (&optional arg)
-  "Replace current line with the ARGth most recent kill.
-If there is active region, replace the active region instead.
-ARG defaults to 1."
-  (interactive "p")
-  (if (use-region-p)
-      (progn
-        (kill-region (region-beginning) (region-end) nil)
-        (yank (1+ arg)))
-    (kill-whole-line 1)
-    (yank (1+ arg))
-    (insert "\n")))
-
 ;;; GNU Emacs, out of the box, lacks commands for marking symbol and going back a symbol
 ;;; `rh/mark-symbol' is like `mark-word' but for symbols
 ;;; `rh/backward-symbol' is backward version of `forward-symbol'
@@ -352,13 +348,13 @@ With ARG, perform this action that many times."
 (global-set-key (kbd "C-j") 'rh/join-line)
 (global-set-key (kbd "M-j") 'rh/break-sentence)
 (global-set-key (kbd "C-M-S-u") 'rh/unwrap-parent-sexp)
+(global-set-key (kbd "C-M-w") 'rh/copy-parent-sexp)
 (global-set-key (kbd "M-M") 'rh/mark-symbol)
 (global-set-key (kbd "<Ci>") 'forward-symbol)
 (global-set-key (kbd "C-S-i") 'rh/backward-symbol)
-(global-set-key (kbd "C-S-y") 'rh/replace-line-or-region)
 
 ;; `isearch-mode' keybindings
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
 (define-key isearch-mode-map (kbd "C-Y") 'rh/isearch-remote-yank)
 
-(provide 'knot-editing)
+(provide 'rh-simple)
