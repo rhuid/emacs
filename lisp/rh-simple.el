@@ -295,6 +295,24 @@ With ARG, perform this action that many times."
     (dotimes (_ arg)
       (join-line -1))))
 
+(defun rh/backward-zap-up-to-char (arg char &optional interactive)
+  "Like `zap-up-to-char' but backwards, to avoid typing negative argument."
+  (interactive
+   (list (prefix-numeric-value current-prefix-arg)
+         (read-char-from-minibuffer "Backward zap up to char: "
+                                    nil 'read-char-history)
+         t))
+  (zap-up-to-char (- arg) char interactive))
+
+(defun rh/backward-zap-to-char (arg char &optional interactive)
+  "Like `zap-to-char' but backwards, to avoid typing negative argument."
+  (interactive
+   (list (prefix-numeric-value current-prefix-arg)
+         (read-char-from-minibuffer "Backward zap up to char: "
+                                    nil 'read-char-history)
+         t))
+  (zap-to-char (- arg) char interactive))
+
 ;;; GNU Emacs, out of the box, lacks commands for marking symbol and going back a symbol
 ;;; `rh/mark-symbol' is like `mark-word' but for symbols
 ;;; `rh/backward-symbol' is backward version of `forward-symbol'
@@ -352,6 +370,8 @@ With ARG, perform this action that many times."
 (global-set-key (kbd "M-M") 'rh/mark-symbol)
 (global-set-key (kbd "<Ci>") 'forward-symbol)
 (global-set-key (kbd "C-S-i") 'rh/backward-symbol)
+(global-set-key (kbd "H-z") 'rh/backward-zap-up-to-char)
+(global-set-key (kbd "H-Z") 'rh/backward-zap-to-char)
 
 ;; `isearch-mode' keybindings
 (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
