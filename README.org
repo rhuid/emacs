@@ -3,37 +3,67 @@
 #+email: ronhuidrom@gmail.com
 #+language: en
 
-** Knot Emacs
+** My extensions
 
 #+BEGIN_QUOTE
 This is my Emacs customization, prioritized for speed, efficiency and functionality.
 #+END_QUOTE
 
-+ Builds on vanilla GNU Emacs. Assumes GNU Emacs 30.1 or higher.
-+ Uses use-package and use-package-vc. I have tried straight.el in the past and I believe use-package-vc (built-in) is cleaner, leaner and makes Emacs boot up faster.
-+ Native compilation is enabled by default. Native compilation cuts down boot up time and Emacs starts faster overall.
-+ Using server-client model, Emacs starts up almost instantly.
-+ I use my version of Colemak-DH keyboard layout but my config would work fine in QWERTY or other layouts as well. This is due to Emacs's mnemonic-keybindings design.
+*** Some custom functions
+**** ~rh/act-inside~ and ~rh/change-inside-forward~
++ The command ~rh/act-inside~ (bound to ~M-i~) kills the content of the balanced expression that contains the point and put the point inside (think of Vim's change-inner but not having to type so long to specify the delimiter)
 
-*** Design philosophy
+Suppose the current point is denoted by ~|~ and we have
 
-I want an editor and personal companion for life. Minimalist, fast, extensible and stable. Accomplish more by using less. Don't keep things you don't need. When there is a choice, choose the built-in way: they are more stable and predictable. When you want some feature, first try to write it in ~Emacs Lisp~ yourself. Be brief. Implement only what you need. Keep it light and do things the native way.
+#+BEGIN_SRC emacs-lisp
+(this is a "nice| string" inside a parenthesis)
+#+END_SRC
 
-A minimalist modeline, a super lightweight but feel-good startup screen and a nice looking lightweight theme... what more visual effects do you need?
+Pressing ~M-i~ takes us to
 
-*** My usecase
+#+BEGIN_SRC emacs-lisp
+(this is a "|" inside a parenthesis)
+#+END_SRC
 
-I use Emacs for editing text, writing documents, proving theorems, doing mathematics, programming, creating presentations, managing files, organizing my life and more. In each of these usecases, I haven't found anything that does it better than Emacs does.
+However, ~C-M-u M-i~ would have taken us to
 
-*** On the editor
+#+BEGIN_SRC emacs-lisp
+(|)
+#+END_SRC
 
-To make editing more efficient and faster, I have redefined or reimplemented some of the built-in functions and added new ones. I shall add new ones (when I find myself needing one and not for the sake of just adding). Most are built from built-in functions and some extra juice (of course). One emphasis is to overload commands and make them context-sensitive, so that they behave as expected. Universal arguments can and must be exploited whenever it's convenient.
++ The command ~rh/act-inside~ accepts universal argument. For instance, ~C-u M-i~ copies the content of the balanced expression instead of killing it.
++ The command ~rh/change-inside-forward~ (bound to ~M-I~) does the same but for the next balanced expression. Suppose we have
 
-*** Over the years
+#+BEGIN_SRC emacs-lisp
+(the fruits |are "apple" and "mango")
+#+END_SRC
 
-I began my Emacs journey with vanilla keybindings. Over the years, I tried ~evil-mode~, to find out what the craze was all about, and even started liking modal editing, but due to some limitations and personal desire for more quests, I tried ~meow~ modal editing, even found it much better than ~evil~ but finally after a long affair with modal editing, I came back to good old, chordy, musical, rhythmic vanilla keys. In the long run, I realized that vanilla keybindings are just better. Although modal editing does have its benefits, I found that a pure emacsy editing is just more efficient, predictable, and leaner overall.
+Then pressing ~M-I~ takes us to
 
-I believe that one of the greatest things about Emacs is its infinite extensibility and one should not compromise that.
+#+BEGIN_SRC emacs-lisp
+(the fruits are "|" and "mango")
+#+END_SRC
+
+Then typing a fruit (say, banana) and then pressing ~M-I~ takes us to
+
+#+BEGIN_SRC emacs-lisp
+(the fruits are "banana" and "|")
+#+END_SRC
+
++ The command ~rh/change-inside-forward~ also accepts universal argument. Here, ~C-u M-I~ does the same thing in the backward direction. Suppose we have
+
+#+BEGIN_SRC emacs-lisp
+(the fruits are "apple" and "man|go")
+#+END_SRC
+
+Then pressing ~C-u M-I~ takes us to
+
+#+BEGIN_SRC emacs-lisp
+(the fruits are "|" and "mango")
+#+END_SRC
+
+**** ~rh/copy-sexp-at-or-around-point~
+
 
 *** Other things
 
