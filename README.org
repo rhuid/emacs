@@ -23,7 +23,7 @@ Suppose the current point is denoted by ~|~ and we have
 Pressing ~M-i~ takes us to
 
 #+BEGIN_SRC emacs-lisp
-(here is a "" inside)
+(here is a "|" inside)
 #+END_SRC
 
 However, ~C-M-u M-i~ would have taken us to
@@ -39,25 +39,25 @@ The command ~rh/act-inside~ accepts universal argument. For instance, ~C-u M-i~ 
 The command ~rh/change-inside-forward~ (bound to ~M-I~) does the same as ~rh/act-inside~ but for the next balanced expression. Suppose we have
 
 #+BEGIN_SRC emacs-lisp
-the fruits |are "apple", "mango" and "guava"
+my fruits |are "apple", "mango" and "guava"
 #+END_SRC
 
 Then pressing ~M-I~ takes us to
 
 #+BEGIN_SRC emacs-lisp
-the fruits are "|", "mango" and "guava"
+my fruits are "|", "mango" and "guava"
 #+END_SRC
 
 To jump several balanced expressions ahead, we supply prefix argument. For instance, typing a fruit (say, banana) and pressing ~C-2 M-I~ takes us to
 
 #+BEGIN_SRC emacs-lisp
-the fruits are "banana", "mango" and "|"
+my fruits are "banana", "mango" and "|"
 #+END_SRC
 
 To jump back, we supply negative argument. For instance, typing another fruit (say, papaya) and pressing ~C-u -2 M-I~ takes us to
 
 #+BEGIN_SRC emacs-lisp
-the fruits are "|", "mango" and "papaya"
+my fruits are "|", "mango" and "papaya"
 #+END_SRC
 
 **** ~rh/copy-sexp-at-or-around-point~
@@ -67,7 +67,7 @@ In my config, this command is bound to ~C-M-w~ (by default, Emacs binds ~append-
 Invoking ~C-M-w~, in the following case, copies the whole string.
 
 #+BEGIN_SRC emacs-lisp
-"The GNU/Linux opera|ting system."
+"My GNU/Linux opera|ting system."
 #+END_SRC
 
 Prefix argument is supplied to specify how many balanced expressions to copy. For instance, invoking ~C-3 C-M-w~, in the following case, copies all the three strings.
@@ -78,7 +78,37 @@ Prefix argument is supplied to specify how many balanced expressions to copy. Fo
 
 **** ~rh/forward-opening-delimiter~
 
+Moves the point to the next opening delimiter. Prefix argument signifies how many opening delimiters to move forward.
 
+**** ~rh/backward-opening-delimiter~
+
+Moves the point to the previous opening delimiter. Prefix argument signifies how many opening delimiters to move backward.
+
+**** ~rh/mark-whole-line~
+
+When there is no active region, this commands marks the whole line. Otherwise, it extends the active region by a whole line at the end opposite to the point. For instance, if the point is at the lower end of the active region, this will extend the region by a whole line above and vice versa.
+
+**** ~rh/join-line~
+
+This is a more sensible join-line based on the built-in ~join-line~. Also takes prefix argument to join multiple lines.
+
+**** ~rh/break-sentence~
+
+This command starts the next sentence in a new line and moves the point there. Also takes prefix argument to break multiple sentences.
+
+**** ~rh/unwrap-parent-sexp~
+
+This removes the delimiters of the smallest sexp containing the current point. If you are already at the beginning of the target sexp (balanced expression), use the built-in ~delete-pair~ instead. A prefix argument can be used to climb up the parent sexp hierarchy. For instance, suppose we have the following.
+
+#+BEGIN_SRC emacs-lisp
+mylist = ["Emacs", "Dired", "Esh|ell"]
+#+END_SRC
+
+With prefix argument ~C-2~ (or ~C-u 2~), we end up with the following.
+
+#+BEGIN_SRC emacs-lisp
+mylist = "Emacs", "Dired", "Esh|ell"
+#+END_SRC
 
 *** Other things
 
