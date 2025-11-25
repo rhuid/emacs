@@ -1,4 +1,4 @@
-;;; rh-simple.el --- My personal editing commands and other extensions to simple.el -*- lexical-binding: t; -*-
+;;; rh-edit.el --- My personal editing mode, where every editing task is a single keystroke. -*- lexical-binding: t; -*-
 
 (defun rh/act-inside (&optional arg)
   "Kill or copy the content inside the current balanced expression.
@@ -370,6 +370,53 @@ If there is an active region, join all lines in the region."
          t))
   (zap-to-char (- arg) char interactive))
 
+;;; `Do What I Mean' commands for killing, copying and commenting
+
+(defun rh/kill-region-dwim (&optional arg)
+  "Kill ARG whole lines or region.
+ARG can be either positive or negative."
+  (interactive "p")
+  (if (use-region-p)
+      (kill-region nil nil t)
+    (kill-whole-line arg)))
+
+(defun rh/kill-ring-save-dwim (&optional arg)
+  "Copy ARG whole lines or region.
+ARG can be either positive or negative."
+  (interactive "p")
+  (if (use-region-p)
+      (kill-ring-save nil nil t)
+    (save-mark-and-excursion
+      (beginning-of-line)
+      (let ((beg (point)))
+        (end-of-line arg)
+        (kill-ring-save beg (point) nil)))))
+
+(defun rh/comment-whole-line-or-region (&optional arg)
+  "Comment ARG whole lines or region.
+ARG can be either positive or negative."
+  (interactive "p")
+  (if (use-region-p)
+      (comment-dwim nil)
+    (save-mark-and-excursion
+      (beginning-of-line)
+      (set-mark (point))
+      (end-of-line arg)
+      (comment-dwim nil))))
+
+(defun rh/replace-line-or-region (&optional arg)
+  "Replace current line with the ARGth most recent kill.
+If there is active region, replace the active region instead.
+ARG defaults to 1."
+  (interactive "p")
+  (if (use-region-p)
+      (progn
+        (kill-region (region-beginning) (region-end) nil)
+        (yank (1+ arg)))
+    (kill-whole-line 1)
+    (yank (1+ arg))
+    (insert "\n")))
+
 ;;; GNU Emacs, out of the box, lacks commands for marking symbol and going back a symbol
 ;;; `rh/mark-symbol' is like `mark-word' but for symbols
 ;;; `rh/backward-symbol' is backward version of `forward-symbol'
@@ -433,6 +480,10 @@ With ARG, perform this action that many times."
     (define-key map (kbd "C-S-i") 'rh/backward-symbol)
     (define-key map (kbd "H-z") 'rh/backward-zap-up-to-char)
     (define-key map (kbd "H-Z") 'rh/backward-zap-to-char)
+    (define-key map (kbd "C-w") 'rh/kill-region-dwim)
+    (define-key map (kbd "M-w") 'rh/kill-ring-save-dwim)
+    (define-key map (kbd "C-M-;") 'rh/comment-whole-line-or-region)
+    (define-key map (kbd "C-S-y") 'rh/replace-line-or-region)
     map)
   ;; `isearch-mode' keybindings
   (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
@@ -441,4 +492,4 @@ With ARG, perform this action that many times."
 ;; Enable it by default while loading this file
 (rh-edit-mode)
 
-(provide 'rh-simple)
+(provide 'rh-edit)
