@@ -233,10 +233,15 @@ Negative ARG copies that many previous sentences."
   "Start the next sentence in a new line and move the cursor there.
 With ARG, perform this action that many times."
   (interactive "p")
-  (dotimes (_ arg)
-    (forward-sentence 1)
-    (newline 1)
-    (delete-horizontal-space nil)))
+  (if (use-region-p)
+      (dotimes (_ (count-sentences (region-beginning) (region-end)))
+        (forward-sentence 1)
+        (newline 1)
+        (delete-horizontal-space nil))
+    (dotimes (_ arg)
+      (forward-sentence 1)
+      (newline 1)
+      (delete-horizontal-space nil))))
 
 (defun rh/break-symbol (&optional arg)
   "Start the next symbol in a new line and move the cursor there.
