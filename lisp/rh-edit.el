@@ -1,5 +1,19 @@
 ;;; rh-edit.el --- My personal editing mode, where every editing task is a single keystroke. -*- lexical-binding: t; -*-
 
+;; Author: Ronald Huidrom <ronhuidrom@gmail.com>
+;; Maintainer: Ronald Huidrom <ronhuidrom@gmail.com>
+;; Created: 08 Nov 2025
+;; Keywords: convenience, efficiency, editing
+
+;;; Commentary:
+
+;; `rh-edit' is a small package for efficient editing. It can also be used as a guide
+;; by beginners in Emacs Lisp in their journey to write efficient custom Lisp commands.
+;; This mini package has no external dependencies whatsoever.
+
+;;; Code:
+
+;;;###autoload
 (defun rh/act-inside (&optional arg)
   "Kill or copy the content inside the current balanced expression.
 With \\[universal-argument] prefix, it copies. Otherwise, it kills."
@@ -14,6 +28,7 @@ With \\[universal-argument] prefix, it copies. Otherwise, it kills."
           (kill-ring-save beg (point))
         (kill-region beg (point))))))
 
+;;;###autoload
 (defun rh/visit-next-sexp (&optional arg)
   "Move the point to the inside of the next sexp of the same level.
 With ARG, it moves forward ARG times.
@@ -24,6 +39,7 @@ With negative ARG, it moves backward that many times."
   (backward-sexp 1 nil)
   (forward-char 1))
 
+;;;###autoload
 (defun rh/visit-previous-sexp (&optional arg)
   "Move the point to the inside of the previous sexp of the same level.
 With ARG, it moves backward ARG times.
@@ -31,6 +47,7 @@ With negative ARG, it moves forward that many times."
   (interactive "p")
   (rh/visit-next-sexp (- arg)))
 
+;;;###autoload
 (defun rh/forward-opening-delimiter (&optional arg)
   "Jump forward to the next opening delimiter.
 Opening delimiters are one of: ( [ { < ` \" '.
@@ -64,11 +81,13 @@ This command may not work well for nested expressions inside strings."
           (unless (re-search-forward delimiters nil t)
             (cl-return)))))))
 
+;;;###autoload
 (defun rh/backward-opening-delimiter (&optional arg)
   "Jump backward to the previous opening delimiter."
   (interactive "p")
   (rh/forward-opening-delimiter (- (or arg 1))))
 
+;;;###autoload
 (defun rh/change-inside-forward (&optional arg)
   "Move the point to the next balanced expression and kill its contents.
 A positive prefix argument \\[universal-argument] can be supplied
@@ -84,6 +103,7 @@ A negative argument jumps backwards."
       (forward-char 1))
     (rh/act-inside)))
 
+;;;###autoload
 (defun rh/unwrap-parent-sexp (&optional arg)
   "Remove delimiters of the parent sexp.
 With ARG, climb up the sexp hierarchy."
@@ -92,6 +112,7 @@ With ARG, climb up the sexp hierarchy."
     (backward-up-list arg t t)
     (delete-pair 1)))
 
+;;;###autoload
 (defun rh/copy-sexp-at-or-around-point (&optional arg)
   "Copy the balanced expression at the point or around the point.
 With \\[universal-argument] ARG, copy that many balanced expressions.
@@ -110,6 +131,7 @@ Otherwise it copies the parent balanced expression that contains the point."
     (mark-sexp arg nil)
     (kill-ring-save nil nil t)))
 
+;;;###autoload
 (defun rh/chop-off-sexp (&optional arg)
   "Chop off the rest of the higher level sexp.
 With \\[universal-argument], it chops backward."
@@ -124,11 +146,13 @@ With \\[universal-argument], it chops backward."
   (when (use-region-p)
     (kill-region (region-beginning) (region-end))))
 
+;;;###autoload
 (defun rh/backward-chop-off-sexp (&optional arg)
   "Chop off backward the rest of the higher level sexp."
   (interactive "P")
   (rh/chop-off-sexp (not arg)))
 
+;;;###autoload
 (defun rh/kill-whole-word (&optional arg)
   "Kill current word and try to fix up whitespace after killing.
 With ARG, perform this action that many times.
@@ -151,6 +175,7 @@ Also kills word backward if the point is at the end of the word."
   (when (looking-at " +")
     (just-one-space)))
 
+;;;###autoload
 (defun rh/copy-whole-word (&optional arg)
   "Copy current word without moving point.
 With ARG, copy that many words; negative ARG copies backward."
@@ -171,6 +196,7 @@ With ARG, copy that many words; negative ARG copies backward."
             (kill-ring-save (point)
                             (progn (forward-word arg) (point)))))))))
 
+;;;###autoload
 (defun rh/isearch-remote-copy (&optional arg)
   "In `isearch', copy ARG words and return to the original point.
 ARG defaults to 1. Negative ARG copies backward."
@@ -194,6 +220,7 @@ ARG defaults to 1. Negative ARG copies backward."
           (goto-char orig-point))
       (message "This command should be invoked in isearch mode."))))
 
+;;;###autoload
 (defun rh/isearch-remote-yank (&optional arg)
   "While in `isearch-mode', yanks the word in search match at the original point.
 With ARG, yank that many words; negative ARG yanks that many previous words."
@@ -204,6 +231,7 @@ With ARG, yank that many words; negative ARG yanks that many previous words."
         (yank 1))
     (message "This command should be invoked in isearch-mode.")))
 
+;;;###autoload
 (defun rh/kill-whole-sentence (&optional arg)
   "Kill current sentence.
 With ARG, perform this action that many times.
@@ -216,6 +244,7 @@ Negative ARG kills that many previous sentences."
   (kill-sentence arg)
   (just-one-space))
 
+;;;###autoload
 (defun rh/copy-whole-sentence (&optional arg)
   "Copy current sentence.
 With ARG, perform this action that many times.
@@ -229,6 +258,7 @@ Negative ARG copies that many previous sentences."
     (mark-end-of-sentence arg)
     (kill-ring-save (region-beginning) (region-end))))
 
+;;;###autoload
 (defun rh--break-thing (motion-fn &optional arg)
   "Break the text at each boundary detected by MOTION-FN.
 For instance, if MOTION-FN is `forward-sentence', then it starts
@@ -260,6 +290,7 @@ after each boundary inside the region."
         (newline 1))
       (delete-horizontal-space nil))))
 
+;;;###autoload
 (defun rh/break-sexp (&optional arg)
   "Start the next sexp in a newline and move the cursor there.
 With ARG, perform this action that many times.
@@ -267,6 +298,7 @@ If there is an active region, break all sexps in the region."
   (interactive "p")
   (rh--break-thing #'forward-sexp arg))
 
+;;;###autoload
 (defun rh/break-sentence (&optional arg)
   "Start the next sentence in a newline and move the cursor there.
 With ARG, perform this action that many times.
@@ -274,12 +306,14 @@ If there is an active region, break all sentences in the region."
   (interactive "p")
   (rh--break-thing #'forward-sentence arg))
 
+;;;###autoload
 (defun rh/kill-whole-paragraph (&optional arg)
   "Kill ARG whole paragraphs. ARG defaults to 1."
   (interactive "p")
   (mark-paragraph arg t)
   (kill-region (region-beginning) (region-end) nil))
 
+;;;###autoload
 (defun rh/chop-off-buffer (&optional arg)
   "Kill the rest of the buffer after point.
 With ARG, it deletes instead (does not save to the kill-ring)."
@@ -288,6 +322,7 @@ With ARG, it deletes instead (does not save to the kill-ring)."
       (delete-region (point) (point-max))
     (kill-region (point) (point-max))))
 
+;;;###autoload
 (defun rh/backward-chop-off-buffer (&optional arg)
   "Kill the rest of the buffer before point.
 With ARG, it deletes instead (does not save to the kill-ring)."
@@ -296,6 +331,7 @@ With ARG, it deletes instead (does not save to the kill-ring)."
       (delete-region (point-min) (point))
     (kill-region (point-min) (point))))
 
+;;;###autoload
 (defun rh/mark-whole-line (&optional arg)
   "Mark ARG whole lines.
 If there is an active region, extend the region by
@@ -322,6 +358,7 @@ ARG defaults to 1."
     (end-of-line)
     (exchange-point-and-mark nil)))
 
+;;;###autoload
 (defun rh/open-line-below (&optional arg)
   "Create a new line below and move the cursor there.
 With ARG, perform this action that many times."
@@ -329,6 +366,7 @@ With ARG, perform this action that many times."
   (move-end-of-line 1)
   (newline-and-indent arg))
 
+;;;###autoload
 (defun rh/open-line-above (&optional arg)
   "Create a new line above and move the cursor there.
 With ARG, perform this action that many times."
@@ -336,6 +374,7 @@ With ARG, perform this action that many times."
   (back-to-indentation)
   (open-line arg))
 
+;;;###autoload
 (defun rh/join-line (&optional arg)
   "Join the current line to the following line.
 With positive ARG, perform this action that many times.
@@ -352,6 +391,7 @@ If there is an active region, join all lines in the region."
         (dotimes (_ (- arg))
           (join-line nil))))))
 
+;;;###autoload
 (defun rh/backward-zap-up-to-char (arg char &optional interactive)
   "Like `zap-up-to-char' but backwards, to avoid typing negative argument."
   (interactive
@@ -361,6 +401,7 @@ If there is an active region, join all lines in the region."
          t))
   (zap-up-to-char (- arg) char interactive))
 
+;;;###autoload
 (defun rh/backward-zap-to-char (arg char &optional interactive)
   "Like `zap-to-char' but backwards, to avoid typing negative argument."
   (interactive
@@ -372,6 +413,7 @@ If there is an active region, join all lines in the region."
 
 ;;; `Do What I Mean' commands for killing, copying and commenting
 
+;;;###autoload
 (defun rh/kill-region-dwim (&optional arg)
   "Kill ARG whole lines or region.
 ARG can be either positive or negative."
@@ -380,6 +422,7 @@ ARG can be either positive or negative."
       (kill-region nil nil t)
     (kill-whole-line arg)))
 
+;;;###autoload
 (defun rh/kill-ring-save-dwim (&optional arg)
   "Copy ARG whole lines or region.
 ARG can be either positive or negative."
@@ -392,6 +435,7 @@ ARG can be either positive or negative."
         (end-of-line arg)
         (kill-ring-save beg (point) nil)))))
 
+;;;###autoload
 (defun rh/comment-whole-line-or-region (&optional arg)
   "Comment ARG whole lines or region.
 ARG can be either positive or negative."
@@ -404,6 +448,7 @@ ARG can be either positive or negative."
       (end-of-line arg)
       (comment-dwim nil))))
 
+;;;###autoload
 (defun rh/replace-line-or-region (&optional arg)
   "Replace current line with the ARGth most recent kill.
 If there is active region, replace the active region instead.
@@ -421,6 +466,7 @@ ARG defaults to 1."
 ;;; `rh/mark-symbol' is like `mark-word' but for symbols
 ;;; `rh/backward-symbol' is backward version of `forward-symbol'
 
+;;;###autoload
 (defun rh/mark-symbol (&optional arg allow-extend)
   "Mark ARG symbols at point. ARG defaults to 1."
   (interactive "P\np")
@@ -441,11 +487,14 @@ ARG defaults to 1."
             (point))
           nil t))))
 
+;;;###autoload
 (defun rh/backward-symbol (&optional arg)
   "Move point to the previous position that is the beginning of a symbol.
 With ARG, perform this action that many times."
   (interactive "p")
   (forward-symbol (- arg)))
+
+;;;; `rh-edit-mode'
 
 ;;;###autoload
 (defvar rh-edit-mode-map
@@ -487,15 +536,15 @@ With ARG, perform this action that many times."
   "Keymap used for `rh-edit-mode'.")
 
 ;;;###autoload
-(progn
-  (define-minor-mode rh-edit-mode
-    "Enable my personal editing mode, where every editing task is a single keystroke."
-    :keymap rh-edit-mode-map
-    ;; `isearch-mode' keybindings
-    (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
-    (define-key isearch-mode-map (kbd "C-x C-y") 'rh/isearch-remote-yank)))
+(define-minor-mode rh-edit-mode
+  "Enable keybindings for `rh-edit' commands."
+  :keymap rh-edit-mode-map)
 
-;; Enable it by default while loading this file
-(rh-edit-mode)
+;;;###autoload
+(define-globalized-minor-mode rh-edit-global-mode
+  rh-edit-mode
+  (lambda () (rh-edit-mode 1)))
 
 (provide 'rh-edit)
+
+;;; rh-edit.el ends here
