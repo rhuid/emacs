@@ -447,9 +447,8 @@ With ARG, perform this action that many times."
   (interactive "p")
   (forward-symbol (- arg)))
 
-(define-minor-mode rh-edit-mode
-  "Enable my personal editing mode, where every editing task is a single keystroke."
-  :keymap
+;;;###autoload
+(defvar rh-edit-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-i") 'rh/act-inside)
     (define-key map (kbd "M-I") 'rh/change-inside-forward)
@@ -485,9 +484,16 @@ With ARG, perform this action that many times."
     (define-key map (kbd "C-M-;") 'rh/comment-whole-line-or-region)
     (define-key map (kbd "C-S-y") 'rh/replace-line-or-region)
     map)
-  ;; `isearch-mode' keybindings
-  (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
-  (define-key isearch-mode-map (kbd "C-x C-y") 'rh/isearch-remote-yank))
+  "Keymap used for `rh-edit-mode'.")
+
+;;;###autoload
+(progn
+  (define-minor-mode rh-edit-mode
+    "Enable my personal editing mode, where every editing task is a single keystroke."
+    :keymap rh-edit-mode-map
+    ;; `isearch-mode' keybindings
+    (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
+    (define-key isearch-mode-map (kbd "C-x C-y") 'rh/isearch-remote-yank)))
 
 ;; Enable it by default while loading this file
 (rh-edit-mode)

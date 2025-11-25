@@ -31,15 +31,14 @@
 (use-package dash :demand t)
 (use-package s    :demand t)
 
-;; Set up appearance
-(require 'rh-set-theme)                                                 ; `rh-set-theme' is my personal package
+;; Set up appearance (`rh-set-theme' is my personal package)
+(require 'rh-set-theme)
 (setq rh/set-theme-day-theme 'modus-operandi)
 (setq rh/set-theme-night-theme 'modus-vivendi)
 (use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
 
 ;; Personal lisp packages (from `lisp' directory)
-(require 'rh-simple)
-(require 'rh-line-or-region)
+(require 'rh-edit)
 (require 'rh-macros)
 
 ;; Local modules (from `conf' directory)
