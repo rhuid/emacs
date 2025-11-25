@@ -11,7 +11,8 @@ This is my Emacs customization, prioritized for speed, efficiency and functional
 
 *** Some custom functions
 **** ~rh/act-inside~ and ~rh/change-inside-forward~
-+ The command ~rh/act-inside~ (bound to ~M-i~) kills the content of the balanced expression that contains the point and put the point inside (think of Vim's change-inner but not having to type so long to specify the delimiter)
+
+The command ~rh/act-inside~ (bound to ~M-i~) kills the content of the balanced expression that contains the point and put the point inside (think of Vim's change-inner but not having to type so long to specify the delimiter)
 
 Suppose the current point is denoted by ~|~ and we have
 
@@ -31,8 +32,11 @@ However, ~C-M-u M-i~ would have taken us to
 (|)
 #+END_SRC
 
-+ The command ~rh/act-inside~ accepts universal argument. For instance, ~C-u M-i~ copies the content of the balanced expression instead of killing it.
-+ The command ~rh/change-inside-forward~ (bound to ~M-I~) does the same but for the next balanced expression. Suppose we have
+The command ~rh/act-inside~ accepts universal argument. For instance, ~C-u M-i~ copies the content of the balanced expression instead of killing it.
+
+**** ~rh/change-inside-forward~
+
+The command ~rh/change-inside-forward~ (bound to ~M-I~) does the same as ~rh/act-inside~ but for the next balanced expression. Suppose we have
 
 #+BEGIN_SRC emacs-lisp
 (the fruits |are "apple" and "mango")
@@ -50,7 +54,7 @@ Then typing a fruit (say, banana) and then pressing ~M-I~ takes us to
 (the fruits are "banana" and "|")
 #+END_SRC
 
-+ The command ~rh/change-inside-forward~ also accepts universal argument. Here, ~C-u M-I~ does the same thing in the backward direction. Suppose we have
+The command ~rh/change-inside-forward~ also accepts universal argument. Here, ~C-u M-I~ does the same thing but in the backward direction. Suppose we have
 
 #+BEGIN_SRC emacs-lisp
 (the fruits are "apple" and "man|go")
@@ -63,7 +67,7 @@ Then pressing ~C-u M-I~ takes us to
 #+END_SRC
 
 **** ~rh/copy-sexp-at-or-around-point~
-
++ This command
 
 *** Other things
 
