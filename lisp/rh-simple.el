@@ -96,11 +96,12 @@ A negative argument jumps backwards."
       (forward-char 1))
     (rh/act-inside)))
 
-(defun rh/unwrap-parent-sexp ()
-  "Remove delimiters of the parent sexp."
-  (interactive)
+(defun rh/unwrap-parent-sexp (&optional arg)
+  "Remove delimiters of the parent sexp.
+With ARG, climb up the sexp hierarchy."
+  (interactive "p")
   (save-excursion
-    (backward-up-list 1 t t)
+    (backward-up-list arg t t)
     (delete-pair 1)))
 
 (defun rh/copy-sexp-at-or-around-point (&optional arg)
