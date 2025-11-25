@@ -229,28 +229,48 @@ Negative ARG copies that many previous sentences."
     (mark-end-of-sentence arg)
     (kill-ring-save (region-beginning) (region-end))))
 
-(defun rh/break-sentence (&optional arg)
-  "Start the next sentence in a new line and move the cursor there.
-With ARG, perform this action that many times."
-  (interactive "p")
+(defun rh--break-thing (motion-fn &optional arg)
+  "Break the text at each boundary detected by MOTION-FN.
+For instance, if MOTION-FN is `forward-sentence', then it starts
+the next sentence in a newline and move the point there.
+When there is an active region, insert a newline
+after each boundary inside the region."
   (if (use-region-p)
-      (dotimes (_ (count-sentences (region-beginning) (region-end)))
-        (forward-sentence 1)
-        (newline 1)
-        (delete-horizontal-space nil))
-    (dotimes (_ arg)
-      (forward-sentence 1)
+      (let* ((beg (region-beginning))
+             (end (region-end))
+             (positions '()))
+        ;; collect positions within the region
+        (save-excursion
+          (goto-char beg)
+          (while (< (point) end)
+            (let ((p (progn (funcall motion-fn 1) (point))))
+              (when (<= p end)
+                (push p positions)))))
+        ;; insert breaks (newlines) at the positions
+        (save-excursion
+          (dolist (pos positions)
+            (goto-char pos)
+            (newline 1)
+            (delete-horizontal-space nil))))
+    ;; if no active region
+    (dotimes (_ (or arg 1))
+      (funcall motion-fn 1)
       (newline 1)
       (delete-horizontal-space nil))))
 
 (defun rh/break-symbol (&optional arg)
-  "Start the next symbol in a new line and move the cursor there.
-With ARG. perform this action that many times."
+  "Start the next symbol in a newline and move the cursor there.
+With ARG, perform this action that many times.
+If there is an active region, break all symbols in the region."
   (interactive "p")
-  (dotimes (_ arg)
-    (forward-symbol 1)
-    (newline 1)
-    (delete-horizontal-space nil)))
+  (rh--break-thing #'forward-symbol arg))
+
+(defun rh/break-sentence (&optional arg)
+  "Start the next sentence in a newline and move the cursor there.
+With ARG, perform this action that many times.
+If there is an active region, break all sentences in the region."
+  (interactive "p")
+  (rh--break-thing #'forward-sentence arg))
 
 (defun rh/kill-whole-paragraph (&optional arg)
   "Kill ARG whole paragraphs. ARG defaults to 1."
