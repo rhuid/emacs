@@ -70,18 +70,6 @@ This command may not work well for nested expressions inside strings."
   (rh/forward-opening-delimiter (- (or arg 1))))
 
 (defun rh/change-inside-forward (&optional arg)
-  "Jump to the next delimiter and kill contents of the parent balanced expression.
-Prefix argument \\[universal-argument] does the same but on the previous delimiter."
-  (interactive "P")
-  (if arg
-      ;; jump one opening delimiter backward once
-      (progn
-        (rh/backward-opening-delimiter 2)
-        (forward-char 1))
-    (rh/forward-opening-delimiter 1))
-  (rh/act-inside))
-
-(defun rh/change-inside-forward (&optional arg)
   "Move the point to the next balanced expression and kill its contents.
 A positive prefix argument \\[universal-argument] can be supplied
 to signify how many balanced expressions to jump forward.
@@ -314,11 +302,19 @@ With ARG, perform this action that many times."
 
 (defun rh/join-line (&optional arg)
   "Join the current line to the following line.
-With ARG, perform this action that many times."
+With positive ARG, perform this action that many times.
+With negative ARG, join the current line to the previous and
+the magnitude of ARG determines how many times this action is performed.
+If there is an active region, join all lines in the region."
   (interactive "p")
-  (save-excursion
-    (dotimes (_ arg)
-      (join-line -1))))
+  (if (use-region-p)
+      (join-line nil (region-beginning) (region-end))
+    (save-excursion
+      (if (> arg 0)
+          (dotimes (_ arg)
+            (join-line -1))
+        (dotimes (_ (- arg))
+          (join-line nil))))))
 
 (defun rh/backward-zap-up-to-char (arg char &optional interactive)
   "Like `zap-up-to-char' but backwards, to avoid typing negative argument."
