@@ -88,14 +88,23 @@ Prefix argument \\[universal-argument] does the same but on the previous delimit
     (backward-up-list 1 t t)
     (delete-pair 1)))
 
-(defun rh/copy-parent-sexp (&optional arg)
-  "Copy the balanced expression that contains the point.
-With \\[universal-argument] ARG, copy that many balanced expressions."
+(defun rh/copy-sexp-at-or-around-point (&optional arg)
+  "Copy the balanced expression at the point or around the point.
+With \\[universal-argument] ARG, copy that many balanced expressions.
+
+If the point is at the start of a balanced expression, it copies that.
+Otherwise it copies the parent balanced expression that contains the point."
   (interactive "p")
   (save-mark-and-excursion
-    (backward-up-list 1 t t)
+    (unless (or
+             ;; match the start of a parenthesis
+             (looking-at "\\s(")
+             ;; match the start of a string
+             (and (looking-at "\\s\"")
+                  (not (eq (syntax-ppss-context (syntax-ppss)) 'string))))
+      (backward-up-list 1 t t))
     (mark-sexp arg nil)
-    (kill-ring-save (region-beginning) (region-end) nil)))
+    (kill-ring-save nil nil t)))
 
 (defun rh/chop-off-sexp (&optional arg)
   "Chop off the rest of the higher level sexp.
@@ -366,7 +375,7 @@ With ARG, perform this action that many times."
 (global-set-key (kbd "C-j") 'rh/join-line)
 (global-set-key (kbd "M-j") 'rh/break-sentence)
 (global-set-key (kbd "C-M-S-u") 'rh/unwrap-parent-sexp)
-(global-set-key (kbd "C-M-w") 'rh/copy-parent-sexp)
+(global-set-key (kbd "C-M-w") 'rh/copy-sexp-at-or-around-point)
 (global-set-key (kbd "M-M") 'rh/mark-symbol)
 (global-set-key (kbd "<Ci>") 'forward-symbol)
 (global-set-key (kbd "C-S-i") 'rh/backward-symbol)
