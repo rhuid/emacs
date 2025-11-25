@@ -250,20 +250,22 @@ after each boundary inside the region."
         (save-excursion
           (dolist (pos positions)
             (goto-char pos)
-            (newline 1)
+            (unless (looking-at-p "\n")
+              (newline 1))
             (delete-horizontal-space nil))))
     ;; if no active region
     (dotimes (_ (or arg 1))
       (funcall motion-fn 1)
-      (newline 1)
+      (unless (looking-at-p "\n")
+        (newline 1))
       (delete-horizontal-space nil))))
 
-(defun rh/break-symbol (&optional arg)
-  "Start the next symbol in a newline and move the cursor there.
+(defun rh/break-sexp (&optional arg)
+  "Start the next sexp in a newline and move the cursor there.
 With ARG, perform this action that many times.
-If there is an active region, break all symbols in the region."
+If there is an active region, break all sexps in the region."
   (interactive "p")
-  (rh--break-thing #'forward-symbol arg))
+  (rh--break-thing #'forward-sexp arg))
 
 (defun rh/break-sentence (&optional arg)
   "Start the next sentence in a newline and move the cursor there.
@@ -419,8 +421,8 @@ With ARG, perform this action that many times."
 (global-set-key (kbd "C-<return>") 'rh/open-line-below)
 (global-set-key (kbd "C-S-<return>") 'rh/open-line-above)
 (global-set-key (kbd "C-j") 'rh/join-line)
-(global-set-key (kbd "M-j") 'rh/break-sentence)
-(global-set-key (kbd "M-J") 'rh/break-symbol)
+(global-set-key (kbd "M-j") 'rh/break-sexp)
+(global-set-key (kbd "M-J") 'rh/break-sentence)
 (global-set-key (kbd "C-M-S-u") 'rh/unwrap-parent-sexp)
 (global-set-key (kbd "C-M-w") 'rh/copy-sexp-at-or-around-point)
 (global-set-key (kbd "M-M") 'rh/mark-symbol)
