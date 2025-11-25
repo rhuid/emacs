@@ -81,6 +81,21 @@ Prefix argument \\[universal-argument] does the same but on the previous delimit
     (rh/forward-opening-delimiter 1))
   (rh/act-inside))
 
+(defun rh/change-inside-forward (&optional arg)
+  "Move the point to the next balanced expression and kill its contents.
+A positive prefix argument \\[universal-argument] can be supplied
+to signify how many balanced expressions to jump forward.
+A negative argument jumps backwards."
+  (interactive "p")
+  (let ((arg (or arg 1)))
+    (if (> arg 0)
+        ;; if positive, jump |ARG| opening delimiters forward
+        (rh/forward-opening-delimiter arg)
+      ;; if negative, jump |ARG| + 1 opening delimiters backward
+      (rh/backward-opening-delimiter (+ 1 (- arg)))
+      (forward-char 1))
+    (rh/act-inside)))
+
 (defun rh/unwrap-parent-sexp ()
   "Remove delimiters of the parent sexp."
   (interactive)
