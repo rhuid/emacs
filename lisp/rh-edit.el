@@ -99,7 +99,7 @@ A negative argument jumps backwards."
         ;; if positive, jump |ARG| opening delimiters forward
         (rh/forward-opening-delimiter arg)
       ;; if negative, jump |ARG| + 1 opening delimiters backward
-      (rh/backward-opening-delimiter (+ 1 (- arg)))
+      (rh/backward-opening-delimiter (- arg))
       (forward-char 1))
     (rh/act-inside)))
 
