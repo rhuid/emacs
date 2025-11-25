@@ -238,6 +238,15 @@ With ARG, perform this action that many times."
     (newline 1)
     (delete-horizontal-space nil)))
 
+(defun rh/break-symbol (&optional arg)
+  "Start the next symbol in a new line and move the cursor there.
+With ARG. perform this action that many times."
+  (interactive "p")
+  (dotimes (_ arg)
+    (forward-symbol 1)
+    (newline 1)
+    (delete-horizontal-space nil)))
+
 (defun rh/kill-whole-paragraph (&optional arg)
   "Kill ARG whole paragraphs. ARG defaults to 1."
   (interactive "p")
@@ -386,6 +395,7 @@ With ARG, perform this action that many times."
 (global-set-key (kbd "C-S-<return>") 'rh/open-line-above)
 (global-set-key (kbd "C-j") 'rh/join-line)
 (global-set-key (kbd "M-j") 'rh/break-sentence)
+(global-set-key (kbd "M-J") 'rh/break-symbol)
 (global-set-key (kbd "C-M-S-u") 'rh/unwrap-parent-sexp)
 (global-set-key (kbd "C-M-w") 'rh/copy-sexp-at-or-around-point)
 (global-set-key (kbd "M-M") 'rh/mark-symbol)
