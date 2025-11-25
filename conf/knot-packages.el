@@ -101,12 +101,13 @@
   (puni-blink-for-sexp-manipulating nil)
   (puni-confirm-when-delete-unbalanced-active-region nil)
   :config
-  (defun rh/puni-rewrap-sexp ()
-    "Rewrap the current sexp."
-    (interactive)
+  (defun rh/puni-rewrap-sexp (&optional arg)
+    "Rewrap the parent sexp in a new pair of delimiters.
+With ARG, it climbs up the sexp hierarchy."
+    (interactive "p")
     (let ((delimiter (read-char "Opening delimiter: ")))
       (save-excursion
-        (backward-up-list 1 t t)
+        (backward-up-list arg t t)
         (mark-sexp 1 nil)
         (when (use-region-p)
           (let ((beg (region-beginning))

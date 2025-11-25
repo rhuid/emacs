@@ -497,53 +497,46 @@ With ARG, perform this action that many times."
 ;;;; `rh-edit-mode'
 
 ;;;###autoload
-(defvar rh-edit-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "M-i") 'rh/act-inside)
-    (define-key map (kbd "M-I") 'rh/change-inside-forward)
-    (define-key map (kbd "H-f") 'rh/visit-next-sexp)
-    (define-key map (kbd "H-b") 'rh/visit-previous-sexp)
-    (define-key map (kbd "C-H-f") 'rh/forward-opening-delimiter)
-    (define-key map (kbd "C-H-b") 'rh/backward-opening-delimiter)
-    (define-key map (kbd "C-M-y") 'up-list)
-    (define-key map (kbd "C-M-)") 'rh/chop-off-sexp)
-    (define-key map (kbd "C-M-(") 'rh/backward-chop-off-sexp)
-    (define-key map (kbd "M-D") 'rh/kill-whole-word)
-    (define-key map (kbd "C-;") 'rh/copy-whole-word)
-    (define-key map (kbd "C-H-d") 'rh/kill-whole-sentence)
-    (define-key map (kbd "C-H-w") 'rh/copy-whole-sentence)
-    (define-key map (kbd "C-M-S-<backspace>") 'rh/kill-whole-paragraph)
-    (define-key map (kbd "C-M-S-k") 'rh/chop-off-buffer)
-    (define-key map (kbd "C-M-S-h") 'rh/backward-chop-off-buffer)
-    (define-key map (kbd "C-'") 'rh/mark-whole-line)
-    (define-key map (kbd "C-<return>") 'rh/open-line-below)
-    (define-key map (kbd "C-S-<return>") 'rh/open-line-above)
-    (define-key map (kbd "C-j") 'rh/join-line)
-    (define-key map (kbd "M-j") 'rh/break-sexp)
-    (define-key map (kbd "M-J") 'rh/break-sentence)
-    (define-key map (kbd "C-M-S-u") 'rh/unwrap-parent-sexp)
-    (define-key map (kbd "C-M-w") 'rh/copy-sexp-at-or-around-point)
-    (define-key map (kbd "M-M") 'rh/mark-symbol)
-    (define-key map (kbd "<Ci>") 'forward-symbol)
-    (define-key map (kbd "C-S-i") 'rh/backward-symbol)
-    (define-key map (kbd "H-z") 'rh/backward-zap-up-to-char)
-    (define-key map (kbd "H-Z") 'rh/backward-zap-to-char)
-    (define-key map (kbd "C-w") 'rh/kill-region-dwim)
-    (define-key map (kbd "M-w") 'rh/kill-ring-save-dwim)
-    (define-key map (kbd "C-M-;") 'rh/comment-whole-line-or-region)
-    (define-key map (kbd "C-S-y") 'rh/replace-line-or-region)
-    map)
-  "Keymap used for `rh-edit-mode'.")
-
-;;;###autoload
-(define-minor-mode rh-edit-mode
-  "Enable keybindings for `rh-edit' commands."
-  :keymap rh-edit-mode-map)
-
-;;;###autoload
-(define-globalized-minor-mode rh-edit-global-mode
-  rh-edit-mode
-  (lambda () (rh-edit-mode 1)))
+(defun rh-edit-default-bindings ()
+  "Enable default keybindings for `rh-edit'."
+  (interactive)
+  ;; Global keys
+  (global-set-key (kbd "M-i") 'rh/act-inside)
+  (global-set-key (kbd "M-I") 'rh/change-inside-forward)
+  (global-set-key (kbd "H-f") 'rh/visit-next-sexp)
+  (global-set-key (kbd "H-b") 'rh/visit-previous-sexp)
+  (global-set-key (kbd "C-H-f") 'rh/forward-opening-delimiter)
+  (global-set-key (kbd "C-H-b") 'rh/backward-opening-delimiter)
+  (global-set-key (kbd "C-M-y") 'up-list)
+  (global-set-key (kbd "C-M-)") 'rh/chop-off-sexp)
+  (global-set-key (kbd "C-M-(") 'rh/backward-chop-off-sexp)
+  (global-set-key (kbd "M-D") 'rh/kill-whole-word)
+  (global-set-key (kbd "C-;") 'rh/copy-whole-word)
+  (global-set-key (kbd "C-H-d") 'rh/kill-whole-sentence)
+  (global-set-key (kbd "C-H-w") 'rh/copy-whole-sentence)
+  (global-set-key (kbd "C-M-S-<backspace>") 'rh/kill-whole-paragraph)
+  (global-set-key (kbd "C-M-S-k") 'rh/chop-off-buffer)
+  (global-set-key (kbd "C-M-S-h") 'rh/backward-chop-off-buffer)
+  (global-set-key (kbd "C-'") 'rh/mark-whole-line)
+  (global-set-key (kbd "C-<return>") 'rh/open-line-below)
+  (global-set-key (kbd "C-S-<return>") 'rh/open-line-above)
+  (global-set-key (kbd "C-j") 'rh/join-line)
+  (global-set-key (kbd "M-j") 'rh/break-sexp)
+  (global-set-key (kbd "M-J") 'rh/break-sentence)
+  (global-set-key (kbd "C-M-S-u") 'rh/unwrap-parent-sexp)
+  (global-set-key (kbd "C-M-w") 'rh/copy-sexp-at-or-around-point)
+  (global-set-key (kbd "M-M") 'rh/mark-symbol)
+  (global-set-key (kbd "<Ci>") 'forward-symbol)
+  (global-set-key (kbd "C-S-i") 'rh/backward-symbol)
+  (global-set-key (kbd "H-z") 'rh/backward-zap-up-to-char)
+  (global-set-key (kbd "H-Z") 'rh/backward-zap-to-char)
+  (global-set-key (kbd "C-w") 'rh/kill-region-dwim)
+  (global-set-key (kbd "M-w") 'rh/kill-ring-save-dwim)
+  (global-set-key (kbd "C-M-;") 'rh/comment-whole-line-or-region)
+  (global-set-key (kbd "C-S-y") 'rh/replace-line-or-region)
+  ;; `isearch-mode' keys
+  (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
+  (define-key isearch-mode-map (kbd "C-x C-y") 'rh/isearch-remote-yank))
 
 (provide 'rh-edit)
 

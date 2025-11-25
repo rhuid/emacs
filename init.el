@@ -39,7 +39,7 @@
 
 ;; Personal lisp packages (from `lisp' directory)
 (require 'rh-edit)
-(rh-edit-global-mode)
+(rh-edit-default-bindings)
 (require 'rh-macros)
 
 ;; Local modules (from `conf' directory)
