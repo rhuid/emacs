@@ -10,20 +10,20 @@ This is my Emacs customization, prioritized for speed, efficiency and functional
 #+END_QUOTE
 
 *** Some custom functions
-**** ~rh/act-inside~ and ~rh/change-inside-forward~
+**** ~rh/act-inside~
 
 The command ~rh/act-inside~ (bound to ~M-i~) kills the content of the balanced expression that contains the point and put the point inside (think of Vim's change-inner but not having to type so long to specify the delimiter)
 
 Suppose the current point is denoted by ~|~ and we have
 
 #+BEGIN_SRC emacs-lisp
-(this is a "nice| string" inside a parenthesis)
+(here is a "nice| string" inside)
 #+END_SRC
 
 Pressing ~M-i~ takes us to
 
 #+BEGIN_SRC emacs-lisp
-(this is a "|" inside a parenthesis)
+(here is a "" inside)
 #+END_SRC
 
 However, ~C-M-u M-i~ would have taken us to
@@ -39,35 +39,46 @@ The command ~rh/act-inside~ accepts universal argument. For instance, ~C-u M-i~ 
 The command ~rh/change-inside-forward~ (bound to ~M-I~) does the same as ~rh/act-inside~ but for the next balanced expression. Suppose we have
 
 #+BEGIN_SRC emacs-lisp
-(the fruits |are "apple" and "mango")
+the fruits |are "apple", "mango" and "guava"
 #+END_SRC
 
 Then pressing ~M-I~ takes us to
 
 #+BEGIN_SRC emacs-lisp
-(the fruits are "|" and "mango")
+the fruits are "|", "mango" and "guava"
 #+END_SRC
 
-Then typing a fruit (say, banana) and then pressing ~M-I~ takes us to
+To jump several balanced expressions ahead, we supply prefix argument. For instance, typing a fruit (say, banana) and pressing ~C-2 M-I~ takes us to
 
 #+BEGIN_SRC emacs-lisp
-(the fruits are "banana" and "|")
+the fruits are "banana", "mango" and "|"
 #+END_SRC
 
-The command ~rh/change-inside-forward~ also accepts universal argument. Here, ~C-u M-I~ does the same thing but in the backward direction. Suppose we have
+To jump back, we supply negative argument. For instance, typing another fruit (say, papaya) and pressing ~C-u -2 M-I~ takes us to
 
 #+BEGIN_SRC emacs-lisp
-(the fruits are "apple" and "man|go")
-#+END_SRC
-
-Then pressing ~C-u M-I~ takes us to
-
-#+BEGIN_SRC emacs-lisp
-(the fruits are "|" and "mango")
+the fruits are "|", "mango" and "papaya"
 #+END_SRC
 
 **** ~rh/copy-sexp-at-or-around-point~
-+ This command
+
+In my config, this command is bound to ~C-M-w~ (by default, Emacs binds ~append-next-kill~ to this key, which I have rebound to ~C-M-S-w~). This commands checks if the point is at the start of a balanced expression. If it is, then the expression is copied. Otherwise, it copies the smallest balanced expression that contains the current point.
+
+Invoking ~C-M-w~, in the following case, copies the whole string.
+
+#+BEGIN_SRC emacs-lisp
+"The GNU/Linux opera|ting system."
+#+END_SRC
+
+Prefix argument is supplied to specify how many balanced expressions to copy. For instance, invoking ~C-3 C-M-w~, in the following case, copies all the three strings.
+
+#+BEGIN_SRC emacs-lisp
+"G|NU" "Emacs" "thermonuclear editor"
+#+END_SRC
+
+**** ~rh/forward-opening-delimiter~
+
+
 
 *** Other things
 
