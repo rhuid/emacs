@@ -95,11 +95,8 @@ to signify how many balanced expressions to jump forward.
 A negative argument jumps backwards."
   (interactive "p")
   (let ((arg (or arg 1)))
-    (if (> arg 0)
-        ;; if positive, jump |ARG| opening delimiters forward
-        (rh/forward-opening-delimiter arg)
-      ;; if negative, jump |ARG| + 1 opening delimiters backward
-      (rh/backward-opening-delimiter (- arg))
+    (rh/forward-opening-delimiter arg)
+    (when (< arg 0)
       (forward-char 1))
     (rh/act-inside)))
 
@@ -437,10 +434,15 @@ ARG can be either positive or negative."
 
 ;;;###autoload
 (defun rh/comment-whole-line-or-region (&optional arg)
-  "Comment ARG whole lines or region.
-ARG can be either positive or negative."
+  "Comment or uncomment ARG whole lines or region.
+
+Comment or uncomment the active region if there is one.
+Otherwise, comment or uncomment ARG whole lines.
+ARG can be either positive or negative.
+If ARG is zero, add a comment at the end of the current line
+and move the point there."
   (interactive "p")
-  (if (use-region-p)
+  (if (or (use-region-p) (zerop arg))
       (comment-dwim nil)
     (save-mark-and-excursion
       (beginning-of-line)
@@ -494,8 +496,6 @@ With ARG, perform this action that many times."
   (interactive "p")
   (forward-symbol (- arg)))
 
-;;;; `rh-edit-mode'
-
 ;;;###autoload
 (defun rh-edit-default-bindings ()
   "Enable default keybindings for `rh-edit'."
@@ -532,7 +532,7 @@ With ARG, perform this action that many times."
   (global-set-key (kbd "H-Z") 'rh/backward-zap-to-char)
   (global-set-key (kbd "C-w") 'rh/kill-region-dwim)
   (global-set-key (kbd "M-w") 'rh/kill-ring-save-dwim)
-  (global-set-key (kbd "C-M-;") 'rh/comment-whole-line-or-region)
+  (global-set-key (kbd "M-;") 'rh/comment-whole-line-or-region)
   (global-set-key (kbd "C-S-y") 'rh/replace-line-or-region)
   ;; `isearch-mode' keys
   (define-key isearch-mode-map (kbd "C-;") 'rh/isearch-remote-copy)
