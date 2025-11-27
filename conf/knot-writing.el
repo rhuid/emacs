@@ -35,7 +35,22 @@
   :bind (:map org-mode-map
               ("C-j" . nil)
               ("C-," . nil)
-              ("C-'" . nil)))
+              ("C-'" . nil)
+              ("H-a" . rh/org-list-new-item))
+  :config
+  (defun rh/org-list-new-item ()
+    "Create a new list item on the current line or below."
+    (interactive)
+    (if (looking-at "^[ \t]*$")
+        (progn
+          (beginning-of-line)
+          (insert "+ ")
+          (end-of-line))
+      (end-of-line)
+      (newline)
+      (beginning-of-line)
+      (insert "+ ")
+      (end-of-line))))
 
 (use-package org-modern
   :after org
