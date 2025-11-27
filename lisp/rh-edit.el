@@ -442,13 +442,26 @@ ARG can be either positive or negative.
 If ARG is zero, add a comment at the end of the current line
 and move the point there."
   (interactive "p")
-  (if (or (use-region-p) (zerop arg))
+  (cond
+   ;; if region active
+   ((use-region-p) (comment-dwim nil))
+   ;; if ARG is zero
+   ((zerop arg) (progn
+                  (comment-dwim nil)
+                  (insert " ")
+                  (just-one-space)))
+   ;; if ARG is one and line is empty
+   ((and (eq arg 1)
+         (eq (line-beginning-position) (line-end-position)))
+    (progn
       (comment-dwim nil)
-    (save-mark-and-excursion
-      (beginning-of-line)
-      (set-mark (point))
-      (end-of-line arg)
-      (comment-dwim nil))))
+      (end-of-line)))
+   ;; any other case
+   (t (save-mark-and-excursion
+        (beginning-of-line)
+        (set-mark (point))
+        (end-of-line arg)
+        (comment-dwim nil)))))
 
 ;;;###autoload
 (defun rh/replace-line-or-region (&optional arg)
