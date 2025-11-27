@@ -4,11 +4,6 @@
 #+language: en
 
 ** My extensions
-
-#+BEGIN_QUOTE
-This is my Emacs customization, prioritized for speed, efficiency and functionality.
-#+END_QUOTE
-
 *** Some custom functions
 **** ~rh/act-inside~
 
@@ -206,15 +201,4 @@ Then we end the ~early-init.el~ file with the following file.
 
 #+BEGIN_SRC emacs-lisp
 (provide 'early-init)
-#+END_SRC
-
-** The ~init~ file
-
-** Final gc restoration?
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (* 1024 1024 32)
-                  gc-cons-percentage 0.1)))
 #+END_SRC
