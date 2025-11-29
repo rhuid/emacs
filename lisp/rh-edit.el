@@ -31,27 +31,28 @@ or symbol or word depending on the point).
 If prefix argument \\[universal-argument] is given, clear the current
 value of `rh--swap-saved-region' (that is, nullify the previous save)."
   (interactive "P")
-  ;; If prefix argument is given, reset and exit
-  (when arg
-    (setq rh--swap-saved-region nil)
-    (return))
-  ;; If no active region, always mark the sexp (do what I mean!)
-  (unless (use-region-p)
-    (mark-sexp 1 nil))
-  (if (not rh--swap-saved-region)
-      ;; Save the current region if there is no saved region already
-      (progn
-        (setq rh--swap-saved-region
-              (cons (region-beginning) (region-end)))
-        (deactivate-mark))
-    ;; Swap the regions
-    (let* ((beg1 (car rh--swap-saved-region))
-           (end1 (cdr rh--swap-saved-region))
-           (beg2 (region-beginning))
-           (end2 (region-end)))
+  (save-excursion
+    ;; If prefix argument is given, reset and exit
+    (when arg
       (setq rh--swap-saved-region nil)
-      (transpose-regions beg1 end1 beg2 end2)
-      (deactivate-mark))))
+      (return))
+    ;; If no active region, always mark the sexp (do what I mean!)
+    (unless (use-region-p)
+      (mark-sexp 1 nil))
+    (if (not rh--swap-saved-region)
+        ;; Save the current region if there is no saved region already
+        (progn
+          (setq rh--swap-saved-region
+                (cons (region-beginning) (region-end)))
+          (deactivate-mark))
+      ;; Swap the regions
+      (let* ((beg1 (car rh--swap-saved-region))
+             (end1 (cdr rh--swap-saved-region))
+             (beg2 (region-beginning))
+             (end2 (region-end)))
+        (setq rh--swap-saved-region nil)
+        (transpose-regions beg1 end1 beg2 end2)
+        (deactivate-mark)))))
 
 ;;;###autoload
 (defun rh/act-inside (&optional arg)
