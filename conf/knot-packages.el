@@ -89,7 +89,7 @@
               ("C-M-b" . puni-backward-sexp-or-up-list)
               ("C-S-h" . puni-backward-kill-word)
               ("C-M-r" . puni-raise)
-              ("C-M-s" . puni-squeeze)
+              ("C-M-q" . puni-squeeze)
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
               ("M-H-n" . puni-slurp-backward)

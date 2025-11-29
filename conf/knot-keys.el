@@ -35,6 +35,7 @@
 (bind-key "C-S-s" 'isearch-forward-thing-at-point)
 (bind-key "M-r"   ctl-x-r-map)                                                  ; `M-r' is much faster to type than `C-x r'
 (bind-key "C-M-S-w" 'append-next-kill)                                          ; saving `C-M-w' for a custom command
+(bind-key "C-M-S-q" 'indent-pp-sexp)                                            ; saving `C-M-q' for a custom command
 (bind-key [remap text-scale-adjust] 'global-text-scale-adjust)                  ; always adjust text scale globally
 (bind-key "C-x C-c" (lamb (message "Sorcerers never quit sorcery.")))
 
