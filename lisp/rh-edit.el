@@ -13,6 +13,47 @@
 
 ;;; Code:
 
+(defvar rh--swap-saved-region nil
+  "The coordinates of a saved region for swapping.
+Holds a cons cell (BEG . END) or nil.")
+
+;;;###autoload
+(defun rh/swap-or-save-region (&optional arg)
+  "Swap two regions in the same buffer, or save one first.
+If a region has been saved from prior invocation of the same command,
+swap it with the current active region.
+Otherwise, save the current active region.
+If there is no active region when this command is invoked,
+assume the sexp at point (that is, assume the region
+that would have been active if \\[mark-sexp] were invoked at that point,
+and this will almost always mark either the intended balanced expression
+or symbol or word depending on the point).
+If prefix argument \\[universal-argument] is given, clear the current
+value of `rh--swap-saved-region' (that is, nullify the previous save)."
+  (interactive "P")
+  (cl-block exit
+    ;; If prefix argument is given, reset and exit
+    (when arg
+      (setq rh--swap-saved-region nil)
+      (cl-return-from exit))
+    ;; If no active region, always mark the sexp (do what I mean!)
+    (unless (use-region-p)
+      (mark-sexp 1 nil))
+    (if (not rh--swap-saved-region)
+        ;; Save the current region if there is no saved region already
+        (progn
+          (setq rh--swap-saved-region
+                (cons (region-beginning) (region-end)))
+          (deactivate-mark))
+      ;; Swap the regions
+      (let* ((beg1 (car rh--swap-saved-region))
+             (end1 (cdr rh--swap-saved-region))
+             (beg2 (region-beginning))
+             (end2 (region-end)))
+        (setq rh--swap-saved-region nil)
+        (transpose-regions beg1 end1 beg2 end2)
+        (deactivate-mark)))))
+
 ;;;###autoload
 (defun rh/act-inside (&optional arg)
   "Kill or copy the content inside the current balanced expression.
@@ -255,6 +296,7 @@ Negative ARG copies that many previous sentences."
     (mark-end-of-sentence arg)
     (kill-ring-save (region-beginning) (region-end))))
 
+;;;###autoload
 (defun rh--break-thing (motion-fn char &optional arg)
   "Break the text at each boundary detected by MOTION-FN with CHAR.
 For instance, if MOTION-FN is `forward-sentence' and CHAR is a newline character,
@@ -557,6 +599,7 @@ ARG defaults to 1."
   "Enable default keybindings for `rh-edit'."
   (interactive)
   ;; Global keys
+  (global-set-key (kbd "C-M-s") 'rh/swap-or-save-region)
   (global-set-key (kbd "M-i") 'rh/act-inside)
   (global-set-key (kbd "M-I") 'rh/change-inside-forward)
   (global-set-key (kbd "H-f") 'rh/visit-next-sexp)
