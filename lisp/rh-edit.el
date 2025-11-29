@@ -255,13 +255,13 @@ Negative ARG copies that many previous sentences."
     (mark-end-of-sentence arg)
     (kill-ring-save (region-beginning) (region-end))))
 
-;;;###autoload
-(defun rh--break-thing (motion-fn &optional arg)
-  "Break the text at each boundary detected by MOTION-FN.
-For instance, if MOTION-FN is `forward-sentence', then it starts
-the next sentence in a newline and move the point there.
-When there is an active region, insert a newline
-after each boundary inside the region."
+(defun rh--break-thing (motion-fn char &optional arg)
+  "Break the text at each boundary detected by MOTION-FN with CHAR.
+For instance, if MOTION-FN is `forward-sentence' and CHAR is a newline character,
+then it starts the next sentence in a newline and move the point there.
+
+This function is also region aware. For instance, when there is an active region,
+it inserts CHAR after each boundary detected by MOTION-FN inside the region."
   (if (use-region-p)
       (let* ((beg (region-beginning))
              (end (region-end))
@@ -278,30 +278,73 @@ after each boundary inside the region."
           (dolist (pos positions)
             (goto-char pos)
             (unless (looking-at-p "\n")
-              (newline 1))
+              (insert char))
             (delete-horizontal-space nil))))
     ;; if no active region
     (dotimes (_ (or arg 1))
       (funcall motion-fn 1)
       (unless (looking-at-p "\n")
-        (newline 1))
+        (insert char))
       (delete-horizontal-space nil))))
 
 ;;;###autoload
 (defun rh/break-sexp (&optional arg)
   "Start the next sexp in a newline and move the cursor there.
-With ARG, perform this action that many times.
-If there is an active region, break all sexps in the region."
+  With ARG, perform this action that many times.
+  If there is an active region, break all sexps in the region."
   (interactive "p")
-  (rh--break-thing #'forward-sexp arg))
+  (rh--break-thing #'forward-sexp "\n" arg))
 
 ;;;###autoload
 (defun rh/break-sentence (&optional arg)
   "Start the next sentence in a newline and move the cursor there.
-With ARG, perform this action that many times.
-If there is an active region, break all sentences in the region."
+  With ARG, perform this action that many times.
+  If there is an active region, break all sentences in the region."
   (interactive "p")
-  (rh--break-thing #'forward-sentence arg))
+  (rh--break-thing #'forward-sentence "\n" arg))
+
+;;;###autoload
+(defun rh/dash-backwards (&optional arg)
+  "Go back to insert ARG dashes and then restore original point.
+
+With there is an active region, put a dash between each subword.
+Otherwise, when a prefix argument \\[universal-argument] is given,
+insert dashes at that many subword boundaries.
+When ran interactively without argument, go back a subword and
+put a dash unless there is already one, in which case keep going
+backwards by a subword until a dash is inserted.
+ARG defaults to 1."
+  (interactive "p")
+  (save-excursion
+    (cond
+     ;; if region active
+     ((use-region-p)
+      (let ((end (region-end)))
+        (rh--break-thing #'subword-forward "-")
+        ;; then delete extra dash inserted
+        (when (thing-at-point-looking-at "-")
+          (delete-char 1))))
+     ;; if ran interactively without arguments
+     ((eq arg 1)
+      (progn
+        (catch 'done
+          (while t
+            (when (bobp)
+              (insert "-")
+              (throw 'done t))
+            (subword-backward)
+            (delete-horizontal-space)
+            (let ((cb (char-before)))
+              (if (or (null cb) (/= cb ?-))
+                  (progn
+                    (insert "-")
+                    (throw 'done t))))))))
+     ;; with prefix argument
+     (t (progn
+          (dotimes (_ arg)
+            (subword-backward)
+            (delete-horizontal-space)
+            (insert "-")))))))
 
 ;;;###autoload
 (defun rh/kill-whole-paragraph (&optional arg)
@@ -313,7 +356,7 @@ If there is an active region, break all sentences in the region."
 ;;;###autoload
 (defun rh/chop-off-buffer (&optional arg)
   "Kill the rest of the buffer after point.
-With ARG, it deletes instead (does not save to the kill-ring)."
+  With ARG, it deletes instead (does not save to the kill-ring)."
   (interactive "P")
   (if arg
       (delete-region (point) (point-max))
@@ -322,7 +365,7 @@ With ARG, it deletes instead (does not save to the kill-ring)."
 ;;;###autoload
 (defun rh/backward-chop-off-buffer (&optional arg)
   "Kill the rest of the buffer before point.
-With ARG, it deletes instead (does not save to the kill-ring)."
+  With ARG, it deletes instead (does not save to the kill-ring)."
   (interactive "P")
   (if arg
       (delete-region (point-min) (point))
@@ -331,9 +374,9 @@ With ARG, it deletes instead (does not save to the kill-ring)."
 ;;;###autoload
 (defun rh/mark-whole-line (&optional arg)
   "Mark ARG whole lines.
-If there is an active region, extend the region by
-ARG whole lines at the other side of the point.
-ARG defaults to 1."
+  If there is an active region, extend the region by
+  ARG whole lines at the other side of the point.
+  ARG defaults to 1."
   (interactive "p")
   (if (region-active-p)
       (if (eq (point) (use-region-beginning))
@@ -358,7 +401,7 @@ ARG defaults to 1."
 ;;;###autoload
 (defun rh/open-line-below (&optional arg)
   "Create a new line below and move the cursor there.
-With ARG, perform this action that many times."
+  With ARG, perform this action that many times."
   (interactive "p")
   (move-end-of-line 1)
   (newline-and-indent arg))
@@ -366,7 +409,7 @@ With ARG, perform this action that many times."
 ;;;###autoload
 (defun rh/open-line-above (&optional arg)
   "Create a new line above and move the cursor there.
-With ARG, perform this action that many times."
+  With ARG, perform this action that many times."
   (interactive "p")
   (back-to-indentation)
   (open-line arg))
@@ -374,10 +417,10 @@ With ARG, perform this action that many times."
 ;;;###autoload
 (defun rh/join-line (&optional arg)
   "Join the current line to the following line.
-With positive ARG, perform this action that many times.
-With negative ARG, join the current line to the previous and
-the magnitude of ARG determines how many times this action is performed.
-If there is an active region, join all lines in the region."
+  With positive ARG, perform this action that many times.
+  With negative ARG, join the current line to the previous and
+  the magnitude of ARG determines how many times this action is performed.
+  If there is an active region, join all lines in the region."
   (interactive "p")
   (if (use-region-p)
       (join-line nil (region-beginning) (region-end))
@@ -413,7 +456,7 @@ If there is an active region, join all lines in the region."
 ;;;###autoload
 (defun rh/kill-region-dwim (&optional arg)
   "Kill ARG whole lines or region.
-ARG can be either positive or negative."
+  ARG can be either positive or negative."
   (interactive "p")
   (if (use-region-p)
       (kill-region nil nil t)
@@ -422,7 +465,7 @@ ARG can be either positive or negative."
 ;;;###autoload
 (defun rh/kill-ring-save-dwim (&optional arg)
   "Copy ARG whole lines or region.
-ARG can be either positive or negative."
+  ARG can be either positive or negative."
   (interactive "p")
   (if (use-region-p)
       (kill-ring-save nil nil t)
@@ -436,11 +479,11 @@ ARG can be either positive or negative."
 (defun rh/comment-whole-line-or-region (&optional arg)
   "Comment or uncomment ARG whole lines or region.
 
-Comment or uncomment the active region if there is one.
-Otherwise, comment or uncomment ARG whole lines.
-ARG can be either positive or negative.
-If ARG is zero, add a comment at the end of the current line
-and move the point there."
+  Comment or uncomment the active region if there is one.
+  Otherwise, comment or uncomment ARG whole lines.
+  ARG can be either positive or negative.
+  If ARG is zero, add a comment at the end of the current line
+  and move the point there."
   (interactive "p")
   (cond
    ;; if region active
@@ -466,8 +509,8 @@ and move the point there."
 ;;;###autoload
 (defun rh/replace-line-or-region (&optional arg)
   "Replace current line with the ARGth most recent kill.
-If there is active region, replace the active region instead.
-ARG defaults to 1."
+  If there is active region, replace the active region instead.
+  ARG defaults to 1."
   (interactive "p")
   (if (use-region-p)
       (progn
@@ -505,7 +548,7 @@ ARG defaults to 1."
 ;;;###autoload
 (defun rh/backward-symbol (&optional arg)
   "Move point to the previous position that is the beginning of a symbol.
-With ARG, perform this action that many times."
+  With ARG, perform this action that many times."
   (interactive "p")
   (forward-symbol (- arg)))
 
@@ -536,6 +579,7 @@ With ARG, perform this action that many times."
   (global-set-key (kbd "C-j") 'rh/join-line)
   (global-set-key (kbd "M-j") 'rh/break-sexp)
   (global-set-key (kbd "M-J") 'rh/break-sentence)
+  (global-set-key (kbd "C-\"") 'rh/dash-backwards)
   (global-set-key (kbd "C-M-S-u") 'rh/unwrap-parent-sexp)
   (global-set-key (kbd "C-M-w") 'rh/copy-sexp-at-or-around-point)
   (global-set-key (kbd "M-M") 'rh/mark-symbol)
