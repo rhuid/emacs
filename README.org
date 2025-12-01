@@ -202,3 +202,13 @@ Then we end the ~early-init.el~ file with the following file.
 #+BEGIN_SRC emacs-lisp
 (provide 'early-init)
 #+END_SRC
+
+*** More Emacs ways
+**** Swap two sexps/words
++ Set mark and deactivate (~C-SPC C-SPC~) at the beginning of the first sexp.
++ At the beginning of the second sexp, do ~C-0 C-M-t~.
++ The same works for words with either ~C-M-t~ or ~M-t~.
+**** Transpose at a distance
++ ~C-u ARG M-t~ takes the word before or around point and drags it forward past ~ARG~ other words (backward if ~ARG~ negative).
++ The same for transposing sexps, but here the point must be between the sexp and not in the middle of a sexp to be transposed.
+**** Tr
