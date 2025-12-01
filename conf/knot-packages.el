@@ -88,7 +88,7 @@
               ("C-M-f" . puni-forward-sexp-or-up-list)
               ("C-M-b" . puni-backward-sexp-or-up-list)
               ("C-S-h" . puni-backward-kill-word)
-              ("C-M-r" . puni-raise)
+              ("C-M-r" . rh/puni-raise)
               ("C-M-q" . puni-squeeze)
               ("C-H-i" . puni-slurp-forward)
               ("C-H-n" . puni-barf-forward)
@@ -101,6 +101,12 @@
   (puni-blink-for-sexp-manipulating nil)
   (puni-confirm-when-delete-unbalanced-active-region nil)
   :config
+  (defun rh/puni-raise (&optional arg)
+    "Like `puni-raise` but choose level with prefix argument \\[universal-argument]."
+    (interactive "p")
+    (dotimes (_ arg)
+      (puni-raise)))
+
   (defun rh/puni-rewrap-sexp (&optional arg)
     "Rewrap the parent sexp in a new pair of delimiters.
 With ARG, it climbs up the sexp hierarchy."
