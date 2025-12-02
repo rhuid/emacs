@@ -561,6 +561,18 @@ ARG defaults to 1."
     (yank (1+ arg))
     (insert "\n")))
 
+;;;###autoload
+(defun rh/raise (&optional arg)
+  "Raise the active region or sexp at point N levels higher up the tree."
+  (interactive "p")
+  ;; If active region exists, use it otherwise choose the sexp at point
+  (unless (use-region-p)
+    (mark-sexp 1 nil))
+  (let ((s (buffer-substring (region-beginning) (region-end))))
+    (backward-up-list arg)
+    (delete-region (point) (save-excursion (forward-sexp 1) (point)))
+    (save-excursion (insert s))))
+
 ;;; GNU Emacs, out of the box, lacks commands for marking symbol and going back a symbol
 ;;; `rh/mark-symbol' is like `mark-word' but for symbols
 ;;; `rh/backward-symbol' is backward version of `forward-symbol'
