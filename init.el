@@ -33,8 +33,8 @@
 
 ;; Set up appearance (`rh-set-theme' is my personal package)
 (require 'rh-set-theme)
-(setq rh/set-theme-day-theme 'modus-operandi)
-(setq rh/set-theme-night-theme 'modus-vivendi)
+(setq rh/set-theme-day-theme 'modus-operandi-deuteranopia)
+(setq rh/set-theme-night-theme 'modus-vivendi-tinted)
 (use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
 
 ;; Personal lisp packages (from `lisp' directory)
