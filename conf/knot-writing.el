@@ -78,6 +78,7 @@
   (LaTeX-mode . rh/provide-keywords-math-face)
   (post-command . rh/toggle-latex-abbrev)
   :bind (:map LaTeX-mode-map ("C-c C-u" . rh/tex-fold-buffer))
+  :bind (:map LaTeX-mode-map ("C-j" . nil))
   :config
   (setq TeX-auto-save t
         TeX-parse-self t)
