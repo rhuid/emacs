@@ -109,4 +109,7 @@
 (bind-key "C-x C-b" 'ibuffer)
 (bind-key "C-S-o" 'other-window)
 
+;; Miscellaneous
+(bind-key "<f7>" 'compile)
+
 (provide 'knot-keys)
