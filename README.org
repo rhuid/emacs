@@ -1,4 +1,4 @@
-#+title: GNU Emacs configuration
+#+title: My GNU Emacs configuration
 #+author: Ronald Huidrom
 #+email: ronhuidrom@gmail.com
 #+language: en
@@ -211,4 +211,3 @@ Then we end the ~early-init.el~ file with the following file.
 **** Transpose at a distance
 + ~C-u ARG M-t~ takes the word before or around point and drags it forward past ~ARG~ other words (backward if ~ARG~ negative).
 + The same for transposing sexps, but here the point must be between the sexp and not in the middle of a sexp to be transposed.
-**** Tr
