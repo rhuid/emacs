@@ -1,17 +1,6 @@
 ;;-*-coding: utf-8;-*-
 (define-abbrev-table 'LaTeX-mode-abbrev-table
   '(
-    ("0" "$0$" nil :count 0)
-    ("1" "$1$" nil :count 0)
-    ("2" "$2$" nil :count 0)
-    ("3" "$3$" nil :count 0)
-    ("4" "$4$" nil :count 2)
-    ("5" "$5$" nil :count 1)
-    ("6" "$6$" nil :count 0)
-    ("7" "$7$" nil :count 0)
-    ("8" "$8$" nil :count 0)
-    ("9" "$9$" nil :count 1)
-    ("A" "$A$" nil :count 5)
     ("B" "$B$" nil :count 1)
     ("C" "$C$" nil :count 1)
     ("D" "$D$" nil :count 0)
