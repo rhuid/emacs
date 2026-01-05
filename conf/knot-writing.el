@@ -79,12 +79,14 @@
   (post-command . rh/toggle-latex-abbrev)
   :bind (:map LaTeX-mode-map ("C-c C-u" . rh/tex-fold-buffer))
   :bind (:map LaTeX-mode-map ("C-j" . nil))
+  :custom
+  (TeX-engine 'xetex)
+  (TeX-PDF-mode t)
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-view-program-selection '((output-pdf "Evince") (output-html "firefox")))
+  (TeX-view-program-list '(("Evince" "flatpak run org.gnome.Evince --page-index=%(outpage) %o")))
   :config
-  (setq TeX-auto-save t
-        TeX-parse-self t)
-  (setq TeX-view-program-selection '((output-pdf "Evince") (output-html "firefox")))
-  (setq TeX-view-program-list '(("Evince" "flatpak run org.gnome.Evince --page-index=%(outpage) %o")))
-
   (defun rh/toggle-latex-abbrev ()
     "Disable abbrevs inside math mode in Latex."
     (if (and (derived-mode-p 'LaTeX-mode) (texmathp))
