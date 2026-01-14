@@ -32,9 +32,10 @@
 (use-package s    :demand t)
 
 ;; Set up appearance (`rh-set-theme' is my personal package)
+(use-package ef-themes :demand t)
 (require 'rh-set-theme)
-(setq rh/set-theme-day-theme 'modus-operandi-deuteranopia)
-(setq rh/set-theme-night-theme 'modus-vivendi-tinted)
+(setq rh/set-theme-day-theme 'ef-light)
+(setq rh/set-theme-night-theme 'ef-dream)
 (use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
 
 ;; Personal lisp packages (from `lisp' directory)
