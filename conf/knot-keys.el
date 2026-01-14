@@ -111,5 +111,6 @@
 
 ;; Miscellaneous
 (bind-key "<f7>" 'compile)
+(bind-key "H-SPC" 'compile)
 
 (provide 'knot-keys)
