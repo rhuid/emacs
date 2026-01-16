@@ -1,11 +1,11 @@
-alias gst git status
-alias ga git add $1
-alias gaa git add --all
-alias gc git commit -m $1
-alias gp git push
-alias ll ls -l
-alias la ls -a
-alias l eza
-alias upscale /sbin/realesrgan-ncnn-vuikan -n realesrgan-x4plus-anime -t 200
-alias igi cd ~/Downloads/Project-IGI/Project_IGI_RIP/PC/ & prime-run wine IGI.exe
+alias upscale /usr/bin/realesrgan-ncnn-vuikan -n realesrgan-x4plus-anime -t 200
 alias igi2 cd ~/.wine/drive_c/"Program Files (x86)"/"IGI 2 - Covert Strike"/ & prime-run wine igi2.exe
+alias igi cd ~/Downloads/Project-IGI/Project_IGI_RIP/PC/ & prime-run wine IGI.exe
+alias l eza
+alias la ls -a
+alias ll ls -l
+alias gp git push
+alias gc git commit -m $1
+alias gaa git add --all
+alias ga git add $1
+alias gst git status
