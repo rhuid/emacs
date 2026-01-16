@@ -34,7 +34,7 @@
 ;; Set up appearance (`rh-set-theme' is my personal package)
 (use-package ef-themes :demand t)
 (require 'rh-set-theme)
-(setq rh/set-theme-day-theme 'ef-light)
+(setq rh/set-theme-day-theme 'ef-summer)
 (setq rh/set-theme-night-theme 'ef-dream)
 (use-package mood-line :init (mood-line-mode))                          ; a minimalist mode-line
 
