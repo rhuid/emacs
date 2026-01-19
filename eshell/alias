@@ -1,11 +1,12 @@
 alias upscale /usr/bin/realesrgan-ncnn-vuikan -n realesrgan-x4plus-anime -t 200
+alias ll ls -l
+alias limbo cd ~/Games/LIMBO/ & ./limbo
+alias la ls -a
+alias l eza
 alias igi2 cd ~/.wine/drive_c/"Program Files (x86)"/"IGI 2 - Covert Strike"/ & prime-run wine igi2.exe
 alias igi cd ~/Downloads/Project-IGI/Project_IGI_RIP/PC/ & prime-run wine IGI.exe
-alias l eza
-alias la ls -a
-alias ll ls -l
+alias gst git status
 alias gp git push
 alias gc git commit -m $1
 alias gaa git add --all
 alias ga git add $1
-alias gst git status
