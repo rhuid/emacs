@@ -1,6 +1,8 @@
 alias upscale /usr/bin/realesrgan-ncnn-vuikan -n realesrgan-x4plus-anime -t 200
 alias ll ls -l
 alias limbo cd ~/Games/LIMBO/ & ./limbo
+alias inside cd /home/ronald/.wine/drive_c/"Program Files (x86)"/INSIDE & prime-run wine INSIDE.exe
+alias qracing cd /home/ronald/.wine/drive_c/"Program Files (x86)"/GameTop.com/"ATV Quadro Racing" & prime-run wine game.exe
 alias la ls -a
 alias l eza
 alias igi2 cd ~/.wine/drive_c/"Program Files (x86)"/"IGI 2 - Covert Strike"/ & prime-run wine igi2.exe
